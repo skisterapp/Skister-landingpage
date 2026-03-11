@@ -1402,20 +1402,21 @@
         
         // Modal Functions
         function openModal(type) {
-            document.getElementById(`modal-${type}`).classList.add('active');
-            document.body.style.overflow = 'hidden';
+            const el = document.getElementById('modal-' + type);
+            if (el) { el.classList.add('active'); document.body.style.overflow = 'hidden'; }
         }
         
         function closeModal(type) {
-            document.getElementById(`modal-${type}`).classList.remove('active');
-            document.body.style.overflow = 'auto';
+            const el = document.getElementById('modal-' + type);
+            if (el) { el.classList.remove('active'); document.body.style.overflow = 'auto'; }
         }
         
         // Close modal when clicking outside
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    closeModal(modal.id.replace('modal-', ''));
+                if (e.target === modal && modal.id) {
+                    var type = modal.id.replace('modal-', '');
+                    if (type) closeModal(type);
                 }
             });
         });

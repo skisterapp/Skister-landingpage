@@ -288,8 +288,10 @@
                     }
                 });
                 
-                const data = await response.json();
-                const posts = data.posts || (Array.isArray(data) ? data : []);
+                var data;
+                try { data = await response.json(); } catch (e) { data = {}; }
+                var posts = (data && data.posts) ? data.posts : (Array.isArray(data) ? data : []);
+                if (!Array.isArray(posts)) posts = [];
                 
                 if (posts.length > 0) {
                     renderBlogPosts(posts);
@@ -331,17 +333,26 @@
             return null;
         }
 
+        // Extract first image URL from HTML content (e.g. blog body)
+        function getFirstImageFromContent(html) {
+            if (!html || typeof html !== 'string') return null;
+            var match = html.match(/<img[^>]+src\s*=\s*["']([^"']+)["']/i);
+            return match ? match[1].trim() : null;
+        }
+
         // Render blog posts
         function renderBlogPosts(posts) {
             const blogList = document.getElementById('blog-list');
             
             blogList.innerHTML = `
                 <div class="blog-grid">
-                    ${posts.map(post => {
-                        const imgUrl = resolveImageUrl(post.featuredImage);
+                    ${posts.filter(function(p) { return p && p.slug; }).map(post => {
+                        const featuredUrl = resolveImageUrl(post.featuredImage);
+                        const firstContentUrl = getFirstImageFromContent(post.content);
+                        const imgUrl = featuredUrl || resolveImageUrl(firstContentUrl);
                         const safeTitle = (post.title || '').replace(/"/g, '&quot;');
                         return `
-                        <a href="blog-post.html?slug=${post.slug}" class="blog-card">
+                        <a href="blog-post.html?slug=${encodeURIComponent(post.slug)}" class="blog-card">
                             <img src="${imgUrl || BLOG_PLACEHOLDER_IMAGE}" 
                                  alt="${safeTitle}" 
                                  class="blog-card-image"
@@ -373,20 +384,27 @@
         
         // Format date
         function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-            });
+            if (!dateString) return '';
+            try {
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) return '';
+                return date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+            } catch (e) { return ''; }
         }
         
         // Extract excerpt from HTML content
         function extractExcerpt(html) {
-            const div = document.createElement('div');
-            div.innerHTML = html;
-            const text = div.textContent || div.innerText || '';
-            return text.substring(0, 150) + (text.length > 150 ? '...' : '');
+            if (!html) return '';
+            try {
+                const div = document.createElement('div');
+                div.innerHTML = html;
+                const text = (div.textContent || div.innerText || '').trim();
+                return text.substring(0, 150) + (text.length > 150 ? '...' : '');
+            } catch (e) { return ''; }
         }
         
         // Load posts on page load
