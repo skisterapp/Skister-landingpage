@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skister Admin - Waitlist Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-green: #228B22;
+            --primary-green-dark: #1a6b1a;
+            --primary-green-light: #2da82d;
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text-white: #ffffff;
+            --text-gray: #b0b0b0;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-white);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            color: var(--primary-green);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card .label {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Actions */
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: var(--primary-green);
+            color: var(--text-white);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-green-light);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-white);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Search */
+        .search-box {
+            flex: 1;
+            max-width: 400px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-white);
+            font-size: 1rem;
+        }
+        
+        .search-input::placeholder {
+            color: var(--text-gray);
+        }
+        
+        /* Table */
+        .table-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .table-header {
+            padding: 1rem 1.5rem;
+            background: rgba(34, 139, 34, 0.1);
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 600;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        th {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary-green);
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        tbody tr {
+            transition: background 0.2s;
+        }
+        
+        tbody tr:hover {
+            background: rgba(34, 139, 34, 0.05);
+        }
+        
+        .email-cell {
+            font-family: 'Monaco', 'Courier New', monospace;
+            color: var(--text-white);
+        }
+        
+        .date-cell {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        
+        .index-cell {
+            color: var(--text-gray);
+            font-weight: 600;
+        }
+        
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-gray);
+        }
+        
+        .loading i {
+            font-size: 2rem;
+            color: var(--primary-green);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Error State */
+        .error {
+            background: rgba(255, 59, 48, 0.1);
+            border: 2px solid rgba(255, 59, 48, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: #ff6b6b;
+            margin-bottom: 2rem;
+        }
+        
+        .error i {
+            margin-right: 0.5rem;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-gray);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .search-box {
+                max-width: 100%;
+            }
+            
+            table {
+                font-size: 0.9rem;
+            }
+            
+            th, td {
+                padding: 0.75rem 1rem;
+            }
+        }
+        
+        /* Login Page Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .login-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .login-box h1 {
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+        
+        .login-box .subtitle {
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .login-btn:hover {
+            background: var(--primary-green-light);
+            transform: translateY(-2px);
+        }
+        
+        .login-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .login-error {
+            background: rgba(255, 59, 48, 0.1);
+            border: 2px solid rgba(255, 59, 48, 0.3);
+            border-radius: 8px;
+            padding: 0.875rem;
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .login-error.show {
+            display: block;
+        }
+        
+        .dashboard-container {
+            display: none;
+        }
+        
+        .dashboard-container.show {
+            display: block;
+        }
+        
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            position: relative;
+            bottom: -2px;
+        }
+        
+        .tab-btn:hover {
+            color: var(--text-white);
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-green);
+            border-bottom-color: var(--primary-green);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Blog Editor */
+        .blog-editor {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group-blog {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group-blog label {
+            margin-bottom: 0.5rem;
+            color: var(--text-gray);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .form-group-blog input,
+        .form-group-blog textarea {
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-white);
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .form-group-blog textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-group-blog input:focus,
+        .form-group-blog textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+        
+        .editor-toolbar {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+            flex-wrap: wrap;
+        }
+        
+        .editor-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-white);
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .editor-btn:hover {
+            background: rgba(34, 139, 34, 0.2);
+            border-color: var(--primary-green);
+        }
+        
+        .content-editor {
+            min-height: 400px;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 0 0 8px 8px;
+            color: var(--text-white);
+            font-size: 1rem;
+            line-height: 1.6;
+            outline: none;
+            overflow-y: auto;
+        }
+        
+        .content-editor:focus {
+            border-color: var(--primary-green);
+        }
+        
+        .blog-list-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .blog-list-item:hover {
+            background: rgba(34, 139, 34, 0.05);
+        }
+        
+        .blog-list-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-white);
+        }
+        
+        .blog-list-meta {
+            font-size: 0.875rem;
+            color: var(--text-gray);
+        }
+        
+        .blog-list-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .login-box {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-container" id="login-page">
+        <div class="login-box">
+            <h1>
+                <i class="fa-solid fa-person-skiing"></i>
+                Skister Admin
+            </h1>
+            <p class="subtitle">Enter your password to access the dashboard</p>
+            
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <div class="login-error" id="login-error">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    Incorrect password. Please try again.
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="Enter admin password"
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+                
+                <button type="submit" class="login-btn" id="login-btn">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    Login
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Dashboard -->
+    <div class="dashboard-container" id="dashboard">
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>
+                <i class="fa-solid fa-person-skiing"></i>
+                Skister Admin
+            </h1>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-secondary" onclick="logout()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </button>
+                <button class="btn btn-secondary" onclick="window.location.href='blog-admin.html'">
+                    <i class="fa-solid fa-newspaper"></i>
+                    Manage Blog
+                </button>
+                <button class="btn btn-secondary" onclick="window.location.href='index.html'">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Back to Landing Page
+                </button>
+            </div>
+        </div>
+        
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="number" id="total-count">-</div>
+                <div class="label">Total Subscribers</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="today-count">-</div>
+                <div class="label">Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="week-count">-</div>
+                <div class="label">This Week</div>
+            </div>
+        </div>
+        
+        <!-- Actions -->
+        <div class="actions">
+            <button class="btn btn-primary" onclick="refreshData()">
+                <i class="fa-solid fa-refresh"></i>
+                Refresh
+            </button>
+            <button class="btn btn-secondary" onclick="exportToCSV()">
+                <i class="fa-solid fa-download"></i>
+                Export CSV
+            </button>
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    id="search-input"
+                    placeholder="Search emails..."
+                    oninput="filterEmails()"
+                >
+            </div>
+        </div>
+        
+        <!-- Error Display -->
+        <div id="error-container"></div>
+        
+        <!-- Table -->
+        <div class="table-container">
+            <div class="table-header">
+                Waitlist Subscribers
+            </div>
+            <div id="table-content">
+                <div class="loading">
+                    <i class="fa-solid fa-spinner"></i>
+                    <p>Loading waitlist data...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+    <script>
+        let allEmails = [];
+        let filteredEmails = [];
+        
+        // Password protection
+        const ADMIN_PASSWORD = 'Benji@Ham2026';
+        
+        // Check password on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            // Check if password is stored in sessionStorage
+            const isAuthenticated = sessionStorage.getItem('adminAuthenticated');
+            
+            if (isAuthenticated) {
+                showDashboard();
+                loadWaitlistData();
+            } else {
+                showLoginPage();
+            }
+        });
+        
+        // Handle login form submission
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const passwordInput = document.getElementById('password');
+            const loginBtn = document.getElementById('login-btn');
+            const loginError = document.getElementById('login-error');
+            const password = passwordInput.value;
+            
+            // Hide error
+            loginError.classList.remove('show');
+            
+            // Disable button
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Logging in...';
+            
+            // Simulate async check
+            setTimeout(() => {
+                if (password === ADMIN_PASSWORD) {
+                    sessionStorage.setItem('adminAuthenticated', 'true');
+                    showDashboard();
+                    loadWaitlistData();
+                } else {
+                    loginError.classList.add('show');
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login';
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                }
+            }, 500);
+        }
+        
+        // Show login page
+        function showLoginPage() {
+            document.getElementById('login-page').style.display = 'flex';
+            document.getElementById('dashboard').classList.remove('show');
+        }
+        
+        // Show dashboard
+        function showDashboard() {
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('dashboard').classList.add('show');
+        }
+        
+        // Load waitlist data from backend
+        async function loadWaitlistData() {
+            const tableContent = document.getElementById('table-content');
+            const errorContainer = document.getElementById('error-container');
+            
+            // Clear errors
+            errorContainer.innerHTML = '';
+            
+            // Show loading
+            tableContent.innerHTML = `
+                <div class="loading">
+                    <i class="fa-solid fa-spinner"></i>
+                    <p>Loading waitlist data...</p>
+                </div>
+            `;
+            
+            try {
+                const response = await fetch('https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84/waitlist/all', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    allEmails = data.emails || [];
+                    filteredEmails = [...allEmails];
+                    updateStats();
+                    renderTable();
+                } else {
+                    throw new Error(data.error || 'Failed to load data');
+                }
+            } catch (error) {
+                console.error('Error loading waitlist:', error);
+                errorContainer.innerHTML = `
+                    <div class="error">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <strong>Error:</strong> ${error.message}
+                    </div>
+                `;
+                tableContent.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fa-solid fa-exclamation-circle"></i>
+                        <p>Failed to load waitlist data</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Update statistics
+        function updateStats() {
+            const total = allEmails.length;
+            document.getElementById('total-count').textContent = total;
+            
+            // Calculate today's count
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const todayCount = allEmails.filter(email => {
+                const emailDate = new Date(email.subscribedAt);
+                emailDate.setHours(0, 0, 0, 0);
+                return emailDate.getTime() === today.getTime();
+            }).length;
+            document.getElementById('today-count').textContent = todayCount;
+            
+            // Calculate this week's count
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+            const weekCount = allEmails.filter(email => {
+                const emailDate = new Date(email.subscribedAt);
+                return emailDate >= oneWeekAgo;
+            }).length;
+            document.getElementById('week-count').textContent = weekCount;
+        }
+        
+        // Render table
+        function renderTable() {
+            const tableContent = document.getElementById('table-content');
+            
+            if (filteredEmails.length === 0) {
+                tableContent.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fa-solid fa-inbox"></i>
+                        <p>No emails found</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            tableContent.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Email Address</th>
+                            <th>Subscribed Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${filteredEmails.map((email, index) => `
+                            <tr>
+                                <td class="index-cell">${index + 1}</td>
+                                <td class="email-cell">${email.email}</td>
+                                <td class="date-cell">${formatDate(email.subscribedAt)}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+        
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+            
+            let timeAgo = '';
+            if (diffMins < 1) {
+                timeAgo = 'Just now';
+            } else if (diffMins < 60) {
+                timeAgo = `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+            } else if (diffHours < 24) {
+                timeAgo = `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+            } else if (diffDays < 7) {
+                timeAgo = `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+            } else {
+                timeAgo = date.toLocaleDateString();
+            }
+            
+            const fullDate = date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            return `${fullDate} (${timeAgo})`;
+        }
+        
+        // Filter emails based on search
+        function filterEmails() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            filteredEmails = allEmails.filter(email => 
+                email.email.toLowerCase().includes(searchTerm)
+            );
+            renderTable();
+        }
+        
+        // Refresh data
+        function refreshData() {
+            document.getElementById('search-input').value = '';
+            loadWaitlistData();
+        }
+        
+        // Export to CSV
+        function exportToCSV() {
+            if (allEmails.length === 0) {
+                alert('No emails to export');
+                return;
+            }
+            
+            // Create CSV content
+            let csvContent = 'Email Address,Subscribed Date\n';
+            allEmails.forEach(email => {
+                const date = new Date(email.subscribedAt).toISOString();
+                csvContent += `"${email.email}","${date}"\n`;
+            });
+            
+            // Create download link
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `skister-waitlist-${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('adminAuthenticated');
+            document.getElementById('password').value = '';
+            showLoginPage();
+        }
+    </script>
+</body>
+</html>

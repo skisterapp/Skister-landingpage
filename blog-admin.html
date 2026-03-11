@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Manager - Skister Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-green: #228B22;
+            --primary-green-dark: #1a6b1a;
+            --primary-green-light: #2da82d;
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text-white: #ffffff;
+            --text-gray: #b0b0b0;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-white);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            color: var(--primary-green);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: var(--primary-green);
+            color: var(--text-white);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-green-light);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-white);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-danger {
+            background: rgba(255, 59, 48, 0.2);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 59, 48, 0.3);
+        }
+        
+        .btn-danger:hover {
+            background: rgba(255, 59, 48, 0.3);
+        }
+        
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+        
+        /* Blog Editor */
+        .blog-editor {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .editor-header h2 {
+            color: var(--primary-green);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            margin-bottom: 0.5rem;
+            color: var(--text-gray);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .form-group small {
+            color: var(--text-gray);
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-white);
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+        
+        /* Rich Text Editor */
+        .editor-section {
+            margin-top: 2rem;
+        }
+        
+        .editor-section h3 {
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+        
+        .editor-toolbar {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+            flex-wrap: wrap;
+        }
+        
+        .editor-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-white);
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            min-width: 40px;
+            justify-content: center;
+        }
+        
+        .editor-btn:hover {
+            background: rgba(34, 139, 34, 0.2);
+            border-color: var(--primary-green);
+        }
+        
+        .content-editor {
+            min-height: 400px;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 0 0 8px 8px;
+            color: var(--text-white);
+            font-size: 1rem;
+            line-height: 1.8;
+            outline: none;
+            overflow-y: auto;
+        }
+        
+        .content-editor:focus {
+            border-color: var(--primary-green);
+        }
+        
+        .content-editor h1, .content-editor h2, .content-editor h3, .content-editor h4 {
+            margin: 1.5rem 0 0.75rem;
+        }
+        
+        .content-editor p {
+            margin-bottom: 1rem;
+        }
+        
+        .content-editor ul, .content-editor ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+        
+        .content-editor table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .content-editor th, .content-editor td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+        }
+        
+        .content-editor th {
+            background: rgba(34, 139, 34, 0.1);
+        }
+        
+        /* Blog List */
+        .blog-list {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .blog-list-header {
+            padding: 1rem 1.5rem;
+            background: rgba(34, 139, 34, 0.1);
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .blog-list-item {
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            transition: background 0.2s;
+        }
+        
+        .blog-list-item:hover {
+            background: rgba(34, 139, 34, 0.05);
+        }
+        
+        .blog-list-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-white);
+        }
+        
+        .blog-list-meta {
+            font-size: 0.875rem;
+            color: var(--text-gray);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .blog-list-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-shrink: 0;
+        }
+        
+        /* Loading & Messages */
+        .loading, .empty-state, .success-message {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-gray);
+        }
+        
+        .loading i {
+            font-size: 2rem;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+            display: block;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .success-message {
+            background: rgba(34, 139, 34, 0.1);
+            border: 2px solid var(--primary-green);
+            border-radius: 8px;
+            color: var(--primary-green);
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .error-message {
+            background: rgba(255, 59, 48, 0.1);
+            border: 2px solid rgba(255, 59, 48, 0.3);
+            border-radius: 8px;
+            color: #ff6b6b;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .blog-list-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .blog-list-actions {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <i class="fa-solid fa-newspaper"></i>
+                Blog Manager
+            </h1>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-secondary" onclick="window.location.href='admin.html'">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Back to Admin
+                </button>
+                <button class="btn btn-secondary" onclick="window.location.href='blog.html'">
+                    <i class="fa-solid fa-eye"></i>
+                    View Blog
+                </button>
+            </div>
+        </div>
+        
+        <!-- Success/Error Messages -->
+        <div id="message-container"></div>
+        
+        <!-- Blog Editor -->
+        <div class="blog-editor" id="blog-editor" style="display: none;">
+            <div class="editor-header">
+                <h2 id="editor-title">Create New Blog Post</h2>
+                <button class="btn btn-secondary btn-small" onclick="cancelEdit()">
+                    <i class="fa-solid fa-times"></i>
+                    Cancel
+                </button>
+            </div>
+            
+            <form id="blog-form" onsubmit="saveBlogPost(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="title">Post Title *</label>
+                        <input type="text" id="title" required placeholder="Enter post title">
+                    </div>
+                    <div class="form-group">
+                        <label for="slug">URL Slug *</label>
+                        <input type="text" id="slug" required placeholder="url-friendly-title">
+                        <small>This will be the URL: /blog-post.html?slug=your-slug</small>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="author">Author</label>
+                        <input type="text" id="author" placeholder="Skister Team">
+                    </div>
+                    <div class="form-group">
+                        <label for="featured-image">Featured Image URL</label>
+                        <input type="url" id="featured-image" placeholder="https://example.com/image.jpg">
+                    </div>
+                </div>
+                
+                <!-- SEO Section -->
+                <h3 style="margin: 2rem 0 1rem; color: var(--primary-green);">SEO Settings</h3>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="meta-title">Meta Title</label>
+                        <input type="text" id="meta-title" placeholder="Leave empty to use post title">
+                    </div>
+                    <div class="form-group">
+                        <label for="canonical">Canonical URL</label>
+                        <input type="url" id="canonical" placeholder="https://example.com/blog/post">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="meta-description">Meta Description</label>
+                    <textarea id="meta-description" placeholder="Brief description for search engines (150-160 characters recommended)"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="og-site-name">OG Site Name</label>
+                        <input type="text" id="og-site-name" placeholder="Skister Blog">
+                    </div>
+                    <div class="form-group">
+                        <label for="robots">Robots</label>
+                        <input type="text" id="robots" placeholder="index, follow">
+                        <small>e.g., "index, follow" or "noindex, nofollow"</small>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="max-image-preview">Max Image Preview</label>
+                    <select id="max-image-preview" style="padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-white); font-size: 1rem;">
+                        <option value="large">Large</option>
+                        <option value="standard">Standard</option>
+                        <option value="none">None</option>
+                    </select>
+                </div>
+                
+                <!-- Content Editor -->
+                <div class="editor-section">
+                    <h3>Content</h3>
+                    <div class="editor-toolbar">
+                        <button type="button" class="editor-btn" onclick="formatText('bold')" title="Bold">
+                            <i class="fa-solid fa-bold"></i>
+                        </button>
+                        <button type="button" class="editor-btn" onclick="formatText('italic')" title="Italic">
+                            <i class="fa-solid fa-italic"></i>
+                        </button>
+                        <button type="button" class="editor-btn" onclick="formatText('underline')" title="Underline">
+                            <i class="fa-solid fa-underline"></i>
+                        </button>
+                        <button type="button" class="editor-btn" onclick="formatText('formatBlock', 'h1')" title="H1">H1</button>
+                        <button type="button" class="editor-btn" onclick="formatText('formatBlock', 'h2')" title="H2">H2</button>
+                        <button type="button" class="editor-btn" onclick="formatText('formatBlock', 'h3')" title="H3">H3</button>
+                        <button type="button" class="editor-btn" onclick="formatText('formatBlock', 'h4')" title="H4">H4</button>
+                        <button type="button" class="editor-btn" onclick="formatText('insertUnorderedList')" title="Bullet List">
+                            <i class="fa-solid fa-list-ul"></i>
+                        </button>
+                        <button type="button" class="editor-btn" onclick="formatText('insertOrderedList')" title="Numbered List">
+                            <i class="fa-solid fa-list-ol"></i>
+                        </button>
+                        <button type="button" class="editor-btn" onclick="insertLink()" title="Insert Link">
+                            <i class="fa-solid fa-link"></i>
+                        </button>
+                        <button type="button" class="editor-btn" onclick="insertImage()" title="Insert Image">
+                            <i class="fa-solid fa-image"></i>
+                        </button>
+                        <button type="button" class="editor-btn" onclick="insertYouTube()" title="Insert YouTube">
+                            <i class="fa-brands fa-youtube"></i>
+                        </button>
+                        <button type="button" class="editor-btn" onclick="insertTable()" title="Insert Table">
+                            <i class="fa-solid fa-table"></i>
+                        </button>
+                    </div>
+                    <div 
+                        id="content-editor" 
+                        class="content-editor" 
+                        contenteditable="true"
+                        placeholder="Start writing your blog post..."
+                    ></div>
+                </div>
+                
+                <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-save"></i>
+                        <span id="save-btn-text">Save Post</span>
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="cancelEdit()">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Blog List -->
+        <div class="blog-list">
+            <div class="blog-list-header">
+                <span>All Blog Posts</span>
+                <button class="btn btn-primary btn-small" onclick="showEditor()">
+                    <i class="fa-solid fa-plus"></i>
+                    New Post
+                </button>
+            </div>
+            <div id="blog-list-content">
+                <div class="loading">
+                    <i class="fa-solid fa-spinner"></i>
+                    <p>Loading blog posts...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let allPosts = [];
+        let editingSlug = null;
+        
+        // Load blog posts
+        async function loadBlogPosts() {
+            const container = document.getElementById('blog-list-content');
+            
+            try {
+                const response = await fetch('https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84/blog/posts', {
+                    headers: {
+                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    allPosts = data.posts;
+                    renderBlogList();
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fa-solid fa-exclamation-circle"></i>
+                        <p>Failed to load blog posts</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Render blog list
+        function renderBlogList() {
+            const container = document.getElementById('blog-list-content');
+            
+            if (allPosts.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fa-solid fa-newspaper"></i>
+                        <p>No blog posts yet. Create your first post!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = allPosts.map(post => `
+                <div class="blog-list-item">
+                    <div class="blog-list-info">
+                        <h3>${post.title}</h3>
+                        <div class="blog-list-meta">
+                            <span><i class="fa-solid fa-user"></i> ${post.author}</span>
+                            <span><i class="fa-solid fa-calendar"></i> ${formatDate(post.publishedTime)}</span>
+                            <span><i class="fa-solid fa-link"></i> ${post.slug}</span>
+                        </div>
+                    </div>
+                    <div class="blog-list-actions">
+                        <button class="btn btn-secondary btn-small" onclick="editPost('${post.slug}')">
+                            <i class="fa-solid fa-edit"></i>
+                            Edit
+                        </button>
+                        <button class="btn btn-danger btn-small" onclick="deletePost('${post.slug}')">
+                            <i class="fa-solid fa-trash"></i>
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Show editor
+        function showEditor() {
+            document.getElementById('blog-editor').style.display = 'block';
+            document.getElementById('editor-title').textContent = 'Create New Blog Post';
+            document.getElementById('save-btn-text').textContent = 'Save Post';
+            editingSlug = null;
+            resetForm();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Cancel edit
+        function cancelEdit() {
+            document.getElementById('blog-editor').style.display = 'none';
+            resetForm();
+        }
+        
+        // Reset form
+        function resetForm() {
+            document.getElementById('blog-form').reset();
+            document.getElementById('content-editor').innerHTML = '';
+            editingSlug = null;
+        }
+        
+        // Edit post
+        async function editPost(slug) {
+            try {
+                const response = await fetch(`https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84/blog/posts/${slug}`, {
+                    headers: {
+                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const post = data.post;
+                    editingSlug = slug;
+                    
+                    document.getElementById('title').value = post.title;
+                    document.getElementById('slug').value = post.slug;
+                    document.getElementById('author').value = post.author || '';
+                    document.getElementById('featured-image').value = post.featuredImage || '';
+                    document.getElementById('meta-title').value = post.metaTitle || '';
+                    document.getElementById('meta-description').value = post.metaDescription || '';
+                    document.getElementById('canonical').value = post.canonical || '';
+                    document.getElementById('og-site-name').value = post.ogSiteName || '';
+                    document.getElementById('robots').value = post.robots || '';
+                    document.getElementById('max-image-preview').value = post.maxImagePreview || 'large';
+                    document.getElementById('content-editor').innerHTML = post.content;
+                    
+                    document.getElementById('editor-title').textContent = 'Edit Blog Post';
+                    document.getElementById('save-btn-text').textContent = 'Update Post';
+                    document.getElementById('blog-editor').style.display = 'block';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            } catch (error) {
+                showMessage('Failed to load post for editing', 'error');
+            }
+        }
+        
+        // Save blog post
+        async function saveBlogPost(event) {
+            event.preventDefault();
+            
+            const postData = {
+                title: document.getElementById('title').value,
+                slug: document.getElementById('slug').value,
+                author: document.getElementById('author').value || 'Skister Team',
+                featuredImage: document.getElementById('featured-image').value,
+                metaTitle: document.getElementById('meta-title').value,
+                metaDescription: document.getElementById('meta-description').value,
+                canonical: document.getElementById('canonical').value,
+                ogSiteName: document.getElementById('og-site-name').value,
+                robots: document.getElementById('robots').value || 'index, follow',
+                maxImagePreview: document.getElementById('max-image-preview').value,
+                content: document.getElementById('content-editor').innerHTML
+            };
+            
+            try {
+                let url = 'https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84/blog/posts';
+                let method = 'POST';
+                
+                if (editingSlug) {
+                    url += `/${editingSlug}`;
+                    method = 'PUT';
+                }
+                
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8'
+                    },
+                    body: JSON.stringify(postData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage(editingSlug ? 'Post updated successfully!' : 'Post created successfully!', 'success');
+                    cancelEdit();
+                    loadBlogPosts();
+                } else {
+                    showMessage(data.error || 'Failed to save post', 'error');
+                }
+            } catch (error) {
+                showMessage('Failed to save post: ' + error.message, 'error');
+            }
+        }
+        
+        // Delete post
+        async function deletePost(slug) {
+            if (!confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84/blog/posts/${slug}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage('Post deleted successfully!', 'success');
+                    loadBlogPosts();
+                } else {
+                    showMessage(data.error || 'Failed to delete post', 'error');
+                }
+            } catch (error) {
+                showMessage('Failed to delete post: ' + error.message, 'error');
+            }
+        }
+        
+        // Format text
+        function formatText(command, value = null) {
+            document.execCommand(command, false, value);
+            document.getElementById('content-editor').focus();
+        }
+        
+        // Insert link
+        function insertLink() {
+            const url = prompt('Enter URL:');
+            if (url) {
+                formatText('createLink', url);
+            }
+        }
+        
+        // Insert image
+        function insertImage() {
+            const url = prompt('Enter image URL:');
+            if (url) {
+                formatText('insertImage', url);
+            }
+        }
+        
+        // Insert YouTube video
+        function insertYouTube() {
+            const url = prompt('Enter YouTube video URL:');
+            if (url) {
+                let videoId = '';
+                
+                // Extract video ID from various YouTube URL formats
+                if (url.includes('youtube.com/watch?v=')) {
+                    videoId = url.split('v=')[1].split('&')[0];
+                } else if (url.includes('youtu.be/')) {
+                    videoId = url.split('youtu.be/')[1].split('?')[0];
+                }
+                
+                if (videoId) {
+                    const embedHTML = `
+                        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 2rem 0; border-radius: 12px;">
+                            <iframe src="https://www.youtube.com/embed/${videoId}" 
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                    `;
+                    document.execCommand('insertHTML', false, embedHTML);
+                } else {
+                    alert('Invalid YouTube URL');
+                }
+            }
+        }
+        
+        // Insert table
+        function insertTable() {
+            const rows = prompt('Number of rows:', '3');
+            const cols = prompt('Number of columns:', '3');
+            
+            if (rows && cols) {
+                let tableHTML = '<table style="width: 100%; border-collapse: collapse; margin: 2rem 0;">';
+                
+                for (let i = 0; i < parseInt(rows); i++) {
+                    tableHTML += '<tr>';
+                    for (let j = 0; j < parseInt(cols); j++) {
+                        const tag = i === 0 ? 'th' : 'td';
+                        tableHTML += `<${tag} style="border: 1px solid rgba(255, 255, 255, 0.1); padding: 0.75rem;">${i === 0 ? 'Header' : 'Cell'}</${tag}>`;
+                    }
+                    tableHTML += '</tr>';
+                }
+                
+                tableHTML += '</table>';
+                document.execCommand('insertHTML', false, tableHTML);
+            }
+        }
+        
+        // Show message
+        function showMessage(message, type) {
+            const container = document.getElementById('message-container');
+            const className = type === 'success' ? 'success-message' : 'error-message';
+            const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+            
+            container.innerHTML = `
+                <div class="${className}">
+                    <i class="fa-solid ${icon}"></i>
+                    ${message}
+                </div>
+            `;
+            
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+        
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+        
+        // Auto-generate slug from title
+        document.getElementById('title').addEventListener('input', (e) => {
+            if (!editingSlug) {
+                const slug = e.target.value
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '-')
+                    .replace(/^-|-$/g, '');
+                document.getElementById('slug').value = slug;
+            }
+        });
+        
+        // Load posts on page load
+        loadBlogPosts();
+    </script>
+</body>
+</html>
