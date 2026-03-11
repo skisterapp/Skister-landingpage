@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Will be dynamically populated -->
+    <title id="page-title">Loading... - Skister Blog</title>
+    <meta name="description" id="meta-description" content="Skister Blog">
+    <meta name="author" id="meta-author" content="Skister Team">
+    <meta name="robots" id="meta-robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" id="og-title" content="">
+    <meta property="og:description" id="og-description" content="">
+    <meta property="og:site_name" id="og-site-name" content="Skister Blog">
+    <meta property="og:image" id="og-image" content="">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" id="twitter-card">
+    <meta name="twitter:title" id="twitter-title" content="">
+    <meta name="twitter:description" id="twitter-description" content="">
+    <meta name="twitter:image" id="twitter-image" content="">
+    
+    <!-- Article Meta -->
+    <meta property="article:author" id="article-author" content="">
+    <meta property="article:published_time" id="article-published" content="">
+    
+    <!-- Canonical -->
+    <link rel="canonical" id="canonical-url" href="">
+    
+    <!-- Max Image Preview -->
+    <meta name="robots" id="max-image-preview" content="max-image-preview:large">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-green: #228B22;
+            --primary-green-dark: #1a6b1a;
+            --primary-green-light: #2da82d;
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text-white: #ffffff;
+            --text-gray: #b0b0b0;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-white);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: var(--primary-green);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--text-white);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-green);
+        }
+        
+        /* Article Container */
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .back-link {
+            color: var(--primary-green);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            transition: gap 0.3s;
+        }
+        
+        .back-link:hover {
+            gap: 0.75rem;
+        }
+        
+        .article-header {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .article-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .article-meta {
+            display: flex;
+            gap: 2rem;
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            flex-wrap: wrap;
+        }
+        
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .featured-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+        
+        /* Article Content Styles */
+        .article-content {
+            font-size: 1.125rem;
+            line-height: 1.8;
+        }
+        
+        .article-content h1 {
+            font-size: 2.25rem;
+            margin: 2rem 0 1rem;
+            color: var(--text-white);
+        }
+        
+        .article-content h2 {
+            font-size: 1.875rem;
+            margin: 2rem 0 1rem;
+            color: var(--text-white);
+        }
+        
+        .article-content h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--text-white);
+        }
+        
+        .article-content h4 {
+            font-size: 1.25rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--text-white);
+        }
+        
+        .article-content p {
+            margin-bottom: 1.5rem;
+            color: #e0e0e0;
+        }
+        
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        
+        .article-content li {
+            margin-bottom: 0.75rem;
+            color: #e0e0e0;
+        }
+        
+        .article-content a {
+            color: var(--primary-green);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .article-content a:hover {
+            border-bottom-color: var(--primary-green);
+        }
+        
+        .article-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .article-content th, .article-content td {
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+        
+        .article-content th {
+            background: rgba(34, 139, 34, 0.1);
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+        
+        .article-content blockquote {
+            border-left: 4px solid var(--primary-green);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: rgba(34, 139, 34, 0.05);
+            border-radius: 4px;
+            font-style: italic;
+        }
+        
+        .article-content code {
+            background: var(--bg-card);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        .article-content pre {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+        
+        .article-content pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        .youtube-embed {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 2rem 0;
+            border-radius: 12px;
+        }
+        
+        .youtube-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Loading & Error States */
+        .loading, .error-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-gray);
+        }
+        
+        .loading i {
+            font-size: 3rem;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+            display: block;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .error-state i {
+            font-size: 3rem;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        footer p {
+            color: var(--text-gray);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 2rem;
+            }
+            
+            .article-content {
+                font-size: 1rem;
+            }
+            
+            .article-content h1 {
+                font-size: 1.75rem;
+            }
+            
+            .article-content h2 {
+                font-size: 1.5rem;
+            }
+            
+            .article-content h3 {
+                font-size: 1.25rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-person-skiing"></i>
+                Skister
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="blog.html">Blog</a>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="article-container" id="article-container">
+        <div class="loading">
+            <i class="fa-solid fa-spinner"></i>
+            <p>Loading article...</p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2026 Skister. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Get slug from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const slug = urlParams.get('slug');
+        
+        if (!slug) {
+            window.location.href = 'blog.html';
+        }
+        
+        // Load blog post
+        async function loadBlogPost() {
+            const container = document.getElementById('article-container');
+            
+            try {
+                const response = await fetch(`https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84/blog/posts/${slug}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.post) {
+                    renderBlogPost(data.post);
+                } else {
+                    showError('Blog post not found');
+                }
+            } catch (error) {
+                console.error('Error loading blog post:', error);
+                showError('Failed to load blog post');
+            }
+        }
+        
+        // Placeholder when featured image is missing or fails (same as blog list)
+        const BLOG_PLACEHOLDER_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 400 200'%3E%3Crect fill='%231a1a1a' width='400' height='200'/%3E%3Cg fill='%23b0b0b0'%3E%3Cpath d='M160 70a30 30 0 1 1 80 0 30 30 0 1 1-80 0zm120 10H120a20 20 0 0 0-20 20v60a20 20 0 0 0 20 20h160a20 20 0 0 0 20-20v-60a20 20 0 0 0-20-20zm-80 60a25 25 0 1 1 0-50 25 25 0 0 1 0 50z'/%3E%3C/g%3E%3Ctext x='200' y='165' fill='%23666' font-family='sans-serif' font-size='14' text-anchor='middle'%3ENo image%3C/text%3E%3C/svg%3E";
+        window.__blogPlaceholder = BLOG_PLACEHOLDER_IMAGE;
+
+        var BLOG_STORAGE_BASE = 'https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/make-080ebf84-blog-images';
+
+        function resolveImageUrl(url) {
+            if (!url || typeof url !== 'string') return null;
+            var trimmed = url.trim();
+            if (!trimmed) return null;
+            if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed;
+            if (trimmed.startsWith('//')) return 'https:' + trimmed;
+            var path = trimmed.replace(/^\/+/, '');
+            if (path) return BLOG_STORAGE_BASE + '/' + path.replace(/^make-080ebf84-blog-images\/?/, '');
+            return null;
+        }
+
+        // Render blog post
+        function renderBlogPost(post) {
+            // Update SEO meta tags
+            updateMetaTags(post);
+            
+            const imgUrl = resolveImageUrl(post.featuredImage);
+            const safeTitle = (post.title || '').replace(/"/g, '&quot;');
+            
+            // Render content
+            const container = document.getElementById('article-container');
+            container.innerHTML = `
+                <a href="blog.html" class="back-link">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Back to Blog
+                </a>
+                
+                <article>
+                    <div class="article-header">
+                        <h1 class="article-title">${post.title}</h1>
+                        <div class="article-meta">
+                            <span>
+                                <i class="fa-solid fa-user"></i>
+                                ${post.author}
+                            </span>
+                            <span>
+                                <i class="fa-solid fa-calendar"></i>
+                                ${formatDate(post.publishedTime)}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <img src="${imgUrl || BLOG_PLACEHOLDER_IMAGE}" 
+                         alt="${safeTitle}" 
+                         class="featured-image"
+                         onerror="this.onerror=null;this.src=window.__blogPlaceholder||'';">
+                    
+                    <div class="article-content">
+                        ${post.content}
+                    </div>
+                </article>
+            `;
+        }
+        
+        // Update meta tags for SEO
+        function updateMetaTags(post) {
+            // Title
+            document.title = post.metaTitle || post.title;
+            document.getElementById('page-title').content = post.metaTitle || post.title;
+            
+            // Description
+            document.getElementById('meta-description').content = post.metaDescription || '';
+            
+            // Author
+            document.getElementById('meta-author').content = post.author;
+            document.getElementById('article-author').content = post.author;
+            
+            // Robots
+            document.getElementById('meta-robots').content = post.robots || 'index, follow';
+            document.getElementById('max-image-preview').content = `max-image-preview:${post.maxImagePreview || 'large'}`;
+            
+            // Open Graph
+            document.getElementById('og-title').content = post.metaTitle || post.title;
+            document.getElementById('og-description').content = post.metaDescription || '';
+            document.getElementById('og-site-name').content = post.ogSiteName || 'Skister Blog';
+            if (post.featuredImage) {
+                document.getElementById('og-image').content = post.featuredImage;
+            }
+            
+            // Twitter
+            document.getElementById('twitter-title').content = post.metaTitle || post.title;
+            document.getElementById('twitter-description').content = post.metaDescription || '';
+            if (post.featuredImage) {
+                document.getElementById('twitter-image').content = post.featuredImage;
+            }
+            
+            // Article published time
+            document.getElementById('article-published').content = post.publishedTime;
+            
+            // Canonical URL
+            const canonicalUrl = post.canonical || window.location.href;
+            document.getElementById('canonical-url').href = canonicalUrl;
+        }
+        
+        // Show error
+        function showError(message) {
+            const container = document.getElementById('article-container');
+            container.innerHTML = `
+                <div class="error-state">
+                    <i class="fa-solid fa-exclamation-circle"></i>
+                    <p>${message}</p>
+                    <a href="blog.html" class="back-link" style="margin-top: 2rem;">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back to Blog
+                    </a>
+                </div>
+            `;
+        }
+        
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+        
+        // Load post on page load
+        loadBlogPost();
+    </script>
+</body>
+</html>

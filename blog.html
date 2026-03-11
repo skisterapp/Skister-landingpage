@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Skister | Ski Equipment Sharing</title>
+    <meta name="description" content="Read the latest updates, tips, and stories from the Skister community.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-green: #228B22;
+            --primary-green-dark: #1a6b1a;
+            --primary-green-light: #2da82d;
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text-white: #ffffff;
+            --text-gray: #b0b0b0;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-white);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: var(--primary-green);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--text-white);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-green);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 4rem 2rem 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-green-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Blog Grid */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .blog-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-green);
+            box-shadow: 0 10px 30px rgba(34, 139, 34, 0.2);
+        }
+        
+        .blog-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, rgba(34, 139, 34, 0.2), rgba(34, 139, 34, 0.1));
+            display: block;
+            vertical-align: top;
+        }
+        
+        .blog-card-content {
+            padding: 1.5rem;
+        }
+        
+        .blog-card-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-gray);
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .blog-card-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .blog-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-white);
+        }
+        
+        .blog-card-excerpt {
+            color: var(--text-gray);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .read-more {
+            color: var(--primary-green);
+            font-weight: 600;
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Loading & Empty States */
+        .loading, .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-gray);
+        }
+        
+        .loading i, .empty-state i {
+            font-size: 3rem;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .loading i {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        footer p {
+            color: var(--text-gray);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-person-skiing"></i>
+                Skister
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="blog.html">Blog</a>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="hero">
+        <h1>Skister Blog</h1>
+        <p>Stories, tips, and updates from the Skister community</p>
+    </div>
+    
+    <div class="container">
+        <div id="blog-list">
+            <div class="loading">
+                <i class="fa-solid fa-spinner"></i>
+                <p>Loading blog posts...</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2026 Skister. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Load blog posts
+        async function loadBlogPosts() {
+            const blogList = document.getElementById('blog-list');
+            
+            try {
+                const response = await fetch('https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84/blog/posts', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8'
+                    }
+                });
+                
+                const data = await response.json();
+                const posts = data.posts || (Array.isArray(data) ? data : []);
+                
+                if (posts.length > 0) {
+                    renderBlogPosts(posts);
+                } else {
+                    blogList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fa-solid fa-newspaper"></i>
+                            <p>No blog posts yet. Check back soon!</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading blog posts:', error);
+                blogList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fa-solid fa-exclamation-circle"></i>
+                        <p>Failed to load blog posts. Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Placeholder image when featured image is missing or fails to load (inline SVG)
+        const BLOG_PLACEHOLDER_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 400 200'%3E%3Crect fill='%231a1a1a' width='400' height='200'/%3E%3Cg fill='%23b0b0b0'%3E%3Cpath d='M160 70a30 30 0 1 1 80 0 30 30 0 1 1-80 0zm120 10H120a20 20 0 0 0-20 20v60a20 20 0 0 0 20 20h160a20 20 0 0 0 20-20v-60a20 20 0 0 0-20-20zm-80 60a25 25 0 1 1 0-50 25 25 0 0 1 0 50z'/%3E%3C/g%3E%3Ctext x='200' y='165' fill='%23666' font-family='sans-serif' font-size='14' text-anchor='middle'%3ENo image%3C/text%3E%3C/svg%3E";
+        window.__blogPlaceholder = BLOG_PLACEHOLDER_IMAGE;
+
+        // Supabase storage base for blog images (fallback if API returns path-only)
+        var BLOG_STORAGE_BASE = 'https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/make-080ebf84-blog-images';
+
+        // Ensure image URL is absolute so thumbnails work on GitHub Pages
+        function resolveImageUrl(url) {
+            if (!url || typeof url !== 'string') return null;
+            var trimmed = url.trim();
+            if (!trimmed) return null;
+            if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed;
+            if (trimmed.startsWith('//')) return 'https:' + trimmed;
+            var path = trimmed.replace(/^\/+/, '');
+            if (path) return BLOG_STORAGE_BASE + '/' + path.replace(/^make-080ebf84-blog-images\/?/, '');
+            return null;
+        }
+
+        // Render blog posts
+        function renderBlogPosts(posts) {
+            const blogList = document.getElementById('blog-list');
+            
+            blogList.innerHTML = `
+                <div class="blog-grid">
+                    ${posts.map(post => {
+                        const imgUrl = resolveImageUrl(post.featuredImage);
+                        const safeTitle = (post.title || '').replace(/"/g, '&quot;');
+                        return `
+                        <a href="blog-post.html?slug=${post.slug}" class="blog-card">
+                            <img src="${imgUrl || BLOG_PLACEHOLDER_IMAGE}" 
+                                 alt="${safeTitle}" 
+                                 class="blog-card-image"
+                                 loading="lazy"
+                                 onerror="this.onerror=null;this.src=window.__blogPlaceholder||'';">
+                            <div class="blog-card-content">
+                                <div class="blog-card-meta">
+                                    <span>
+                                        <i class="fa-solid fa-user"></i>
+                                        ${post.author}
+                                    </span>
+                                    <span>
+                                        <i class="fa-solid fa-calendar"></i>
+                                        ${formatDate(post.publishedTime)}
+                                    </span>
+                                </div>
+                                <h2>${post.title}</h2>
+                                <p class="blog-card-excerpt">${post.metaDescription || extractExcerpt(post.content)}</p>
+                                <span class="read-more">
+                                    Read more
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </span>
+                            </div>
+                        </a>
+                    `; }).join('')}
+                </div>
+            `;
+        }
+        
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+        
+        // Extract excerpt from HTML content
+        function extractExcerpt(html) {
+            const div = document.createElement('div');
+            div.innerHTML = html;
+            const text = div.textContent || div.innerText || '';
+            return text.substring(0, 150) + (text.length > 150 ? '...' : '');
+        }
+        
+        // Load posts on page load
+        loadBlogPosts();
+    </script>
+</body>
+</html>
