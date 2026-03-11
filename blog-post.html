@@ -422,10 +422,25 @@
             }
         }
         
+        // Placeholder when featured image is missing or fails (same as blog list)
+        const BLOG_PLACEHOLDER_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 400 200'%3E%3Crect fill='%231a1a1a' width='400' height='200'/%3E%3Cg fill='%23b0b0b0'%3E%3Cpath d='M160 70a30 30 0 1 1 80 0 30 30 0 1 1-80 0zm120 10H120a20 20 0 0 0-20 20v60a20 20 0 0 0 20 20h160a20 20 0 0 0 20-20v-60a20 20 0 0 0-20-20zm-80 60a25 25 0 1 1 0-50 25 25 0 0 1 0 50z'/%3E%3C/g%3E%3Ctext x='200' y='165' fill='%23666' font-family='sans-serif' font-size='14' text-anchor='middle'%3ENo image%3C/text%3E%3C/svg%3E";
+
+        function resolveImageUrl(url) {
+            if (!url || typeof url !== 'string') return null;
+            const trimmed = url.trim();
+            if (!trimmed) return null;
+            if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed;
+            if (trimmed.startsWith('//')) return 'https:' + trimmed;
+            return null;
+        }
+
         // Render blog post
         function renderBlogPost(post) {
             // Update SEO meta tags
             updateMetaTags(post);
+            
+            const imgUrl = resolveImageUrl(post.featuredImage);
+            const safeTitle = (post.title || '').replace(/"/g, '&quot;');
             
             // Render content
             const container = document.getElementById('article-container');
@@ -450,9 +465,11 @@
                         </div>
                     </div>
                     
-                    ${post.featuredImage ? `
-                        <img src="${post.featuredImage}" alt="${post.title}" class="featured-image">
-                    ` : ''}
+                    <img src="${imgUrl || BLOG_PLACEHOLDER_IMAGE}" 
+                         alt="${safeTitle}" 
+                         class="featured-image"
+                         onerror="this.onerror=null;this.src=this.dataset.fallback;"
+                         data-fallback="${BLOG_PLACEHOLDER_IMAGE.replace(/"/g, '&quot;')}">
                     
                     <div class="article-content">
                         ${post.content}
