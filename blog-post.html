@@ -321,6 +321,117 @@
             display: block;
         }
         
+        /* Likes & Comments */
+        .blog-engagement {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .like-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .like-section .like-count {
+            color: var(--text-gray);
+            font-size: 1rem;
+        }
+        .btn-like {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-white);
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+        .btn-like:hover {
+            background: rgba(34, 139, 34, 0.2);
+            border-color: var(--primary-green);
+        }
+        .btn-like.liked {
+            background: rgba(34, 139, 34, 0.25);
+            border-color: var(--primary-green);
+            color: var(--primary-green);
+        }
+        .comments-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .comment-form input,
+        .comment-form textarea {
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-white);
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        .comment-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .comment-form input:focus,
+        .comment-form textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+        .comment-form .btn-submit {
+            align-self: flex-start;
+            padding: 0.6rem 1.25rem;
+            background: var(--primary-green);
+            color: var(--text-white);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .comment-form .btn-submit:hover {
+            background: var(--primary-green-light);
+        }
+        .comment-form .comment-error {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+        }
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .comment-item {
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        .comment-item .comment-author {
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 0.35rem;
+        }
+        .comment-item .comment-date {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            margin-bottom: 0.5rem;
+        }
+        .comment-item .comment-body {
+            color: #e0e0e0;
+            line-height: 1.5;
+        }
+        
         /* Footer */
         footer {
             background: var(--bg-card);
@@ -478,8 +589,29 @@
                     <div class="article-content">
                         ${post.content}
                     </div>
+                    
+                    <div class="blog-engagement" id="blog-engagement">
+                        <div class="like-section">
+                            <span class="like-count" id="like-count">0 likes</span>
+                            <button type="button" class="btn-like" id="btn-like" aria-label="Like this post">
+                                <i class="fa-regular fa-heart" id="like-icon"></i>
+                                <span id="like-text">Like</span>
+                            </button>
+                        </div>
+                        <h2 class="comments-title">Comments</h2>
+                        <form class="comment-form" id="comment-form">
+                            <input type="text" id="comment-name" placeholder="Your name" required maxlength="100" aria-label="Your name">
+                            <textarea id="comment-content" placeholder="Write a comment..." required maxlength="2000" aria-label="Your comment"></textarea>
+                            <p class="comment-error" id="comment-error" style="display: none;"></p>
+                            <button type="submit" class="btn-submit">Post comment</button>
+                        </form>
+                        <div class="comments-list" id="comments-list">
+                            <p class="loading" id="comments-loading"><i class="fa-solid fa-spinner"></i> Loading comments...</p>
+                        </div>
+                    </div>
                 </article>
             `;
+            afterPostRendered();
         }
         
         // Update meta tags for SEO
@@ -545,6 +677,125 @@
                 month: 'long',
                 day: 'numeric'
             });
+        }
+        
+        const API_BASE = 'https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84';
+        const AUTH_HEADER = { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8' };
+        
+        function getOrCreateVisitorId() {
+            var key = 'skister_blog_visitor_id';
+            try {
+                var id = localStorage.getItem(key);
+                if (id) return id;
+                id = 'v_' + Math.random().toString(36).slice(2) + '_' + Date.now().toString(36);
+                localStorage.setItem(key, id);
+                return id;
+            } catch (e) { return 'v_anon_' + Date.now(); }
+        }
+        
+        function afterPostRendered() {
+            if (!slug) return;
+            loadLikes();
+            loadComments();
+            var btnLike = document.getElementById('btn-like');
+            if (btnLike) btnLike.addEventListener('click', toggleLike);
+            var form = document.getElementById('comment-form');
+            if (form) form.addEventListener('submit', submitComment);
+        }
+        
+        async function loadLikes() {
+            var visitorId = getOrCreateVisitorId();
+            try {
+                var res = await fetch(API_BASE + '/blog/posts/' + encodeURIComponent(slug) + '/likes?visitorId=' + encodeURIComponent(visitorId), { headers: AUTH_HEADER });
+                var data = await res.json();
+                if (data.success) {
+                    var el = document.getElementById('like-count');
+                    var btn = document.getElementById('btn-like');
+                    var icon = document.getElementById('like-icon');
+                    var text = document.getElementById('like-text');
+                    if (el) el.textContent = data.count === 1 ? '1 like' : data.count + ' likes';
+                    if (btn) btn.classList.toggle('liked', data.liked);
+                    if (icon) {
+                        icon.className = data.liked ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
+                    }
+                    if (text) text.textContent = data.liked ? 'Liked' : 'Like';
+                }
+            } catch (e) { console.warn('Failed to load likes', e); }
+        }
+        
+        async function toggleLike() {
+            var visitorId = getOrCreateVisitorId();
+            var btn = document.getElementById('btn-like');
+            if (btn) btn.disabled = true;
+            try {
+                var res = await fetch(API_BASE + '/blog/posts/' + encodeURIComponent(slug) + '/likes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', ...AUTH_HEADER },
+                    body: JSON.stringify({ visitorId: visitorId })
+                });
+                var data = await res.json();
+                if (data.success) {
+                    loadLikes();
+                }
+            } catch (e) { console.warn('Like failed', e); }
+            if (btn) btn.disabled = false;
+        }
+        
+        async function loadComments() {
+            var listEl = document.getElementById('comments-list');
+            var loadingEl = document.getElementById('comments-loading');
+            if (!listEl) return;
+            try {
+                var res = await fetch(API_BASE + '/blog/posts/' + encodeURIComponent(slug) + '/comments', { headers: AUTH_HEADER });
+                var data = await res.json();
+                if (loadingEl) loadingEl.remove();
+                if (data.success && Array.isArray(data.comments)) {
+                    if (data.comments.length === 0) {
+                        listEl.innerHTML = '<p class="empty-state" style="padding: 1rem 0; color: var(--text-gray);">No comments yet. Be the first to comment!</p>';
+                    } else {
+                        listEl.innerHTML = data.comments.map(function(c) {
+                            var dateStr = c.createdAt ? formatDate(c.createdAt) : '';
+                            var safeName = (c.authorName || 'Anonymous').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+                            var safeContent = (c.content || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+                            return '<div class="comment-item"><div class="comment-author">' + safeName + '</div><div class="comment-date">' + dateStr + '</div><div class="comment-body">' + safeContent + '</div></div>';
+                        }).join('');
+                    }
+                } else {
+                    listEl.innerHTML = '<p style="color: var(--text-gray);">Could not load comments.</p>';
+                }
+            } catch (e) {
+                if (loadingEl) loadingEl.remove();
+                listEl.innerHTML = '<p style="color: var(--text-gray);">Could not load comments.</p>';
+            }
+        }
+        
+        async function submitComment(e) {
+            e.preventDefault();
+            var nameInput = document.getElementById('comment-name');
+            var contentInput = document.getElementById('comment-content');
+            var errEl = document.getElementById('comment-error');
+            var name = (nameInput && nameInput.value || '').trim();
+            var content = (contentInput && contentInput.value || '').trim();
+            if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+            if (!name) { if (errEl) { errEl.textContent = 'Please enter your name.'; errEl.style.display = 'block'; } return; }
+            if (!content) { if (errEl) { errEl.textContent = 'Please enter a comment.'; errEl.style.display = 'block'; } return; }
+            try {
+                var res = await fetch(API_BASE + '/blog/posts/' + encodeURIComponent(slug) + '/comments', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', ...AUTH_HEADER },
+                    body: JSON.stringify({ authorName: name, content: content })
+                });
+                var data = await res.json();
+                if (data.success) {
+                    if (nameInput) nameInput.value = '';
+                    if (contentInput) contentInput.value = '';
+                    loadComments();
+                } else {
+                    if (errEl) { errEl.textContent = data.error || 'Failed to post comment.'; errEl.style.display = 'block'; }
+                }
+            } catch (err) {
+                if (errEl) { errEl.textContent = 'Failed to post comment. Try again.'; errEl.style.display = 'block'; }
+            }
         }
         
         // Load post on page load

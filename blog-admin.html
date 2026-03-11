@@ -347,6 +347,24 @@
             margin-bottom: 1rem;
         }
         
+        .comment-admin-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        .comment-admin-item .comment-meta {
+            font-size: 0.875rem;
+            color: var(--text-gray);
+            margin-bottom: 0.5rem;
+        }
+        .comment-admin-item .comment-meta strong { color: var(--primary-green); }
+        .comment-admin-item .comment-text { margin-bottom: 0.75rem; line-height: 1.5; }
+        .comment-admin-item .comment-actions { display: flex; justify-content: flex-end; }
+        .comments-by-post { margin-top: 1rem; }
+        .comments-by-post h4 { font-size: 1rem; color: var(--text-gray); margin-bottom: 0.5rem; }
+        
         /* Responsive */
         @media (max-width: 768px) {
             body {
@@ -400,10 +418,16 @@
         <div class="blog-editor" id="blog-editor" style="display: none;">
             <div class="editor-header">
                 <h2 id="editor-title">Create New Blog Post</h2>
-                <button class="btn btn-secondary btn-small" onclick="cancelEdit()">
-                    <i class="fa-solid fa-times"></i>
-                    Cancel
-                </button>
+                <div style="display: flex; gap: 0.75rem; align-items: center;">
+                    <button type="button" class="btn btn-primary btn-small" id="editor-header-save-btn" onclick="document.getElementById('blog-form').requestSubmit()">
+                        <i class="fa-solid fa-save"></i>
+                        <span id="editor-header-save-text">Save Post</span>
+                    </button>
+                    <button class="btn btn-secondary btn-small" onclick="cancelEdit()">
+                        <i class="fa-solid fa-times"></i>
+                        Cancel
+                    </button>
+                </div>
             </div>
             
             <form id="blog-form" onsubmit="saveBlogPost(event)">
@@ -542,6 +566,23 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Comments moderation -->
+        <div class="blog-list" style="margin-top: 2rem;">
+            <div class="blog-list-header">
+                <span><i class="fa-solid fa-comments"></i> Comments</span>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <input type="password" id="blog-admin-key" placeholder="Admin key (BLOG_ADMIN_SECRET)" style="padding: 0.4rem 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-white); font-size: 0.875rem; width: 200px;" title="Set BLOG_ADMIN_SECRET in Supabase Edge Function secrets to protect delete">
+                    <button class="btn btn-primary btn-small" onclick="loadAllComments()">
+                        <i class="fa-solid fa-refresh"></i>
+                        Load comments
+                    </button>
+                </div>
+            </div>
+            <div id="comments-admin-content" style="padding: 1rem;">
+                <p style="color: var(--text-gray);">Click "Load comments" to review visitor comments. Use Admin key if you set BLOG_ADMIN_SECRET in Supabase.</p>
+            </div>
+        </div>
     </div>
     
     <script>
@@ -621,6 +662,8 @@
             document.getElementById('blog-editor').style.display = 'block';
             document.getElementById('editor-title').textContent = 'Create New Blog Post';
             document.getElementById('save-btn-text').textContent = 'Save Post';
+            var headerSaveText = document.getElementById('editor-header-save-text');
+            if (headerSaveText) headerSaveText.textContent = 'Save Post';
             editingSlug = null;
             resetForm();
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -668,6 +711,8 @@
                     
                     document.getElementById('editor-title').textContent = 'Edit Blog Post';
                     document.getElementById('save-btn-text').textContent = 'Update Post';
+                    var headerSaveText = document.getElementById('editor-header-save-text');
+                    if (headerSaveText) headerSaveText.textContent = 'Update Post';
                     document.getElementById('blog-editor').style.display = 'block';
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
@@ -864,6 +909,76 @@
                 document.getElementById('slug').value = slug;
             }
         });
+        
+        // Comments moderation
+        const BLOG_API_BASE = 'https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84';
+        const BLOG_AUTH_HEADER = { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8' };
+        
+        function getAdminHeaders() {
+            var keyEl = document.getElementById('blog-admin-key');
+            var key = (keyEl && keyEl.value) ? keyEl.value.trim() : '';
+            if (!key) try { key = localStorage.getItem('skister_blog_admin_key') || ''; } catch (e) {}
+            var h = { ...BLOG_AUTH_HEADER };
+            if (key) h['X-Admin-Key'] = key;
+            return h;
+        }
+        
+        async function loadAllComments() {
+            var container = document.getElementById('comments-admin-content');
+            var keyEl = document.getElementById('blog-admin-key');
+            if (keyEl && keyEl.value.trim()) try { localStorage.setItem('skister_blog_admin_key', keyEl.value.trim()); } catch (e) {}
+            container.innerHTML = '<div class="loading"><i class="fa-solid fa-spinner"></i><p>Loading comments...</p></div>';
+            try {
+                var res = await fetch(BLOG_API_BASE + '/blog/comments', { headers: getAdminHeaders() });
+                var data = await res.json();
+                if (data.success && Array.isArray(data.comments)) {
+                    if (data.comments.length === 0) {
+                        container.innerHTML = '<p style="color: var(--text-gray);">No comments yet.</p>';
+                    } else {
+                        var bySlug = {};
+                        data.comments.forEach(function(c) {
+                            var s = c.slug || '_';
+                            if (!bySlug[s]) bySlug[s] = [];
+                            bySlug[s].push(c);
+                        });
+                        var html = '';
+                        Object.keys(bySlug).sort().forEach(function(slug) {
+                            html += '<div class="comments-by-post"><h4>Post: ' + slug + '</h4>';
+                            bySlug[slug].forEach(function(c) {
+                                var dateStr = c.createdAt ? new Date(c.createdAt).toLocaleString() : '';
+                                var author = (c.authorName || 'Anonymous').replace(/</g, '&lt;');
+                                var body = (c.content || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+                                html += '<div class="comment-admin-item" data-comment-id="' + (c.id || '') + '"><div class="comment-meta"><strong>' + author + '</strong> · ' + dateStr + '</div><div class="comment-text">' + body + '</div><div class="comment-actions"><button type="button" class="btn btn-danger btn-small" onclick="deleteComment(\'' + (c.id || '').replace(/'/g, "\\'") + '\')"><i class="fa-solid fa-trash"></i> Delete</button></div></div>';
+                            });
+                            html += '</div>';
+                        });
+                        container.innerHTML = html;
+                    }
+                } else {
+                    container.innerHTML = '<p class="error-message">' + (data.error || 'Failed to load comments. Set BLOG_ADMIN_SECRET and use Admin key if required.') + '</p>';
+                }
+            } catch (err) {
+                container.innerHTML = '<p class="error-message">Failed to load comments: ' + err.message + '</p>';
+            }
+        }
+        
+        async function deleteComment(id) {
+            if (!id || !confirm('Delete this comment?')) return;
+            try {
+                var res = await fetch(BLOG_API_BASE + '/blog/comments/' + encodeURIComponent(id), {
+                    method: 'DELETE',
+                    headers: getAdminHeaders()
+                });
+                var data = await res.json();
+                if (data.success) {
+                    loadAllComments();
+                } else {
+                    alert(data.error || 'Failed to delete comment. Try setting Admin key.');
+                }
+            } catch (err) {
+                alert('Failed to delete: ' + err.message);
+            }
+        }
         
         // Load posts on page load
         loadBlogPosts();
