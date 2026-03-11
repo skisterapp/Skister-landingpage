@@ -140,6 +140,8 @@
             height: 200px;
             object-fit: cover;
             background: linear-gradient(135deg, rgba(34, 139, 34, 0.2), rgba(34, 139, 34, 0.1));
+            display: block;
+            vertical-align: top;
         }
         
         .blog-card-content {
@@ -287,9 +289,10 @@
                 });
                 
                 const data = await response.json();
+                const posts = data.posts || (Array.isArray(data) ? data : []);
                 
-                if (data.success && data.posts.length > 0) {
-                    renderBlogPosts(data.posts);
+                if (posts.length > 0) {
+                    renderBlogPosts(posts);
                 } else {
                     blogList.innerHTML = `
                         <div class="empty-state">
@@ -309,19 +312,36 @@
             }
         }
         
+        // Placeholder image when featured image is missing or fails to load (inline SVG)
+        const BLOG_PLACEHOLDER_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 400 200'%3E%3Crect fill='%231a1a1a' width='400' height='200'/%3E%3Cg fill='%23b0b0b0'%3E%3Cpath d='M160 70a30 30 0 1 1 80 0 30 30 0 1 1-80 0zm120 10H120a20 20 0 0 0-20 20v60a20 20 0 0 0 20 20h160a20 20 0 0 0 20-20v-60a20 20 0 0 0-20-20zm-80 60a25 25 0 1 1 0-50 25 25 0 0 1 0 50z'/%3E%3C/g%3E%3Ctext x='200' y='165' fill='%23666' font-family='sans-serif' font-size='14' text-anchor='middle'%3ENo image%3C/text%3E%3C/svg%3E";
+        window.__blogPlaceholder = BLOG_PLACEHOLDER_IMAGE;
+
+        // Ensure image URL is absolute (fix relative URLs from API)
+        function resolveImageUrl(url) {
+            if (!url || typeof url !== 'string') return null;
+            const trimmed = url.trim();
+            if (!trimmed) return null;
+            if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed;
+            if (trimmed.startsWith('//')) return 'https:' + trimmed;
+            return null;
+        }
+
         // Render blog posts
         function renderBlogPosts(posts) {
             const blogList = document.getElementById('blog-list');
             
             blogList.innerHTML = `
                 <div class="blog-grid">
-                    ${posts.map(post => `
+                    ${posts.map(post => {
+                        const imgUrl = resolveImageUrl(post.featuredImage);
+                        const safeTitle = (post.title || '').replace(/"/g, '&quot;');
+                        return `
                         <a href="blog-post.html?slug=${post.slug}" class="blog-card">
-                            ${post.featuredImage ? `
-                                <img src="${post.featuredImage}" alt="${post.title}" class="blog-card-image">
-                            ` : `
-                                <div class="blog-card-image"></div>
-                            `}
+                            <img src="${imgUrl || BLOG_PLACEHOLDER_IMAGE}" 
+                                 alt="${safeTitle}" 
+                                 class="blog-card-image"
+                                 loading="lazy"
+                                 onerror="this.onerror=null;this.src=window.__blogPlaceholder||'';">
                             <div class="blog-card-content">
                                 <div class="blog-card-meta">
                                     <span>
@@ -341,7 +361,7 @@
                                 </span>
                             </div>
                         </a>
-                    `).join('')}
+                    `; }).join('')}
                 </div>
             `;
         }
