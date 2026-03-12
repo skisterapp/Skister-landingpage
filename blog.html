@@ -7,6 +7,8 @@
     <meta name="description" content="Read the latest updates, tips, and stories from the Skister community.">
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="apple-touch-icon" href="assets/favicon.png">
+    <link rel="preconnect" href="https://ayomhapkzckbhgwxenwr.supabase.co" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -455,12 +457,14 @@
                         const firstContentUrl = getFirstImageFromContent(post.content);
                         const imgUrl = featuredUrl || resolveImageUrl(firstContentUrl);
                         const safeTitle = (post.title || '').replace(/"/g, '&quot;');
+                        var isFirst = posts.indexOf(post) === 0;
                         return `
                         <a href="blog-post.html?slug=${post.slug}" class="blog-card">
                             <img src="${imgUrl || BLOG_PLACEHOLDER_IMAGE}" 
                                  alt="${safeTitle}" 
                                  class="blog-card-image"
-                                 loading="lazy"
+                                 loading="${isFirst ? 'eager' : 'lazy'}"
+                                 ${isFirst ? 'fetchpriority="high"' : ''}
                                  onerror="this.onerror=null;this.src=window.__blogPlaceholder||'';">
                             <div class="blog-card-content">
                                 <div class="blog-card-meta">

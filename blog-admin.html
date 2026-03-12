@@ -456,6 +456,7 @@
         .history-item .date { color: var(--text-gray); font-size: 0.9rem; }
         .history-item .revert-btn { flex-shrink: 0; }
         .history-empty { color: var(--text-gray); padding: 1rem; }
+        .featured-image-preview img[src=""] { display: none; }
         
         /* Responsive */
         @media (max-width: 768px) {
@@ -540,12 +541,16 @@
         <div class="blog-editor" id="blog-editor" style="display: none;">
             <div class="editor-header">
                 <h2 id="editor-title">Create New Blog Post</h2>
-                <div style="display: flex; gap: 0.75rem; align-items: center;">
+                <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+                    <button type="button" class="btn btn-secondary btn-small" onclick="backToBlogList()" aria-label="Back to blog list">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back to blog list
+                    </button>
                     <button type="button" class="btn btn-primary btn-small" id="editor-header-save-btn" onclick="document.getElementById('blog-form').requestSubmit()">
                         <i class="fa-solid fa-save"></i>
                         <span id="editor-header-save-text">Save Post</span>
                     </button>
-                    <button class="btn btn-secondary btn-small" onclick="cancelEdit()">
+                    <button type="button" class="btn btn-secondary btn-small" onclick="cancelEdit()">
                         <i class="fa-solid fa-times"></i>
                         Cancel
                     </button>
@@ -572,7 +577,11 @@
                     </div>
                     <div class="form-group">
                         <label for="featured-image">Featured Image URL</label>
-                        <input type="url" id="featured-image" placeholder="https://example.com/image.jpg">
+                        <input type="url" id="featured-image" placeholder="https://example.com/image.jpg" aria-label="Featured image URL">
+                        <div id="featured-image-preview" class="featured-image-preview" style="margin-top: 0.75rem; display: none;">
+                            <span style="color: var(--text-gray); font-size: 0.875rem;">Preview:</span>
+                            <img id="featured-image-preview-img" src="" alt="Featured image preview" style="max-width: 100%; max-height: 200px; border-radius: 8px; margin-top: 0.5rem; border: 1px solid var(--border-color);" onerror="this.style.display='none';">
+                        </div>
                     </div>
                 </div>
                 
@@ -728,7 +737,26 @@
         let editingSlug = null;
         const BLOG_API = 'https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84';
         const BLOG_HEADERS = { 'Content-Type': 'application/json', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8' };
-        
+        const BLOG_STORAGE_BASE = 'https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/make-080ebf84-blog-images';
+        const BLOG_PLACEHOLDER_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' viewBox='0 0 120 80'%3E%3Crect fill='%231a1a1a' width='120' height='80'/%3E%3Ctext x='60' y='45' fill='%23666' font-size='10' text-anchor='middle'%3ENo image%3C/text%3E%3C/svg%3E";
+
+        function resolveImageUrl(url) {
+            if (!url || typeof url !== 'string') return null;
+            var trimmed = url.trim();
+            if (!trimmed) return null;
+            if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed;
+            if (trimmed.startsWith('//')) return 'https:' + trimmed;
+            var path = trimmed.replace(/^\/+/, '');
+            if (path) return BLOG_STORAGE_BASE + '/' + path.replace(/^make-080ebf84-blog-images\/?/, '');
+            return null;
+        }
+
+        function backToBlogList() {
+            cancelEdit();
+            var listEl = document.querySelector('.blog-list');
+            if (listEl) listEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
         // Load blog posts
         async function loadBlogPosts() {
             const container = document.getElementById('blog-list-content');
@@ -774,18 +802,18 @@
             }
             
             container.innerHTML = allPosts.map(post => {
-                // Extract preview text from content
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = post.content;
                 const previewText = tempDiv.textContent.substring(0, 150) + '...' || 'No preview available';
-                
+                const thumbUrl = resolveImageUrl(post.featuredImage) || post.featuredImage;
+                const safeTitle = (post.title || '').replace(/"/g, '&quot;');
+                const thumbHtml = thumbUrl
+                    ? '<img src="' + thumbUrl + '" alt="' + safeTitle + '" class="blog-list-thumbnail" loading="lazy" onerror="this.onerror=null;this.src=\'' + BLOG_PLACEHOLDER_IMAGE + '\'">'
+                    : '<div class="blog-list-thumbnail placeholder"><i class="fa-solid fa-image"></i></div>';
                 return `
                 <div class="blog-list-item">
                     <div class="blog-list-item-content">
-                        ${post.featuredImage ? 
-                            `<img src="${post.featuredImage}" alt="${post.title}" class="blog-list-thumbnail">` :
-                            `<div class="blog-list-thumbnail placeholder"><i class="fa-solid fa-image"></i></div>`
-                        }
+                        ${thumbHtml}
                         <div class="blog-list-info">
                             <div>
                                 <h3>${post.title}</h3>
@@ -874,7 +902,7 @@
                     document.getElementById('robots').value = post.robots || '';
                     document.getElementById('max-image-preview').value = post.maxImagePreview || 'large';
                     document.getElementById('content-editor').innerHTML = post.content;
-                    
+                    document.getElementById('featured-image').dispatchEvent(new Event('input'));
                     document.getElementById('editor-title').textContent = 'Edit Blog Post';
                     document.getElementById('save-btn-text').textContent = 'Update Post';
                     var headerSaveText = document.getElementById('editor-header-save-text');
@@ -1165,6 +1193,28 @@
                     .replace(/^-|-$/g, '');
                 document.getElementById('slug').value = slug;
             }
+        });
+
+        // Featured image preview in editor
+        document.getElementById('featured-image').addEventListener('input', function () {
+            var url = (this.value || '').trim();
+            var previewWrap = document.getElementById('featured-image-preview');
+            var previewImg = document.getElementById('featured-image-preview-img');
+            if (!url) {
+                previewWrap.style.display = 'none';
+                if (previewImg) previewImg.src = '';
+                return;
+            }
+            var resolved = resolveImageUrl(url) || url;
+            previewWrap.style.display = 'block';
+            if (previewImg) {
+                previewImg.src = resolved;
+                previewImg.style.display = '';
+                previewImg.onerror = function () { this.style.display = 'none'; };
+            }
+        });
+        document.getElementById('featured-image').addEventListener('change', function () {
+            this.dispatchEvent(new Event('input'));
         });
         
         // Comments moderation

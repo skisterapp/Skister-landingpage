@@ -35,6 +35,8 @@
     
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="apple-touch-icon" href="assets/favicon.png">
+    <link rel="preconnect" href="https://ayomhapkzckbhgwxenwr.supabase.co" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -730,9 +732,11 @@
                     <img src="${imgUrl || BLOG_PLACEHOLDER_IMAGE}" 
                          alt="${safeTitle}" 
                          class="featured-image"
+                         decoding="async"
+                         fetchpriority="high"
                          onerror="this.onerror=null;this.src=window.__blogPlaceholder||'';">
                     
-                    <div class="article-content">
+                    <div class="article-content" id="article-content">
                         ${post.content}
                     </div>
                     
@@ -758,7 +762,20 @@
                     </div>
                 </article>
             `;
+            resolveContentImages();
             afterPostRendered();
+        }
+
+        function resolveContentImages() {
+            var articleContent = document.getElementById('article-content');
+            if (!articleContent) return;
+            var imgs = articleContent.querySelectorAll('img[src]');
+            imgs.forEach(function (img) {
+                var src = img.getAttribute('src');
+                if (!src || src.startsWith('data:') || src.startsWith('http://') || src.startsWith('https://')) return;
+                var resolved = resolveImageUrl(src);
+                if (resolved) img.src = resolved;
+            });
         }
         
         // Update meta tags for SEO
@@ -782,15 +799,16 @@
             document.getElementById('og-title').content = post.metaTitle || post.title;
             document.getElementById('og-description').content = post.metaDescription || '';
             document.getElementById('og-site-name').content = post.ogSiteName || 'Skister Blog';
-            if (post.featuredImage) {
-                document.getElementById('og-image').content = post.featuredImage;
+            var resolvedImage = resolveImageUrl(post.featuredImage) || post.featuredImage;
+            if (resolvedImage) {
+                document.getElementById('og-image').content = resolvedImage;
             }
-            
+
             // Twitter
             document.getElementById('twitter-title').content = post.metaTitle || post.title;
             document.getElementById('twitter-description').content = post.metaDescription || '';
-            if (post.featuredImage) {
-                document.getElementById('twitter-image').content = post.featuredImage;
+            if (resolvedImage) {
+                document.getElementById('twitter-image').content = resolvedImage;
             }
             
             // Article published time
