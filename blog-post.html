@@ -729,12 +729,7 @@
                         </div>
                     </div>
                     
-                    <img src="${imgUrl || BLOG_PLACEHOLDER_IMAGE}" 
-                         alt="${safeTitle}" 
-                         class="featured-image"
-                         decoding="async"
-                         fetchpriority="high"
-                         onerror="this.onerror=null;this.src=window.__blogPlaceholder||'';">
+                    ${imgUrl ? `<img src="${imgUrl}" alt="${safeTitle}" class="featured-image" decoding="async" fetchpriority="high" onerror="this.style.display=\'none\'">` : ''}
                     
                     <div class="article-content" id="article-content">
                         ${post.content}
