@@ -107,6 +107,26 @@
         .image-upload input[type="text"] { flex: 1; min-width: 200px; }
         .image-preview { max-width: 120px; max-height: 120px; border-radius: 8px; border: 1px solid var(--border-color); margin-top: 0.5rem; }
         input[type="file"] { display: none; }
+        .links-ref { display: flex; flex-direction: column; gap: 0.5rem; }
+        .link-row { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); }
+        .link-row:last-child { border-bottom: none; }
+        .link-label { color: var(--text-gray); min-width: 140px; }
+        .link-url { background: rgba(255,255,255,0.05); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem; color: var(--primary-green); }
+        .section-tab-nav { display: flex; gap: 0; flex-wrap: wrap; border-bottom: 2px solid var(--border-color); margin-bottom: 1.5rem; }
+        .section-tab-btn {
+            padding: 0.75rem 1rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--text-gray);
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        .section-tab-btn:hover { color: var(--text-white); }
+        .section-tab-btn.active { color: var(--primary-green); border-bottom-color: var(--primary-green); }
+        .section-tab-content { display: none; }
+        .section-tab-content.active { display: block; }
     </style>
 </head>
 <body>
@@ -136,38 +156,59 @@
                 </div>
             </div>
             <div id="message" class="message"></div>
-            <div class="section-card">
-                <h2><i class="fa-solid fa-image"></i> Images</h2>
-                <div class="field-row">
-                    <label>Hero mascot image URL</label>
-                    <div class="image-upload">
-                        <input type="text" id="img-heroMascot" placeholder="https://...">
-                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('file-heroMascot').click()">Upload</button>
-                        <input type="file" id="file-heroMascot" accept="image/*" onchange="handleImageUpload('heroMascot', this)">
+            <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 0.5rem;">Select a language and section to edit. Save to publish.</p>
+            <p style="margin-bottom: 1rem;">
+                <button type="button" class="btn btn-secondary" id="auto-translate-btn" onclick="autoTranslate()" title="Fill other languages from current tab using machine translation">
+                    <i class="fa-solid fa-language"></i> Auto-translate from <span id="auto-translate-lang">Deutsch</span>
+                </button>
+            </p>
+            <div class="tabs" id="lang-tabs"></div>
+            <div class="section-tab-nav" id="section-tab-nav"></div>
+            <div id="tab-content-links" class="section-tab-content active">
+                <div class="section-card">
+                    <h2><i class="fa-solid fa-link"></i> Links used on the site</h2>
+                    <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 1rem;">Reference for pages and CMS. Use these in your content or share with your team.</p>
+                    <div class="links-ref">
+                        <div class="link-row"><span class="link-label">Landing page</span><code class="link-url">index.html</code></div>
+                        <div class="link-row"><span class="link-label">Blog</span><code class="link-url">blog.html</code></div>
+                        <div class="link-row"><span class="link-label">Edit landing (this CMS)</span><code class="link-url">landing-admin.html</code></div>
+                        <div class="link-row"><span class="link-label">Manage blog</span><code class="link-url">blog-admin.html</code></div>
+                        <div class="link-row"><span class="link-label">Admin dashboard</span><code class="link-url">admin.html</code></div>
                     </div>
-                    <img id="preview-heroMascot" class="image-preview" alt="" style="display:none">
-                </div>
-                <div class="field-row">
-                    <label>OG / Social share image URL</label>
-                    <div class="image-upload">
-                        <input type="text" id="img-ogImage" placeholder="https://...">
-                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('file-ogImage').click()">Upload</button>
-                        <input type="file" id="file-ogImage" accept="image/*" onchange="handleImageUpload('ogImage', this)">
-                    </div>
-                    <img id="preview-ogImage" class="image-preview" alt="" style="display:none">
                 </div>
             </div>
-            <div class="section-card">
-                <h2><i class="fa-solid fa-language"></i> Text content by language</h2>
-                <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 1rem;">Select a language and edit the text. Save to publish.</p>
-                <p style="margin-bottom: 1rem;">
-                    <button type="button" class="btn btn-secondary" id="auto-translate-btn" onclick="autoTranslate()" title="Fill other languages from current tab using machine translation">
-                        <i class="fa-solid fa-language"></i> Auto-translate from <span id="auto-translate-lang">Deutsch</span>
-                    </button>
-                </p>
-                <div class="tabs" id="lang-tabs"></div>
-                <div id="translations-fields"></div>
+            <div id="tab-content-images" class="section-tab-content">
+                <div class="section-card">
+                    <h2><i class="fa-solid fa-image"></i> Images</h2>
+                    <div class="field-row">
+                        <label>Hero mascot image URL</label>
+                        <div class="image-upload">
+                            <input type="text" id="img-heroMascot" placeholder="https://...">
+                            <button type="button" class="btn btn-secondary" onclick="document.getElementById('file-heroMascot').click()">Upload</button>
+                            <input type="file" id="file-heroMascot" accept="image/*" onchange="handleImageUpload('heroMascot', this)">
+                        </div>
+                        <img id="preview-heroMascot" class="image-preview" alt="" style="display:none">
+                    </div>
+                    <div class="field-row">
+                        <label>OG / Social share image URL</label>
+                        <div class="image-upload">
+                            <input type="text" id="img-ogImage" placeholder="https://...">
+                            <button type="button" class="btn btn-secondary" onclick="document.getElementById('file-ogImage').click()">Upload</button>
+                            <input type="file" id="file-ogImage" accept="image/*" onchange="handleImageUpload('ogImage', this)">
+                        </div>
+                        <img id="preview-ogImage" class="image-preview" alt="" style="display:none">
+                    </div>
+                </div>
             </div>
+            <div id="tab-content-nav" class="section-tab-content"><div id="section-fields-nav" class="section-card"></div></div>
+            <div id="tab-content-hero" class="section-tab-content"><div id="section-fields-hero" class="section-card"></div></div>
+            <div id="tab-content-messages" class="section-tab-content"><div id="section-fields-messages" class="section-card"></div></div>
+            <div id="tab-content-features" class="section-tab-content"><div id="section-fields-features" class="section-card"></div></div>
+            <div id="tab-content-platform" class="section-tab-content"><div id="section-fields-platform" class="section-card"></div></div>
+            <div id="tab-content-faq" class="section-tab-content"><div id="section-fields-faq" class="section-card"></div></div>
+            <div id="tab-content-disclaimer" class="section-tab-content"><div id="section-fields-disclaimer" class="section-card"></div></div>
+            <div id="tab-content-footer" class="section-tab-content"><div id="section-fields-footer" class="section-card"></div></div>
+            <div id="tab-content-modal" class="section-tab-content"><div id="section-fields-modal" class="section-card"></div></div>
         </div>
     </div>
 
@@ -186,6 +227,10 @@
             { id: 'footer', title: 'Footer' },
             { id: 'modal', title: 'Modals' }
         ];
+        const SECTION_TABS = [
+            { id: 'links', title: 'Links' },
+            { id: 'images', title: 'Images' }
+        ].concat(SECTIONS);
         const ALL_KEYS = [
             'nav.features','nav.faq','nav.blog','nav.contact',
             'hero.title','hero.tagline','hero.subtitle','hero.emailPlaceholder','hero.submitBtn','hero.waitlistInfo',
@@ -203,6 +248,7 @@
 
         let content = { translations: {}, images: {} };
         let currentLang = 'de';
+        let currentSectionTab = 'links';
 
         function getSection(key) {
             const parts = key.split('.');
@@ -227,8 +273,10 @@
                     document.getElementById('login-page').style.display = 'none';
                     document.getElementById('editor').classList.add('show');
                     loadContent();
+                    renderSectionTabs();
                     renderLangTabs();
                     renderFields();
+                    initSectionTabFromHash();
                 } else {
                     errEl.classList.add('show');
                 }
@@ -242,8 +290,31 @@
                 document.getElementById('login-page').style.display = 'none';
                 document.getElementById('editor').classList.add('show');
                 loadContent();
+                renderSectionTabs();
                 renderLangTabs();
                 renderFields();
+                initSectionTabFromHash();
+            }
+        }
+
+        function renderSectionTabs() {
+            var container = document.getElementById('section-tab-nav');
+            if (!container) return;
+            var html = SECTION_TABS.map(function (t) {
+                var active = t.id === currentSectionTab ? ' active' : '';
+                return '<button type="button" class="section-tab-btn' + active + '" id="section-tab-' + t.id + '" onclick="switchSectionTab(\'' + t.id + '\')">' + t.title + '</button>';
+            }).join('');
+            container.innerHTML = html;
+        }
+
+        function initSectionTabFromHash() {
+            var hash = (location.hash || '').replace(/^#/, '');
+            var valid = SECTION_TABS.some(function (t) { return t.id === hash; });
+            if (valid) {
+                currentSectionTab = hash;
+                switchSectionTab(hash);
+            } else {
+                switchSectionTab('links');
             }
         }
 
@@ -293,6 +364,18 @@
             renderFields();
         }
 
+        function switchSectionTab(sectionId) {
+            currentSectionTab = sectionId;
+            document.querySelectorAll('.section-tab-btn').forEach(function (b) { b.classList.remove('active'); });
+            document.querySelectorAll('.section-tab-content').forEach(function (c) { c.classList.remove('active'); });
+            var btn = document.getElementById('section-tab-' + sectionId);
+            var content = document.getElementById('tab-content-' + sectionId);
+            if (btn) btn.classList.add('active');
+            if (content) content.classList.add('active');
+            var hash = sectionId === 'links' ? '' : sectionId;
+            if (location.hash !== '#' + hash) location.hash = hash ? '#' + hash : '#';
+        }
+
         function fillFieldValues() {
             ALL_KEYS.forEach(key => {
                 const id = `key-${currentLang}-${key.replace(/\./g, '-')}`;
@@ -302,28 +385,28 @@
         }
 
         function renderFields() {
-            const bySection = {};
-            ALL_KEYS.forEach(key => {
-                const section = getSection(key);
+            var bySection = {};
+            ALL_KEYS.forEach(function (key) {
+                var section = getSection(key);
                 if (!bySection[section]) bySection[section] = [];
                 bySection[section].push(key);
             });
-            let html = '';
-            SECTIONS.forEach(sec => {
-                const keys = bySection[sec.id];
+            SECTIONS.forEach(function (sec) {
+                var keys = bySection[sec.id];
                 if (!keys || keys.length === 0) return;
-                html += `<div class="section-card"><h2>${sec.title}</h2>`;
-                keys.forEach(key => {
-                    const id = `key-${currentLang}-${key.replace(/\./g, '-')}`;
-                    const isLong = key.startsWith('faq.a') || key.startsWith('modal.') || key === 'disclaimer.text' || key.includes('description') || key.includes('Text') || key.includes('intro') || key.includes('email');
-                    html += `<div class="field-row">
-                        <label><span class="key-name">${key}</span></label>
-                        ${isLong ? `<textarea id="${id}" data-key="${key}"></textarea>` : `<input type="text" id="${id}" data-key="${key}">`}
-                    </div>`;
+                var container = document.getElementById('section-fields-' + sec.id);
+                if (!container) return;
+                var html = '<h2>' + sec.title + '</h2>';
+                keys.forEach(function (key) {
+                    var id = 'key-' + currentLang + '-' + key.replace(/\./g, '-');
+                    var isLong = key.indexOf('faq.a') === 0 || key.indexOf('modal.') === 0 || key === 'disclaimer.text' || key.indexOf('description') !== -1 || key.indexOf('Text') !== -1 || key.indexOf('intro') !== -1 || key.indexOf('email') !== -1;
+                    html += '<div class="field-row">';
+                    html += '<label><span class="key-name">' + key + '</span></label>';
+                    html += isLong ? '<textarea id="' + id + '" data-key="' + key + '"></textarea>' : '<input type="text" id="' + id + '" data-key="' + key + '">';
+                    html += '</div>';
                 });
-                html += '</div>';
+                container.innerHTML = html;
             });
-            document.getElementById('translations-fields').innerHTML = html;
             fillFieldValues();
         }
 
@@ -335,8 +418,13 @@
             if (mascot) { p1.src = mascot; p1.style.display = 'block'; } else { p1.style.display = 'none'; }
             if (og) { p2.src = og; p2.style.display = 'block'; } else { p2.style.display = 'none'; }
         }
-        document.getElementById('img-heroMascot').addEventListener('input', toggleImagePreviews);
-        document.getElementById('img-ogImage').addEventListener('input', toggleImagePreviews);
+        function attachImagePreviewListeners() {
+            var mascot = document.getElementById('img-heroMascot');
+            var og = document.getElementById('img-ogImage');
+            if (mascot) mascot.addEventListener('input', toggleImagePreviews);
+            if (og) og.addEventListener('input', toggleImagePreviews);
+        }
+        attachImagePreviewListeners();
 
         function handleImageUpload(field, input) {
             const file = input.files && input.files[0];
@@ -437,6 +525,15 @@
         }
 
         window.addEventListener('DOMContentLoaded', checkAuth);
+        window.addEventListener('hashchange', function () {
+            if (document.getElementById('editor') && document.getElementById('editor').classList.contains('show')) {
+                var hash = (location.hash || '').replace(/^#/, '');
+                if (SECTION_TABS.some(function (t) { return t.id === hash; })) {
+                    currentSectionTab = hash;
+                    switchSectionTab(hash);
+                }
+            }
+        });
     </script>
 </body>
 </html>

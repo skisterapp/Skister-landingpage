@@ -1,0 +1,9 @@
+node_modules
+android/
+ios/
+.cursor/
+supabase/
+dist/
+*.apk
+.gradle/
+.DS_Store

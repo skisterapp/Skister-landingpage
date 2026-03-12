@@ -442,6 +442,11 @@
             color: #ff6b6b;
             font-size: 0.9rem;
         }
+        .comment-form .comment-success-msg {
+            color: var(--primary-green);
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
         .comments-list {
             display: flex;
             flex-direction: column;
@@ -533,6 +538,42 @@
             .nav-links {
                 gap: 1rem;
                 font-size: 0.9rem;
+            }
+        }
+        /* Comment success toast */
+        .comment-toast-container {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .comment-toast {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--primary-green);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            color: var(--text-white);
+            font-size: 1rem;
+            animation: commentToastIn 0.3s ease-out;
+        }
+        .comment-toast i {
+            color: var(--primary-green);
+            font-size: 1.25rem;
+        }
+        @keyframes commentToastIn {
+            from {
+                opacity: 0;
+                transform: translateY(1rem);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
@@ -706,6 +747,7 @@
                             <input type="text" id="comment-name" placeholder="Your name" required maxlength="100" aria-label="Your name">
                             <textarea id="comment-content" placeholder="Write a comment..." required maxlength="2000" aria-label="Your comment"></textarea>
                             <p class="comment-error" id="comment-error" style="display: none;"></p>
+                            <p class="comment-success-msg" id="comment-success-msg" style="display: none;"></p>
                             <button type="submit" class="btn-submit">Post comment</button>
                         </form>
                         <div class="comments-list" id="comments-list">
@@ -892,6 +934,13 @@
                 if (data.success) {
                     if (nameInput) nameInput.value = '';
                     if (contentInput) contentInput.value = '';
+                    var successMsg = document.getElementById('comment-success-msg');
+                    if (successMsg) {
+                        successMsg.textContent = 'Thank you! Your comment will appear after it\'s approved.';
+                        successMsg.style.display = 'block';
+                        setTimeout(function () { successMsg.style.display = 'none'; }, 6000);
+                    }
+                    showCommentToast('Thank you for posting your comment!');
                     loadComments();
                 } else {
                     if (errEl) { errEl.textContent = data.error || 'Failed to post comment.'; errEl.style.display = 'block'; }
@@ -932,7 +981,22 @@
             setBlogLang(blogLang);
         });
 
+        var commentToastTimeout = null;
+        function showCommentToast(message) {
+            var container = document.getElementById('comment-toast-container');
+            if (!container) return;
+            if (commentToastTimeout) clearTimeout(commentToastTimeout);
+            container.innerHTML = '<div class="comment-toast" role="alert"><i class="fa-solid fa-check-circle"></i><span>' + (message || 'Thank you for posting your comment!').replace(/</g, '&lt;') + '</span></div>';
+            container.style.display = 'block';
+            commentToastTimeout = setTimeout(function () {
+                container.innerHTML = '';
+                container.style.display = 'none';
+                commentToastTimeout = null;
+            }, 4000);
+        }
+
         loadBlogPost();
     </script>
+    <div id="comment-toast-container" class="comment-toast-container" role="status" aria-live="polite" style="display: none;"></div>
 </body>
 </html>

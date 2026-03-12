@@ -647,7 +647,6 @@
             <div class="blog-list-header">
                 <span><i class="fa-solid fa-comments"></i> Comments</span>
                 <div style="display: flex; align-items: center; gap: 0.75rem;">
-                    <input type="password" id="blog-admin-key" placeholder="Admin key (BLOG_ADMIN_SECRET)" style="padding: 0.4rem 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-white); font-size: 0.875rem; width: 200px;" title="Set BLOG_ADMIN_SECRET in Supabase Edge Function secrets to protect delete">
                     <button class="btn btn-primary btn-small" onclick="loadAllComments()">
                         <i class="fa-solid fa-refresh"></i>
                         Load comments
@@ -655,7 +654,7 @@
                 </div>
             </div>
             <div id="comments-admin-content" style="padding: 1rem;">
-                <p style="color: var(--text-gray);">Click "Load comments" to review visitor comments. Use Admin key if you set BLOG_ADMIN_SECRET in Supabase.</p>
+                <p style="color: var(--text-gray);">Click "Load comments" to review visitor comments. Uses the same admin password as admin.html (log in there first if needed).</p>
             </div>
         </div>
     </div>
@@ -818,10 +817,15 @@
                     if (headerSaveText) headerSaveText.textContent = 'Update Post';
                     document.getElementById('blog-editor').style.display = 'block';
                     var hs = document.getElementById('history-section');
-                    if (hs) hs.style.display = 'block';
+                    if (hs) { hs.style.display = 'block'; hs.style.visibility = 'visible'; }
                     document.getElementById('history-list').style.display = 'none';
                     document.getElementById('history-empty').style.display = 'block';
+                    document.getElementById('history-empty').textContent = 'Loading history...';
                     window.scrollTo({ top: 0, behavior: 'smooth' });
+                    loadPostHistory().then(function () {
+                        var el = document.getElementById('history-section');
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    });
                 }
             } catch (error) {
                 showMessage('Failed to load post for editing', 'error');
@@ -845,10 +849,16 @@
                         return '<li class="history-item"><span class="date">' + formatHistoryDate(v.savedAt) + '</span><button type="button" class="btn btn-secondary btn-small revert-btn" onclick="revertToVersion(' + v.id + ')"><i class="fa-solid fa-rotate-left"></i> Revert to this</button></li>';
                     }).join('');
                     listEl.style.display = data.history.length ? 'block' : 'none';
-                    if (emptyEl) emptyEl.style.display = data.history.length ? 'none' : 'block';
-                    if (data.history.length && emptyEl) emptyEl.textContent = 'No previous versions.';
-                } else { if (emptyEl) emptyEl.textContent = data.error || 'Could not load history.'; }
-            } catch (e) { if (emptyEl) emptyEl.textContent = 'Failed to load history.'; }
+                    if (emptyEl) {
+                        emptyEl.style.display = data.history.length ? 'none' : 'block';
+                        emptyEl.textContent = data.history.length ? '' : 'No previous versions. History is saved each time you update this post.';
+                    }
+                } else {
+                    if (emptyEl) { emptyEl.style.display = 'block'; emptyEl.textContent = data.error || 'Could not load history.'; }
+                }
+            } catch (e) {
+                if (emptyEl) { emptyEl.style.display = 'block'; emptyEl.textContent = 'Failed to load history. Check connection and try again.'; }
+            }
             if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-refresh"></i> Load history'; }
         }
         async function revertToVersion(versionId) {
@@ -1098,18 +1108,15 @@
         const BLOG_AUTH_HEADER = { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8' };
         
         function getAdminHeaders() {
-            var keyEl = document.getElementById('blog-admin-key');
-            var key = (keyEl && keyEl.value) ? keyEl.value.trim() : '';
-            if (!key) try { key = localStorage.getItem('skister_blog_admin_key') || ''; } catch (e) {}
+            var pwd = '';
+            try { pwd = sessionStorage.getItem('landingAdminPassword') || ''; } catch (e) {}
             var h = { ...BLOG_AUTH_HEADER };
-            if (key) h['X-Admin-Key'] = key;
+            if (pwd) h['X-Admin-Password'] = pwd;
             return h;
         }
         
         async function loadAllComments() {
             var container = document.getElementById('comments-admin-content');
-            var keyEl = document.getElementById('blog-admin-key');
-            if (keyEl && keyEl.value.trim()) try { localStorage.setItem('skister_blog_admin_key', keyEl.value.trim()); } catch (e) {}
             container.innerHTML = '<div class="loading"><i class="fa-solid fa-spinner"></i><p>Loading comments...</p></div>';
             try {
                 var res = await fetch(BLOG_API_BASE + '/blog/comments', { headers: getAdminHeaders() });
@@ -1131,17 +1138,35 @@
                                 var dateStr = c.createdAt ? new Date(c.createdAt).toLocaleString() : '';
                                 var author = (c.authorName || 'Anonymous').replace(/</g, '&lt;');
                                 var body = (c.content || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
-                                html += '<div class="comment-admin-item" data-comment-id="' + (c.id || '') + '"><div class="comment-meta"><strong>' + author + '</strong> · ' + dateStr + '</div><div class="comment-text">' + body + '</div><div class="comment-actions"><button type="button" class="btn btn-danger btn-small" onclick="deleteComment(\'' + (c.id || '').replace(/'/g, "\\'") + '\')"><i class="fa-solid fa-trash"></i> Delete</button></div></div>';
+                                var status = c.status || 'pending';
+                                var statusLabel = status === 'approved' ? 'Published' : status === 'rejected' ? 'Rejected' : 'Pending';
+                                html += '<div class="comment-admin-item" data-comment-id="' + (c.id || '') + '"><div class="comment-meta"><strong>' + author + '</strong> · ' + dateStr + ' · ' + statusLabel + '</div><div class="comment-text">' + body + '</div><div class="comment-actions"><button type="button" class="btn btn-primary btn-small" onclick="setCommentStatus(\'' + (c.id || '').replace(/'/g, "\\'") + '\', \'approved\')"><i class="fa-solid fa-check"></i> Publish</button><button type="button" class="btn btn-secondary btn-small" onclick="setCommentStatus(\'' + (c.id || '').replace(/'/g, "\\'") + '\', \'rejected\')"><i class="fa-solid fa-times"></i> Reject</button><button type="button" class="btn btn-danger btn-small" onclick="deleteComment(\'' + (c.id || '').replace(/'/g, "\\'") + '\')"><i class="fa-solid fa-trash"></i> Delete</button></div></div>';
                             });
                             html += '</div>';
                         });
                         container.innerHTML = html;
                     }
                 } else {
-                    container.innerHTML = '<p class="error-message">' + (data.error || 'Failed to load comments. Set BLOG_ADMIN_SECRET and use Admin key if required.') + '</p>';
+                    container.innerHTML = '<p class="error-message">' + (data.error || 'Failed to load comments. Log in at admin.html first with your admin password.') + '</p>';
                 }
             } catch (err) {
                 container.innerHTML = '<p class="error-message">Failed to load comments: ' + err.message + '</p>';
+            }
+        }
+        
+        async function setCommentStatus(id, status) {
+            if (!id || (status !== 'approved' && status !== 'rejected')) return;
+            try {
+                var res = await fetch(BLOG_API_BASE + '/blog/comments/' + encodeURIComponent(id), {
+                    method: 'PATCH',
+                    headers: getAdminHeaders(),
+                    body: JSON.stringify({ status: status })
+                });
+                var data = await res.json();
+                if (data.success) loadAllComments();
+                else alert(data.error || 'Failed to update comment.');
+            } catch (err) {
+                alert('Failed to update: ' + err.message);
             }
         }
         
@@ -1153,11 +1178,8 @@
                     headers: getAdminHeaders()
                 });
                 var data = await res.json();
-                if (data.success) {
-                    loadAllComments();
-                } else {
-                    alert(data.error || 'Failed to delete comment. Try setting Admin key.');
-                }
+                if (data.success) loadAllComments();
+                else alert(data.error || 'Failed to delete comment. Log in at admin.html first.');
             } catch (err) {
                 alert('Failed to delete: ' + err.message);
             }
