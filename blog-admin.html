@@ -421,6 +421,16 @@
         .comments-by-post { margin-top: 1rem; }
         .comments-by-post h4 { font-size: 1rem; color: var(--text-gray); margin-bottom: 0.5rem; }
         
+        .history-section { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+        .history-section h3 { color: var(--primary-green); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .history-section p.sub { color: var(--text-gray); font-size: 0.9rem; margin-bottom: 1rem; }
+        .history-load-btn { margin-bottom: 1rem; }
+        .history-list { list-style: none; }
+        .history-item { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.75rem 1rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 0.5rem; }
+        .history-item .date { color: var(--text-gray); font-size: 0.9rem; }
+        .history-item .revert-btn { flex-shrink: 0; }
+        .history-empty { color: var(--text-gray); padding: 1rem; }
+        
         /* Responsive */
         @media (max-width: 768px) {
             body {
@@ -603,6 +613,15 @@
                         Cancel
                     </button>
                 </div>
+                <div class="history-section" id="history-section" style="display: none;">
+                    <h3><i class="fa-solid fa-clock-rotate-left"></i> History</h3>
+                    <p class="sub">Revert to a previous version. History is saved each time you update.</p>
+                    <button type="button" class="btn btn-secondary btn-small history-load-btn" id="history-load-btn" onclick="loadPostHistory()"><i class="fa-solid fa-refresh"></i> Load history</button>
+                    <div id="history-list-container">
+                        <p class="history-empty" id="history-empty">Click "Load history" to see previous versions.</p>
+                        <ul class="history-list" id="history-list" style="display: none;"></ul>
+                    </div>
+                </div>
             </form>
         </div>
         
@@ -644,6 +663,8 @@
     <script>
         let allPosts = [];
         let editingSlug = null;
+        const BLOG_API = 'https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84';
+        const BLOG_HEADERS = { 'Content-Type': 'application/json', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8' };
         
         // Load blog posts
         async function loadBlogPosts() {
@@ -744,12 +765,16 @@
             if (headerSaveText) headerSaveText.textContent = 'Save Post';
             editingSlug = null;
             resetForm();
+            var hs = document.getElementById('history-section');
+            if (hs) hs.style.display = 'none';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
         // Cancel edit
         function cancelEdit() {
             document.getElementById('blog-editor').style.display = 'none';
+            var hs = document.getElementById('history-section');
+            if (hs) hs.style.display = 'none';
             resetForm();
         }
         
@@ -792,11 +817,62 @@
                     var headerSaveText = document.getElementById('editor-header-save-text');
                     if (headerSaveText) headerSaveText.textContent = 'Update Post';
                     document.getElementById('blog-editor').style.display = 'block';
+                    var hs = document.getElementById('history-section');
+                    if (hs) hs.style.display = 'block';
+                    document.getElementById('history-list').style.display = 'none';
+                    document.getElementById('history-empty').style.display = 'block';
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             } catch (error) {
                 showMessage('Failed to load post for editing', 'error');
             }
+        }
+        function formatHistoryDate(iso) {
+            if (!iso) return '';
+            try { return new Date(iso).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }); } catch (e) { return iso; }
+        }
+        async function loadPostHistory() {
+            if (!editingSlug) return;
+            var btn = document.getElementById('history-load-btn');
+            var listEl = document.getElementById('history-list');
+            var emptyEl = document.getElementById('history-empty');
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Loading...'; }
+            try {
+                var res = await fetch(BLOG_API + '/blog/posts/' + encodeURIComponent(editingSlug) + '/history', { headers: BLOG_HEADERS });
+                var data = await res.json();
+                if (data.success && Array.isArray(data.history)) {
+                    listEl.innerHTML = data.history.map(function (v) {
+                        return '<li class="history-item"><span class="date">' + formatHistoryDate(v.savedAt) + '</span><button type="button" class="btn btn-secondary btn-small revert-btn" onclick="revertToVersion(' + v.id + ')"><i class="fa-solid fa-rotate-left"></i> Revert to this</button></li>';
+                    }).join('');
+                    listEl.style.display = data.history.length ? 'block' : 'none';
+                    if (emptyEl) emptyEl.style.display = data.history.length ? 'none' : 'block';
+                    if (data.history.length && emptyEl) emptyEl.textContent = 'No previous versions.';
+                } else { if (emptyEl) emptyEl.textContent = data.error || 'Could not load history.'; }
+            } catch (e) { if (emptyEl) emptyEl.textContent = 'Failed to load history.'; }
+            if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-refresh"></i> Load history'; }
+        }
+        async function revertToVersion(versionId) {
+            if (!editingSlug || !confirm('Replace the current post content with this version?')) return;
+            try {
+                var res = await fetch(BLOG_API + '/blog/posts/' + encodeURIComponent(editingSlug) + '/revert', { method: 'POST', headers: BLOG_HEADERS, body: JSON.stringify({ versionId: versionId }) });
+                var data = await res.json();
+                if (data.success && data.post) {
+                    var post = data.post;
+                    document.getElementById('title').value = post.title;
+                    document.getElementById('slug').value = post.slug;
+                    document.getElementById('author').value = post.author || '';
+                    document.getElementById('featured-image').value = post.featuredImage || '';
+                    document.getElementById('meta-title').value = post.metaTitle || '';
+                    document.getElementById('meta-description').value = post.metaDescription || '';
+                    document.getElementById('canonical').value = post.canonical || '';
+                    document.getElementById('og-site-name').value = post.ogSiteName || '';
+                    document.getElementById('robots').value = post.robots || '';
+                    document.getElementById('max-image-preview').value = post.maxImagePreview || 'large';
+                    document.getElementById('content-editor').innerHTML = post.content || '';
+                    showMessage('Reverted to previous version. Edit and save to keep.', 'success');
+                    loadPostHistory();
+                } else showMessage(data.error || 'Revert failed', 'error');
+            } catch (e) { showMessage('Revert failed', 'error'); }
         }
         
         // Save blog post

@@ -392,6 +392,27 @@
         .reset-password-message.error { background: rgba(255,59,48,0.15); border: 1px solid rgba(255,59,48,0.3); color: #ff6b6b; }
         .reset-password-message.success { background: rgba(34,139,34,0.2); border: 1px solid var(--primary-green); color: var(--primary-green); }
         
+        .settings-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-gray);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 2rem;
+            transition: color 0.2s, background 0.2s;
+        }
+        .settings-toggle:hover { background: rgba(255, 255, 255, 0.08); color: var(--text-white); }
+        .settings-toggle i.fa-chevron-down { transition: transform 0.2s; }
+        .settings-toggle.open i.fa-chevron-down { transform: rotate(180deg); }
+        .settings-panel { display: none; }
+        .settings-panel.open { display: block; }
+        
         .dashboard-container {
             display: none;
         }
@@ -695,30 +716,37 @@
             </div>
         </div>
 
-        <!-- Reset password -->
-        <div class="table-container" style="margin-top: 2rem;">
-            <div class="table-header">
-                <i class="fa-solid fa-key"></i> Reset admin password
-            </div>
-            <div style="padding: 1.5rem;">
-                <p style="color: var(--text-gray); margin-bottom: 1rem;">Change the password used for this admin dashboard, landing page editing, and blog editing. New password must be at least 8 characters.</p>
-                <div id="reset-password-message" class="reset-password-message"></div>
-                <div class="form-row" style="display: block;">
-                    <div class="form-group" style="margin-bottom: 1rem;">
-                        <label for="reset-current">Current password</label>
-                        <input type="password" id="reset-current" placeholder="Current admin password" autocomplete="current-password" style="max-width: 320px;">
+        <!-- Settings (collapsed by default) -->
+        <button type="button" class="settings-toggle" id="settings-toggle" onclick="toggleSettings()" aria-expanded="false" aria-controls="settings-panel">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="settings-panel" id="settings-panel" role="region" aria-label="Settings">
+            <div class="table-container" style="margin-top: 1rem;">
+                <div class="table-header">
+                    <i class="fa-solid fa-key"></i> Reset admin password
+                </div>
+                <div style="padding: 1.5rem;">
+                    <p style="color: var(--text-gray); margin-bottom: 1rem;">Change the password used for this admin dashboard, landing page editing, and blog editing. New password must be at least 8 characters.</p>
+                    <div id="reset-password-message" class="reset-password-message"></div>
+                    <div class="form-row" style="display: block;">
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label for="reset-current">Current password</label>
+                            <input type="password" id="reset-current" placeholder="Current admin password" autocomplete="current-password" style="max-width: 320px;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label for="reset-new">New password</label>
+                            <input type="password" id="reset-new" placeholder="At least 8 characters" autocomplete="new-password" style="max-width: 320px;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label for="reset-confirm">Confirm new password</label>
+                            <input type="password" id="reset-confirm" placeholder="Confirm new password" autocomplete="new-password" style="max-width: 320px;">
+                        </div>
+                        <button type="button" class="btn btn-primary" id="reset-password-btn" onclick="handleResetPassword()">
+                            <i class="fa-solid fa-key"></i> Update password
+                        </button>
                     </div>
-                    <div class="form-group" style="margin-bottom: 1rem;">
-                        <label for="reset-new">New password</label>
-                        <input type="password" id="reset-new" placeholder="At least 8 characters" autocomplete="new-password" style="max-width: 320px;">
-                    </div>
-                    <div class="form-group" style="margin-bottom: 1rem;">
-                        <label for="reset-confirm">Confirm new password</label>
-                        <input type="password" id="reset-confirm" placeholder="Confirm new password" autocomplete="new-password" style="max-width: 320px;">
-                    </div>
-                    <button type="button" class="btn btn-primary" id="reset-password-btn" onclick="handleResetPassword()">
-                        <i class="fa-solid fa-key"></i> Update password
-                    </button>
                 </div>
             </div>
         </div>
@@ -988,6 +1016,15 @@
             showLoginPage();
         }
         
+        function toggleSettings() {
+            const panel = document.getElementById('settings-panel');
+            const btn = document.getElementById('settings-toggle');
+            if (!panel || !btn) return;
+            panel.classList.toggle('open');
+            btn.classList.toggle('open');
+            btn.setAttribute('aria-expanded', panel.classList.contains('open'));
+        }
+
         // Reset admin password (landing + blog admin)
         async function handleResetPassword() {
             const currentEl = document.getElementById('reset-current');
