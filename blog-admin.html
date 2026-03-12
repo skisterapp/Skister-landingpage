@@ -281,8 +281,8 @@
             padding: 1.5rem;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
+            align-items: flex-start;
+            gap: 1.5rem;
             transition: background 0.2s;
         }
         
@@ -290,9 +290,46 @@
             background: rgba(34, 139, 34, 0.05);
         }
         
+        .blog-list-item-content {
+            display: flex;
+            gap: 1rem;
+            flex: 1;
+        }
+        
+        .blog-list-thumbnail {
+            width: 120px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: rgba(255, 255, 255, 0.05);
+            flex-shrink: 0;
+        }
+        
+        .blog-list-thumbnail.placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+        }
+        
+        .blog-list-info {
+            flex: 1;
+        }
+        
         .blog-list-info h3 {
             margin-bottom: 0.5rem;
             color: var(--text-white);
+        }
+        
+        .blog-preview-text {
+            color: var(--text-gray);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         
         .blog-list-meta {
@@ -303,10 +340,29 @@
             flex-wrap: wrap;
         }
         
+        .blog-status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .blog-status-badge.published {
+            background: rgba(34, 139, 34, 0.2);
+            color: var(--primary-green);
+        }
+        
+        .blog-status-badge.archived {
+            background: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+        }
+        
         .blog-list-actions {
             display: flex;
             gap: 0.5rem;
-            flex-shrink: 0;
+            flex-direction: column;
         }
         
         /* Loading & Messages */
@@ -633,14 +689,32 @@
                 return;
             }
             
-            container.innerHTML = allPosts.map(post => `
+            container.innerHTML = allPosts.map(post => {
+                // Extract preview text from content
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = post.content;
+                const previewText = tempDiv.textContent.substring(0, 150) + '...' || 'No preview available';
+                
+                return `
                 <div class="blog-list-item">
-                    <div class="blog-list-info">
-                        <h3>${post.title}</h3>
-                        <div class="blog-list-meta">
-                            <span><i class="fa-solid fa-user"></i> ${post.author}</span>
-                            <span><i class="fa-solid fa-calendar"></i> ${formatDate(post.publishedTime)}</span>
-                            <span><i class="fa-solid fa-link"></i> ${post.slug}</span>
+                    <div class="blog-list-item-content">
+                        ${post.featuredImage ? 
+                            `<img src="${post.featuredImage}" alt="${post.title}" class="blog-list-thumbnail">` :
+                            `<div class="blog-list-thumbnail placeholder"><i class="fa-solid fa-image"></i></div>`
+                        }
+                        <div class="blog-list-info">
+                            <div>
+                                <h3>${post.title}</h3>
+                                ${post.archived ? '<span class="blog-status-badge archived">Archived</span>' : '<span class="blog-status-badge published">Published</span>'}
+                            </div>
+                            <div class="blog-list-meta">
+                                <span><i class="fa-solid fa-user"></i> ${post.author}</span>
+                                <span><i class="fa-solid fa-calendar"></i> ${formatDate(post.publishedTime)}</span>
+                                <span><i class="fa-solid fa-link"></i> ${post.slug}</span>
+                            </div>
+                            <div class="blog-preview-text">
+                                ${previewText}
+                            </div>
                         </div>
                     </div>
                     <div class="blog-list-actions">
@@ -648,13 +722,17 @@
                             <i class="fa-solid fa-edit"></i>
                             Edit
                         </button>
+                        <button class="btn btn-secondary btn-small" onclick="toggleArchive('${post.slug}', ${post.archived})">
+                            <i class="fa-solid fa-${post.archived ? 'box-open' : 'archive'}"></i>
+                            ${post.archived ? 'Unarchive' : 'Archive'}
+                        </button>
                         <button class="btn btn-danger btn-small" onclick="deletePost('${post.slug}')">
                             <i class="fa-solid fa-trash"></i>
                             Delete
                         </button>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
         
         // Show editor
@@ -795,6 +873,35 @@
                 }
             } catch (error) {
                 showMessage('Failed to delete post: ' + error.message, 'error');
+            }
+        }
+        
+        // Archive/Unarchive post
+        async function toggleArchive(slug, archived) {
+            if (!confirm(`Are you sure you want to ${archived ? 'unarchive' : 'archive'} this post?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84/blog/posts/${slug}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8'
+                    },
+                    body: JSON.stringify({ archived: !archived })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage(`Post ${archived ? 'unarchived' : 'archived'} successfully!`, 'success');
+                    loadBlogPosts();
+                } else {
+                    showMessage(data.error || 'Failed to update post', 'error');
+                }
+            } catch (error) {
+                showMessage('Failed to update post: ' + error.message, 'error');
             }
         }
         

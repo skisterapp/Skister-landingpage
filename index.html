@@ -11,7 +11,7 @@
     <meta property="og:title" content="Skister - Share the Slopes">
     <meta property="og:description" content="Family-friendly ski equipment sharing within your trusted network">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://qoqbdiixztolvtcjdnle.supabase.co/storage/v1/object/public/Skister/Skister%20Mascot.png">
+    <meta property="og:image" id="meta-og-image" content="https://qoqbdiixztolvtcjdnle.supabase.co/storage/v1/object/public/Skister/Skister%20Mascot.png">
     
     <!-- Android/Mobile Meta Tags -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -670,6 +670,7 @@
             <a onclick="scrollToSection('features')" data-i18n="nav.features">Features</a>
             <a onclick="scrollToSection('faq')" data-i18n="nav.faq">FAQ</a>
             <a href="blog.html" data-i18n="nav.blog">Blog</a>
+            <a href="admin.html">Admin</a>
             <a onclick="openModal('contact')" data-i18n="nav.contact">Contact</a>
             <div class="language-selector">
                 <button class="language-btn" onclick="toggleLanguageDropdown()">
@@ -689,7 +690,7 @@
     
     <!-- Hero Section -->
     <section class="hero">
-        <img src="https://qoqbdiixztolvtcjdnle.supabase.co/storage/v1/object/public/Skister/Skister%20Mascot.png" alt="Skister Mascot" class="mascot">
+        <img id="hero-mascot" src="https://qoqbdiixztolvtcjdnle.supabase.co/storage/v1/object/public/Skister/Skister%20Mascot.png" alt="Skister Mascot" class="mascot">
         <h1 data-i18n="hero.title">Skister</h1>
         <p class="tagline" data-i18n="hero.tagline">Teile die Pisten</p>
         <p class="subtitle" data-i18n="hero.subtitle">Deine familienfreundliche Plattform zum Teilen von Ski-Ausrüstung innerhalb deines vertrauenswürdigen Netzwerks. Kostenlos, lokal und sicher.</p>
@@ -866,7 +867,7 @@
                 <div class="footer-links">
                     <a onclick="openModal('contact')" data-i18n="footer.contact">Kontakt</a>
                     <a href="mailto:support@skister.com">support@skister.com</a>
-                    <a onclick="openAdminPanel()" style="opacity: 0.5; font-size: 0.85rem;">Admin</a>
+                    <a href="admin.html">Admin</a>
                 </div>
             </div>
         </div>
@@ -1331,6 +1332,57 @@
         };
         
         let currentLang = 'de';
+        const DEFAULT_HERO_IMAGE = 'https://qoqbdiixztolvtcjdnle.supabase.co/storage/v1/object/public/Skister/Skister%20Mascot.png';
+        
+        // Load landing content from API and merge with defaults
+        function deepMerge(target, source) {
+            const out = { ...target };
+            for (const key of Object.keys(source || {})) {
+                if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key]) && typeof target[key] === 'object' && target[key]) {
+                    out[key] = deepMerge(target[key] || {}, source[key]);
+                } else {
+                    out[key] = source[key];
+                }
+            }
+            return out;
+        }
+        
+        function applyLandingContent(content) {
+            if (!content) return;
+            if (content.translations && typeof content.translations === 'object') {
+                const langs = ['de', 'en', 'fr', 'es', 'it'];
+                langs.forEach(lang => {
+                    if (content.translations[lang]) {
+                        translations[lang] = deepMerge(translations[lang] || {}, content.translations[lang]);
+                    }
+                });
+            }
+            if (content.images) {
+                const mascotUrl = content.images.heroMascot || content.images.heroMascotUrl;
+                if (mascotUrl) {
+                    const el = document.getElementById('hero-mascot');
+                    if (el) el.src = mascotUrl;
+                }
+                const ogUrl = content.images.ogImage;
+                if (ogUrl) {
+                    const meta = document.getElementById('meta-og-image');
+                    if (meta) meta.setAttribute('content', ogUrl);
+                }
+            }
+            changeLanguage(currentLang);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84/landing-content', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.content) applyLandingContent(data.content);
+            })
+            .catch(() => {});
+        });
         
         // Language Functions
         function changeLanguage(lang) {
@@ -1402,21 +1454,20 @@
         
         // Modal Functions
         function openModal(type) {
-            const el = document.getElementById('modal-' + type);
-            if (el) { el.classList.add('active'); document.body.style.overflow = 'hidden'; }
+            document.getElementById(`modal-${type}`).classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
         
         function closeModal(type) {
-            const el = document.getElementById('modal-' + type);
-            if (el) { el.classList.remove('active'); document.body.style.overflow = 'auto'; }
+            document.getElementById(`modal-${type}`).classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
         
         // Close modal when clicking outside
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', function(e) {
-                if (e.target === modal && modal.id) {
-                    var type = modal.id.replace('modal-', '');
-                    if (type) closeModal(type);
+                if (e.target === modal) {
+                    closeModal(modal.id.replace('modal-', ''));
                 }
             });
         });

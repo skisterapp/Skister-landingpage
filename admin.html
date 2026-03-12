@@ -381,6 +381,17 @@
             display: block;
         }
         
+        .reset-password-message {
+            display: none;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        .reset-password-message.show { display: block; }
+        .reset-password-message.error { background: rgba(255,59,48,0.15); border: 1px solid rgba(255,59,48,0.3); color: #ff6b6b; }
+        .reset-password-message.success { background: rgba(34,139,34,0.2); border: 1px solid var(--primary-green); color: var(--primary-green); }
+        
         .dashboard-container {
             display: none;
         }
@@ -616,6 +627,10 @@
                     <i class="fa-solid fa-right-from-bracket"></i>
                     Logout
                 </button>
+                <button class="btn btn-secondary" onclick="window.location.href='landing-admin.html'">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    Edit Landing Page
+                </button>
                 <button class="btn btn-secondary" onclick="window.location.href='blog-admin.html'">
                     <i class="fa-solid fa-newspaper"></i>
                     Manage Blog
@@ -679,6 +694,34 @@
                 </div>
             </div>
         </div>
+
+        <!-- Reset password -->
+        <div class="table-container" style="margin-top: 2rem;">
+            <div class="table-header">
+                <i class="fa-solid fa-key"></i> Reset admin password
+            </div>
+            <div style="padding: 1.5rem;">
+                <p style="color: var(--text-gray); margin-bottom: 1rem;">Change the password used for this admin dashboard, landing page editing, and blog editing. New password must be at least 8 characters.</p>
+                <div id="reset-password-message" class="reset-password-message"></div>
+                <div class="form-row" style="display: block;">
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label for="reset-current">Current password</label>
+                        <input type="password" id="reset-current" placeholder="Current admin password" autocomplete="current-password" style="max-width: 320px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label for="reset-new">New password</label>
+                        <input type="password" id="reset-new" placeholder="At least 8 characters" autocomplete="new-password" style="max-width: 320px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label for="reset-confirm">Confirm new password</label>
+                        <input type="password" id="reset-confirm" placeholder="Confirm new password" autocomplete="new-password" style="max-width: 320px;">
+                    </div>
+                    <button type="button" class="btn btn-primary" id="reset-password-btn" onclick="handleResetPassword()">
+                        <i class="fa-solid fa-key"></i> Update password
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
     </div>
     
@@ -686,14 +729,12 @@
         let allEmails = [];
         let filteredEmails = [];
         
-        // Password protection
-        const ADMIN_PASSWORD = 'Benji@Ham2026';
+        const API_BASE = 'https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84';
+        const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8';
         
         // Check password on page load
         window.addEventListener('DOMContentLoaded', () => {
-            // Check if password is stored in sessionStorage
             const isAuthenticated = sessionStorage.getItem('adminAuthenticated');
-            
             if (isAuthenticated) {
                 showDashboard();
                 loadWaitlistData();
@@ -702,36 +743,40 @@
             }
         });
         
-        // Handle login form submission
-        function handleLogin(event) {
+        // Handle login form submission (verify password with server)
+        async function handleLogin(event) {
             event.preventDefault();
-            
             const passwordInput = document.getElementById('password');
             const loginBtn = document.getElementById('login-btn');
             const loginError = document.getElementById('login-error');
             const password = passwordInput.value;
-            
-            // Hide error
             loginError.classList.remove('show');
-            
-            // Disable button
             loginBtn.disabled = true;
             loginBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Logging in...';
-            
-            // Simulate async check
-            setTimeout(() => {
-                if (password === ADMIN_PASSWORD) {
+            try {
+                const res = await fetch(API_BASE + '/landing-admin-verify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ANON_KEY, 'X-Admin-Password': password }
+                });
+                const data = await res.json().catch(() => ({}));
+                if (res.ok && data.ok) {
                     sessionStorage.setItem('adminAuthenticated', 'true');
+                    sessionStorage.setItem('landingAdminAuth', 'true');
+                    sessionStorage.setItem('landingAdminPassword', password);
                     showDashboard();
                     loadWaitlistData();
                 } else {
                     loginError.classList.add('show');
-                    loginBtn.disabled = false;
-                    loginBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login';
                     passwordInput.value = '';
                     passwordInput.focus();
                 }
-            }, 500);
+            } catch (e) {
+                loginError.classList.add('show');
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login';
         }
         
         // Show login page
@@ -937,8 +982,70 @@
         // Logout function
         function logout() {
             sessionStorage.removeItem('adminAuthenticated');
+            sessionStorage.removeItem('landingAdminAuth');
+            sessionStorage.removeItem('landingAdminPassword');
             document.getElementById('password').value = '';
             showLoginPage();
+        }
+        
+        // Reset admin password (landing + blog admin)
+        async function handleResetPassword() {
+            const currentEl = document.getElementById('reset-current');
+            const newEl = document.getElementById('reset-new');
+            const confirmEl = document.getElementById('reset-confirm');
+            const msgEl = document.getElementById('reset-password-message');
+            const btn = document.getElementById('reset-password-btn');
+            const current = (currentEl && currentEl.value) ? currentEl.value.trim() : '';
+            const newP = (newEl && newEl.value) ? newEl.value.trim() : '';
+            const confirmP = (confirmEl && confirmEl.value) ? confirmEl.value.trim() : '';
+            msgEl.textContent = '';
+            msgEl.className = 'reset-password-message';
+            if (!current) {
+                msgEl.textContent = 'Enter your current password.';
+                msgEl.className = 'reset-password-message show error';
+                return;
+            }
+            if (newP.length < 8) {
+                msgEl.textContent = 'New password must be at least 8 characters.';
+                msgEl.className = 'reset-password-message show error';
+                return;
+            }
+            if (newP !== confirmP) {
+                msgEl.textContent = 'New password and confirmation do not match.';
+                msgEl.className = 'reset-password-message show error';
+                return;
+            }
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Updating...';
+            try {
+                const res = await fetch(API_BASE + '/landing-admin-reset-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + ANON_KEY,
+                        'X-Admin-Password': current
+                    },
+                    body: JSON.stringify({ newPassword: newP })
+                });
+                const data = await res.json().catch(() => ({}));
+                if (res.ok && data.success) {
+                    msgEl.textContent = data.message || 'Password updated. Use the new password to log in.';
+                    msgEl.className = 'reset-password-message show success';
+                    sessionStorage.setItem('landingAdminPassword', newP);
+                    if (currentEl) currentEl.value = '';
+                    if (newEl) newEl.value = '';
+                    if (confirmEl) confirmEl.value = '';
+                    setTimeout(function () { msgEl.classList.remove('show'); }, 5000);
+                } else {
+                    msgEl.textContent = data.error || 'Failed to update password.';
+                    msgEl.className = 'reset-password-message show error';
+                }
+            } catch (e) {
+                msgEl.textContent = 'Network error. Try again.';
+                msgEl.className = 'reset-password-message show error';
+            }
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-key"></i> Update password';
         }
     </script>
 </body>

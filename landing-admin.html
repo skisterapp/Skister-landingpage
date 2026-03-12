@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Landing Page - Skister Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-green: #228B22;
+            --primary-green-light: #2da82d;
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text-white: #ffffff;
+            --text-gray: #b0b0b0;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-white);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .header h1 { font-size: 1.75rem; color: var(--primary-green); display: flex; align-items: center; gap: 0.5rem; }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+        .btn-primary { background: var(--primary-green); color: var(--text-white); }
+        .btn-primary:hover { background: var(--primary-green-light); transform: translateY(-2px); }
+        .btn-secondary { background: rgba(255,255,255,0.05); color: var(--text-white); border: 1px solid var(--border-color); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .login-container { display: flex; justify-content: center; align-items: center; min-height: 80vh; }
+        .login-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        .login-box h1 { margin-bottom: 0.5rem; font-size: 1.5rem; }
+        .login-box .subtitle { color: var(--text-gray); margin-bottom: 1.5rem; font-size: 0.9rem; }
+        .form-group { text-align: left; margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-gray); font-weight: 500; }
+        .form-group input { width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px; color: white; font-size: 1rem; }
+        .form-group input:focus { outline: none; border-color: var(--primary-green); }
+        .login-btn { width: 100%; padding: 0.875rem; background: var(--primary-green); color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 0.5rem; }
+        .login-btn:hover { background: var(--primary-green-light); }
+        .login-error { display: none; background: rgba(255,59,48,0.15); border: 1px solid rgba(255,59,48,0.3); border-radius: 8px; padding: 0.75rem; color: #ff6b6b; font-size: 0.9rem; margin-bottom: 1rem; }
+        .login-error.show { display: block; }
+        .editor-container { display: none; }
+        .editor-container.show { display: block; }
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-card h2 { color: var(--primary-green); font-size: 1.25rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); }
+        .field-row { margin-bottom: 1rem; }
+        .field-row label { display: block; color: var(--text-gray); font-size: 0.85rem; margin-bottom: 0.35rem; }
+        .field-row input, .field-row textarea {
+            width: 100%;
+            padding: 0.6rem 0.75rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-white);
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+        .field-row textarea { min-height: 80px; resize: vertical; }
+        .field-row input:focus, .field-row textarea:focus { outline: none; border-color: var(--primary-green); }
+        .field-row .key-name { color: var(--text-gray); font-size: 0.8rem; }
+        .tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .tab { padding: 0.6rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-gray); cursor: pointer; font-weight: 500; }
+        .tab:hover { color: var(--text-white); }
+        .tab.active { background: rgba(34,139,34,0.2); border-color: var(--primary-green); color: var(--primary-green); }
+        .message { padding: 1rem; border-radius: 8px; margin-bottom: 1rem; display: none; }
+        .message.show { display: block; }
+        .message.success { background: rgba(34,139,34,0.2); border: 1px solid var(--primary-green); color: var(--primary-green); }
+        .message.error { background: rgba(255,59,48,0.15); border: 1px solid rgba(255,59,48,0.3); color: #ff6b6b; }
+        .image-upload { display: flex; gap: 0.5rem; align-items: flex-start; flex-wrap: wrap; }
+        .image-upload input[type="text"] { flex: 1; min-width: 200px; }
+        .image-preview { max-width: 120px; max-height: 120px; border-radius: 8px; border: 1px solid var(--border-color); margin-top: 0.5rem; }
+        input[type="file"] { display: none; }
+    </style>
+</head>
+<body>
+    <div class="login-container" id="login-page">
+        <div class="login-box">
+            <h1><i class="fa-solid fa-pen-to-square"></i> Edit Landing Page</h1>
+            <p class="subtitle">Enter your admin password to edit content and images.</p>
+            <div class="login-error" id="login-error">Incorrect password.</div>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Admin password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="editor-container" id="editor">
+        <div class="container">
+            <div class="header">
+                <h1><i class="fa-solid fa-pen-to-square"></i> Landing Page Content</h1>
+                <div style="display: flex; gap: 0.75rem;">
+                    <button class="btn btn-secondary" onclick="window.location.href='admin.html'"><i class="fa-solid fa-arrow-left"></i> Back to Admin</button>
+                    <button class="btn btn-secondary" onclick="window.location.href='index.html'" target="_blank"><i class="fa-solid fa-external-link"></i> View Landing Page</button>
+                    <button class="btn btn-primary" id="save-btn" onclick="saveContent()"><i class="fa-solid fa-save"></i> Save</button>
+                </div>
+            </div>
+            <div id="message" class="message"></div>
+            <div class="section-card">
+                <h2><i class="fa-solid fa-image"></i> Images</h2>
+                <div class="field-row">
+                    <label>Hero mascot image URL</label>
+                    <div class="image-upload">
+                        <input type="text" id="img-heroMascot" placeholder="https://...">
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('file-heroMascot').click()">Upload</button>
+                        <input type="file" id="file-heroMascot" accept="image/*" onchange="handleImageUpload('heroMascot', this)">
+                    </div>
+                    <img id="preview-heroMascot" class="image-preview" alt="" style="display:none">
+                </div>
+                <div class="field-row">
+                    <label>OG / Social share image URL</label>
+                    <div class="image-upload">
+                        <input type="text" id="img-ogImage" placeholder="https://...">
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('file-ogImage').click()">Upload</button>
+                        <input type="file" id="file-ogImage" accept="image/*" onchange="handleImageUpload('ogImage', this)">
+                    </div>
+                    <img id="preview-ogImage" class="image-preview" alt="" style="display:none">
+                </div>
+            </div>
+            <div class="section-card">
+                <h2><i class="fa-solid fa-language"></i> Text content by language</h2>
+                <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 1rem;">Select a language and edit the text. Save to publish.</p>
+                <p style="margin-bottom: 1rem;">
+                    <button type="button" class="btn btn-secondary" id="auto-translate-btn" onclick="autoTranslate()" title="Fill other languages from current tab using machine translation">
+                        <i class="fa-solid fa-language"></i> Auto-translate from <span id="auto-translate-lang">Deutsch</span>
+                    </button>
+                </p>
+                <div class="tabs" id="lang-tabs"></div>
+                <div id="translations-fields"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84';
+        const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8';
+        const LANGUAGES = [{ code: 'de', name: 'Deutsch' }, { code: 'en', name: 'English' }, { code: 'fr', name: 'Français' }, { code: 'es', name: 'Español' }, { code: 'it', name: 'Italiano' }];
+        const SECTIONS = [
+            { id: 'nav', title: 'Navigation' },
+            { id: 'hero', title: 'Hero' },
+            { id: 'messages', title: 'Messages' },
+            { id: 'features', title: 'Features' },
+            { id: 'platform', title: 'Platform' },
+            { id: 'faq', title: 'FAQ' },
+            { id: 'disclaimer', title: 'Disclaimer' },
+            { id: 'footer', title: 'Footer' },
+            { id: 'modal', title: 'Modals' }
+        ];
+        const ALL_KEYS = [
+            'nav.features','nav.faq','nav.blog','nav.contact',
+            'hero.title','hero.tagline','hero.subtitle','hero.emailPlaceholder','hero.submitBtn','hero.waitlistInfo',
+            'messages.success','messages.duplicate','messages.error','messages.serverError',
+            'features.title','features.share.title','features.share.description','features.family.title','features.family.description','features.free.title','features.free.description','features.reminders.title','features.reminders.description','features.private.title','features.private.description','features.local.title','features.local.description',
+            'platform.title','platform.ios','platform.android','platform.web',
+            'faq.title','faq.q1','faq.a1','faq.q2','faq.a2','faq.q3','faq.a3','faq.q4','faq.a4','faq.q5','faq.a5',
+            'disclaimer.title','disclaimer.text',
+            'footer.product','footer.features','footer.faq','footer.feedback','footer.legal','footer.privacy','footer.terms','footer.support','footer.contact','footer.rights','footer.madewith',
+            'modal.privacy.title','modal.privacy.intro','modal.privacy.p1','modal.privacy.collection','modal.privacy.collectionText','modal.privacy.usage','modal.privacy.usageText','modal.privacy.sharing','modal.privacy.sharingText',
+            'modal.terms.title','modal.terms.intro','modal.terms.acceptance','modal.terms.acceptanceText','modal.terms.service','modal.terms.serviceText','modal.terms.liability','modal.terms.liabilityText',
+            'modal.contact.title','modal.contact.intro','modal.contact.email','modal.contact.response',
+            'modal.feedback.title','modal.feedback.intro','modal.feedback.email'
+        ];
+
+        let content = { translations: {}, images: {} };
+        let currentLang = 'de';
+
+        function getSection(key) {
+            const parts = key.split('.');
+            if (parts[0] === 'modal') return 'modal';
+            return parts[0];
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            const errEl = document.getElementById('login-error');
+            errEl.classList.remove('show');
+            try {
+                const res = await fetch(`${API_BASE}/landing-admin-verify`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${ANON_KEY}`, 'X-Admin-Password': password }
+                });
+                const data = await res.json().catch(function () { return {}; });
+                if (res.ok && data.ok) {
+                    sessionStorage.setItem('landingAdminAuth', 'true');
+                    sessionStorage.setItem('landingAdminPassword', password);
+                    document.getElementById('login-page').style.display = 'none';
+                    document.getElementById('editor').classList.add('show');
+                    loadContent();
+                    renderLangTabs();
+                    renderFields();
+                } else {
+                    errEl.classList.add('show');
+                }
+            } catch (err) {
+                errEl.classList.add('show');
+            }
+        }
+
+        function checkAuth() {
+            if (sessionStorage.getItem('landingAdminAuth')) {
+                document.getElementById('login-page').style.display = 'none';
+                document.getElementById('editor').classList.add('show');
+                loadContent();
+                renderLangTabs();
+                renderFields();
+            }
+        }
+
+        async function loadContent() {
+            try {
+                const res = await fetch(`${API_BASE}/landing-content`, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+                const data = await res.json();
+                if (data.success && data.content) {
+                    content = { translations: data.content.translations || {}, images: data.content.images || {} };
+                }
+                applyContentToForm();
+            } catch (err) {
+                showMessage('Failed to load content.', true);
+            }
+        }
+
+        function applyContentToForm() {
+            document.getElementById('img-heroMascot').value = content.images.heroMascot || content.images.heroMascotUrl || '';
+            document.getElementById('img-ogImage').value = content.images.ogImage || '';
+            toggleImagePreviews();
+        }
+
+        function applyFormToContent() {
+            content.images.heroMascot = document.getElementById('img-heroMascot').value.trim() || undefined;
+            content.images.ogImage = document.getElementById('img-ogImage').value.trim() || undefined;
+            if (!content.translations[currentLang]) content.translations[currentLang] = {};
+            ALL_KEYS.forEach(key => {
+                const el = document.getElementById(`key-${currentLang}-${key.replace(/\./g, '-')}`);
+                if (el) content.translations[currentLang][key] = el.value;
+            });
+        }
+
+        function renderLangTabs() {
+            const html = LANGUAGES.map(l => `<button type="button" class="tab ${l.code === currentLang ? 'active' : ''}" onclick="switchLang('${l.code}')">${l.name}</button>`).join('');
+            document.getElementById('lang-tabs').innerHTML = html;
+            const langSpan = document.getElementById('auto-translate-lang');
+            if (langSpan) {
+                const cur = LANGUAGES.find(l => l.code === currentLang);
+                langSpan.textContent = cur ? cur.name : currentLang;
+            }
+        }
+
+        function switchLang(lang) {
+            applyFormToContent();
+            currentLang = lang;
+            renderLangTabs();
+            renderFields();
+        }
+
+        function fillFieldValues() {
+            ALL_KEYS.forEach(key => {
+                const id = `key-${currentLang}-${key.replace(/\./g, '-')}`;
+                const el = document.getElementById(id);
+                if (el) el.value = (content.translations[currentLang] || {})[key] || '';
+            });
+        }
+
+        function renderFields() {
+            const bySection = {};
+            ALL_KEYS.forEach(key => {
+                const section = getSection(key);
+                if (!bySection[section]) bySection[section] = [];
+                bySection[section].push(key);
+            });
+            let html = '';
+            SECTIONS.forEach(sec => {
+                const keys = bySection[sec.id];
+                if (!keys || keys.length === 0) return;
+                html += `<div class="section-card"><h2>${sec.title}</h2>`;
+                keys.forEach(key => {
+                    const id = `key-${currentLang}-${key.replace(/\./g, '-')}`;
+                    const isLong = key.startsWith('faq.a') || key.startsWith('modal.') || key === 'disclaimer.text' || key.includes('description') || key.includes('Text') || key.includes('intro') || key.includes('email');
+                    html += `<div class="field-row">
+                        <label><span class="key-name">${key}</span></label>
+                        ${isLong ? `<textarea id="${id}" data-key="${key}"></textarea>` : `<input type="text" id="${id}" data-key="${key}">`}
+                    </div>`;
+                });
+                html += '</div>';
+            });
+            document.getElementById('translations-fields').innerHTML = html;
+            fillFieldValues();
+        }
+
+        function toggleImagePreviews() {
+            const mascot = document.getElementById('img-heroMascot').value.trim();
+            const og = document.getElementById('img-ogImage').value.trim();
+            const p1 = document.getElementById('preview-heroMascot');
+            const p2 = document.getElementById('preview-ogImage');
+            if (mascot) { p1.src = mascot; p1.style.display = 'block'; } else { p1.style.display = 'none'; }
+            if (og) { p2.src = og; p2.style.display = 'block'; } else { p2.style.display = 'none'; }
+        }
+        document.getElementById('img-heroMascot').addEventListener('input', toggleImagePreviews);
+        document.getElementById('img-ogImage').addEventListener('input', toggleImagePreviews);
+
+        function handleImageUpload(field, input) {
+            const file = input.files && input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async () => {
+                const base64 = reader.result;
+                try {
+                    const res = await fetch(`${API_BASE}/landing/upload-image`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${ANON_KEY}` },
+                        body: JSON.stringify({ image: base64, fileName: file.name })
+                    });
+                    const data = await res.json();
+                    if (data.url) {
+                        document.getElementById(`img-${field}`).value = data.url;
+                        toggleImagePreviews();
+                        showMessage('Image uploaded. Click Save to publish.', false);
+                    } else showMessage(data.error || 'Upload failed', true);
+                } catch (e) { showMessage('Upload failed', true); }
+            };
+            reader.readAsDataURL(file);
+            input.value = '';
+        }
+
+        function showMessage(text, isError) {
+            const el = document.getElementById('message');
+            el.textContent = text;
+            el.className = 'message show ' + (isError ? 'error' : 'success');
+            setTimeout(() => el.classList.remove('show'), 4000);
+        }
+
+        async function saveContent() {
+            applyFormToContent();
+            const password = sessionStorage.getItem('landingAdminPassword');
+            const btn = document.getElementById('save-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+            try {
+                const res = await fetch(`${API_BASE}/landing-content`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${ANON_KEY}`,
+                        'X-Admin-Password': password || ''
+                    },
+                    body: JSON.stringify({ translations: content.translations, images: content.images })
+                });
+                const data = await res.json();
+                if (data.success) showMessage('Content saved. Refresh the landing page to see changes.', false);
+                else showMessage(data.error || 'Save failed', true);
+            } catch (e) { showMessage('Save failed', true); }
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-save"></i> Save';
+        }
+
+        async function autoTranslate() {
+            applyFormToContent();
+            const texts = content.translations[currentLang];
+            if (!texts || Object.keys(texts).length === 0) {
+                showMessage('Edit and fill at least one field in the current language, then click Auto-translate.', true);
+                return;
+            }
+            const password = sessionStorage.getItem('landingAdminPassword');
+            const btn = document.getElementById('auto-translate-btn');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Translating...';
+            }
+            try {
+                const res = await fetch(`${API_BASE}/landing-translate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${ANON_KEY}`,
+                        'X-Admin-Password': password || ''
+                    },
+                    body: JSON.stringify({ sourceLang: currentLang, texts })
+                });
+                const data = await res.json();
+                if (data.success && data.translations) {
+                    Object.keys(data.translations).forEach(function (lang) {
+                        if (!content.translations[lang]) content.translations[lang] = {};
+                        Object.assign(content.translations[lang], data.translations[lang]);
+                    });
+                    showMessage('Other languages filled. Review and Save to publish.', false);
+                } else {
+                    showMessage(data.error || 'Auto-translate failed.', true);
+                }
+            } catch (e) {
+                showMessage('Auto-translate failed.', true);
+            }
+            if (btn) {
+                btn.disabled = false;
+                var curName = (LANGUAGES.find(function (l) { return l.code === currentLang; }) || {}).name || currentLang;
+                btn.innerHTML = '<i class="fa-solid fa-language"></i> Auto-translate from <span id="auto-translate-lang">' + curName + '</span>';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+</body>
+</html>
