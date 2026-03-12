@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Manager - Skister Admin</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -19,9 +21,11 @@
             --primary-green-light: #2da82d;
             --bg-dark: #0a0a0a;
             --bg-card: #1a1a1a;
+            --bg-sidebar: #111;
             --text-white: #ffffff;
             --text-gray: #b0b0b0;
             --border-color: rgba(255, 255, 255, 0.1);
+            --sidebar-width: 260px;
         }
         
         body {
@@ -29,12 +33,34 @@
             background: var(--bg-dark);
             color: var(--text-white);
             line-height: 1.6;
-            padding: 2rem;
+            min-height: 100vh;
         }
         
+        .cms-layout { display: flex; min-height: 100vh; }
+        .cms-sidebar {
+            width: var(--sidebar-width);
+            min-width: var(--sidebar-width);
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            overflow-y: auto;
+        }
+        .cms-sidebar .sidebar-brand { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-color); font-size: 1.25rem; font-weight: 700; color: var(--primary-green); display: flex; align-items: center; gap: 0.5rem; }
+        .cms-sidebar .sidebar-nav { flex: 1; padding: 1rem 0; overflow-y: auto; }
+        .cms-sidebar .nav-section { margin-bottom: 0.5rem; }
+        .cms-sidebar .nav-section-title { padding: 0.5rem 1.5rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-gray); }
+        .cms-sidebar .nav-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 1.5rem; color: var(--text-gray); text-decoration: none; font-weight: 500; transition: background 0.2s, color 0.2s; font-size: 0.95rem; }
+        .cms-sidebar .nav-link:hover { background: rgba(255,255,255,0.05); color: var(--text-white); }
+        .cms-sidebar .nav-link.active { background: rgba(34,139,34,0.15); color: var(--primary-green); border-right: 3px solid var(--primary-green); }
+        .cms-sidebar .nav-link i { width: 1.25rem; text-align: center; }
+        .cms-sidebar .sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border-color); }
+        .cms-main { flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: auto; padding: 2rem; }
         .container {
             max-width: 1400px;
             margin: 0 auto;
+            width: 100%;
         }
         
         /* Header */
@@ -459,21 +485,51 @@
     </style>
 </head>
 <body>
+    <div class="cms-layout">
+        <aside class="cms-sidebar">
+            <div class="sidebar-brand"><i class="fa-solid fa-person-skiing"></i> Skister CMS</div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Overview</div>
+                    <a href="admin.html" class="nav-link"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+                    <a href="admin.html" class="nav-link"><i class="fa-solid fa-envelope"></i> Waitlist</a>
+                    <a href="admin.html" class="nav-link"><i class="fa-solid fa-comments"></i> Comments</a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Content</div>
+                    <a href="landing-admin.html" class="nav-link"><i class="fa-solid fa-pen-to-square"></i> Landing page</a>
+                    <a href="blog-admin.html" class="nav-link active"><i class="fa-solid fa-newspaper"></i> Blog</a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Site</div>
+                    <a href="index.html" class="nav-link" target="_blank" rel="noopener"><i class="fa-solid fa-external-link"></i> View site</a>
+                    <a href="blog.html" class="nav-link" target="_blank" rel="noopener"><i class="fa-solid fa-newspaper"></i> View blog</a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">System</div>
+                    <a href="admin.html" class="nav-link"><i class="fa-solid fa-gear"></i> Settings</a>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <button type="button" class="btn btn-secondary" style="width:100%;" onclick="cmsLogout()"><i class="fa-solid fa-right-from-bracket"></i> Log out</button>
+            </div>
+        </aside>
+        <main class="cms-main">
     <div class="container">
         <div class="header">
             <h1>
                 <i class="fa-solid fa-newspaper"></i>
                 Blog Manager
             </h1>
-            <div style="display: flex; gap: 1rem;">
-                <button class="btn btn-secondary" onclick="window.location.href='admin.html'">
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="admin.html" class="btn btn-secondary">
                     <i class="fa-solid fa-arrow-left"></i>
                     Back to Admin
-                </button>
-                <button class="btn btn-secondary" onclick="window.location.href='blog.html'">
+                </a>
+                <a href="blog.html" class="btn btn-secondary" target="_blank" rel="noopener">
                     <i class="fa-solid fa-eye"></i>
                     View Blog
-                </button>
+                </a>
             </div>
         </div>
         
@@ -658,8 +714,16 @@
             </div>
         </div>
     </div>
+        </main>
+    </div>
     
     <script>
+        function cmsLogout() {
+            sessionStorage.removeItem('landingAdminAuth');
+            sessionStorage.removeItem('landingAdminPassword');
+            sessionStorage.removeItem('adminAuthenticated');
+            window.location.href = 'admin.html';
+        }
         let allPosts = [];
         let editingSlug = null;
         const BLOG_API = 'https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84';

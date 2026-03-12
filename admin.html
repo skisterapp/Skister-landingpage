@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skister CMS – Admin</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -206,15 +208,10 @@
         .password-fields .form-group { margin-bottom: 1rem; }
         .password-fields input { max-width: 320px; }
 
+        /* Sidebar stays fixed: same vertical panel on all screen sizes */
         @media (max-width: 900px) {
-            .cms { flex-direction: column; }
-            .sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; border-right: none; border-bottom: 1px solid var(--border); }
-            .sidebar-brand { flex: 1; }
-            .sidebar-nav { display: flex; flex-wrap: wrap; gap: 0.25rem; padding: 0.5rem; }
-            .nav-section { margin-bottom: 0; }
-            .nav-section-title { display: none; }
-            .nav-link { padding: 0.5rem 0.75rem; border-radius: 8px; border-right: none; }
-            .nav-link.active { border-right: none; border-bottom: 2px solid var(--primary); }
+            .sidebar { min-width: var(--sidebar-width); overflow-y: auto; }
+            .main { min-width: 0; }
         }
     </style>
 </head>
@@ -253,8 +250,8 @@
                 </div>
                 <div class="nav-section">
                     <div class="nav-section-title">Site</div>
-                    <a href="index.html" class="nav-link" target="_blank"><i class="fa-solid fa-external-link"></i> View site</a>
-                    <a href="blog.html" class="nav-link" target="_blank"><i class="fa-solid fa-newspaper"></i> View blog</a>
+                    <a href="index.html" class="nav-link" target="_blank" rel="noopener"><i class="fa-solid fa-external-link"></i> View site</a>
+                    <a href="blog.html" class="nav-link" target="_blank" rel="noopener"><i class="fa-solid fa-newspaper"></i> View blog</a>
                 </div>
                 <div class="nav-section">
                     <div class="nav-section-title">System</div>
@@ -285,8 +282,8 @@
                         <div class="card-body" style="display:flex;flex-wrap:wrap;gap:0.75rem;">
                             <a href="landing-admin.html" class="btn btn-secondary"><i class="fa-solid fa-pen-to-square"></i> Edit landing page</a>
                             <a href="blog-admin.html" class="btn btn-secondary"><i class="fa-solid fa-newspaper"></i> Manage blog</a>
-                            <a href="index.html" class="btn btn-secondary" target="_blank"><i class="fa-solid fa-external-link"></i> View landing</a>
-                            <a href="blog.html" class="btn btn-secondary" target="_blank"><i class="fa-solid fa-newspaper"></i> View blog</a>
+                            <a href="index.html" class="btn btn-secondary" target="_blank" rel="noopener"><i class="fa-solid fa-external-link"></i> View landing</a>
+                            <a href="blog.html" class="btn btn-secondary" target="_blank" rel="noopener"><i class="fa-solid fa-newspaper"></i> View blog</a>
                         </div>
                     </div>
                 </div>

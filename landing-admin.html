@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Landing Page - Skister Admin</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -12,18 +14,41 @@
             --primary-green-light: #2da82d;
             --bg-dark: #0a0a0a;
             --bg-card: #1a1a1a;
+            --bg-sidebar: #111;
             --text-white: #ffffff;
             --text-gray: #b0b0b0;
             --border-color: rgba(255, 255, 255, 0.1);
+            --sidebar-width: 260px;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg-dark);
             color: var(--text-white);
             line-height: 1.6;
-            padding: 2rem;
+            min-height: 100vh;
         }
-        .container { max-width: 1000px; margin: 0 auto; }
+        .cms-layout { display: flex; min-height: 100vh; }
+        .cms-sidebar {
+            width: var(--sidebar-width);
+            min-width: var(--sidebar-width);
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            overflow-y: auto;
+        }
+        .cms-sidebar .sidebar-brand { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-color); font-size: 1.25rem; font-weight: 700; color: var(--primary-green); display: flex; align-items: center; gap: 0.5rem; }
+        .cms-sidebar .sidebar-nav { flex: 1; padding: 1rem 0; overflow-y: auto; }
+        .cms-sidebar .nav-section { margin-bottom: 0.5rem; }
+        .cms-sidebar .nav-section-title { padding: 0.5rem 1.5rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-gray); }
+        .cms-sidebar .nav-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 1.5rem; color: var(--text-gray); text-decoration: none; font-weight: 500; transition: background 0.2s, color 0.2s; font-size: 0.95rem; }
+        .cms-sidebar .nav-link:hover { background: rgba(255,255,255,0.05); color: var(--text-white); }
+        .cms-sidebar .nav-link.active { background: rgba(34,139,34,0.15); color: var(--primary-green); border-right: 3px solid var(--primary-green); }
+        .cms-sidebar .nav-link i { width: 1.25rem; text-align: center; }
+        .cms-sidebar .sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border-color); }
+        .cms-main { flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: auto; padding: 2rem; }
+        .container { max-width: 1000px; margin: 0 auto; width: 100%; }
         .header {
             display: flex;
             justify-content: space-between;
@@ -50,7 +75,7 @@
         .btn-secondary { background: rgba(255,255,255,0.05); color: var(--text-white); border: 1px solid var(--border-color); }
         .btn-secondary:hover { background: rgba(255,255,255,0.1); }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        .login-container { display: flex; justify-content: center; align-items: center; min-height: 80vh; }
+        .login-container { display: flex; justify-content: center; align-items: center; flex: 1; min-height: 280px; }
         .login-box {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -130,6 +155,36 @@
     </style>
 </head>
 <body>
+    <div class="cms-layout">
+        <aside class="cms-sidebar">
+            <div class="sidebar-brand"><i class="fa-solid fa-person-skiing"></i> Skister CMS</div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Overview</div>
+                    <a href="admin.html" class="nav-link"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+                    <a href="admin.html" class="nav-link"><i class="fa-solid fa-envelope"></i> Waitlist</a>
+                    <a href="admin.html" class="nav-link"><i class="fa-solid fa-comments"></i> Comments</a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Content</div>
+                    <a href="landing-admin.html" class="nav-link active"><i class="fa-solid fa-pen-to-square"></i> Landing page</a>
+                    <a href="blog-admin.html" class="nav-link"><i class="fa-solid fa-newspaper"></i> Blog</a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Site</div>
+                    <a href="index.html" class="nav-link" target="_blank" rel="noopener"><i class="fa-solid fa-external-link"></i> View site</a>
+                    <a href="blog.html" class="nav-link" target="_blank" rel="noopener"><i class="fa-solid fa-newspaper"></i> View blog</a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">System</div>
+                    <a href="admin.html" class="nav-link"><i class="fa-solid fa-gear"></i> Settings</a>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <button type="button" class="btn btn-secondary" style="width:100%;" onclick="cmsLogout()"><i class="fa-solid fa-right-from-bracket"></i> Log out</button>
+            </div>
+        </aside>
+        <main class="cms-main">
     <div class="login-container" id="login-page">
         <div class="login-box">
             <h1><i class="fa-solid fa-pen-to-square"></i> Edit Landing Page</h1>
@@ -149,9 +204,9 @@
         <div class="container">
             <div class="header">
                 <h1><i class="fa-solid fa-pen-to-square"></i> Landing Page Content</h1>
-                <div style="display: flex; gap: 0.75rem;">
-                    <button class="btn btn-secondary" onclick="window.location.href='admin.html'"><i class="fa-solid fa-arrow-left"></i> Back to Admin</button>
-                    <button class="btn btn-secondary" onclick="window.location.href='index.html'" target="_blank"><i class="fa-solid fa-external-link"></i> View Landing Page</button>
+                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                    <a href="admin.html" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Back to Admin</a>
+                    <a href="index.html" class="btn btn-secondary" target="_blank" rel="noopener"><i class="fa-solid fa-external-link"></i> View Landing Page</a>
                     <button class="btn btn-primary" id="save-btn" onclick="saveContent()"><i class="fa-solid fa-save"></i> Save</button>
                 </div>
             </div>
@@ -211,8 +266,16 @@
             <div id="tab-content-modal" class="section-tab-content"><div id="section-fields-modal" class="section-card"></div></div>
         </div>
     </div>
+        </main>
+    </div>
 
     <script>
+        function cmsLogout() {
+            sessionStorage.removeItem('landingAdminAuth');
+            sessionStorage.removeItem('landingAdminPassword');
+            sessionStorage.removeItem('adminAuthenticated');
+            window.location.href = 'admin.html';
+        }
         const API_BASE = 'https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84';
         const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8';
         const LANGUAGES = [{ code: 'de', name: 'Deutsch' }, { code: 'en', name: 'English' }, { code: 'fr', name: 'Français' }, { code: 'es', name: 'Español' }, { code: 'it', name: 'Italiano' }];
@@ -272,7 +335,7 @@
                     sessionStorage.setItem('landingAdminPassword', password);
                     document.getElementById('login-page').style.display = 'none';
                     document.getElementById('editor').classList.add('show');
-                    loadContent();
+                    await loadContent();
                     renderSectionTabs();
                     renderLangTabs();
                     renderFields();
@@ -285,11 +348,11 @@
             }
         }
 
-        function checkAuth() {
+        async function checkAuth() {
             if (sessionStorage.getItem('landingAdminAuth')) {
                 document.getElementById('login-page').style.display = 'none';
                 document.getElementById('editor').classList.add('show');
-                loadContent();
+                await loadContent();
                 renderSectionTabs();
                 renderLangTabs();
                 renderFields();
@@ -320,7 +383,10 @@
 
         async function loadContent() {
             try {
-                const res = await fetch(`${API_BASE}/landing-content`, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+                const res = await fetch(`${API_BASE}/landing-content`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${ANON_KEY}` }
+                });
                 const data = await res.json();
                 if (data.success && data.content) {
                     content = { translations: data.content.translations || {}, images: data.content.images || {} };
