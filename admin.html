@@ -760,15 +760,9 @@
         const API_BASE = 'https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84';
         const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8';
         
-        // Check password on page load
+        // Always require password when opening admin page (never auto-enter from sessionStorage)
         window.addEventListener('DOMContentLoaded', () => {
-            const isAuthenticated = sessionStorage.getItem('adminAuthenticated');
-            if (isAuthenticated) {
-                showDashboard();
-                loadWaitlistData();
-            } else {
-                showLoginPage();
-            }
+            showLoginPage();
         });
         
         // Handle login form submission (verify password with server)
