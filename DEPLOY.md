@@ -4,48 +4,41 @@ This folder is the source for the live site: **https://skisterapp.github.io/Skis
 
 The repo lives in a different account: **https://github.com/skisterapp/Skister-landingpage**
 
+**Note:** This project is **not** configured to push to Skister-landingpage by default. The live repo is stored as the remote `skister-live` (not `origin`), so normal `git push` will not update it. Only push to the live site when you intentionally deploy (see below).
+
 ## Link this folder to the live repo and push
 
-1. **Add the live repo as a remote** (if not already):
+1. **Live repo remote:** The live repo is already added as `skister-live` (not `origin`), so normal pushes do not update it. To deploy intentionally:
+
+2. **Fetch and push to the live repo** (only when you want to update the live site):
 
    ```bash
-   cd /Users/sharanestone/Semprog/Skister/Skister-main/Skister-landingpage-main
-   git remote add live https://github.com/skisterapp/Skister-landingpage.git
+   git fetch skister-live
+   git push skister-live main:main
    ```
 
-   If you already have a different `origin`, keep it. Use `live` for the skisterapp repo.
-
-2. **Fetch and push to the live repo**:
+   Or if you're on `main`:
 
    ```bash
-   git fetch live
-   git push live main:main
+   git push skister-live main
    ```
 
-   Or if the default branch on GitHub is `main` and you're on it:
+3. **If you need to force-push** (only if you're replacing the live site with this content—use with care):
 
    ```bash
-   git push live main
-   ```
-
-3. **If this folder was not cloned from skisterapp/Skister-landingpage**, you may need to force-push once (only if you're replacing the live site with this content):
-
-   ```bash
-   git push live main:main --force
+   git push skister-live main:main --force
    ```
 
    Use with care: this overwrites the history on the live repo.
 
 ## Make this folder the main copy for the live repo
 
-To use this folder as the only copy and push it to skisterapp/Skister-landingpage:
+To push this folder to [skisterapp/Skister-landingpage](https://github.com/skisterapp/Skister-landingpage) (intentional deploy only):
 
 ```bash
-cd /Users/sharanestone/Semprog/Skister/Skister-main/Skister-landingpage-main
-git remote set-url origin https://github.com/skisterapp/Skister-landingpage.git
 git add .
 git commit -m "Update blog thumbnails and landing page"
-git push -u origin main
+git push skister-live main
 ```
 
 You need **write access** to the **skisterapp/Skister-landingpage** repo (member of the org or added as collaborator).

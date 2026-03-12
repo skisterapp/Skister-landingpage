@@ -211,13 +211,15 @@
                 </div>
             </div>
             <div id="message" class="message"></div>
-            <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 0.5rem;">Select a language and section to edit. Save to publish.</p>
+            <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 0.5rem;">Select a language and section to edit. Each language has its own content—update each panel per language, then Save to publish.</p>
             <p style="margin-bottom: 1rem;">
-                <button type="button" class="btn btn-secondary" id="auto-translate-btn" onclick="autoTranslate()" title="Fill other languages from current tab using machine translation">
-                    <i class="fa-solid fa-language"></i> Auto-translate from <span id="auto-translate-lang">Deutsch</span>
+                <button type="button" class="btn btn-secondary" id="auto-translate-btn" disabled title="Auto-translate will be available in a future update">
+                    <i class="fa-solid fa-language"></i> Auto-translate — Coming soon
                 </button>
             </p>
+            <p style="color: var(--text-gray); font-size: 0.85rem; margin-bottom: 0.35rem;">Language to edit</p>
             <div class="tabs" id="lang-tabs"></div>
+            <p style="color: var(--text-gray); font-size: 0.85rem; margin-top: 1rem; margin-bottom: 0.35rem;">Section to edit</p>
             <div class="section-tab-nav" id="section-tab-nav"></div>
             <div id="tab-content-links" class="section-tab-content active">
                 <div class="section-card">
@@ -381,15 +383,41 @@
             }
         }
 
+        function normalizeLoadedContent(data) {
+            if (!data || typeof data !== 'object') return null;
+            var translations = {};
+            var images = {};
+            var c = data.content;
+            if (c && typeof c === 'object') {
+                if (c.translations && typeof c.translations === 'object') {
+                    translations = c.translations;
+                } else if (c.de || c.en || c.fr || c.es || c.it) {
+                    translations = c;
+                }
+                if (c.images && typeof c.images === 'object') images = c.images;
+            }
+            if (data.translations && typeof data.translations === 'object') translations = data.translations;
+            if (data.images && typeof data.images === 'object') images = data.images;
+            return { translations: translations, images: images };
+        }
+
         async function loadContent() {
             try {
                 const res = await fetch(`${API_BASE}/landing-content`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${ANON_KEY}` }
                 });
-                const data = await res.json();
-                if (data.success && data.content) {
-                    content = { translations: data.content.translations || {}, images: data.content.images || {} };
+                const data = await res.json().catch(function () { return {}; });
+                if (res.ok) {
+                    var loaded = normalizeLoadedContent(data);
+                    if (loaded) {
+                        content = {
+                            translations: loaded.translations && typeof loaded.translations === 'object' ? loaded.translations : {},
+                            images: loaded.images && typeof loaded.images === 'object' ? loaded.images : {}
+                        };
+                    }
+                } else {
+                    showMessage('Failed to load content: ' + (data.error || res.status), true);
                 }
                 applyContentToForm();
             } catch (err) {
@@ -398,9 +426,12 @@
         }
 
         function applyContentToForm() {
-            document.getElementById('img-heroMascot').value = content.images.heroMascot || content.images.heroMascotUrl || '';
-            document.getElementById('img-ogImage').value = content.images.ogImage || '';
+            var imgHero = document.getElementById('img-heroMascot');
+            var imgOg = document.getElementById('img-ogImage');
+            if (imgHero) imgHero.value = content.images.heroMascot || content.images.heroMascotUrl || '';
+            if (imgOg) imgOg.value = content.images.ogImage || '';
             toggleImagePreviews();
+            fillFieldValues();
         }
 
         function applyFormToContent() {
@@ -416,11 +447,6 @@
         function renderLangTabs() {
             const html = LANGUAGES.map(l => `<button type="button" class="tab ${l.code === currentLang ? 'active' : ''}" onclick="switchLang('${l.code}')">${l.name}</button>`).join('');
             document.getElementById('lang-tabs').innerHTML = html;
-            const langSpan = document.getElementById('auto-translate-lang');
-            if (langSpan) {
-                const cur = LANGUAGES.find(l => l.code === currentLang);
-                langSpan.textContent = cur ? cur.name : currentLang;
-            }
         }
 
         function switchLang(lang) {
@@ -547,47 +573,8 @@
             btn.innerHTML = '<i class="fa-solid fa-save"></i> Save';
         }
 
-        async function autoTranslate() {
-            applyFormToContent();
-            const texts = content.translations[currentLang];
-            if (!texts || Object.keys(texts).length === 0) {
-                showMessage('Edit and fill at least one field in the current language, then click Auto-translate.', true);
-                return;
-            }
-            const password = sessionStorage.getItem('landingAdminPassword');
-            const btn = document.getElementById('auto-translate-btn');
-            if (btn) {
-                btn.disabled = true;
-                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Translating...';
-            }
-            try {
-                const res = await fetch(`${API_BASE}/landing-translate`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${ANON_KEY}`,
-                        'X-Admin-Password': password || ''
-                    },
-                    body: JSON.stringify({ sourceLang: currentLang, texts })
-                });
-                const data = await res.json();
-                if (data.success && data.translations) {
-                    Object.keys(data.translations).forEach(function (lang) {
-                        if (!content.translations[lang]) content.translations[lang] = {};
-                        Object.assign(content.translations[lang], data.translations[lang]);
-                    });
-                    showMessage('Other languages filled. Review and Save to publish.', false);
-                } else {
-                    showMessage(data.error || 'Auto-translate failed.', true);
-                }
-            } catch (e) {
-                showMessage('Auto-translate failed.', true);
-            }
-            if (btn) {
-                btn.disabled = false;
-                var curName = (LANGUAGES.find(function (l) { return l.code === currentLang; }) || {}).name || currentLang;
-                btn.innerHTML = '<i class="fa-solid fa-language"></i> Auto-translate from <span id="auto-translate-lang">' + curName + '</span>';
-            }
+        function autoTranslate() {
+            showMessage('Auto-translate is coming soon. Edit each language using the language and section tabs above.', false);
         }
 
         window.addEventListener('DOMContentLoaded', checkAuth);
