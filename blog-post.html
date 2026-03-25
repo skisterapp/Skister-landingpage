@@ -671,7 +671,12 @@
                 const data = await response.json();
                 
                 if (data.success && data.post) {
-                    renderBlogPost(data.post);
+                    const post = data.post;
+                    if (post.archived || post.showOnWebsite === false) {
+                        showError('This post is not available.');
+                        return;
+                    }
+                    renderBlogPost(post);
                 } else {
                     showError('Blog post not found');
                 }
@@ -729,7 +734,7 @@
                         </div>
                     </div>
                     
-                    ${imgUrl ? `<img src="${imgUrl}" alt="${safeTitle}" class="featured-image" decoding="async" fetchpriority="high" onerror="this.style.display=\'none\'">` : ''}
+                    ${imgUrl && imgUrl !== BLOG_PLACEHOLDER_IMAGE ? `<img src="${imgUrl}" alt="${safeTitle}" class="featured-image" decoding="async" fetchpriority="high" onerror="this.style.display=\'none\'">` : ''}
                     
                     <div class="article-content" id="article-content">
                         ${post.content}

@@ -500,6 +500,7 @@
                     <div class="nav-section-title">Content</div>
                     <a href="landing-admin.html" class="nav-link"><i class="fa-solid fa-pen-to-square"></i> Landing page</a>
                     <a href="blog-admin.html" class="nav-link active"><i class="fa-solid fa-newspaper"></i> Blog</a>
+                    <a href="admin.html#seo" class="nav-link"><i class="fa-solid fa-magnifying-glass-chart"></i> SEO &amp; publish</a>
                 </div>
                 <div class="nav-section">
                     <div class="nav-section-title">Site</div>
@@ -914,10 +915,7 @@
                     document.getElementById('history-empty').style.display = 'block';
                     document.getElementById('history-empty').textContent = 'Loading history...';
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                    loadPostHistory().then(function () {
-                        var el = document.getElementById('history-section');
-                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    });
+                    loadPostHistory();
                 }
             } catch (error) {
                 showMessage('Failed to load post for editing', 'error');
@@ -1252,7 +1250,7 @@
                                 var dateStr = c.createdAt ? new Date(c.createdAt).toLocaleString() : '';
                                 var author = (c.authorName || 'Anonymous').replace(/</g, '&lt;');
                                 var body = (c.content || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
-                                var status = c.status || 'pending';
+                                var status = c.moderationStatus || c.status || 'pending';
                                 var statusLabel = status === 'approved' ? 'Published' : status === 'rejected' ? 'Rejected' : 'Pending';
                                 html += '<div class="comment-admin-item" data-comment-id="' + (c.id || '') + '"><div class="comment-meta"><strong>' + author + '</strong> · ' + dateStr + ' · ' + statusLabel + '</div><div class="comment-text">' + body + '</div><div class="comment-actions"><button type="button" class="btn btn-primary btn-small" onclick="setCommentStatus(\'' + (c.id || '').replace(/'/g, "\\'") + '\', \'approved\')"><i class="fa-solid fa-check"></i> Publish</button><button type="button" class="btn btn-secondary btn-small" onclick="setCommentStatus(\'' + (c.id || '').replace(/'/g, "\\'") + '\', \'rejected\')"><i class="fa-solid fa-times"></i> Reject</button><button type="button" class="btn btn-danger btn-small" onclick="deleteComment(\'' + (c.id || '').replace(/'/g, "\\'") + '\')"><i class="fa-solid fa-trash"></i> Delete</button></div></div>';
                             });

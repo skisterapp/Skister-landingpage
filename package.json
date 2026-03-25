@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "supabase:deploy": "supabase functions deploy make-server-080ebf84"
+    "supabase:deploy": "supabase functions deploy make-server-080ebf84",
+    "generate:blogs": "node scripts/generateBlogs.js"
   }
 }

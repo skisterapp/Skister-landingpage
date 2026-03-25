@@ -204,6 +204,15 @@
         .restore-zone { border: 2px dashed var(--border); border-radius: 12px; padding: 1.5rem; text-align: center; color: var(--text-muted); margin-bottom: 1rem; }
         .restore-zone.has-file { border-color: var(--primary); color: var(--primary); }
 
+        .seo-cms-frame {
+            width: 100%;
+            min-height: 520px;
+            height: min(82vh, 920px);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: #0c0e12;
+        }
+
         /* Password reset in settings */
         .password-fields .form-group { margin-bottom: 1rem; }
         .password-fields input { max-width: 320px; }
@@ -247,6 +256,7 @@
                     <div class="nav-section-title">Content</div>
                     <a href="landing-admin.html" class="nav-link"><i class="fa-solid fa-pen-to-square"></i> Landing page</a>
                     <a href="blog-admin.html" class="nav-link"><i class="fa-solid fa-newspaper"></i> Blog</a>
+                    <button type="button" class="nav-link" data-page="seo"><i class="fa-solid fa-magnifying-glass-chart"></i> SEO &amp; publish</button>
                 </div>
                 <div class="nav-section">
                     <div class="nav-section-title">Site</div>
@@ -282,6 +292,7 @@
                         <div class="card-body" style="display:flex;flex-wrap:wrap;gap:0.75rem;">
                             <a href="landing-admin.html" class="btn btn-secondary"><i class="fa-solid fa-pen-to-square"></i> Edit landing page</a>
                             <a href="blog-admin.html" class="btn btn-secondary"><i class="fa-solid fa-newspaper"></i> Manage blog</a>
+                            <button type="button" class="btn btn-secondary" onclick="switchPage('seo')"><i class="fa-solid fa-magnifying-glass-chart"></i> SEO &amp; publish</button>
                             <a href="index.html" class="btn btn-secondary" target="_blank" rel="noopener"><i class="fa-solid fa-external-link"></i> View landing</a>
                             <a href="blog.html" class="btn btn-secondary" target="_blank" rel="noopener"><i class="fa-solid fa-newspaper"></i> View blog</a>
                         </div>
@@ -314,6 +325,24 @@
                         <div class="card-body">
                             <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;">Review and approve or reject comments. Uses your admin password.</p>
                             <div id="comments-admin-content"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEO CMS (Supabase sign-in inside iframe) -->
+                <div id="page-seo" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">SEO &amp; publish</div>
+                        <div class="card-body">
+                            <p style="color:var(--text-muted);font-size:0.95rem;margin-bottom:1rem;">
+                                Site SEO, article SEO, blog visibility, guest comments, team, and GitHub publish run here.
+                                This panel uses <strong>Supabase email / password</strong> (not your Skister admin password).
+                                Use an account that is in <code style="color:var(--primary);">LANDING_CMS_BOOTSTRAP_ADMIN_IDS</code> or added under Team.
+                            </p>
+                            <p style="margin-bottom:1rem;">
+                                <a href="seo-admin.html" target="_blank" rel="noopener" class="btn btn-secondary btn-small"><i class="fa-solid fa-up-right-from-square"></i> Open in full window</a>
+                            </p>
+                            <iframe id="seo-cms-iframe" class="seo-cms-frame" title="Skister SEO CMS" src="seo-admin.html?embed=1"></iframe>
                         </div>
                     </div>
                 </div>
@@ -400,7 +429,7 @@
                     sessionStorage.setItem('landingAdminPassword', password);
                     document.getElementById('login-page').style.display = 'none';
                     document.getElementById('cms').classList.add('show');
-                    switchPage('dashboard');
+                    switchPage(location.hash === '#seo' ? 'seo' : 'dashboard');
                     loadWaitlistData();
                 } else {
                     loginError.classList.add('show');
@@ -436,9 +465,14 @@
             document.querySelectorAll('.tab-content[id^="page-"]').forEach(el => {
                 el.classList.toggle('active', el.id === 'page-' + pageId);
             });
-            const titles = { dashboard: 'Dashboard', waitlist: 'Waitlist', comments: 'Comments', settings: 'Settings' };
+            const titles = { dashboard: 'Dashboard', waitlist: 'Waitlist', comments: 'Comments', seo: 'SEO & publish', settings: 'Settings' };
             document.getElementById('page-title').textContent = titles[pageId] || pageId;
             if (pageId === 'comments') loadAdminComments();
+            if (pageId === 'seo') {
+                try { history.replaceState(null, '', location.pathname + location.search + '#seo'); } catch (e) { /* ignore */ }
+            } else if (location.hash === '#seo') {
+                try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* ignore */ }
+            }
         }
 
         document.querySelectorAll('.nav-link[data-page]').forEach(btn => {
