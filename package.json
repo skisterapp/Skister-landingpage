@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "supabase:deploy": "cp supabase/functions/make-server-080ebf84/index.tsx supabase/functions/make-server-080ebf84/index.ts && supabase functions deploy make-server-080ebf84",
+    "supabase:deploy": "cp supabase/functions/make-server-080ebf84/index.tsx supabase/functions/make-server-080ebf84/index.ts && supabase functions deploy make-server-080ebf84 --no-verify-jwt",
     "generate:blogs": "node scripts/generateBlogs.js"
   }
 }
