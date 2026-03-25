@@ -380,62 +380,15 @@
             line-height: 1.6;
         }
         
-        /* Platform Badges */
-        .platform-section {
-            text-align: center;
-            padding: 3rem 2rem;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .platform-badges {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-        
-        .badge {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 1.5rem 2rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        
-        .badge:hover {
-            background: rgba(34, 139, 34, 0.1);
-            border-color: var(--primary-green);
-        }
-        
-        .badge-icon {
-            font-size: 2rem;
-            color: var(--primary-green);
-        }
-        
-        .badge-text h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.25rem;
-        }
-        
-        .badge-text p {
-            font-size: 0.9rem;
-            color: var(--text-gray);
-        }
-        
         /* Home: latest blog strip (2×2) */
         .home-blog-strip {
             display: none;
-            padding: 5rem 2rem;
+            padding: 6rem 2rem 6.5rem;
             max-width: 960px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
         }
         .home-blog-strip .section-title {
             margin-bottom: 0.75rem;
@@ -444,14 +397,14 @@
             text-align: center;
             color: var(--text-gray);
             max-width: 560px;
-            margin: 0 auto 2.5rem;
-            font-size: 1.05rem;
-            line-height: 1.65;
+            margin: 0 auto 3rem;
+            font-size: 1.08rem;
+            line-height: 1.7;
         }
         .home-blog-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 1.25rem;
+            gap: 1.5rem;
         }
         .home-blog-card {
             display: flex;
@@ -518,13 +471,136 @@
             font-size: 0.85em;
         }
         
+        /* Download / app stores — full section */
+        .download-section {
+            position: relative;
+            z-index: 2;
+            padding: 5.5rem 2rem 6rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: linear-gradient(180deg, rgba(34, 139, 34, 0.07) 0%, rgba(10, 10, 10, 0.4) 45%, rgba(10, 10, 10, 0.95) 100%);
+        }
+        .download-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .download-section .section-title {
+            margin-bottom: 1rem;
+        }
+        .download-subtitle {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            max-width: 640px;
+            margin: 0 auto 3rem;
+        }
+        .download-cards {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.75rem;
+            align-items: stretch;
+        }
+        .download-card {
+            font: inherit;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1.75rem 1.75rem 1.5rem;
+            min-height: 220px;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.12);
+            background: linear-gradient(155deg, rgba(40, 40, 40, 0.95) 0%, rgba(18, 18, 18, 0.98) 100%);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            color: var(--text-white);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+        }
+        .download-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: rgba(45, 168, 45, 0.65);
+            box-shadow: 0 20px 48px rgba(34, 139, 34, 0.22), 0 12px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            background: linear-gradient(155deg, rgba(50, 55, 50, 0.98) 0%, rgba(22, 32, 24, 0.99) 100%);
+        }
+        .download-card:focus-visible {
+            outline: 3px solid var(--primary-green);
+            outline-offset: 3px;
+        }
+        .download-card:active {
+            transform: translateY(-2px) scale(1.01);
+        }
+        .download-card-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--primary-green-light);
+            background: rgba(34, 139, 34, 0.2);
+            border: 1px solid rgba(45, 168, 45, 0.45);
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            margin-bottom: 1.25rem;
+        }
+        .download-card-icon-wrap {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(34, 139, 34, 0.15);
+            border: 1px solid rgba(45, 168, 45, 0.35);
+            margin-bottom: 1.25rem;
+            font-size: 2.1rem;
+            color: var(--primary-green-light);
+        }
+        .download-card h3 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            margin: 0 0 0.35rem;
+            letter-spacing: -0.02em;
+        }
+        .download-card-store {
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            margin: 0 0 auto;
+            line-height: 1.45;
+        }
+        .download-card-hint {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.35rem;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+        .download-card-hint i {
+            transition: transform 0.2s ease;
+        }
+        .download-card:hover .download-card-hint i {
+            transform: translateX(4px);
+        }
+        @media (max-width: 900px) {
+            .download-cards {
+                grid-template-columns: 1fr;
+                max-width: 420px;
+                margin: 0 auto;
+            }
+            .download-card {
+                min-height: auto;
+            }
+        }
+        
         /* FAQ Section */
         .faq-section {
-            padding: 5rem 2rem;
+            padding: 6rem 2rem 5rem;
             max-width: 800px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
         }
         
         .faq-item {
@@ -763,6 +839,7 @@
         </div>
         <div class="nav-links">
             <a onclick="scrollToSection('features')" data-i18n="nav.features">Features</a>
+            <a onclick="scrollToSection('download')" data-i18n="nav.download">Download</a>
             <a onclick="scrollToSection('faq')" data-i18n="nav.faq">FAQ</a>
             <a href="blog.html" data-i18n="nav.blog">Blog</a>
             <a onclick="openModal('contact')" data-i18n="nav.contact">Contact</a>
@@ -836,34 +913,6 @@
         </div>
     </section>
     
-    <!-- Platform Section -->
-    <section class="platform-section">
-        <h2 class="section-title" data-i18n="platform.title">Bald verfügbar auf</h2>
-        <div class="platform-badges">
-            <div class="badge" onclick="alert('Coming Soon...')">
-                <div class="badge-icon"><i class="fa-brands fa-apple"></i></div>
-                <div class="badge-text">
-                    <h4>iOS</h4>
-                    <p data-i18n="platform.ios">App Store</p>
-                </div>
-            </div>
-            <div class="badge" onclick="alert('Coming Soon...')">
-                <div class="badge-icon"><i class="fa-brands fa-android"></i></div>
-                <div class="badge-text">
-                    <h4>Android</h4>
-                    <p data-i18n="platform.android">Google Play</p>
-                </div>
-            </div>
-            <div class="badge" onclick="alert('Coming Soon...')">
-                <div class="badge-icon"><i class="fa-solid fa-globe"></i></div>
-                <div class="badge-text">
-                    <h4>Web</h4>
-                    <p data-i18n="platform.web">Browser</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
     <!-- Latest from the blog (2×2) -->
     <section class="home-blog-strip" id="home-blog-strip" aria-labelledby="home-blog-heading">
         <h2 class="section-title" id="home-blog-heading" data-i18n="home.blog.title">News from the slopes</h2>
@@ -871,6 +920,37 @@
         <div class="home-blog-grid" id="home-blog-grid" role="list"></div>
         <div class="home-blog-footer">
             <a href="blog.html" class="home-blog-all"><span data-i18n="home.blog.viewAll">Browse all posts</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+    </section>
+    
+    <!-- Get the app — full-width download section -->
+    <section class="download-section" id="download" aria-labelledby="download-heading">
+        <div class="download-inner">
+            <h2 class="section-title" id="download-heading" data-i18n="download.title">Get Skister</h2>
+            <p class="download-subtitle" data-i18n="download.subtitle">iOS, Android, and the web — launching soon. Pick your platform; store links will appear here.</p>
+            <div class="download-cards" role="group" aria-label="App stores">
+                <button type="button" class="download-card" onclick="showComingSoon()" aria-label="iOS App Store — coming soon">
+                    <span class="download-card-badge" data-i18n="download.badge">Coming soon</span>
+                    <span class="download-card-icon-wrap" aria-hidden="true"><i class="fa-brands fa-apple"></i></span>
+                    <h3>iOS</h3>
+                    <p class="download-card-store" data-i18n="platform.ios">App Store</p>
+                    <span class="download-card-hint" data-i18n="download.hint">Tap for updates <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="download-card" onclick="showComingSoon()" aria-label="Google Play — coming soon">
+                    <span class="download-card-badge" data-i18n="download.badge">Coming soon</span>
+                    <span class="download-card-icon-wrap" aria-hidden="true"><i class="fa-brands fa-android"></i></span>
+                    <h3>Android</h3>
+                    <p class="download-card-store" data-i18n="platform.android">Google Play</p>
+                    <span class="download-card-hint" data-i18n="download.hint">Tap for updates <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="download-card" onclick="showComingSoon()" aria-label="Web app — coming soon">
+                    <span class="download-card-badge" data-i18n="download.badge">Coming soon</span>
+                    <span class="download-card-icon-wrap" aria-hidden="true"><i class="fa-solid fa-globe"></i></span>
+                    <h3>Web</h3>
+                    <p class="download-card-store" data-i18n="platform.web">Browser</p>
+                    <span class="download-card-hint" data-i18n="download.hint">Tap for updates <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+                </button>
+            </div>
         </div>
     </section>
     
@@ -954,6 +1034,7 @@
                 <h3 data-i18n="footer.product">Produkt</h3>
                 <div class="footer-links">
                     <a onclick="scrollToSection('features')" data-i18n="footer.features">Funktionen</a>
+                    <a onclick="scrollToSection('download')" data-i18n="footer.download">Download</a>
                     <a onclick="scrollToSection('faq')" data-i18n="footer.faq">FAQ</a>
                     <a href="blog.html" data-i18n="nav.blog">Blog</a>
                     <a onclick="openModal('feedback')" data-i18n="footer.feedback">Feedback</a>
@@ -1037,6 +1118,7 @@
                 'nav.features': 'Funktionen',
                 'nav.faq': 'FAQ',
                 'nav.blog': 'Blog',
+                'nav.download': 'Download',
                 'nav.contact': 'Kontakt',
                 'hero.title': 'Skister',
                 'hero.tagline': 'Teile die Pisten',
@@ -1068,6 +1150,11 @@
                 'home.blog.title': 'Neues von der Piste',
                 'home.blog.subtitle': 'Tipps zur Ausrüstung, Updates und Geschichten vom Skister-Team.',
                 'home.blog.viewAll': 'Alle Beiträge lesen',
+                'download.title': 'Skister holen',
+                'download.subtitle': 'iOS, Android und Web — bald startklar. Wähle deine Plattform; die Store-Links folgen in Kürze.',
+                'download.badge': 'Demnächst',
+                'download.hint': 'Tippen für Infos',
+                'download.comingSoonAlert': 'Demnächst! Wir melden uns, sobald die App verfügbar ist.',
                 'faq.title': 'Häufig gestellte Fragen',
                 'faq.q1': 'Wie funktioniert Skister?',
                 'faq.a1': 'Skister ist eine kostenlose, familienfreundliche Plattform zum Teilen von Ski-Ausrüstung innerhalb deines vertrauenswürdigen Netzwerks. Liste deine Ausrüstung auf, durchsuche was andere geteilt haben und koordiniere lokale Abholungen.',
@@ -1083,6 +1170,7 @@
                 'disclaimer.text': 'Skister ist nur ein Kommunikations-Tool. Wir übernehmen keine Verantwortung für geliehene, beschädigte oder verlorene Ausrüstung. Nutze die App auf eigenes Risiko. Alle Austausche erfolgen direkt zwischen dir und deinen Bekannten.',
                 'footer.product': 'Produkt',
                 'footer.features': 'Funktionen',
+                'footer.download': 'Download',
                 'footer.faq': 'FAQ',
                 'footer.feedback': 'Feedback',
                 'footer.legal': 'Rechtliches',
@@ -1121,6 +1209,7 @@
                 'nav.features': 'Features',
                 'nav.faq': 'FAQ',
                 'nav.blog': 'Blog',
+                'nav.download': 'Download',
                 'nav.contact': 'Contact',
                 'hero.title': 'Skister',
                 'hero.tagline': 'Share the Slopes',
@@ -1152,6 +1241,11 @@
                 'home.blog.title': 'News from the slopes',
                 'home.blog.subtitle': 'Gear tips, product updates, and stories from the Skister team.',
                 'home.blog.viewAll': 'Browse all posts',
+                'download.title': 'Get Skister',
+                'download.subtitle': 'iOS, Android, and the web — launching soon. Choose your platform; store links will appear here.',
+                'download.badge': 'Coming soon',
+                'download.hint': 'Tap for updates',
+                'download.comingSoonAlert': 'Coming soon! We will notify you when the app is ready.',
                 'faq.title': 'Frequently Asked Questions',
                 'faq.q1': 'How does Skister work?',
                 'faq.a1': 'Skister is a free, family-friendly platform for sharing ski equipment within your trusted network. List your equipment, browse what others have shared, and coordinate local pickups.',
@@ -1167,6 +1261,7 @@
                 'disclaimer.text': 'Skister is only a communication tool. We assume no responsibility for borrowed, damaged, or lost equipment. Use the app at your own risk. All exchanges occur directly between you and your acquaintances.',
                 'footer.product': 'Product',
                 'footer.features': 'Features',
+                'footer.download': 'Download',
                 'footer.faq': 'FAQ',
                 'footer.feedback': 'Feedback',
                 'footer.legal': 'Legal',
@@ -1205,6 +1300,7 @@
                 'nav.features': 'Fonctionnalités',
                 'nav.faq': 'FAQ',
                 'nav.blog': 'Blog',
+                'nav.download': 'Télécharger',
                 'nav.contact': 'Contact',
                 'hero.title': 'Skister',
                 'hero.tagline': 'Partagez les Pistes',
@@ -1236,6 +1332,11 @@
                 'home.blog.title': 'Nouvelles des pistes',
                 'home.blog.subtitle': 'Conseils matériel, actus et coulisses de l’équipe Skister.',
                 'home.blog.viewAll': 'Tous les articles',
+                'download.title': 'Obtenir Skister',
+                'download.subtitle': 'iOS, Android et web — lancement imminent. Choisissez votre plateforme ; les liens des stores arrivent.',
+                'download.badge': 'Bientôt',
+                'download.hint': 'Appuyer pour plus d’infos',
+                'download.comingSoonAlert': 'Bientôt disponible ! Nous vous préviendrons quand l’app sera prête.',
                 'faq.title': 'Questions Fréquemment Posées',
                 'faq.q1': 'Comment fonctionne Skister?',
                 'faq.a1': 'Skister est une plateforme gratuite et conviviale pour partager du matériel de ski au sein de votre réseau de confiance. Listez votre équipement, parcourez ce que d\'autres ont partagé et coordonnez les retraits locaux.',
@@ -1251,6 +1352,7 @@
                 'disclaimer.text': 'Skister n\'est qu\'un outil de communication. Nous n\'assumons aucune responsabilité pour l\'équipement emprunté, endommagé ou perdu. Utilisez l\'application à vos propres risques. Tous les échanges se font directement entre vous et vos connaissances.',
                 'footer.product': 'Produit',
                 'footer.features': 'Fonctionnalités',
+                'footer.download': 'Télécharger',
                 'footer.faq': 'FAQ',
                 'footer.feedback': 'Commentaires',
                 'footer.legal': 'Légal',
@@ -1289,6 +1391,7 @@
                 'nav.features': 'Características',
                 'nav.faq': 'Preguntas Frecuentes',
                 'nav.blog': 'Blog',
+                'nav.download': 'Descargar',
                 'nav.contact': 'Contacto',
                 'hero.title': 'Skister',
                 'hero.tagline': 'Comparte las Pistas',
@@ -1316,6 +1419,11 @@
                 'home.blog.title': 'Novedades desde la pista',
                 'home.blog.subtitle': 'Consejos, novedades e historias del equipo Skister.',
                 'home.blog.viewAll': 'Ver todas las entradas',
+                'download.title': 'Consigue Skister',
+                'download.subtitle': 'iOS, Android y web — muy pronto. Elige tu plataforma; los enlaces a las tiendas llegarán aquí.',
+                'download.badge': 'Próximamente',
+                'download.hint': 'Toca para más información',
+                'download.comingSoonAlert': '¡Próximamente! Te avisaremos cuando la app esté lista.',
                 'faq.title': 'Preguntas Frecuentes',
                 'faq.q1': '¿Cómo funciona Skister?',
                 'faq.a1': 'Skister es una plataforma gratuita y familiar para compartir equipo de esquí dentro de tu red de confianza. Lista tu equipo, explora lo que otros han compartido y coordina recogidas locales.',
@@ -1331,6 +1439,7 @@
                 'disclaimer.text': 'Skister es solo una herramienta de comunicación. No asumimos responsabilidad por equipo prestado, dañado o perdido. Usa la aplicación bajo tu propio riesgo. Todos los intercambios ocurren directamente entre tú y tus conocidos.',
                 'footer.product': 'Producto',
                 'footer.features': 'Características',
+                'footer.download': 'Descargar',
                 'footer.faq': 'Preguntas Frecuentes',
                 'footer.feedback': 'Comentarios',
                 'footer.legal': 'Legal',
@@ -1369,6 +1478,7 @@
                 'nav.features': 'Funzionalità',
                 'nav.faq': 'Domande Frequenti',
                 'nav.blog': 'Blog',
+                'nav.download': 'Download',
                 'nav.contact': 'Contatto',
                 'hero.title': 'Skister',
                 'hero.tagline': 'Condividi le Piste',
@@ -1400,6 +1510,11 @@
                 'home.blog.title': 'Novità dalla pista',
                 'home.blog.subtitle': 'Consigli, aggiornamenti e storie dal team Skister.',
                 'home.blog.viewAll': 'Vedi tutti gli articoli',
+                'download.title': 'Scarica Skister',
+                'download.subtitle': 'iOS, Android e web — in arrivo. Scegli la tua piattaforma; i link agli store arriveranno qui.',
+                'download.badge': 'In arrivo',
+                'download.hint': 'Tocca per aggiornamenti',
+                'download.comingSoonAlert': 'In arrivo! Ti avvisiamo quando l’app sarà pronta.',
                 'faq.title': 'Domande Frequenti',
                 'faq.q1': 'Come funziona Skister?',
                 'faq.a1': 'Skister è una piattaforma gratuita per famiglie per condividere attrezzatura da sci all\'interno della tua rete di fiducia. Elenca la tua attrezzatura, esplora cosa hanno condiviso gli altri e coordina ritiri locali.',
@@ -1415,6 +1530,7 @@
                 'disclaimer.text': 'Skister è solo uno strumento di comunicazione. Non assumiamo responsabilità per attrezzatura prestata, danneggiata o persa. Usa l\'app a tuo rischio. Tutti gli scambi avvengono direttamente tra te e i tuoi conoscenti.',
                 'footer.product': 'Prodotto',
                 'footer.features': 'Funzionalità',
+                'footer.download': 'Download',
                 'footer.faq': 'Domande Frequenti',
                 'footer.feedback': 'Feedback',
                 'footer.legal': 'Legale',
@@ -1673,6 +1789,12 @@
             if (element) {
                 element.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
+        }
+
+        function showComingSoon() {
+            const lang = document.documentElement.getAttribute('lang') || 'de';
+            const t = translations[lang] || translations['de'];
+            alert(t['download.comingSoonAlert'] || 'Coming soon!');
         }
         
         // Admin Panel Access
