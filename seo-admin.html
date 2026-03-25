@@ -397,7 +397,6 @@
     function api(path, opts) {
         opts = opts || {};
         var h = Object.assign({
-            apikey: SUPABASE_ANON_KEY,
             Authorization: 'Bearer ' + (session && session.access_token ? session.access_token : SUPABASE_ANON_KEY)
         }, opts.headers || {});
         return fetch(EDGE + path, Object.assign({}, opts, { headers: h })).then(function (r) {
@@ -613,7 +612,7 @@
     function loadSeo() {
         if (cmsRole !== 'admin' && cmsRole !== 'moderator') return;
         fetch(EDGE + '/site-seo', {
-            headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
+            headers: { Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
         }).then(function (r) { return r.json(); }).then(function (d) {
             var s = d.seo || {};
             document.getElementById('seoMetaTitle').value = s.metaTitle || '';
