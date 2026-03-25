@@ -27,5 +27,5 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add blog/ sitemap.xml || true
-          git diff --staged --quiet || (git commit -m "chore: regenerate static blog and sitemap" && git push)
+          git add blog/ sitemap.xml robots.txt || true
+          git diff --staged --quiet || (git commit -m "chore: regenerate static blog, sitemap, robots" && git push)
