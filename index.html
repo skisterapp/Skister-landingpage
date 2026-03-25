@@ -471,16 +471,17 @@
             font-size: 0.85em;
         }
         
-        /* Download / app stores — full section */
+        /* Download / app stores — centered, light touch */
         .download-section {
             position: relative;
             z-index: 2;
             padding: 5.5rem 2rem 6rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            background: linear-gradient(180deg, rgba(34, 139, 34, 0.07) 0%, rgba(10, 10, 10, 0.4) 45%, rgba(10, 10, 10, 0.95) 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(34, 139, 34, 0.12) 0%, transparent 55%),
+                var(--bg-dark);
         }
         .download-inner {
-            max-width: 1100px;
+            max-width: 920px;
             margin: 0 auto;
             text-align: center;
         }
@@ -489,107 +490,83 @@
         }
         .download-subtitle {
             color: var(--text-gray);
-            font-size: 1.1rem;
-            line-height: 1.7;
-            max-width: 640px;
-            margin: 0 auto 3rem;
+            font-size: 1.05rem;
+            line-height: 1.75;
+            max-width: 520px;
+            margin: 0 auto 2.75rem;
         }
         .download-cards {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1.75rem;
+            gap: 1.25rem;
             align-items: stretch;
         }
         .download-card {
             font: inherit;
-            text-align: left;
             cursor: pointer;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            padding: 1.75rem 1.75rem 1.5rem;
-            min-height: 220px;
-            border-radius: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.12);
-            background: linear-gradient(155deg, rgba(40, 40, 40, 0.95) 0%, rgba(18, 18, 18, 0.98) 100%);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem 1.25rem;
+            border-radius: 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
             color: var(--text-white);
-            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+            gap: 0.65rem;
+            transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+            box-shadow: none;
         }
         .download-card:hover {
-            transform: translateY(-6px) scale(1.02);
-            border-color: rgba(45, 168, 45, 0.65);
-            box-shadow: 0 20px 48px rgba(34, 139, 34, 0.22), 0 12px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            background: linear-gradient(155deg, rgba(50, 55, 50, 0.98) 0%, rgba(22, 32, 24, 0.99) 100%);
+            transform: translateY(-4px);
+            border-color: rgba(34, 139, 34, 0.45);
+            background: rgba(34, 139, 34, 0.08);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
         }
         .download-card:focus-visible {
-            outline: 3px solid var(--primary-green);
+            outline: 2px solid var(--primary-green);
             outline-offset: 3px;
         }
         .download-card:active {
-            transform: translateY(-2px) scale(1.01);
-        }
-        .download-card-badge {
-            display: inline-block;
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--primary-green-light);
-            background: rgba(34, 139, 34, 0.2);
-            border: 1px solid rgba(45, 168, 45, 0.45);
-            padding: 0.35rem 0.75rem;
-            border-radius: 999px;
-            margin-bottom: 1.25rem;
+            transform: translateY(-1px);
         }
         .download-card-icon-wrap {
-            width: 4rem;
-            height: 4rem;
-            border-radius: 16px;
+            width: 5.25rem;
+            height: 5.25rem;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(34, 139, 34, 0.15);
-            border: 1px solid rgba(45, 168, 45, 0.35);
-            margin-bottom: 1.25rem;
-            font-size: 2.1rem;
+            margin: 0 auto;
+            background: rgba(34, 139, 34, 0.12);
+            border: 1px solid rgba(34, 139, 34, 0.25);
+            font-size: 2.35rem;
             color: var(--primary-green-light);
+            transition: background 0.22s ease, transform 0.22s ease;
+        }
+        .download-card:hover .download-card-icon-wrap {
+            background: rgba(34, 139, 34, 0.2);
+            transform: scale(1.05);
         }
         .download-card h3 {
-            font-size: 1.45rem;
+            font-size: 1.35rem;
             font-weight: 700;
-            margin: 0 0 0.35rem;
+            margin: 0.35rem 0 0;
             letter-spacing: -0.02em;
         }
         .download-card-store {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             color: var(--text-gray);
-            margin: 0 0 auto;
-            line-height: 1.45;
-        }
-        .download-card-hint {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 1.35rem;
-            font-size: 0.88rem;
-            font-weight: 600;
-            color: var(--primary-green);
-        }
-        .download-card-hint i {
-            transition: transform 0.2s ease;
-        }
-        .download-card:hover .download-card-hint i {
-            transform: translateX(4px);
+            margin: 0;
+            line-height: 1.5;
+            max-width: 11rem;
         }
         @media (max-width: 900px) {
             .download-cards {
                 grid-template-columns: 1fr;
-                max-width: 420px;
+                max-width: 22rem;
                 margin: 0 auto;
-            }
-            .download-card {
-                min-height: auto;
             }
         }
         
@@ -929,26 +906,20 @@
             <h2 class="section-title" id="download-heading" data-i18n="download.title">Get Skister</h2>
             <p class="download-subtitle" data-i18n="download.subtitle">iOS, Android, and the web — launching soon. Pick your platform; store links will appear here.</p>
             <div class="download-cards" role="group" aria-label="App stores">
-                <button type="button" class="download-card" onclick="showComingSoon()" aria-label="iOS App Store — coming soon">
-                    <span class="download-card-badge" data-i18n="download.badge">Coming soon</span>
+                <button type="button" class="download-card" onclick="showComingSoon()" aria-label="iOS — App Store (coming soon)">
                     <span class="download-card-icon-wrap" aria-hidden="true"><i class="fa-brands fa-apple"></i></span>
                     <h3>iOS</h3>
                     <p class="download-card-store" data-i18n="platform.ios">App Store</p>
-                    <span class="download-card-hint" data-i18n="download.hint">Tap for updates <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
                 </button>
-                <button type="button" class="download-card" onclick="showComingSoon()" aria-label="Google Play — coming soon">
-                    <span class="download-card-badge" data-i18n="download.badge">Coming soon</span>
+                <button type="button" class="download-card" onclick="showComingSoon()" aria-label="Android — Google Play (coming soon)">
                     <span class="download-card-icon-wrap" aria-hidden="true"><i class="fa-brands fa-android"></i></span>
                     <h3>Android</h3>
                     <p class="download-card-store" data-i18n="platform.android">Google Play</p>
-                    <span class="download-card-hint" data-i18n="download.hint">Tap for updates <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
                 </button>
-                <button type="button" class="download-card" onclick="showComingSoon()" aria-label="Web app — coming soon">
-                    <span class="download-card-badge" data-i18n="download.badge">Coming soon</span>
+                <button type="button" class="download-card" onclick="showComingSoon()" aria-label="Web app — browser (coming soon)">
                     <span class="download-card-icon-wrap" aria-hidden="true"><i class="fa-solid fa-globe"></i></span>
                     <h3>Web</h3>
                     <p class="download-card-store" data-i18n="platform.web">Browser</p>
-                    <span class="download-card-hint" data-i18n="download.hint">Tap for updates <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
                 </button>
             </div>
         </div>
