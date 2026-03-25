@@ -53,6 +53,8 @@ This project mirrors the **SeaDays-style** SEO CMS and static blog pipeline. The
 
 ## Deploy notes
 
+Supabase CLI uploads **`index.ts`** as the function entrypoint. Edits are in **`index.tsx`**; `npm run supabase:deploy` copies `index.tsx` → `index.ts` before deploy so routes like `/landing-cms/me` are not missing on production.
+
 Redeploy the Edge Function after changing `index.tsx` / `kv_store.tsx`. If your workflow copies sources elsewhere (e.g. `server/` → `make-server-080ebf84/`), follow that process; this tree edits `make-server-080ebf84` directly.
 
 GitHub Actions needs `SUPABASE_ANON_KEY` in repo secrets for `generate-blogs.yml`.
