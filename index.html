@@ -428,6 +428,96 @@
             color: var(--text-gray);
         }
         
+        /* Home: latest blog strip (2×2) */
+        .home-blog-strip {
+            display: none;
+            padding: 5rem 2rem;
+            max-width: 960px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        .home-blog-strip .section-title {
+            margin-bottom: 0.75rem;
+        }
+        .home-blog-subtitle {
+            text-align: center;
+            color: var(--text-gray);
+            max-width: 560px;
+            margin: 0 auto 2.5rem;
+            font-size: 1.05rem;
+            line-height: 1.65;
+        }
+        .home-blog-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.25rem;
+        }
+        .home-blog-card {
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+        }
+        .home-blog-card:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+        }
+        .home-blog-card:focus-visible {
+            outline: 2px solid var(--primary-green);
+            outline-offset: 3px;
+        }
+        .home-blog-card-img {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            object-fit: cover;
+            background: #111;
+        }
+        .home-blog-card-body {
+            padding: 1rem 1.1rem 1.25rem;
+            flex: 1;
+            display: flex;
+            align-items: flex-start;
+        }
+        .home-blog-card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--text-white);
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .home-blog-footer {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .home-blog-all {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: gap 0.2s, color 0.2s;
+        }
+        .home-blog-all:hover {
+            gap: 0.65rem;
+            color: var(--primary-green-light);
+        }
+        .home-blog-all i {
+            font-size: 0.85em;
+        }
+        
         /* FAQ Section */
         .faq-section {
             padding: 5rem 2rem;
@@ -774,6 +864,16 @@
         </div>
     </section>
     
+    <!-- Latest from the blog (2×2) -->
+    <section class="home-blog-strip" id="home-blog-strip" aria-labelledby="home-blog-heading">
+        <h2 class="section-title" id="home-blog-heading" data-i18n="home.blog.title">News from the slopes</h2>
+        <p class="home-blog-subtitle" data-i18n="home.blog.subtitle">Gear tips, product updates, and stories from the Skister team.</p>
+        <div class="home-blog-grid" id="home-blog-grid" role="list"></div>
+        <div class="home-blog-footer">
+            <a href="blog.html" class="home-blog-all"><span data-i18n="home.blog.viewAll">Browse all posts</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+    </section>
+    
     <!-- FAQ Section -->
     <section class="faq-section" id="faq">
         <h2 class="section-title" data-i18n="faq.title">Häufig gestellte Fragen</h2>
@@ -965,6 +1065,9 @@
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
                 'platform.web': 'Browser',
+                'home.blog.title': 'Neues von der Piste',
+                'home.blog.subtitle': 'Tipps zur Ausrüstung, Updates und Geschichten vom Skister-Team.',
+                'home.blog.viewAll': 'Alle Beiträge lesen',
                 'faq.title': 'Häufig gestellte Fragen',
                 'faq.q1': 'Wie funktioniert Skister?',
                 'faq.a1': 'Skister ist eine kostenlose, familienfreundliche Plattform zum Teilen von Ski-Ausrüstung innerhalb deines vertrauenswürdigen Netzwerks. Liste deine Ausrüstung auf, durchsuche was andere geteilt haben und koordiniere lokale Abholungen.',
@@ -1046,6 +1149,9 @@
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
                 'platform.web': 'Browser',
+                'home.blog.title': 'News from the slopes',
+                'home.blog.subtitle': 'Gear tips, product updates, and stories from the Skister team.',
+                'home.blog.viewAll': 'Browse all posts',
                 'faq.title': 'Frequently Asked Questions',
                 'faq.q1': 'How does Skister work?',
                 'faq.a1': 'Skister is a free, family-friendly platform for sharing ski equipment within your trusted network. List your equipment, browse what others have shared, and coordinate local pickups.',
@@ -1127,6 +1233,9 @@
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
                 'platform.web': 'Navigateur',
+                'home.blog.title': 'Nouvelles des pistes',
+                'home.blog.subtitle': 'Conseils matériel, actus et coulisses de l’équipe Skister.',
+                'home.blog.viewAll': 'Tous les articles',
                 'faq.title': 'Questions Fréquemment Posées',
                 'faq.q1': 'Comment fonctionne Skister?',
                 'faq.a1': 'Skister est une plateforme gratuite et conviviale pour partager du matériel de ski au sein de votre réseau de confiance. Listez votre équipement, parcourez ce que d\'autres ont partagé et coordonnez les retraits locaux.',
@@ -1179,6 +1288,7 @@
             es: {
                 'nav.features': 'Características',
                 'nav.faq': 'Preguntas Frecuentes',
+                'nav.blog': 'Blog',
                 'nav.contact': 'Contacto',
                 'hero.title': 'Skister',
                 'hero.tagline': 'Comparte las Pistas',
@@ -1203,6 +1313,9 @@
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
                 'platform.web': 'Navegador',
+                'home.blog.title': 'Novedades desde la pista',
+                'home.blog.subtitle': 'Consejos, novedades e historias del equipo Skister.',
+                'home.blog.viewAll': 'Ver todas las entradas',
                 'faq.title': 'Preguntas Frecuentes',
                 'faq.q1': '¿Cómo funciona Skister?',
                 'faq.a1': 'Skister es una plataforma gratuita y familiar para compartir equipo de esquí dentro de tu red de confianza. Lista tu equipo, explora lo que otros han compartido y coordina recogidas locales.',
@@ -1284,6 +1397,9 @@
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
                 'platform.web': 'Browser',
+                'home.blog.title': 'Novità dalla pista',
+                'home.blog.subtitle': 'Consigli, aggiornamenti e storie dal team Skister.',
+                'home.blog.viewAll': 'Vedi tutti gli articoli',
                 'faq.title': 'Domande Frequenti',
                 'faq.q1': 'Come funziona Skister?',
                 'faq.a1': 'Skister è una piattaforma gratuita per famiglie per condividere attrezzatura da sci all\'interno della tua rete di fiducia. Elenca la tua attrezzatura, esplora cosa hanno condiviso gli altri e coordina ritiri locali.',
@@ -1376,7 +1492,81 @@
             changeLanguage(currentLang);
         }
         
+        const HOME_BLOG_PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 400 200'%3E%3Crect fill='%231a1a1a' width='400' height='200'/%3E%3Cg fill='%23b0b0b0'%3E%3Cpath d='M160 70a30 30 0 1 1 80 0 30 30 0 1 1-80 0zm120 10H120a20 20 0 0 0-20 20v60a20 20 0 0 0 20 20h160a20 20 0 0 0 20-20v-60a20 20 0 0 0-20-20zm-80 60a25 25 0 1 1 0-50 25 25 0 0 1 0 50z'/%3E%3C/g%3E%3Ctext x='200' y='165' fill='%23666' font-family='sans-serif' font-size='14' text-anchor='middle'%3ENo image%3C/text%3E%3C/svg%3E";
+        window.__homeBlogPlaceholder = HOME_BLOG_PLACEHOLDER;
+        const HOME_BLOG_STORAGE_BASE = 'https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/make-080ebf84-blog-images';
+        const HOME_BLOG_AUTH = { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8' };
+
+        function escapeHtmlHome(str) {
+            return String(str == null ? '' : str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function resolveHomeBlogImageUrl(url) {
+            if (!url || typeof url !== 'string') return null;
+            const trimmed = url.trim();
+            if (!trimmed) return null;
+            if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed;
+            if (trimmed.startsWith('//')) return 'https:' + trimmed;
+            const path = trimmed.replace(/^\/+/, '');
+            if (path) return HOME_BLOG_STORAGE_BASE + '/' + path.replace(/^make-080ebf84-blog-images\/?/, '');
+            return null;
+        }
+
+        function getFirstImageFromHomeBlogContent(html) {
+            if (!html || typeof html !== 'string') return null;
+            const match = html.match(/<img[^>]+src\s*=\s*["']([^"']+)["']/i);
+            return match ? match[1].trim() : null;
+        }
+
+        function loadHomeBlogStrip() {
+            const section = document.getElementById('home-blog-strip');
+            const grid = document.getElementById('home-blog-grid');
+            if (!section || !grid) return;
+            fetch('https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84/blog/posts?forWebsite=1', {
+                method: 'GET',
+                headers: HOME_BLOG_AUTH
+            })
+                .then(function (res) { return res.json(); })
+                .then(function (data) {
+                    const posts = data.posts || (Array.isArray(data) ? data : []);
+                    const visible = posts.filter(function (p) {
+                        return !p.archived && p.showOnWebsite !== false;
+                    });
+                    const byNewest = visible.slice().sort(function (a, b) {
+                        return new Date(b.publishedTime) - new Date(a.publishedTime);
+                    });
+                    const topFour = byNewest.slice(0, 4);
+                    if (topFour.length === 0) {
+                        section.style.display = 'none';
+                        return;
+                    }
+                    grid.innerHTML = topFour.map(function (post, i) {
+                        const featuredUrl = resolveHomeBlogImageUrl(post.featuredImage);
+                        const firstContentUrl = resolveHomeBlogImageUrl(getFirstImageFromHomeBlogContent(post.content));
+                        const imgUrl = featuredUrl || firstContentUrl || HOME_BLOG_PLACEHOLDER;
+                        const title = escapeHtmlHome(post.title || '');
+                        const loading = i < 2 ? 'eager' : 'lazy';
+                        const fetchpriority = i === 0 ? 'high' : 'auto';
+                        return '<a href="blog-post.html?slug=' + encodeURIComponent(post.slug) + '" class="home-blog-card" role="listitem">' +
+                            '<img class="home-blog-card-img" src="' + escapeHtmlHome(imgUrl) + '" alt="" loading="' + loading + '" decoding="async" fetchpriority="' + fetchpriority + '" onerror="this.onerror=null;this.src=window.__homeBlogPlaceholder||\'\'">' +
+                            '<div class="home-blog-card-body"><h3 class="home-blog-card-title">' + title + '</h3></div></a>';
+                    }).join('');
+                    grid.querySelectorAll('.home-blog-card-img').forEach(function (img, i) {
+                        img.setAttribute('alt', topFour[i].title || '');
+                    });
+                    section.style.display = 'block';
+                    applyDataI18n(currentLang);
+                })
+                .catch(function () {
+                    section.style.display = 'none';
+                });
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
+            loadHomeBlogStrip();
             fetch('https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84/landing-content', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
@@ -1389,6 +1579,21 @@
         });
         
         // Language Functions
+        function applyDataI18n(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (translations[lang] && translations[lang][key]) {
+                    element.placeholder = translations[lang][key];
+                }
+            });
+        }
+
         function changeLanguage(lang) {
             currentLang = lang;
             document.documentElement.lang = lang;
@@ -1397,21 +1602,7 @@
             const flags = { de: '🇩🇪 DE', en: '🇬🇧 EN', fr: '🇫🇷 FR', es: '🇪🇸 ES', it: '🇮🇹 IT' };
             document.getElementById('current-language').textContent = flags[lang];
             
-            // Update all translations
-            document.querySelectorAll('[data-i18n]').forEach(element => {
-                const key = element.getAttribute('data-i18n');
-                if (translations[lang][key]) {
-                    element.innerHTML = translations[lang][key];
-                }
-            });
-            
-            // Update placeholders
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-                const key = element.getAttribute('data-i18n-placeholder');
-                if (translations[lang][key]) {
-                    element.placeholder = translations[lang][key];
-                }
-            });
+            applyDataI18n(lang);
             
             // Close dropdown
             toggleLanguageDropdown();

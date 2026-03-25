@@ -334,6 +334,126 @@
             border: none;
         }
         
+        /* Related posts & prev/next (before comments) */
+        .post-more-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .related-posts-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-white);
+            margin-bottom: 1rem;
+        }
+        .related-posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        @media (min-width: 600px) {
+            .related-posts-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+        }
+        .related-post-card {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .related-post-card:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+        .related-post-card:focus-visible {
+            outline: 2px solid var(--primary-green);
+            outline-offset: 2px;
+        }
+        .related-post-thumb {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            object-fit: cover;
+            background: #111;
+        }
+        .related-post-heading {
+            font-size: 0.85rem;
+            font-weight: 600;
+            line-height: 1.35;
+            padding: 0.65rem 0.75rem;
+            color: var(--text-white);
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .post-nav-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            align-items: stretch;
+        }
+        .post-nav-row > div {
+            min-width: 0;
+        }
+        .post-nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.35rem;
+            padding: 1rem 1.25rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-white);
+            transition: border-color 0.2s, background 0.2s;
+            min-height: 4.5rem;
+            justify-content: center;
+        }
+        .post-nav-btn:hover:not(.post-nav-empty) {
+            border-color: var(--primary-green);
+            background: rgba(34, 139, 34, 0.08);
+        }
+        .post-nav-btn:focus-visible:not(.post-nav-empty) {
+            outline: 2px solid var(--primary-green);
+            outline-offset: 2px;
+        }
+        .post-nav-btn.post-nav-next {
+            align-items: flex-end;
+            text-align: right;
+        }
+        .post-nav-btn.post-nav-empty {
+            opacity: 0.45;
+            cursor: default;
+            pointer-events: none;
+        }
+        .post-nav-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+        .post-nav-title {
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            line-height: 1.35;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .post-nav-btn:not(.post-nav-empty) .post-nav-title {
+            color: var(--text-white);
+        }
+        
         /* Loading & Error States */
         .loading, .error-state {
             text-align: center;
@@ -740,6 +860,17 @@
                         ${post.content}
                     </div>
                     
+                    <div class="post-more-section" id="post-more-section">
+                        <div class="related-posts-wrap" id="related-posts-wrap" style="display:none;">
+                            <h2 class="related-posts-title" data-i18n="blog.relatedTitle">More from the blog</h2>
+                            <div class="related-posts-grid" id="related-posts-grid" role="list"></div>
+                        </div>
+                        <nav class="post-nav-row" id="post-nav-row" style="display:none;" aria-label="Adjacent articles">
+                            <div id="post-nav-prev-slot"></div>
+                            <div id="post-nav-next-slot"></div>
+                        </nav>
+                    </div>
+                    
                     <div class="blog-engagement" id="blog-engagement">
                         <div class="like-section">
                             <span class="like-count" id="like-count">0 likes</span>
@@ -764,6 +895,7 @@
             `;
             resolveContentImages();
             afterPostRendered();
+            loadRelatedPostsNav(post.slug);
         }
 
         function resolveContentImages() {
@@ -776,6 +908,19 @@
                 var resolved = resolveImageUrl(src);
                 if (resolved) img.src = resolved;
             });
+        }
+
+        function getFirstImageFromContent(html) {
+            if (!html || typeof html !== 'string') return null;
+            var match = html.match(/<img[^>]+src\s*=\s*["']([^"']+)["']/i);
+            return match ? match[1].trim() : null;
+        }
+
+        function escapeHtml(str) {
+            return String(str == null ? '' : str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/"/g, '&quot;');
         }
         
         // Update meta tags for SEO
@@ -846,6 +991,94 @@
         
         const API_BASE = 'https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84';
         const AUTH_HEADER = { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8' };
+
+        function loadRelatedPostsNav(currentSlug) {
+            var wrap = document.getElementById('related-posts-wrap');
+            var grid = document.getElementById('related-posts-grid');
+            var navRow = document.getElementById('post-nav-row');
+            var prevSlot = document.getElementById('post-nav-prev-slot');
+            var nextSlot = document.getElementById('post-nav-next-slot');
+            if (!wrap || !grid || !navRow || !prevSlot || !nextSlot) return;
+            fetch(API_BASE + '/blog/posts?forWebsite=1', { headers: AUTH_HEADER })
+                .then(function (res) { return res.json(); })
+                .then(function (data) {
+                    var posts = data.posts || (Array.isArray(data) ? data : []);
+                    var visible = posts.filter(function (p) {
+                        return !p.archived && p.showOnWebsite !== false;
+                    });
+                    if (visible.length <= 1) {
+                        wrap.style.display = 'none';
+                        navRow.style.display = 'none';
+                        return;
+                    }
+                    var chrono = visible.slice().sort(function (a, b) {
+                        return new Date(a.publishedTime) - new Date(b.publishedTime);
+                    });
+                    var idx = chrono.findIndex(function (p) { return p.slug === currentSlug; });
+                    function blogT(key) {
+                        var lang = typeof blogLang !== 'undefined' ? blogLang : 'en';
+                        var tr = typeof blogTranslations !== 'undefined' ? blogTranslations : {};
+                        var fallbacks = {
+                            'blog.prevArticle': 'Previous',
+                            'blog.nextArticle': 'Next',
+                            'blog.noOlder': 'First post',
+                            'blog.noNewer': 'Latest post',
+                            'blog.relatedTitle': 'More from the blog'
+                        };
+                        if (tr[lang] && tr[lang][key]) return tr[lang][key];
+                        if (tr.en && tr.en[key]) return tr.en[key];
+                        return fallbacks[key] || key;
+                    }
+                    if (idx === -1) {
+                        navRow.style.display = 'none';
+                        prevSlot.innerHTML = '';
+                        nextSlot.innerHTML = '';
+                    } else {
+                        navRow.style.display = 'grid';
+                        if (idx > 0) {
+                            var prevPost = chrono[idx - 1];
+                            prevSlot.innerHTML = '<a class="post-nav-btn post-nav-prev" href="blog-post.html?slug=' + encodeURIComponent(prevPost.slug) + '">' +
+                                '<span class="post-nav-label" data-i18n="blog.prevArticle">' + escapeHtml(blogT('blog.prevArticle')) + '</span>' +
+                                '<span class="post-nav-title">' + escapeHtml(prevPost.title || '') + '</span></a>';
+                        } else {
+                            prevSlot.innerHTML = '<span class="post-nav-btn post-nav-prev post-nav-empty" aria-disabled="true">' +
+                                '<span class="post-nav-label" data-i18n="blog.prevArticle">' + escapeHtml(blogT('blog.prevArticle')) + '</span>' +
+                                '<span class="post-nav-title" data-i18n="blog.noOlder">' + escapeHtml(blogT('blog.noOlder')) + '</span></span>';
+                        }
+                        if (idx < chrono.length - 1) {
+                            var nextPost = chrono[idx + 1];
+                            nextSlot.innerHTML = '<a class="post-nav-btn post-nav-next" href="blog-post.html?slug=' + encodeURIComponent(nextPost.slug) + '">' +
+                                '<span class="post-nav-label" data-i18n="blog.nextArticle">' + escapeHtml(blogT('blog.nextArticle')) + '</span>' +
+                                '<span class="post-nav-title">' + escapeHtml(nextPost.title || '') + '</span></a>';
+                        } else {
+                            nextSlot.innerHTML = '<span class="post-nav-btn post-nav-next post-nav-empty" aria-disabled="true">' +
+                                '<span class="post-nav-label" data-i18n="blog.nextArticle">' + escapeHtml(blogT('blog.nextArticle')) + '</span>' +
+                                '<span class="post-nav-title" data-i18n="blog.noNewer">' + escapeHtml(blogT('blog.noNewer')) + '</span></span>';
+                        }
+                    }
+                    var byNewest = visible.slice().sort(function (a, b) {
+                        return new Date(b.publishedTime) - new Date(a.publishedTime);
+                    });
+                    var related = byNewest.filter(function (p) { return p.slug !== currentSlug; }).slice(0, 6);
+                    if (related.length === 0) {
+                        wrap.style.display = 'none';
+                    } else {
+                        wrap.style.display = 'block';
+                        grid.innerHTML = related.map(function (p) {
+                            var feat = resolveImageUrl(p.featuredImage);
+                            var firstImg = resolveImageUrl(getFirstImageFromContent(p.content));
+                            var imgUrl = feat || firstImg || BLOG_PLACEHOLDER_IMAGE;
+                            return '<a href="blog-post.html?slug=' + encodeURIComponent(p.slug) + '" class="related-post-card" role="listitem">' +
+                                '<img class="related-post-thumb" src="' + escapeHtml(imgUrl) + '" alt="' + escapeHtml(p.title || '') + '" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=window.__blogPlaceholder||\'\'">' +
+                                '<span class="related-post-heading">' + escapeHtml(p.title || '') + '</span></a>';
+                        }).join('');
+                    }
+                    if (typeof setBlogLang === 'function') setBlogLang(blogLang);
+                })
+                .catch(function (e) {
+                    console.warn('Related posts failed', e);
+                });
+        }
         
         function getOrCreateVisitorId() {
             var key = 'skister_blog_visitor_id';
@@ -972,11 +1205,11 @@
         
         // Language for nav/footer (same as blog listing)
         var blogTranslations = {
-            de: { 'nav.features': 'Funktionen', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.contact': 'Kontakt', 'footer.product': 'Produkt', 'footer.features': 'Funktionen', 'footer.faq': 'FAQ', 'footer.feedback': 'Feedback', 'footer.legal': 'Rechtliches', 'footer.privacy': 'Datenschutz', 'footer.terms': 'Nutzungsbedingungen', 'footer.support': 'Support', 'footer.contact': 'Kontakt', 'footer.rights': 'Alle Rechte vorbehalten.', 'footer.madewith': 'Made with ❤️ from the alps' },
-            en: { 'nav.features': 'Features', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.contact': 'Contact', 'footer.product': 'Product', 'footer.features': 'Features', 'footer.faq': 'FAQ', 'footer.feedback': 'Feedback', 'footer.legal': 'Legal', 'footer.privacy': 'Privacy Policy', 'footer.terms': 'Terms of Service', 'footer.support': 'Support', 'footer.contact': 'Contact', 'footer.rights': 'All rights reserved.', 'footer.madewith': 'Made with ❤️ from the alps' },
-            fr: { 'nav.features': 'Fonctionnalités', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.contact': 'Contact', 'footer.product': 'Produit', 'footer.features': 'Fonctionnalités', 'footer.faq': 'FAQ', 'footer.feedback': 'Commentaires', 'footer.legal': 'Légal', 'footer.privacy': 'Politique de confidentialité', 'footer.terms': 'Conditions d\'utilisation', 'footer.support': 'Support', 'footer.contact': 'Contact', 'footer.rights': 'Tous droits réservés.', 'footer.madewith': 'Fait avec ❤️ depuis les Alpes' },
-            es: { 'nav.features': 'Características', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.contact': 'Contacto', 'footer.product': 'Producto', 'footer.features': 'Características', 'footer.faq': 'FAQ', 'footer.feedback': 'Comentarios', 'footer.legal': 'Legal', 'footer.privacy': 'Política de privacidad', 'footer.terms': 'Términos de servicio', 'footer.support': 'Soporte', 'footer.contact': 'Contacto', 'footer.rights': 'Todos los derechos reservados.', 'footer.madewith': 'Hecho con ❤️ desde los Alpes' },
-            it: { 'nav.features': 'Funzionalità', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.contact': 'Contatto', 'footer.product': 'Prodotto', 'footer.features': 'Funzionalità', 'footer.faq': 'FAQ', 'footer.feedback': 'Feedback', 'footer.legal': 'Legale', 'footer.privacy': 'Privacy', 'footer.terms': 'Termini di servizio', 'footer.support': 'Supporto', 'footer.contact': 'Contatto', 'footer.rights': 'Tutti i diritti riservati.', 'footer.madewith': 'Fatto con ❤️ dalle Alpi' }
+            de: { 'nav.features': 'Funktionen', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.contact': 'Kontakt', 'footer.product': 'Produkt', 'footer.features': 'Funktionen', 'footer.faq': 'FAQ', 'footer.feedback': 'Feedback', 'footer.legal': 'Rechtliches', 'footer.privacy': 'Datenschutz', 'footer.terms': 'Nutzungsbedingungen', 'footer.support': 'Support', 'footer.contact': 'Kontakt', 'footer.rights': 'Alle Rechte vorbehalten.', 'footer.madewith': 'Made with ❤️ from the alps', 'blog.relatedTitle': 'Mehr vom Blog', 'blog.prevArticle': 'Zurück', 'blog.nextArticle': 'Weiter', 'blog.noOlder': 'Erster Beitrag', 'blog.noNewer': 'Neuester Beitrag' },
+            en: { 'nav.features': 'Features', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.contact': 'Contact', 'footer.product': 'Product', 'footer.features': 'Features', 'footer.faq': 'FAQ', 'footer.feedback': 'Feedback', 'footer.legal': 'Legal', 'footer.privacy': 'Privacy Policy', 'footer.terms': 'Terms of Service', 'footer.support': 'Support', 'footer.contact': 'Contact', 'footer.rights': 'All rights reserved.', 'footer.madewith': 'Made with ❤️ from the alps', 'blog.relatedTitle': 'More from the blog', 'blog.prevArticle': 'Previous', 'blog.nextArticle': 'Next', 'blog.noOlder': 'First post', 'blog.noNewer': 'Latest post' },
+            fr: { 'nav.features': 'Fonctionnalités', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.contact': 'Contact', 'footer.product': 'Produit', 'footer.features': 'Fonctionnalités', 'footer.faq': 'FAQ', 'footer.feedback': 'Commentaires', 'footer.legal': 'Légal', 'footer.privacy': 'Politique de confidentialité', 'footer.terms': 'Conditions d\'utilisation', 'footer.support': 'Support', 'footer.contact': 'Contact', 'footer.rights': 'Tous droits réservés.', 'footer.madewith': 'Fait avec ❤️ depuis les Alpes', 'blog.relatedTitle': 'Plus d\'articles', 'blog.prevArticle': 'Précédent', 'blog.nextArticle': 'Suivant', 'blog.noOlder': 'Premier article', 'blog.noNewer': 'Dernier article' },
+            es: { 'nav.features': 'Características', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.contact': 'Contacto', 'footer.product': 'Producto', 'footer.features': 'Características', 'footer.faq': 'FAQ', 'footer.feedback': 'Comentarios', 'footer.legal': 'Legal', 'footer.privacy': 'Política de privacidad', 'footer.terms': 'Términos de servicio', 'footer.support': 'Soporte', 'footer.contact': 'Contacto', 'footer.rights': 'Todos los derechos reservados.', 'footer.madewith': 'Hecho con ❤️ desde los Alpes', 'blog.relatedTitle': 'Más del blog', 'blog.prevArticle': 'Anterior', 'blog.nextArticle': 'Siguiente', 'blog.noOlder': 'Primera entrada', 'blog.noNewer': 'Última entrada' },
+            it: { 'nav.features': 'Funzionalità', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.contact': 'Contatto', 'footer.product': 'Prodotto', 'footer.features': 'Funzionalità', 'footer.faq': 'FAQ', 'footer.feedback': 'Feedback', 'footer.legal': 'Legale', 'footer.privacy': 'Privacy', 'footer.terms': 'Termini di servizio', 'footer.support': 'Supporto', 'footer.contact': 'Contatto', 'footer.rights': 'Tutti i diritti riservati.', 'footer.madewith': 'Fatto con ❤️ dalle Alpi', 'blog.relatedTitle': 'Altri articoli', 'blog.prevArticle': 'Precedente', 'blog.nextArticle': 'Successivo', 'blog.noOlder': 'Primo articolo', 'blog.noNewer': 'Ultimo articolo' }
         };
         var blogLang = (localStorage && localStorage.getItem('skister-lang')) || 'en';
         var langFlags = { de: '🇩🇪 DE', en: '🇬🇧 EN', fr: '🇫🇷 FR', es: '🇪🇸 ES', it: '🇮🇹 IT' };
