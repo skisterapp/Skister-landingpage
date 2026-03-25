@@ -396,9 +396,13 @@
 
     function api(path, opts) {
         opts = opts || {};
-        var h = Object.assign({
-            Authorization: 'Bearer ' + (session && session.access_token ? session.access_token : SUPABASE_ANON_KEY)
-        }, opts.headers || {});
+        var accessToken = '';
+        if (session) {
+            if (typeof session.access_token === 'string') accessToken = session.access_token;
+            if (!accessToken && typeof session.accessToken === 'string') accessToken = session.accessToken;
+        }
+        var h = Object.assign({}, opts.headers || {});
+        if (accessToken) h['Authorization'] = 'Bearer ' + accessToken;
         return fetch(EDGE + path, Object.assign({}, opts, { headers: h })).then(function (r) {
             return r.text().then(function (text) {
                 var j = null;
