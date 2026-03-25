@@ -396,38 +396,46 @@
 
     function api(path, opts) {
         opts = opts || {};
-        var accessToken = '';
-        if (session) {
-            if (typeof session.access_token === 'string') accessToken = session.access_token;
-            if (!accessToken && typeof session.accessToken === 'string') accessToken = session.accessToken;
+        if (!supa) {
+            return Promise.reject(new Error('Supabase not initialized'));
         }
-        var h = Object.assign({}, opts.headers || {});
-        // Always send an Authorization header so the Supabase gateway doesn't fail with "Invalid JWT"
-        // when access token extraction fails in certain iframe/session edge cases.
-        h['Authorization'] = 'Bearer ' + (accessToken || SUPABASE_ANON_KEY);
-        return fetch(EDGE + path, Object.assign({}, opts, { headers: h })).then(function (r) {
-            return r.text().then(function (text) {
-                var j = null;
-                if (text) {
-                    try {
-                        j = JSON.parse(text);
-                    } catch (parseErr) {
-                        var plain = (text || '').replace(/\s+/g, ' ').trim().slice(0, 160);
-                        throw new Error(
-                            r.ok
-                                ? 'Invalid response from server'
-                                : ('HTTP ' + r.status + (plain ? ': ' + plain : ' ' + r.statusText))
-                        );
+        return supa.auth.getSession().then(function (res) {
+            var s = res && res.data && res.data.session;
+            var accessToken = '';
+            if (s) {
+                if (typeof s.access_token === 'string') accessToken = s.access_token;
+                if (!accessToken && typeof s.accessToken === 'string') accessToken = s.accessToken;
+            }
+            if (!accessToken) {
+                return Promise.reject(new Error('No session. Sign in again.'));
+            }
+            var h = Object.assign({}, opts.headers || {});
+            h['Authorization'] = 'Bearer ' + accessToken;
+            h['apikey'] = SUPABASE_ANON_KEY;
+            return fetch(EDGE + path, Object.assign({}, opts, { headers: h })).then(function (r) {
+                return r.text().then(function (text) {
+                    var j = null;
+                    if (text) {
+                        try {
+                            j = JSON.parse(text);
+                        } catch (parseErr) {
+                            var plain = (text || '').replace(/\s+/g, ' ').trim().slice(0, 160);
+                            throw new Error(
+                                r.ok
+                                    ? 'Invalid response from server'
+                                    : ('HTTP ' + r.status + (plain ? ': ' + plain : ' ' + r.statusText))
+                            );
+                        }
+                    } else {
+                        j = {};
                     }
-                } else {
-                    j = {};
-                }
-                if (!r.ok) {
-                    var serverMsg = (j && (j.error || j.message)) || '';
-                    if (typeof serverMsg === 'object') serverMsg = JSON.stringify(serverMsg);
-                    throw new Error(serverMsg || r.statusText || ('HTTP ' + r.status));
-                }
-                return j;
+                    if (!r.ok) {
+                        var serverMsg = (j && (j.error || j.message)) || '';
+                        if (typeof serverMsg === 'object') serverMsg = JSON.stringify(serverMsg);
+                        throw new Error(serverMsg || r.statusText || ('HTTP ' + r.status));
+                    }
+                    return j;
+                });
             });
         });
     }
@@ -618,7 +626,10 @@
     function loadSeo() {
         if (cmsRole !== 'admin' && cmsRole !== 'moderator') return;
         fetch(EDGE + '/site-seo', {
-            headers: { Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
+            headers: {
+                Authorization: 'Bearer ' + SUPABASE_ANON_KEY,
+                apikey: SUPABASE_ANON_KEY
+            }
         }).then(function (r) { return r.json(); }).then(function (d) {
             var s = d.seo || {};
             document.getElementById('seoMetaTitle').value = s.metaTitle || '';
