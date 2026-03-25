@@ -185,6 +185,20 @@
         }
         .article-seo-thumb__badge--ok { background: #2a9d6e; }
         .article-seo-thumb__badge--todo { background: #e6c229; }
+        .crawl-preview-pre {
+            max-height: 100px;
+            overflow: auto;
+            font-size: 11px;
+            line-height: 1.35;
+            white-space: pre-wrap;
+            word-break: break-word;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px;
+            margin: 0 0 10px;
+        }
+        #crawlPanel h2 { font-size: 18px; }
         @media (max-width: 768px) {
             .layout { flex-direction: column; }
             .sidebar { width: 100%; display: flex; flex-wrap: wrap; gap: 4px; padding: 12px; }
@@ -300,6 +314,26 @@
                         <option value="noindex,nofollow">noindex,nofollow</option>
                     </select>
                     <button type="button" class="btn btn-primary" id="btnSaveSeo">Save site SEO</button>
+                </div>
+                <div class="panel" id="crawlPanel">
+                    <h2>Sitemap &amp; robots.txt</h2>
+                    <p class="article-seo-strip-hint">Custom text is stored in site SEO. <strong>Publish to GitHub</strong> (Blog tab) writes <code>sitemap.xml</code> and <code>robots.txt</code> to the live repo. Sitemap always includes core URLs plus visible blog posts; extra lines are merged in.</p>
+                    <label for="seoRobotsTxt">robots.txt (optional)</label>
+                    <textarea id="seoRobotsTxt" rows="5" placeholder="Leave empty for default: User-agent: * / Allow: / / Sitemap: …"></textarea>
+                    <div class="row-actions" style="margin-top:8px;">
+                        <button type="button" class="btn btn-secondary" id="btnResetRobotsTxt">Clear → use default</button>
+                    </div>
+                    <label for="seoSitemapExtras" style="margin-top:14px;">Extra sitemap URLs (one per line)</label>
+                    <textarea id="seoSitemapExtras" rows="3" placeholder="https://skister.app/example.html"></textarea>
+                    <div class="row-actions" style="margin-top:12px;">
+                        <button type="button" class="btn btn-secondary" id="btnPreviewCrawl">Preview merged files</button>
+                    </div>
+                    <div id="crawlPreviewWrap" class="hidden" style="margin-top:14px;">
+                        <label>robots.txt preview</label>
+                        <pre id="crawlPreviewRobots" class="crawl-preview-pre"></pre>
+                        <label>sitemap.xml preview (may truncate)</label>
+                        <pre id="crawlPreviewSitemap" class="crawl-preview-pre"></pre>
+                    </div>
                 </div>
                 <div class="panel" id="articleSeoPanel">
                     <h2>Article SEO</h2>
@@ -712,14 +746,22 @@
             document.getElementById('seoArticleAuthor').value = s.articleAuthor || '';
             document.getElementById('seoOgSite').value = s.ogSiteName || '';
             document.getElementById('seoRobots').value = s.robots || 'index,follow';
+            var rt = document.getElementById('seoRobotsTxt');
+            var sx = document.getElementById('seoSitemapExtras');
+            if (rt) rt.value = s.robotsTxt || '';
+            if (sx) sx.value = s.sitemapExtraUrls || '';
         }).catch(function () {});
         var artPanel = document.getElementById('articleSeoPanel');
         if (cmsRole !== 'admin') artPanel.style.display = 'none';
         else artPanel.style.display = 'block';
+        var crawlPanel = document.getElementById('crawlPanel');
+        if (crawlPanel) crawlPanel.style.display = cmsRole === 'admin' ? 'block' : 'none';
     }
 
     document.getElementById('btnSaveSeo').onclick = function () {
         if (cmsRole !== 'admin') return toast('Admins only', true);
+        var rt = document.getElementById('seoRobotsTxt');
+        var sx = document.getElementById('seoSitemapExtras');
         api('/site-seo', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -731,9 +773,33 @@
                 canonicalBase: document.getElementById('seoCanonical').value,
                 articleAuthor: document.getElementById('seoArticleAuthor').value,
                 ogSiteName: document.getElementById('seoOgSite').value,
-                robots: document.getElementById('seoRobots').value
+                robots: document.getElementById('seoRobots').value,
+                robotsTxt: rt ? rt.value : '',
+                sitemapExtraUrls: sx ? sx.value : ''
             })
         }).then(function () { toast('Site SEO saved'); }).catch(function (e) { toast(e.message, true); });
+    };
+
+    document.getElementById('btnResetRobotsTxt').onclick = function () {
+        if (cmsRole !== 'admin') return;
+        var rt = document.getElementById('seoRobotsTxt');
+        if (rt) rt.value = '';
+        toast('Cleared — save site SEO to apply default robots.txt on publish.');
+    };
+
+    document.getElementById('btnPreviewCrawl').onclick = function () {
+        if (cmsRole !== 'admin') return toast('Admins only', true);
+        api('/landing-cms/crawl-preview').then(function (d) {
+            var wrap = document.getElementById('crawlPreviewWrap');
+            var pr = document.getElementById('crawlPreviewRobots');
+            var ps = document.getElementById('crawlPreviewSitemap');
+            if (pr) pr.textContent = d.robotsTxt || '';
+            if (ps) ps.textContent = String(d.sitemapXml || '').slice(0, 16000);
+            if (wrap) wrap.classList.remove('hidden');
+            toast((d.urlCount != null ? d.urlCount + ' URLs' : 'Preview') + ' — sitemap + robots');
+        }).catch(function (e) {
+            toast(e.message || 'Preview failed', true);
+        });
     };
 
     var articlesCache = [];

@@ -246,9 +246,25 @@ ${indexLinks}
   fs.writeFileSync(path.join(blogDir, 'index.html'), blogIndex, 'utf8')
   sitemapUrls.push(`${base}/blog/`)
 
+  for (const line of String(siteSeo.sitemapExtraUrls || '')
+    .split(/[\r\n]+/)
+    .map((l) => l.trim())
+    .filter(Boolean)) {
+    if (/^https?:\/\//i.test(line)) {
+      sitemapUrls.push(line.endsWith('/') ? line.slice(0, -1) : line)
+    }
+  }
+
+  const seen = new Set()
+  const deduped = []
+  for (const u of sitemapUrls) {
+    if (!u || seen.has(u)) continue
+    seen.add(u)
+    deduped.push(u)
+  }
+
   const today = new Date().toISOString().split('T')[0]
-  const urlset = sitemapUrls
-    .filter(Boolean)
+  const urlset = deduped
     .map((loc) => `  <url><loc>${escapeHtml(loc)}</loc><lastmod>${today}</lastmod></url>`)
     .join('\n')
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -257,7 +273,13 @@ ${urlset}
 </urlset>
 `
   fs.writeFileSync(path.join(OUT, 'sitemap.xml'), sitemap, 'utf8')
-  console.log('Wrote blog/*, sitemap.xml — posts:', posts.length)
+
+  const robotsBody = String(siteSeo.robotsTxt || '').trim()
+    ? String(siteSeo.robotsTxt)
+    : `User-agent: *\nAllow: /\n\nSitemap: ${base}/sitemap.xml\n`
+  fs.writeFileSync(path.join(OUT, 'robots.txt'), robotsBody, 'utf8')
+
+  console.log('Wrote blog/*, sitemap.xml, robots.txt — posts:', posts.length)
 }
 
 main().catch((e) => {
