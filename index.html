@@ -41,6 +41,19 @@
             --bg-dark: #0a0a0a;
             --text-white: #ffffff;
             --text-gray: #b0b0b0;
+            --nav-offset: 5.5rem;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+            scroll-padding-top: var(--nav-offset);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-snap-type: y proximity;
+            }
         }
         
         body {
@@ -170,15 +183,26 @@
             background: rgba(34, 139, 34, 0.2);
         }
         
+        /* Full-viewport snap sections (one screen per scroll stop) */
+        .snap-section {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            min-height: 100vh;
+            min-height: 100dvh;
+            box-sizing: border-box;
+        }
+
         /* Hero Section */
         .hero {
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             padding: 2rem;
+            padding-top: calc(2rem + var(--nav-offset));
             position: relative;
             z-index: 2;
         }
@@ -331,6 +355,9 @@
             margin: 0 auto;
             position: relative;
             z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
         .section-title {
@@ -389,6 +416,8 @@
             position: relative;
             z-index: 2;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
+            flex-direction: column;
+            justify-content: center;
         }
         .home-blog-strip .section-title {
             margin-bottom: 0.75rem;
@@ -479,6 +508,9 @@
             border-top: 1px solid rgba(255, 255, 255, 0.06);
             background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(34, 139, 34, 0.12) 0%, transparent 55%),
                 var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         .download-inner {
             max-width: 920px;
@@ -578,6 +610,9 @@
             position: relative;
             z-index: 2;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
         
         .faq-item {
@@ -837,7 +872,7 @@
     </nav>
     
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero snap-section" id="home">
         <img id="hero-mascot" src="https://qoqbdiixztolvtcjdnle.supabase.co/storage/v1/object/public/Skister/Skister%20Mascot.png" alt="Skister Mascot" class="mascot">
         <h1 data-i18n="hero.title">Skister</h1>
         <p class="tagline" data-i18n="hero.tagline">Teile die Pisten</p>
@@ -854,7 +889,7 @@
     </section>
     
     <!-- Features Section -->
-    <section class="features" id="features">
+    <section class="features snap-section" id="features">
         <h2 class="section-title" data-i18n="features.title">Funktionen</h2>
         <div class="features-grid">
             <div class="feature-card">
@@ -891,7 +926,7 @@
     </section>
     
     <!-- Latest from the blog (2×2) -->
-    <section class="home-blog-strip" id="home-blog-strip" aria-labelledby="home-blog-heading">
+    <section class="home-blog-strip snap-section" id="home-blog-strip" aria-labelledby="home-blog-heading">
         <h2 class="section-title" id="home-blog-heading" data-i18n="home.blog.title">News from the slopes</h2>
         <p class="home-blog-subtitle" data-i18n="home.blog.subtitle">Gear tips, product updates, and stories from the Skister team.</p>
         <div class="home-blog-grid" id="home-blog-grid" role="list"></div>
@@ -901,7 +936,7 @@
     </section>
     
     <!-- Get the app — full-width download section -->
-    <section class="download-section" id="download" aria-labelledby="download-heading">
+    <section class="download-section snap-section" id="download" aria-labelledby="download-heading">
         <div class="download-inner">
             <h2 class="section-title" id="download-heading" data-i18n="download.title">Get Skister</h2>
             <p class="download-subtitle" data-i18n="download.subtitle">iOS, Android, and the web — launching soon. Pick your platform; store links will appear here.</p>
@@ -926,7 +961,7 @@
     </section>
     
     <!-- FAQ Section -->
-    <section class="faq-section" id="faq">
+    <section class="faq-section snap-section" id="faq">
         <h2 class="section-title" data-i18n="faq.title">Häufig gestellte Fragen</h2>
         
         <div class="faq-item" onclick="toggleFAQ(this)">
@@ -1644,7 +1679,7 @@
                     grid.querySelectorAll('.home-blog-card-img').forEach(function (img, i) {
                         img.setAttribute('alt', topFour[i].title || '');
                     });
-                    section.style.display = 'block';
+                    section.style.display = 'flex';
                     applyDataI18n(currentLang);
                 })
                 .catch(function () {
