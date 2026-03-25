@@ -402,7 +402,9 @@
             if (!accessToken && typeof session.accessToken === 'string') accessToken = session.accessToken;
         }
         var h = Object.assign({}, opts.headers || {});
-        if (accessToken) h['Authorization'] = 'Bearer ' + accessToken;
+        // Always send an Authorization header so the Supabase gateway doesn't fail with "Invalid JWT"
+        // when access token extraction fails in certain iframe/session edge cases.
+        h['Authorization'] = 'Bearer ' + (accessToken || SUPABASE_ANON_KEY);
         return fetch(EDGE + path, Object.assign({}, opts, { headers: h })).then(function (r) {
             return r.text().then(function (text) {
                 var j = null;
