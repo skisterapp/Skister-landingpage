@@ -560,7 +560,7 @@
 
     function buildArticleCanonical(article, articleId) {
         if (article && article.slug) return 'https://skister.app/blog/' + encodeURIComponent(article.slug) + '/';
-        return 'https://skister.app/blog-post.html?slug=' + encodeURIComponent(articleId);
+        return 'https://skister.app/blog/' + encodeURIComponent(articleId) + '/';
     }
 
     function getArticleSeoTagsHtml() {

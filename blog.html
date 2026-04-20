@@ -459,7 +459,7 @@
                         const safeTitle = (post.title || '').replace(/"/g, '&quot;');
                         var isFirst = posts.indexOf(post) === 0;
                         return `
-                        <a href="blog-post.html?slug=${post.slug}" class="blog-card">
+                        <a href="/blog/${encodeURIComponent(post.slug)}/" class="blog-card">
                             <img src="${imgUrl || BLOG_PLACEHOLDER_IMAGE}" 
                                  alt="${safeTitle}" 
                                  class="blog-card-image"

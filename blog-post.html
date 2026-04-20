@@ -959,9 +959,9 @@
             // Article published time
             document.getElementById('article-published').content = post.publishedTime;
             
-            // Canonical URL
-            const canonicalUrl = post.canonical || window.location.href;
-            document.getElementById('canonical-url').href = canonicalUrl;
+            // Prefer static article URL for SEO (matches GitHub Pages HTML)
+            const staticCanonical = 'https://skister.app/blog/' + encodeURIComponent(post.slug) + '/';
+            document.getElementById('canonical-url').href = staticCanonical;
         }
         
         // Show error
@@ -991,6 +991,10 @@
         
         const API_BASE = 'https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84';
         const AUTH_HEADER = { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8' };
+
+        function blogArticleUrl(slug) {
+            return '/blog/' + encodeURIComponent(slug) + '/';
+        }
 
         function loadRelatedPostsNav(currentSlug) {
             var wrap = document.getElementById('related-posts-wrap');
@@ -1037,7 +1041,7 @@
                         navRow.style.display = 'grid';
                         if (idx > 0) {
                             var prevPost = chrono[idx - 1];
-                            prevSlot.innerHTML = '<a class="post-nav-btn post-nav-prev" href="blog-post.html?slug=' + encodeURIComponent(prevPost.slug) + '">' +
+                            prevSlot.innerHTML = '<a class="post-nav-btn post-nav-prev" href="' + blogArticleUrl(prevPost.slug) + '">' +
                                 '<span class="post-nav-label" data-i18n="blog.prevArticle">' + escapeHtml(blogT('blog.prevArticle')) + '</span>' +
                                 '<span class="post-nav-title">' + escapeHtml(prevPost.title || '') + '</span></a>';
                         } else {
@@ -1047,7 +1051,7 @@
                         }
                         if (idx < chrono.length - 1) {
                             var nextPost = chrono[idx + 1];
-                            nextSlot.innerHTML = '<a class="post-nav-btn post-nav-next" href="blog-post.html?slug=' + encodeURIComponent(nextPost.slug) + '">' +
+                            nextSlot.innerHTML = '<a class="post-nav-btn post-nav-next" href="' + blogArticleUrl(nextPost.slug) + '">' +
                                 '<span class="post-nav-label" data-i18n="blog.nextArticle">' + escapeHtml(blogT('blog.nextArticle')) + '</span>' +
                                 '<span class="post-nav-title">' + escapeHtml(nextPost.title || '') + '</span></a>';
                         } else {
@@ -1068,7 +1072,7 @@
                             var feat = resolveImageUrl(p.featuredImage);
                             var firstImg = resolveImageUrl(getFirstImageFromContent(p.content));
                             var imgUrl = feat || firstImg || BLOG_PLACEHOLDER_IMAGE;
-                            return '<a href="blog-post.html?slug=' + encodeURIComponent(p.slug) + '" class="related-post-card" role="listitem">' +
+                            return '<a href="' + blogArticleUrl(p.slug) + '" class="related-post-card" role="listitem">' +
                                 '<img class="related-post-thumb" src="' + escapeHtml(imgUrl) + '" alt="' + escapeHtml(p.title || '') + '" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=window.__blogPlaceholder||\'\'">' +
                                 '<span class="related-post-heading">' + escapeHtml(p.title || '') + '</span></a>';
                         }).join('');
