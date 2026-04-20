@@ -3,61 +3,959 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog — Skister</title>
-  <meta name="robots" content="index,follow">
+  <title>Skister Blog</title>
+  <meta name="description" content="Guides, tips, and updates from the Skister team.">
+  <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://skister.app/blog/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Skister Blog">
+  <meta property="og:description" content="Guides, tips, and updates from the Skister team.">
+  <meta property="og:url" content="https://skister.app/blog/">
+  
+  <meta property="og:site_name" content="Skister">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Skister Blog">
+  <meta name="twitter:description" content="Guides, tips, and updates from the Skister team.">
+  
   <link rel="icon" type="image/png" href="../assets/favicon.png">
   <style>
-    body { font-family: system-ui, sans-serif; background:#0a0a0a; color:#fff; padding:2rem; max-width:640px; margin:0 auto; }
-    a { color:#228B22; }
+    :root { --bg:#0a0a0a; --panel:rgba(255,255,255,0.03); --border:rgba(255,255,255,0.1); --text:#fff; --muted:#b0b0b0; --accent:#228B22; }
+    * { box-sizing:border-box; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:var(--bg); color:var(--text); margin:0; }
+    a { color:inherit; }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    .topnav { display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom: 1.75rem; }
+    .topnav a { text-decoration:none; color:var(--muted); }
+    .topnav a:hover { color:var(--text); }
+    .brand { display:flex; gap:0.6rem; align-items:center; color:var(--text); font-weight:700; }
+    .hero { padding: 1rem 0 1.25rem; }
+    .hero h1 { margin:0 0 0.35rem; font-size:2.15rem; letter-spacing:-0.02em; }
+    .hero p { margin:0; color:var(--muted); max-width: 60ch; line-height: 1.65; }
+    .featured { margin-top: 1.75rem; padding: 1.25rem; border: 1px solid var(--border); border-radius: 16px; background: var(--panel); }
+    .featured h2 { margin:0 0 1rem; font-size: 1.1rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .featured-row { display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.75rem; }
+    @media (max-width: 900px) { .featured-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .featured-card { text-decoration:none; border:1px solid var(--border); border-radius: 12px; overflow:hidden; background: rgba(255,255,255,0.02); transition: transform 0.18s ease, border-color 0.18s ease; display:flex; flex-direction:column; min-height: 170px; }
+    .featured-card:hover { transform: translateY(-2px); border-color: rgba(34,139,34,0.5); }
+    .featured-card-media { width:100%; aspect-ratio: 16 / 10; background:#111; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+    .featured-card-media img { width:100%; height:100%; object-fit:cover; display:block; }
+    .featured-card-media-placeholder { color: var(--muted); font-size: 0.85rem; }
+    .featured-card-body { padding: 0.75rem 0.85rem 0.9rem; }
+    .featured-card-title { margin:0; font-size: 0.95rem; font-weight: 650; line-height: 1.35; display:-webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow:hidden; }
+    .tools { margin-top: 1.25rem; display:flex; flex-wrap:wrap; gap: 0.75rem; align-items:center; }
+    .search { flex: 1; min-width: 220px; display:flex; gap: 0.5rem; align-items:center; }
+    .search input { width: 100%; padding: 0.75rem 0.9rem; border-radius: 12px; border: 1px solid var(--border); background: rgba(255,255,255,0.04); color: var(--text); font-size: 1rem; }
+    .pill-row { display:flex; flex-wrap:wrap; gap: 0.5rem; }
+    .pill-row button { padding: 0.55rem 0.7rem; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.03); color: var(--muted); cursor:pointer; font-weight: 600; font-size: 0.9rem; }
+    .pill-row button[aria-pressed="true"] { background: rgba(34,139,34,0.18); border-color: rgba(34,139,34,0.45); color: var(--text); }
+    .results-hint { margin-top: 0.75rem; color: var(--muted); font-size: 0.95rem; }
+    .grid { margin-top: 1.25rem; display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    @media (max-width: 820px) { .grid { grid-template-columns: 1fr; } }
+    .article-card { border: 1px solid var(--border); border-radius: 16px; overflow:hidden; background: rgba(255,255,255,0.02); }
+    .article-card-link { text-decoration:none; display:grid; grid-template-columns: 160px 1fr; gap: 0; color: inherit; }
+    @media (max-width: 520px) { .article-card-link { grid-template-columns: 1fr; } }
+    .article-card-media { width: 100%; height: 100%; background:#111; display:flex; align-items:center; justify-content:center; }
+    .article-card-media img { width:100%; height:100%; object-fit:cover; display:block; }
+    .article-card-media-placeholder { color: var(--muted); font-size: 0.85rem; padding: 1rem; }
+    .article-card-body { padding: 1rem 1rem 1.1rem; }
+    .article-card-meta { color: var(--muted); font-size: 0.9rem; display:flex; gap:0.5rem; align-items:center; margin-bottom: 0.35rem; }
+    .dot { opacity: 0.7; }
+    .article-card-title { margin: 0; font-size: 1.1rem; line-height: 1.35; letter-spacing:-0.01em; }
+    .article-card-excerpt { margin: 0.45rem 0 0.75rem; color: var(--muted); line-height: 1.55; }
+    .article-card-cta { margin: 0; color: var(--accent); font-weight: 700; }
+    details.seo-details { margin-top: 2rem; padding: 1.25rem; border: 1px solid var(--border); border-radius: 16px; background: var(--panel); }
+    details.seo-details summary { cursor:pointer; color: var(--accent); font-weight: 750; }
+    details.seo-details .seo-body { color: var(--muted); line-height: 1.65; margin-top: 0.75rem; }
   </style>
 </head>
 <body>
-  <p><a href="../index.html">Home</a> · <a href="../blog.html">Dynamic blog</a></p>
-  <h1>Skister blog (static)</h1>
-  <ul>
-<li><a href="https://skister.app/blog/skiverleih-hamburg-anbieter-preise-alternativen-2026-2027/">Skiverleih Hamburg: Anbieter, Preise &amp; Alternativen 2026/2027</a></li>
-<li><a href="https://skister.app/blog/skigebiete-sueddeutschland/">Die 10 besten Skigebiete in Süddeutschland</a></li>
-<li><a href="https://skister.app/blog/ski-gadgets/">Ski Gadgets 2026/2027: Die cleversten Helfer für deinen nächsten Skiurlaub</a></li>
-<li><a href="https://skister.app/blog/kinderski-120-cm/">Kinderski 120 cm – kaufen, leihen oder teilen?</a></li>
-<li><a href="https://skister.app/blog/skigebiete-frankreich/">Die 10 besten Skigebiete in Frankreich</a></li>
-<li><a href="https://skister.app/blog/guenstig-skifahren/">Günstig Skifahren: Geht das überhaupt?</a></li>
-<li><a href="https://skister.app/blog/skischuhe-245-mm-welche-groesse/">Skischuhe 245 mm – welche Größe steckt dahinter?</a></li>
-<li><a href="https://skister.app/blog/skiausruestung-anfaenger/">Skiausrüstung für Anfänger: Was du wirklich brauchst</a></li>
-<li><a href="https://skister.app/blog/skigebiete-oberbayern/">Die besten Skigebiete in Oberbayern</a></li>
-<li><a href="https://skister.app/blog/kinderski-90-cm-gebraucht/">Wo kann man Kinderski (90 cm) gebraucht kaufen?</a></li>
-<li><a href="https://skister.app/blog/skifahren-lernen-tipps/">Skifahren lernen: Tipps &amp; Übungen für deinen ersten Pistentrip</a></li>
-<li><a href="https://skister.app/blog/skiverleih-berlin/">Skiverleih Berlin: Anbieter, Preise &amp; Alternativen 2026/2027</a></li>
-<li><a href="https://skister.app/blog/skifahren-app/">Skifahren-App: Die besten digitalen Helfer für deinen Winterurlaub 2026/2027</a></li>
-<li><a href="https://skister.app/blog/kinderski-110-cm/">Kinderski 110 cm – kaufen, leihen oder teilen?</a></li>
-<li><a href="https://skister.app/blog/skifahren-ab-2-jahren/">Skifahren ab 2 Jahren: Wie der frühe Einstieg für Kleinkinder sinnvoll gelingt (oder nicht)</a></li>
-<li><a href="https://skister.app/blog/skischuhe-236-mm/">Skischuhe 236 mm – welche Größe steckt dahinter?</a></li>
-<li><a href="https://skister.app/blog/skifahren-mit-kindern-im-allgaeu/">Skifahren mit Kindern im Allgäu: Die besten Familien-Skigebiete, Tipps &amp; Kostenfallen vermeiden</a></li>
-<li><a href="https://skister.app/blog/kinderski-100-cm-gebraucht/">Wo kann man Kinderski (100 cm) gebraucht kaufen?</a></li>
-<li><a href="https://skister.app/blog/skiausruestung-kosten/">Skiausrüstung - mit welchen Kosten du wirklich planen musst</a></li>
-<li><a href="https://skister.app/blog/kinderski-80-cm/">Kinderski 80 cm – kaufen, leihen oder teilen?</a></li>
-<li><a href="https://skister.app/blog/ist-eine-skileine-eine-sinnvolle-skilernhilfe/">Ist eine Skileine eine sinnvolle Skilernhilfe für Kinder?</a></li>
-<li><a href="https://skister.app/blog/skiverleih-dortmund/">Skiverleih Dortmund: Anbieter, Preise &amp; Alternativen 2026/2027</a></li>
-<li><a href="https://skister.app/blog/ab-welchem-alter-skifahren-unser-leitfaden-f-r-eltern-2026-2027/">Ab welchem Alter Skifahren? Unser Leitfaden für Eltern (2026/2027)</a></li>
-<li><a href="https://skister.app/blog/skischuhe-220-mm/">Skischuhe 220 mm – welche Größe steckt dahinter?</a></li>
-<li><a href="https://skister.app/blog/skifahren-lernen/">Skifahren lernen: In 7 Schritten sicher auf die Piste</a></li>
-<li><a href="https://skister.app/blog/kinderski-125-cm-gebraucht/">Wo kann man Kinderski (125 cm) gebraucht kaufen?</a></li>
-<li><a href="https://skister.app/blog/skiausruestung/">Skiausrüstung: So findest du das perfekte Equipment für die Piste</a></li>
-<li><a href="https://skister.app/blog/kinderski-100-cm/">Kinderski 100 cm – kaufen, leihen oder teilen?</a></li>
-<li><a href="https://skister.app/blog/skischuhe-248-mm/">Skischuhe 248 mm – welche Größe steckt dahinter?</a></li>
-<li><a href="https://skister.app/blog/was-braucht-man-zum-skifahren/">Was braucht man zum Skifahren? Die komplette Checkliste für deine Skitage</a></li>
-<li><a href="https://skister.app/blog/kinderski-60-cm-gebraucht/">Wo kann man Kinderski (60 cm) gebraucht kaufen?</a></li>
-<li><a href="https://skister.app/blog/skiverleih-muenchen/">Skiverleih München: Anbieter, Preise &amp; Alternativen 2026/2027</a></li>
-<li><a href="https://skister.app/blog/kinderski-130-cm/">Kinderski 130 cm – kaufen, leihen oder teilen?</a></li>
-<li><a href="https://skister.app/blog/wo-kann-man-in-deutschland-skifahren/">Wo kann man in Deutschland Skifahren? Die wichtigsten Regionen im Überblick</a></li>
-<li><a href="https://skister.app/blog/skischuhe-185-mm-welche-groesse/">Skischuhe 185 mm – welche Größe steckt dahinter?</a></li>
-<li><a href="https://skister.app/blog/skifahren-kosten-1-tag/">Skifahren - welche Kosten du für 1 Tag in 2026/2027 einplanen musst</a></li>
-<li><a href="https://skister.app/blog/kinderski-70-cm-gebraucht/">Wo kann man Kinderski (70 cm) gebraucht kaufen?</a></li>
-<li><a href="https://skister.app/blog/kinderski-70-cm-kaufen-leihen-oder-teilen/">Kinderski 70 cm – kaufen, leihen oder teilen?</a></li>
-<li><a href="https://skister.app/blog/skiurlaub-kosten/">Skiurlaub Kosten: Was dich eine Woche 2026/2027 wirklich kostet</a></li>
-<li><a href="https://skister.app/blog/skiverleih-stuttgart/">Skiverleih Stuttgart: Anbieter, Preise &amp; Alternativen 2026/2027</a></li>
-<li><a href="https://skister.app/blog/klassenfahrt-skifahren-kosten/">Klassenfahrt Skifahren: Mit welchen Kosten du rechnen musst und wie du sparen kannst</a></li>
-<li><a href="https://skister.app/blog/skischuhe-205mm-welche-groesse/">Skischuhe 205 mm – welche Größe steckt dahinter?</a></li>
-  </ul>
+  <div class="wrap">
+    <header class="topnav">
+      <a class="brand" href="../index.html" aria-label="Skister home">Skister</a>
+      <nav style="display:flex; gap:1rem;">
+        <a href="../index.html">Home</a>
+        <a href="/blog/">Blog</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1>Skister Blog</h1>
+      <p>Guides, tips, and updates from the Skister team.</p>
+    </section>
+
+    <section class="featured" aria-label="Featured posts">
+      <h2>Featured</h2>
+      <div class="featured-row">
+<a class="featured-card" href="/blog/skiverleih-hamburg-anbieter-preise-alternativen-2026-2027/" aria-label="Skiverleih Hamburg: Anbieter, Preise &amp; Alternativen 2026/2027">
+          <div class="featured-card-media">
+            <img src="https://images.surferseo.art/38f4cb39-a6de-4066-9d9d-5c1e396fac05.png" alt="Skiverleih Hamburg: Anbieter, Preise &amp; Alternativen 2026/2027" loading="eager" decoding="async" fetchpriority="high" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="featured-card-body">
+            <p class="featured-card-title">Skiverleih Hamburg: Anbieter, Preise &amp; Alternativen 2026/2027</p>
+          </div>
+        </a>
+<a class="featured-card" href="/blog/skigebiete-sueddeutschland/" aria-label="Die 10 besten Skigebiete in Süddeutschland">
+          <div class="featured-card-media">
+            <img src="https://images.surferseo.art/e5538654-61cd-4987-a2f6-c54994ad3c1d.png" alt="Die 10 besten Skigebiete in Süddeutschland" loading="eager" decoding="async" fetchpriority="high" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="featured-card-body">
+            <p class="featured-card-title">Die 10 besten Skigebiete in Süddeutschland</p>
+          </div>
+        </a>
+<a class="featured-card" href="/blog/ski-gadgets/" aria-label="Ski Gadgets 2026/2027: Die cleversten Helfer für deinen nächsten Skiurlaub">
+          <div class="featured-card-media">
+            <img src="https://images.surferseo.art/f30c9419-75ad-4443-887b-3048f12ce73d.png" alt="Ski Gadgets 2026/2027: Die cleversten Helfer für deinen nächsten Skiurlaub" loading="eager" decoding="async" fetchpriority="high" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="featured-card-body">
+            <p class="featured-card-title">Ski Gadgets 2026/2027: Die cleversten Helfer für deinen nächsten Skiurlaub</p>
+          </div>
+        </a>
+<a class="featured-card" href="/blog/kinderski-120-cm/" aria-label="Kinderski 120 cm – kaufen, leihen oder teilen?">
+          <div class="featured-card-media">
+            <img src="https://images.surferseo.art/394097c4-d298-4f4d-b68d-c301d0254b46.png" alt="Kinderski 120 cm – kaufen, leihen oder teilen?" loading="eager" decoding="async" fetchpriority="high" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="featured-card-body">
+            <p class="featured-card-title">Kinderski 120 cm – kaufen, leihen oder teilen?</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="tools" aria-label="Search and filter">
+      <div class="search">
+        <input id="blogSearch" type="search" placeholder="Search articles" autocomplete="off" aria-label="Search articles">
+      </div>
+      <div class="pill-row" id="topicFilters" aria-label="Topic filters">
+        <button type="button" class="topic-pill" data-topic="__all__" aria-pressed="true">All</button><button type="button" class="topic-pill" data-topic="beginners" aria-pressed="false">Beginners</button><button type="button" class="topic-pill" data-topic="kids" aria-pressed="false">Kids</button><button type="button" class="topic-pill" data-topic="gear" aria-pressed="false">Gear</button><button type="button" class="topic-pill" data-topic="costs" aria-pressed="false">Costs</button><button type="button" class="topic-pill" data-topic="rentals" aria-pressed="false">Rentals</button><button type="button" class="topic-pill" data-topic="trips" aria-pressed="false">Trips</button>
+      </div>
+    </section>
+    <p class="results-hint" id="resultsHint"></p>
+
+    <section class="grid" id="blogGrid" aria-label="All posts">
+<article class="article-card" data-title="Skiverleih Hamburg: Anbieter, Preise &amp; Alternativen 2026/2027" data-search="skiverleih hamburg: anbieter, preise &amp; alternativen 2026/2027 in hamburg gibt es – ähnlich wie in berlin oder dortmund – nur wenige spezialisierte skiverleihe. wintersport findet hier in der regel nicht vor ort statt, sondern im urlaub oder b" data-slug="skiverleih-hamburg-anbieter-preise-alternativen-2026-2027">
+        <a class="article-card-link" href="/blog/skiverleih-hamburg-anbieter-preise-alternativen-2026-2027/" aria-label="Skiverleih Hamburg: Anbieter, Preise &amp; Alternativen 2026/2027">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/38f4cb39-a6de-4066-9d9d-5c1e396fac05.png" alt="Skiverleih Hamburg: Anbieter, Preise &amp; Alternativen 2026/2027" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-04-17T10:08:19.001Z">2026-04-17</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skiverleih Hamburg: Anbieter, Preise &amp; Alternativen 2026/2027</h2>
+            <p class="article-card-excerpt">In Hamburg gibt es – ähnlich wie in Berlin oder Dortmund – nur wenige spezialisierte Skiverleihe. Wintersport findet hier in der Regel nicht vor Ort statt, sondern im Urlaub oder b</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skiverleih-hamburg-anbieter-preise-alternativen-2026-2027/">
+      </article>
+<article class="article-card" data-title="Die 10 besten Skigebiete in Süddeutschland" data-search="die 10 besten skigebiete in süddeutschland in unserem ranking bewerten wir die top 10 skigebiete nach schneesicherheit, pistenvielfalt, familientauglichkeit und preis-leistung." data-slug="skigebiete-sueddeutschland">
+        <a class="article-card-link" href="/blog/skigebiete-sueddeutschland/" aria-label="Die 10 besten Skigebiete in Süddeutschland">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/e5538654-61cd-4987-a2f6-c54994ad3c1d.png" alt="Die 10 besten Skigebiete in Süddeutschland" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-04-17T10:00:02.314Z">2026-04-17</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Die 10 besten Skigebiete in Süddeutschland</h2>
+            <p class="article-card-excerpt">In unserem Ranking bewerten wir die Top 10 Skigebiete nach Schneesicherheit, Pistenvielfalt, Familientauglichkeit und Preis-Leistung.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skigebiete-sueddeutschland/">
+      </article>
+<article class="article-card" data-title="Ski Gadgets 2026/2027: Die cleversten Helfer für deinen nächsten Skiurlaub" data-search="ski gadgets 2026/2027: die cleversten helfer für deinen nächsten skiurlaub der markt für smarte ski accessoires wächst seit 2022 jährlich um 25 %. menschen suchen nach geräten, die echtzeit-feedback liefern und den tag auf der piste in messbare leistun..." data-slug="ski-gadgets">
+        <a class="article-card-link" href="/blog/ski-gadgets/" aria-label="Ski Gadgets 2026/2027: Die cleversten Helfer für deinen nächsten Skiurlaub">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/f30c9419-75ad-4443-887b-3048f12ce73d.png" alt="Ski Gadgets 2026/2027: Die cleversten Helfer für deinen nächsten Skiurlaub" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-04-17T09:55:40.907Z">2026-04-17</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Ski Gadgets 2026/2027: Die cleversten Helfer für deinen nächsten Skiurlaub</h2>
+            <p class="article-card-excerpt">Der Markt für smarte Ski Accessoires wächst seit 2022 jährlich um 25 %. Menschen suchen nach Geräten, die Echtzeit-Feedback liefern und den Tag auf der Piste in messbare Leistun...</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/ski-gadgets/">
+      </article>
+<article class="article-card" data-title="Kinderski 120 cm – kaufen, leihen oder teilen?" data-search="kinderski 120 cm – kaufen, leihen oder teilen? kinderski mit 120 cm länge liegen bereits im fortgeschrittenen juniorbereich" data-slug="kinderski-120-cm">
+        <a class="article-card-link" href="/blog/kinderski-120-cm/" aria-label="Kinderski 120 cm – kaufen, leihen oder teilen?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/394097c4-d298-4f4d-b68d-c301d0254b46.png" alt="Kinderski 120 cm – kaufen, leihen oder teilen?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-04-17T09:44:06.260Z">2026-04-17</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Kinderski 120 cm – kaufen, leihen oder teilen?</h2>
+            <p class="article-card-excerpt">Kinderski mit 120 cm Länge liegen bereits im fortgeschrittenen Juniorbereich</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/kinderski-120-cm/">
+      </article>
+<article class="article-card" data-title="Die 10 besten Skigebiete in Frankreich" data-search="die 10 besten skigebiete in frankreich wir haben die besten skigebiete in frankreich nach pistenvielfalt, schneesicherheit und gesamterlebnis bewertet." data-slug="skigebiete-frankreich">
+        <a class="article-card-link" href="/blog/skigebiete-frankreich/" aria-label="Die 10 besten Skigebiete in Frankreich">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/457ec923-feb8-4b8e-90eb-73227260da2d.png" alt="Die 10 besten Skigebiete in Frankreich" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-04-17T09:36:22.623Z">2026-04-17</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Die 10 besten Skigebiete in Frankreich</h2>
+            <p class="article-card-excerpt">Wir haben die besten Skigebiete in Frankreich nach Pistenvielfalt, Schneesicherheit und Gesamterlebnis bewertet.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skigebiete-frankreich/">
+      </article>
+<article class="article-card" data-title="Günstig Skifahren: Geht das überhaupt?" data-search="günstig skifahren: geht das überhaupt? in diesem artikel erfährst du, welche skigebiete echte spartipps bieten, wie du bei unterkunft, anreise und ausrüstung clever sparen kannst und welche fehler du unbedingt vermei..." data-slug="guenstig-skifahren">
+        <a class="article-card-link" href="/blog/guenstig-skifahren/" aria-label="Günstig Skifahren: Geht das überhaupt?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/7c6820f5-7f05-41a5-b1b4-69412644e508.png" alt="Günstig Skifahren: Geht das überhaupt?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-04-17T09:33:24.060Z">2026-04-17</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Günstig Skifahren: Geht das überhaupt?</h2>
+            <p class="article-card-excerpt">In diesem Artikel erfährst du, welche Skigebiete echte Spartipps bieten, wie du bei Unterkunft, Anreise und Ausrüstung clever sparen kannst und welche Fehler du unbedingt vermei...</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/guenstig-skifahren/">
+      </article>
+<article class="article-card" data-title="Skischuhe 245 mm – welche Größe steckt dahinter?" data-search="skischuhe 245 mm – welche größe steckt dahinter? hier erfährst du, was 245 mm bedeutet, welchen größenbereich du erwarten kannst und worauf du unbedingt achten solltest." data-slug="skischuhe-245-mm-welche-groesse">
+        <a class="article-card-link" href="/blog/skischuhe-245-mm-welche-groesse/" aria-label="Skischuhe 245 mm – welche Größe steckt dahinter?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/9273ab8c-0216-420b-aa51-139107116cea.png" alt="Skischuhe 245 mm – welche Größe steckt dahinter?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-04-17T09:26:57.713Z">2026-04-17</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skischuhe 245 mm – welche Größe steckt dahinter?</h2>
+            <p class="article-card-excerpt">Hier erfährst du, was 245 mm bedeutet, welchen Größenbereich du erwarten kannst und worauf du unbedingt achten solltest.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skischuhe-245-mm-welche-groesse/">
+      </article>
+<article class="article-card" data-title="Skiausrüstung für Anfänger: Was du wirklich brauchst" data-search="skiausrüstung für anfänger: was du wirklich brauchst dieser ratgeber zeigt dir, worauf es bei der skiausrüstung für anfänger ankommt und wie du clever kosten sparst." data-slug="skiausruestung-anfaenger">
+        <a class="article-card-link" href="/blog/skiausruestung-anfaenger/" aria-label="Skiausrüstung für Anfänger: Was du wirklich brauchst">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/246d01d2-54d8-4bd9-b1f9-aaaf047825c0.png" alt="Skiausrüstung für Anfänger: Was du wirklich brauchst" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-04-17T09:18:55.315Z">2026-04-17</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skiausrüstung für Anfänger: Was du wirklich brauchst</h2>
+            <p class="article-card-excerpt">Dieser Ratgeber zeigt dir, worauf es bei der Skiausrüstung für Anfänger ankommt und wie du clever Kosten sparst.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skiausruestung-anfaenger/">
+      </article>
+<article class="article-card" data-title="Die besten Skigebiete in Oberbayern" data-search="die besten skigebiete in oberbayern in diesem artikel bewerten wir die top-skigebiete in oberbayern nach schneesicherheit, pistenvielfalt und familientauglichkeit." data-slug="skigebiete-oberbayern">
+        <a class="article-card-link" href="/blog/skigebiete-oberbayern/" aria-label="Die besten Skigebiete in Oberbayern">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/5f32be6b-3759-41d1-9a20-1d7c53cb1ad1.png" alt="Die besten Skigebiete in Oberbayern" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-04-17T09:16:22.836Z">2026-04-17</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Die besten Skigebiete in Oberbayern</h2>
+            <p class="article-card-excerpt">In diesem Artikel bewerten wir die Top-Skigebiete in Oberbayern nach Schneesicherheit, Pistenvielfalt und Familientauglichkeit.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skigebiete-oberbayern/">
+      </article>
+<article class="article-card" data-title="Wo kann man Kinderski (90 cm) gebraucht kaufen?" data-search="wo kann man kinderski (90 cm) gebraucht kaufen? dieser artikel zeigt dir, wo du gebrauchte 90-cm-ski findest, worauf du beim zustand achten solltest und wann teilen sinnvoller ist als kaufen." data-slug="kinderski-90-cm-gebraucht">
+        <a class="article-card-link" href="/blog/kinderski-90-cm-gebraucht/" aria-label="Wo kann man Kinderski (90 cm) gebraucht kaufen?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/7af9544b-eb8e-4d97-a275-44e5edf959fa.png" alt="Wo kann man Kinderski (90 cm) gebraucht kaufen?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-27T08:33:17.591Z">2026-03-27</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Wo kann man Kinderski (90 cm) gebraucht kaufen?</h2>
+            <p class="article-card-excerpt">Dieser Artikel zeigt dir, wo du gebrauchte 90-cm-Ski findest, worauf du beim Zustand achten solltest und wann Teilen sinnvoller ist als Kaufen.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/kinderski-90-cm-gebraucht/">
+      </article>
+<article class="article-card" data-title="Skifahren lernen: Tipps &amp; Übungen für deinen ersten Pistentrip" data-search="skifahren lernen: tipps &amp; übungen für deinen ersten pistentrip dieser guide liefert dir konkrete tipps zur vorbereitung, ausrüstung, den ersten schritten im schnee und zum sicheren kurvenfahren. er ersetzt keinen skikurs, hilft dir aber, de..." data-slug="skifahren-lernen-tipps">
+        <a class="article-card-link" href="/blog/skifahren-lernen-tipps/" aria-label="Skifahren lernen: Tipps &amp; Übungen für deinen ersten Pistentrip">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/ea0f3e0d-80cb-4245-89e0-56e7b8850126.png" alt="Skifahren lernen: Tipps &amp; Übungen für deinen ersten Pistentrip" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-27T08:27:39.307Z">2026-03-27</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skifahren lernen: Tipps &amp; Übungen für deinen ersten Pistentrip</h2>
+            <p class="article-card-excerpt">Dieser Guide liefert dir konkrete Tipps zur Vorbereitung, Ausrüstung, den ersten Schritten im Schnee und zum sicheren Kurvenfahren. Er ersetzt keinen Skikurs, hilft dir aber, de...</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skifahren-lernen-tipps/">
+      </article>
+<article class="article-card" data-title="Skiverleih Berlin: Anbieter, Preise &amp; Alternativen 2026/2027" data-search="skiverleih berlin: anbieter, preise &amp; alternativen 2026/2027 in berlin gibt es – ähnlich wie in anderen städten, die nicht in der nähe von skigebieten liegen – nur wenige klassische skiverleihe. wintersport findet hier nicht vor der haust..." data-slug="skiverleih-berlin">
+        <a class="article-card-link" href="/blog/skiverleih-berlin/" aria-label="Skiverleih Berlin: Anbieter, Preise &amp; Alternativen 2026/2027">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/1fec395e-141d-4a7a-9cc9-e6f3f517e5c4.png" alt="Skiverleih Berlin: Anbieter, Preise &amp; Alternativen 2026/2027" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-27T08:19:47.776Z">2026-03-27</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skiverleih Berlin: Anbieter, Preise &amp; Alternativen 2026/2027</h2>
+            <p class="article-card-excerpt">In Berlin gibt es – ähnlich wie in anderen Städten, die nicht in der Nähe von Skigebieten liegen – nur wenige klassische Skiverleihe. Wintersport findet hier nicht vor der Haust...</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skiverleih-berlin/">
+      </article>
+<article class="article-card" data-title="Skifahren-App: Die besten digitalen Helfer für deinen Winterurlaub 2026/2027" data-search="skifahren-app: die besten digitalen helfer für deinen winterurlaub 2026/2027 wichtigste erkenntnisse skifahren-apps gehören 2026/2027 zur standardausrüstung vieler wintersportler. sie unterstützen bei planung, sicherheit, tracking und helfen sogar, ausrüstu" data-slug="skifahren-app">
+        <a class="article-card-link" href="/blog/skifahren-app/" aria-label="Skifahren-App: Die besten digitalen Helfer für deinen Winterurlaub 2026/2027">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/d132e3b5-18a0-4d3c-b4a0-7c8208b09657.png" alt="Skifahren-App: Die besten digitalen Helfer für deinen Winterurlaub 2026/2027" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-26T19:16:17.052Z">2026-03-26</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skifahren-App: Die besten digitalen Helfer für deinen Winterurlaub 2026/2027</h2>
+            <p class="article-card-excerpt">Wichtigste Erkenntnisse Skifahren-Apps gehören 2026/2027 zur Standardausrüstung vieler Wintersportler. Sie unterstützen bei Planung, Sicherheit, Tracking und helfen sogar, Ausrüstu</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skifahren-app/">
+      </article>
+<article class="article-card" data-title="Kinderski 110 cm – kaufen, leihen oder teilen?" data-search="kinderski 110 cm – kaufen, leihen oder teilen? kinderski mit 110 cm länge sind häufig die nächste stufe nach 100 cm und markieren für viele kinder den übergang zu deutlich stabilerem, kontrollierterem fahren. sie passen typi..." data-slug="kinderski-110-cm">
+        <a class="article-card-link" href="/blog/kinderski-110-cm/" aria-label="Kinderski 110 cm – kaufen, leihen oder teilen?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/90be0901-75ca-4ec9-89c8-8a8bc52f547b.png" alt="Kinderski 110 cm – kaufen, leihen oder teilen?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-26T19:07:59.087Z">2026-03-26</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Kinderski 110 cm – kaufen, leihen oder teilen?</h2>
+            <p class="article-card-excerpt">Kinderski mit 110 cm Länge sind häufig die nächste Stufe nach 100 cm und markieren für viele Kinder den Übergang zu deutlich stabilerem, kontrollierterem Fahren. Sie passen typi...</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/kinderski-110-cm/">
+      </article>
+<article class="article-card" data-title="Skifahren ab 2 Jahren: Wie der frühe Einstieg für Kleinkinder sinnvoll gelingt (oder nicht)" data-search="skifahren ab 2 jahren: wie der frühe einstieg für kleinkinder sinnvoll gelingt (oder nicht) dieser artikel liefert einen überblick zu voraussetzungen, ausrüstung und praktischen tipps für die ersten schritte im schnee." data-slug="skifahren-ab-2-jahren">
+        <a class="article-card-link" href="/blog/skifahren-ab-2-jahren/" aria-label="Skifahren ab 2 Jahren: Wie der frühe Einstieg für Kleinkinder sinnvoll gelingt (oder nicht)">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/38260a93-8ded-4953-803d-6da89673f965.png" alt="Skifahren ab 2 Jahren: Wie der frühe Einstieg für Kleinkinder sinnvoll gelingt (oder nicht)" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-26T19:01:44.444Z">2026-03-26</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skifahren ab 2 Jahren: Wie der frühe Einstieg für Kleinkinder sinnvoll gelingt (oder nicht)</h2>
+            <p class="article-card-excerpt">Dieser Artikel liefert einen Überblick zu Voraussetzungen, Ausrüstung und praktischen Tipps für die ersten Schritte im Schnee.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skifahren-ab-2-jahren/">
+      </article>
+<article class="article-card" data-title="Skischuhe 236 mm – welche Größe steckt dahinter?" data-search="skischuhe 236 mm – welche größe steckt dahinter? du hast skischuhe mit einer sohlenlänge von 236 mm gefunden? dieser wert liegt praktisch im gleichen größencluster wie 235 mm und befindet sich im übergang vom junior- zum klein..." data-slug="skischuhe-236-mm">
+        <a class="article-card-link" href="/blog/skischuhe-236-mm/" aria-label="Skischuhe 236 mm – welche Größe steckt dahinter?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/2b6f45e1-3261-4094-9507-ad7fb767b0fd.jpg" alt="Skischuhe 236 mm – welche Größe steckt dahinter?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-16T16:34:30.389Z">2026-03-16</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skischuhe 236 mm – welche Größe steckt dahinter?</h2>
+            <p class="article-card-excerpt">Du hast Skischuhe mit einer Sohlenlänge von 236 mm gefunden? Dieser Wert liegt praktisch im gleichen Größencluster wie 235 mm und befindet sich im Übergang vom Junior- zum klein...</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skischuhe-236-mm/">
+      </article>
+<article class="article-card" data-title="Skifahren mit Kindern im Allgäu: Die besten Familien-Skigebiete, Tipps &amp; Kostenfallen vermeiden" data-search="skifahren mit kindern im allgäu: die besten familien-skigebiete, tipps &amp; kostenfallen vermeiden das allgäu bietet zahlreiche überschaubare skigebiete mit kinderländern, zauberteppiche und breiten blauen pisten – ideal für den ersten skiurlaub mit kindern." data-slug="skifahren-mit-kindern-im-allgaeu">
+        <a class="article-card-link" href="/blog/skifahren-mit-kindern-im-allgaeu/" aria-label="Skifahren mit Kindern im Allgäu: Die besten Familien-Skigebiete, Tipps &amp; Kostenfallen vermeiden">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/61331ea4-6292-497e-967c-a8d2419c40cd.png" alt="Skifahren mit Kindern im Allgäu: Die besten Familien-Skigebiete, Tipps &amp; Kostenfallen vermeiden" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-16T16:26:29.529Z">2026-03-16</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skifahren mit Kindern im Allgäu: Die besten Familien-Skigebiete, Tipps &amp; Kostenfallen vermeiden</h2>
+            <p class="article-card-excerpt">Das Allgäu bietet zahlreiche überschaubare Skigebiete mit Kinderländern, Zauberteppiche und breiten blauen Pisten – ideal für den ersten Skiurlaub mit Kindern.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skifahren-mit-kindern-im-allgaeu/">
+      </article>
+<article class="article-card" data-title="Wo kann man Kinderski (100 cm) gebraucht kaufen?" data-search="wo kann man kinderski (100 cm) gebraucht kaufen? dieser artikel zeigt dir, wo du gebrauchte 100-cm-ski findest, wie du ihren zustand bewertest und wann teilen sinnvoller ist als kaufen." data-slug="kinderski-100-cm-gebraucht">
+        <a class="article-card-link" href="/blog/kinderski-100-cm-gebraucht/" aria-label="Wo kann man Kinderski (100 cm) gebraucht kaufen?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/f353c7c1-8608-4bb2-afb6-cc40f284b092.jpg" alt="Wo kann man Kinderski (100 cm) gebraucht kaufen?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-16T16:17:25.959Z">2026-03-16</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Wo kann man Kinderski (100 cm) gebraucht kaufen?</h2>
+            <p class="article-card-excerpt">Dieser Artikel zeigt dir, wo du gebrauchte 100-cm-Ski findest, wie du ihren Zustand bewertest und wann Teilen sinnvoller ist als Kaufen.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/kinderski-100-cm-gebraucht/">
+      </article>
+<article class="article-card" data-title="Skiausrüstung - mit welchen Kosten du wirklich planen musst" data-search="skiausrüstung - mit welchen kosten du wirklich planen musst dieser artikel zeigt dir konkrete preise, hilft beim vergleich zwischen kauf und miete – und erklärt, wie du mit cleverer planung viel geld sparst." data-slug="skiausruestung-kosten">
+        <a class="article-card-link" href="/blog/skiausruestung-kosten/" aria-label="Skiausrüstung - mit welchen Kosten du wirklich planen musst">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/896b31d6-4d79-4a4f-8138-caeb7fe13612.png" alt="Skiausrüstung - mit welchen Kosten du wirklich planen musst" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-13T11:16:33.154Z">2026-03-13</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skiausrüstung - mit welchen Kosten du wirklich planen musst</h2>
+            <p class="article-card-excerpt">Dieser Artikel zeigt dir konkrete Preise, hilft beim Vergleich zwischen Kauf und Miete – und erklärt, wie du mit cleverer Planung viel Geld sparst.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skiausruestung-kosten/">
+      </article>
+<article class="article-card" data-title="Kinderski 80 cm – kaufen, leihen oder teilen?" data-search="kinderski 80 cm – kaufen, leihen oder teilen? dieser artikel hilft dir, passende 80-cm-ski zu finden." data-slug="kinderski-80-cm">
+        <a class="article-card-link" href="/blog/kinderski-80-cm/" aria-label="Kinderski 80 cm – kaufen, leihen oder teilen?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/523a01d0-f2b0-4536-b083-c707e60bf8ee.png" alt="Kinderski 80 cm – kaufen, leihen oder teilen?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-13T11:08:21.165Z">2026-03-13</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Kinderski 80 cm – kaufen, leihen oder teilen?</h2>
+            <p class="article-card-excerpt">Dieser Artikel hilft dir, passende 80-cm-Ski zu finden.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/kinderski-80-cm/">
+      </article>
+<article class="article-card" data-title="Ist eine Skileine eine sinnvolle Skilernhilfe für Kinder?" data-search="ist eine skileine eine sinnvolle skilernhilfe für kinder? skileine für kinder erklärt: wann sie sinnvoll ist, wie lange sie genutzt wird und worauf eltern achten sollten. tipps für sicheres skifahren lernen." data-slug="ist-eine-skileine-eine-sinnvolle-skilernhilfe">
+        <a class="article-card-link" href="/blog/ist-eine-skileine-eine-sinnvolle-skilernhilfe/" aria-label="Ist eine Skileine eine sinnvolle Skilernhilfe für Kinder?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/d710db13-4ef1-41b9-ba83-c1b09e9ead50.jpg" alt="Ist eine Skileine eine sinnvolle Skilernhilfe für Kinder?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-13T10:58:06.160Z">2026-03-13</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Ist eine Skileine eine sinnvolle Skilernhilfe für Kinder?</h2>
+            <p class="article-card-excerpt">Skileine für Kinder erklärt: Wann sie sinnvoll ist, wie lange sie genutzt wird und worauf Eltern achten sollten. Tipps für sicheres Skifahren lernen.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/ist-eine-skileine-eine-sinnvolle-skilernhilfe/">
+      </article>
+<article class="article-card" data-title="Skiverleih Dortmund: Anbieter, Preise &amp; Alternativen 2026/2027" data-search="skiverleih dortmund: anbieter, preise &amp; alternativen 2026/2027 in dortmund gibt es nur wenige klassische skiverleihe. trotzdem bieten einige sportgeschäfte skiverleih oder saisonsets an – vor allem für familien, die für einen skiurlaub in d..." data-slug="skiverleih-dortmund">
+        <a class="article-card-link" href="/blog/skiverleih-dortmund/" aria-label="Skiverleih Dortmund: Anbieter, Preise &amp; Alternativen 2026/2027">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/797c5505-832a-43be-9046-0f2f1dbc258c.png" alt="Skiverleih Dortmund: Anbieter, Preise &amp; Alternativen 2026/2027" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-12T17:05:52.149Z">2026-03-12</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skiverleih Dortmund: Anbieter, Preise &amp; Alternativen 2026/2027</h2>
+            <p class="article-card-excerpt">In Dortmund gibt es nur wenige klassische Skiverleihe. Trotzdem bieten einige Sportgeschäfte Skiverleih oder Saisonsets an – vor allem für Familien, die für einen Skiurlaub in d...</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skiverleih-dortmund/">
+      </article>
+<article class="article-card" data-title="Ab welchem Alter Skifahren? Unser Leitfaden für Eltern (2026/2027)" data-search="ab welchem alter skifahren? unser leitfaden für eltern (2026/2027) hier findest du alle wichtigen altersgruppen und faktoren im überblick, damit du den besten start für dein kind in den wintersport findest." data-slug="ab-welchem-alter-skifahren-unser-leitfaden-f-r-eltern-2026-2027">
+        <a class="article-card-link" href="/blog/ab-welchem-alter-skifahren-unser-leitfaden-f-r-eltern-2026-2027/" aria-label="Ab welchem Alter Skifahren? Unser Leitfaden für Eltern (2026/2027)">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/3bb53ba9-d6ec-477f-a2a3-53536706cfb8.png" alt="Ab welchem Alter Skifahren? Unser Leitfaden für Eltern (2026/2027)" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-12T16:54:36.709Z">2026-03-12</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Ab welchem Alter Skifahren? Unser Leitfaden für Eltern (2026/2027)</h2>
+            <p class="article-card-excerpt">Hier findest du alle wichtigen Altersgruppen und Faktoren im Überblick, damit du den besten Start für dein Kind in den Wintersport findest.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/ab-welchem-alter-skifahren-unser-leitfaden-f-r-eltern-2026-2027/">
+      </article>
+<article class="article-card" data-title="Skischuhe 220 mm – welche Größe steckt dahinter?" data-search="skischuhe 220 mm – welche größe steckt dahinter? hier erfährst du, was 220 mm bedeutet, welchen größenbereich du erwarten kannst und worauf du unbedingt achten solltest." data-slug="skischuhe-220-mm">
+        <a class="article-card-link" href="/blog/skischuhe-220-mm/" aria-label="Skischuhe 220 mm – welche Größe steckt dahinter?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/0ff55f59-7698-43c7-9091-5132815c6ca3.jpg" alt="Skischuhe 220 mm – welche Größe steckt dahinter?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-12T16:48:52.649Z">2026-03-12</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skischuhe 220 mm – welche Größe steckt dahinter?</h2>
+            <p class="article-card-excerpt">Hier erfährst du, was 220 mm bedeutet, welchen Größenbereich du erwarten kannst und worauf du unbedingt achten solltest.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skischuhe-220-mm/">
+      </article>
+<article class="article-card" data-title="Skifahren lernen: In 7 Schritten sicher auf die Piste" data-search="skifahren lernen: in 7 schritten sicher auf die piste du träumst davon, im winter 2026/2027 deine ersten schwünge im schnee zu machen? dieser artikel führt dich schritt für schritt von den ersten stehversuchen bis zu kontrollierten..." data-slug="skifahren-lernen">
+        <a class="article-card-link" href="/blog/skifahren-lernen/" aria-label="Skifahren lernen: In 7 Schritten sicher auf die Piste">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/4bcf1d7d-b0bd-4f12-93da-3c0f073c2621.png" alt="Skifahren lernen: In 7 Schritten sicher auf die Piste" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-12T16:33:53.930Z">2026-03-12</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skifahren lernen: In 7 Schritten sicher auf die Piste</h2>
+            <p class="article-card-excerpt">Du träumst davon, im Winter 2026/2027 deine ersten Schwünge im Schnee zu machen? Dieser Artikel führt dich Schritt für Schritt von den ersten Stehversuchen bis zu kontrollierten...</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skifahren-lernen/">
+      </article>
+<article class="article-card" data-title="Wo kann man Kinderski (125 cm) gebraucht kaufen?" data-search="wo kann man kinderski (125 cm) gebraucht kaufen? dieser artikel zeigt dir, wo du gebrauchte 125-cm-ski findest, worauf du technisch achten solltest und wann teilen die bessere lösung ist." data-slug="kinderski-125-cm-gebraucht">
+        <a class="article-card-link" href="/blog/kinderski-125-cm-gebraucht/" aria-label="Wo kann man Kinderski (125 cm) gebraucht kaufen?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/defd2f3b-d2d9-411c-80e9-034e282303cb.png" alt="Wo kann man Kinderski (125 cm) gebraucht kaufen?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-12T16:24:49.530Z">2026-03-12</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Wo kann man Kinderski (125 cm) gebraucht kaufen?</h2>
+            <p class="article-card-excerpt">Dieser Artikel zeigt dir, wo du gebrauchte 125-cm-Ski findest, worauf du technisch achten solltest und wann Teilen die bessere Lösung ist.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/kinderski-125-cm-gebraucht/">
+      </article>
+<article class="article-card" data-title="Skiausrüstung: So findest du das perfekte Equipment für die Piste" data-search="skiausrüstung: so findest du das perfekte equipment für die piste in diesem artikel erfährst du, welche komponenten du wirklich brauchst, worauf du beim kauf achten solltest und wie du das beste preis-leistungs-verhältnis findest." data-slug="skiausruestung">
+        <a class="article-card-link" href="/blog/skiausruestung/" aria-label="Skiausrüstung: So findest du das perfekte Equipment für die Piste">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/04c412cd-5817-44ad-855c-be658fdad73e.png" alt="Skiausrüstung: So findest du das perfekte Equipment für die Piste" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-12T12:30:41.525Z">2026-03-12</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skiausrüstung: So findest du das perfekte Equipment für die Piste</h2>
+            <p class="article-card-excerpt">In diesem Artikel erfährst du, welche Komponenten du wirklich brauchst, worauf du beim Kauf achten solltest und wie du das beste Preis-Leistungs-Verhältnis findest.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skiausruestung/">
+      </article>
+<article class="article-card" data-title="Kinderski 100 cm – kaufen, leihen oder teilen?" data-search="kinderski 100 cm – kaufen, leihen oder teilen? kinderski mit 100 cm länge sind häufig der übergang vom reinen anfängerbereich hin zu stabilerem, kontrolliertem fahren. sie passen typischerweise für kinder im alter von etwa 5..." data-slug="kinderski-100-cm">
+        <a class="article-card-link" href="/blog/kinderski-100-cm/" aria-label="Kinderski 100 cm – kaufen, leihen oder teilen?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/62b989dd-d554-4d27-ba11-ae06987ddbce.png" alt="Kinderski 100 cm – kaufen, leihen oder teilen?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-11T21:10:45.120Z">2026-03-11</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Kinderski 100 cm – kaufen, leihen oder teilen?</h2>
+            <p class="article-card-excerpt">Kinderski mit 100 cm Länge sind häufig der Übergang vom reinen Anfängerbereich hin zu stabilerem, kontrolliertem Fahren. Sie passen typischerweise für Kinder im Alter von etwa 5...</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/kinderski-100-cm/">
+      </article>
+<article class="article-card" data-title="Skischuhe 248 mm – welche Größe steckt dahinter?" data-search="skischuhe 248 mm – welche größe steckt dahinter? hier erfährst du, was 248 mm bedeutet, welchen größenbereich du erwarten kannst und worauf du unbedingt achten solltest." data-slug="skischuhe-248-mm">
+        <a class="article-card-link" href="/blog/skischuhe-248-mm/" aria-label="Skischuhe 248 mm – welche Größe steckt dahinter?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/2f9a9df7-b58c-4625-ae4c-1e236ff73c7f.jpg" alt="Skischuhe 248 mm – welche Größe steckt dahinter?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-11T21:08:13.853Z">2026-03-11</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skischuhe 248 mm – welche Größe steckt dahinter?</h2>
+            <p class="article-card-excerpt">Hier erfährst du, was 248 mm bedeutet, welchen Größenbereich du erwarten kannst und worauf du unbedingt achten solltest.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skischuhe-248-mm/">
+      </article>
+<article class="article-card" data-title="Was braucht man zum Skifahren? Die komplette Checkliste für deine Skitage" data-search="was braucht man zum skifahren? die komplette checkliste für deine skitage dieser ratgeber zeigt dir schritt für schritt, welche ausrüstung, kleidung und dokumente du wirklich brauchst." data-slug="was-braucht-man-zum-skifahren">
+        <a class="article-card-link" href="/blog/was-braucht-man-zum-skifahren/" aria-label="Was braucht man zum Skifahren? Die komplette Checkliste für deine Skitage">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/b3661b6e-bfb3-4d1c-8683-7798d7afb670.png" alt="Was braucht man zum Skifahren? Die komplette Checkliste für deine Skitage" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-11T21:01:28.012Z">2026-03-11</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Was braucht man zum Skifahren? Die komplette Checkliste für deine Skitage</h2>
+            <p class="article-card-excerpt">Dieser Ratgeber zeigt dir Schritt für Schritt, welche Ausrüstung, Kleidung und Dokumente du wirklich brauchst.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/was-braucht-man-zum-skifahren/">
+      </article>
+<article class="article-card" data-title="Wo kann man Kinderski (60 cm) gebraucht kaufen?" data-search="wo kann man kinderski (60 cm) gebraucht kaufen? dieser artikel zeigt dir, wo du gebrauchte 60-cm-ski findest, worauf du achten solltest – und warum kaufen hier oft gar nicht nötig ist." data-slug="kinderski-60-cm-gebraucht">
+        <a class="article-card-link" href="/blog/kinderski-60-cm-gebraucht/" aria-label="Wo kann man Kinderski (60 cm) gebraucht kaufen?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/f846c878-fd36-4123-918d-a8653d698341.png" alt="Wo kann man Kinderski (60 cm) gebraucht kaufen?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-11T20:47:15.565Z">2026-03-11</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Wo kann man Kinderski (60 cm) gebraucht kaufen?</h2>
+            <p class="article-card-excerpt">Dieser Artikel zeigt dir, wo du gebrauchte 60-cm-Ski findest, worauf du achten solltest – und warum Kaufen hier oft gar nicht nötig ist.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/kinderski-60-cm-gebraucht/">
+      </article>
+<article class="article-card" data-title="Skiverleih München: Anbieter, Preise &amp; Alternativen 2026/2027" data-search="skiverleih münchen: anbieter, preise &amp; alternativen 2026/2027 in münchen gibt es deutlich mehr möglichkeiten für skiverleih als in vielen anderen deutschen städten. durch die nähe zu den alpen sind wintersportgeschäfte und verleiher stark ver" data-slug="skiverleih-muenchen">
+        <a class="article-card-link" href="/blog/skiverleih-muenchen/" aria-label="Skiverleih München: Anbieter, Preise &amp; Alternativen 2026/2027">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/7251acf4-6b3c-46c0-9027-11348f35c77b.png" alt="Skiverleih München: Anbieter, Preise &amp; Alternativen 2026/2027" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-11T20:45:00.808Z">2026-03-11</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skiverleih München: Anbieter, Preise &amp; Alternativen 2026/2027</h2>
+            <p class="article-card-excerpt">In München gibt es deutlich mehr Möglichkeiten für Skiverleih als in vielen anderen deutschen Städten. Durch die Nähe zu den Alpen sind Wintersportgeschäfte und Verleiher stark ver</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skiverleih-muenchen/">
+      </article>
+<article class="article-card" data-title="Kinderski 130 cm – kaufen, leihen oder teilen?" data-search="kinderski 130 cm – kaufen, leihen oder teilen? kinderski mit 130 cm länge befinden sich bereits klar im sportlichen juniorsegment. sie passen typischerweise für kinder im alter von etwa 8–10 jahren beziehungsweise bei einer..." data-slug="kinderski-130-cm">
+        <a class="article-card-link" href="/blog/kinderski-130-cm/" aria-label="Kinderski 130 cm – kaufen, leihen oder teilen?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/fec3ba72-325b-4c1e-b4c2-85b21af0c017.png" alt="Kinderski 130 cm – kaufen, leihen oder teilen?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-11T20:18:28.725Z">2026-03-11</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Kinderski 130 cm – kaufen, leihen oder teilen?</h2>
+            <p class="article-card-excerpt">Kinderski mit 130 cm Länge befinden sich bereits klar im sportlichen Juniorsegment. Sie passen typischerweise für Kinder im Alter von etwa 8–10 Jahren beziehungsweise bei einer...</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/kinderski-130-cm/">
+      </article>
+<article class="article-card" data-title="Wo kann man in Deutschland Skifahren? Die wichtigsten Regionen im Überblick" data-search="wo kann man in deutschland skifahren? die wichtigsten regionen im überblick deutschland bietet über 655 skigebiete mit rund 1.300 pistenkilometern – von den bayerischen alpen bis zu den mittelgebirgen." data-slug="wo-kann-man-in-deutschland-skifahren">
+        <a class="article-card-link" href="/blog/wo-kann-man-in-deutschland-skifahren/" aria-label="Wo kann man in Deutschland Skifahren? Die wichtigsten Regionen im Überblick">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/82f1080c-7654-441f-ae7a-ed2d2f07291d.png" alt="Wo kann man in Deutschland Skifahren? Die wichtigsten Regionen im Überblick" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-11T17:08:05.139Z">2026-03-11</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Wo kann man in Deutschland Skifahren? Die wichtigsten Regionen im Überblick</h2>
+            <p class="article-card-excerpt">Deutschland bietet über 655 Skigebiete mit rund 1.300 Pistenkilometern – von den Bayerischen Alpen bis zu den Mittelgebirgen.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/wo-kann-man-in-deutschland-skifahren/">
+      </article>
+<article class="article-card" data-title="Skischuhe 185 mm – welche Größe steckt dahinter?" data-search="skischuhe 185 mm – welche größe steckt dahinter? du hast kinder-skischuhe mit einer sohlenlänge von 185 mm gefunden und fragst dich, welche größe das ist? die zahl an der ferse hilft dir bei der einordnung – aber sie ist nicht..." data-slug="skischuhe-185-mm-welche-groesse">
+        <a class="article-card-link" href="/blog/skischuhe-185-mm-welche-groesse/" aria-label="Skischuhe 185 mm – welche Größe steckt dahinter?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/0ea68b25-9e5e-42aa-8677-02c6a2cd6ba5.jpg" alt="Skischuhe 185 mm – welche Größe steckt dahinter?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-03-11T16:14:02.810Z">2026-03-11</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skischuhe 185 mm – welche Größe steckt dahinter?</h2>
+            <p class="article-card-excerpt">Du hast Kinder-Skischuhe mit einer Sohlenlänge von 185 mm gefunden und fragst dich, welche Größe das ist? Die Zahl an der Ferse hilft dir bei der Einordnung – aber sie ist nicht...</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skischuhe-185-mm-welche-groesse/">
+      </article>
+<article class="article-card" data-title="Skifahren - welche Kosten du für 1 Tag in 2026/2027 einplanen musst" data-search="skifahren - welche kosten du für 1 tag in 2026/2027 einplanen musst dieser artikel zeigt dir die konkreten preise für die wintersaison 2026/27 und wo du gezielt sparen kannst." data-slug="skifahren-kosten-1-tag">
+        <a class="article-card-link" href="/blog/skifahren-kosten-1-tag/" aria-label="Skifahren - welche Kosten du für 1 Tag in 2026/2027 einplanen musst">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/bc3813fd-da34-451b-96ff-e50636ff7a13.png" alt="Skifahren - welche Kosten du für 1 Tag in 2026/2027 einplanen musst" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-02-23T19:15:58.726Z">2026-02-23</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skifahren - welche Kosten du für 1 Tag in 2026/2027 einplanen musst</h2>
+            <p class="article-card-excerpt">Dieser Artikel zeigt dir die konkreten Preise für die Wintersaison 2026/27 und wo du gezielt sparen kannst.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skifahren-kosten-1-tag/">
+      </article>
+<article class="article-card" data-title="Wo kann man Kinderski (70 cm) gebraucht kaufen?" data-search="wo kann man kinderski (70 cm) gebraucht kaufen? dieser artikel hilft dir, passende gebrauchte 70-cm-ski zu finden, ihren zustand richtig zu bewerten und sie sinnvoll in der familie zu nutzen." data-slug="kinderski-70-cm-gebraucht">
+        <a class="article-card-link" href="/blog/kinderski-70-cm-gebraucht/" aria-label="Wo kann man Kinderski (70 cm) gebraucht kaufen?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/ac077555-40cc-4952-b878-59fd69810041.png" alt="Wo kann man Kinderski (70 cm) gebraucht kaufen?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-02-23T18:31:12.759Z">2026-02-23</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Wo kann man Kinderski (70 cm) gebraucht kaufen?</h2>
+            <p class="article-card-excerpt">Dieser Artikel hilft dir, passende gebrauchte 70-cm-Ski zu finden, ihren Zustand richtig zu bewerten und sie sinnvoll in der Familie zu nutzen.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/kinderski-70-cm-gebraucht/">
+      </article>
+<article class="article-card" data-title="Kinderski 70 cm – kaufen, leihen oder teilen?" data-search="kinderski 70 cm – kaufen, leihen oder teilen? kinderski mit 70 cm länge sind für viele kinder der erste kontakt mit dem skifahren. meist passen sie im alter von etwa 2–4 jahren beziehungsweise bei einer körpergröße von rund..." data-slug="kinderski-70-cm-kaufen-leihen-oder-teilen">
+        <a class="article-card-link" href="/blog/kinderski-70-cm-kaufen-leihen-oder-teilen/" aria-label="Kinderski 70 cm – kaufen, leihen oder teilen?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/133758c5-dd72-43b5-aa49-5dcaf31b3270.png" alt="Kinderski 70 cm – kaufen, leihen oder teilen?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-02-23T16:34:06.963Z">2026-02-23</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Kinderski 70 cm – kaufen, leihen oder teilen?</h2>
+            <p class="article-card-excerpt">Kinderski mit 70 cm Länge sind für viele Kinder der erste Kontakt mit dem Skifahren. Meist passen sie im Alter von etwa 2–4 Jahren beziehungsweise bei einer Körpergröße von rund...</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/kinderski-70-cm-kaufen-leihen-oder-teilen/">
+      </article>
+<article class="article-card" data-title="Skiurlaub Kosten: Was dich eine Woche 2026/2027 wirklich kostet" data-search="skiurlaub kosten: was dich eine woche 2026/2027 wirklich kostet dieser artikel zeigt dir die wichtigsten kostenfaktoren, konkrete beispielrechnungen und praktische wege, wie du mit smarter planung 20 bis 40 prozent sparen kannst." data-slug="skiurlaub-kosten">
+        <a class="article-card-link" href="/blog/skiurlaub-kosten/" aria-label="Skiurlaub Kosten: Was dich eine Woche 2026/2027 wirklich kostet">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/7d5cf96d-c2e3-40de-bada-2a9094329de2.png" alt="Skiurlaub Kosten: Was dich eine Woche 2026/2027 wirklich kostet" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-02-23T16:05:27.306Z">2026-02-23</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skiurlaub Kosten: Was dich eine Woche 2026/2027 wirklich kostet</h2>
+            <p class="article-card-excerpt">Dieser Artikel zeigt dir die wichtigsten Kostenfaktoren, konkrete Beispielrechnungen und praktische Wege, wie du mit smarter Planung 20 bis 40 Prozent sparen kannst.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skiurlaub-kosten/">
+      </article>
+<article class="article-card" data-title="Skiverleih Stuttgart: Anbieter, Preise &amp; Alternativen 2026/2027" data-search="skiverleih stuttgart: anbieter, preise &amp; alternativen 2026/2027 in stuttgart selbst gibt es nur wenige klassische skiverleihe. die meisten anbieter sitzen in umliegenden stadtteilen wie vaihingen, hedelfingen oder fellbach. alternativ kannst..." data-slug="skiverleih-stuttgart">
+        <a class="article-card-link" href="/blog/skiverleih-stuttgart/" aria-label="Skiverleih Stuttgart: Anbieter, Preise &amp; Alternativen 2026/2027">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/013fd6bc-7885-46e6-b51b-7b65effbdd07.png" alt="Skiverleih Stuttgart: Anbieter, Preise &amp; Alternativen 2026/2027" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-02-23T14:31:19.554Z">2026-02-23</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skiverleih Stuttgart: Anbieter, Preise &amp; Alternativen 2026/2027</h2>
+            <p class="article-card-excerpt">In Stuttgart selbst gibt es nur wenige klassische Skiverleihe. Die meisten Anbieter sitzen in umliegenden Stadtteilen wie Vaihingen, Hedelfingen oder Fellbach. Alternativ kannst...</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skiverleih-stuttgart/">
+      </article>
+<article class="article-card" data-title="Klassenfahrt Skifahren: Mit welchen Kosten du rechnen musst und wie du sparen kannst" data-search="klassenfahrt skifahren: mit welchen kosten du rechnen musst und wie du sparen kannst eine ski-klassenfahrt kostet pro schüler typischerweise zwischen 350 und 650 euro für 5 bis 7 tage. diese spanne hängt stark vom zielgebiet, der reisezeit und der ausrüstungswah..." data-slug="klassenfahrt-skifahren-kosten">
+        <a class="article-card-link" href="/blog/klassenfahrt-skifahren-kosten/" aria-label="Klassenfahrt Skifahren: Mit welchen Kosten du rechnen musst und wie du sparen kannst">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/55197e18-3631-436d-8fc7-cd28cc0d2261.png" alt="Klassenfahrt Skifahren: Mit welchen Kosten du rechnen musst und wie du sparen kannst" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-02-23T13:41:08.954Z">2026-02-23</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Klassenfahrt Skifahren: Mit welchen Kosten du rechnen musst und wie du sparen kannst</h2>
+            <p class="article-card-excerpt">Eine Ski-Klassenfahrt kostet pro Schüler typischerweise zwischen 350 und 650 Euro für 5 bis 7 Tage. Diese Spanne hängt stark vom Zielgebiet, der Reisezeit und der Ausrüstungswah...</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/klassenfahrt-skifahren-kosten/">
+      </article>
+<article class="article-card" data-title="Skischuhe 205 mm – welche Größe steckt dahinter?" data-search="skischuhe 205 mm – welche größe steckt dahinter? skischuhe 205 mm – welche größe ist das? erfahre, welcher mondopoint-bereich wahrscheinlich ist und wie du die größe sicher prüfst." data-slug="skischuhe-205mm-welche-groesse">
+        <a class="article-card-link" href="/blog/skischuhe-205mm-welche-groesse/" aria-label="Skischuhe 205 mm – welche Größe steckt dahinter?">
+          <div class="article-card-media">
+            <img src="https://images.surferseo.art/499bd448-f862-486f-8c7d-38f227d36fd7.jpg" alt="Skischuhe 205 mm – welche Größe steckt dahinter?" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display='none'">
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <time datetime="2026-02-21T10:30:16.400Z">2026-02-21</time>
+              <span class="dot" aria-hidden="true">·</span>
+              <span>Skister Team</span>
+            </div>
+            <h2 class="article-card-title">Skischuhe 205 mm – welche Größe steckt dahinter?</h2>
+            <p class="article-card-excerpt">Skischuhe 205 mm – welche Größe ist das? Erfahre, welcher Mondopoint-Bereich wahrscheinlich ist und wie du die Größe sicher prüfst.</p>
+            <p class="article-card-cta">Read →</p>
+          </div>
+        </a>
+        <link rel="canonical" href="https://skister.app/blog/skischuhe-205mm-welche-groesse/">
+      </article>
+    </section>
+
+    <details class="seo-details" id="blogSeoDetails">
+      <summary>Why this blog exists</summary>
+      <div class="seo-body">
+        <p>Skister shares practical ski gear guidance for families: sizing, costs, rentals, and trip planning. Every article is published as real HTML so search engines can crawl it reliably.</p>
+        <p>If you’re new to skiing, start with the beginner and kids topics. For planning, check costs and rentals.</p>
+      </div>
+    </details>
+  </div>
+
+  <script>
+  (function(){
+    var grid = document.getElementById('blogGrid')
+    var search = document.getElementById('blogSearch')
+    var hint = document.getElementById('resultsHint')
+    var filters = document.getElementById('topicFilters')
+    if(!grid || !search || !filters) return
+
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.article-card'))
+    var activeTopic = '__all__'
+    var topicRules = {
+      __all__: [],
+      beginners: ['learn', 'beginner', 'start', 'first time', 'basics', 'anfänger', 'lernen'],
+      kids: ['kid', 'kids', 'child', 'children', 'family', 'kind', 'kinder', 'eltern'],
+      gear: ['gear', 'equipment', 'skischuhe', 'ski', 'ausrüstung', 'checklist', 'pack'],
+      costs: ['cost', 'price', 'budget', 'kosten', 'preise', 'spar'],
+      rentals: ['rental', 'rent', 'verleih', 'mieten', 'leihen'],
+      trips: ['trip', 'urlaub', 'resort', 'allgäu', 'region', 'deutschland', 'klassenfahrt']
+    }
+    function setPressed(active){
+      Array.prototype.slice.call(filters.querySelectorAll('button.topic-pill')).forEach(function(b){
+        b.setAttribute('aria-pressed', String(b.getAttribute('data-topic') === active))
+      })
+    }
+    function cardText(card){
+      var t = card.getAttribute('data-search') || ''
+      return String(t).toLowerCase()
+    }
+    function matchesTopic(text, topic){
+      var rules = topicRules[topic] || []
+      if(topic === '__all__' || rules.length === 0) return true
+      return rules.some(function(k){ return text.includes(k) })
+    }
+    function apply(){
+      var q = (search.value || '').trim().toLowerCase()
+      var visible = 0
+      cards.forEach(function(card){
+        var text = cardText(card)
+        var ok = true
+        if(q) ok = ok && text.includes(q)
+        ok = ok && matchesTopic(text, activeTopic)
+        card.style.display = ok ? '' : 'none'
+        if(ok) visible++
+      })
+      if(hint) hint.textContent = visible ? (visible + ' posts') : 'No matches'
+    }
+    filters.addEventListener('click', function(e){
+      var btn = e.target && e.target.closest && e.target.closest('button[data-topic]')
+      if(!btn) return
+      activeTopic = btn.getAttribute('data-topic') || '__all__'
+      setPressed(activeTopic)
+      apply()
+    })
+    search.addEventListener('input', apply)
+    search.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); apply() } })
+    apply()
+  })();
+  </script>
 </body>
 </html>

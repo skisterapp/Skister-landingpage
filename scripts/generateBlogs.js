@@ -81,6 +81,26 @@ async function fetchJson(url, init = {}) {
   return data
 }
 
+/** When /site-seo is missing on the deployed Edge Function (404), use defaults. */
+async function fetchSiteSeoSafe() {
+  const url = `${EDGE}/site-seo`
+  const res = await fetch(url, {
+    headers: { Authorization: `Bearer ${ANON_KEY}` },
+  })
+  const text = await res.text()
+  if (!res.ok) {
+    console.warn(`site-seo returned ${res.status}; using generator defaults for blog index meta.`)
+    return {}
+  }
+  try {
+    const data = text ? JSON.parse(text) : {}
+    return data.seo || {}
+  } catch {
+    console.warn('site-seo: invalid JSON; using defaults.')
+    return {}
+  }
+}
+
 function articleJsonLd(p, imageUrl) {
   const o = {
     '@context': 'https://schema.org',
@@ -237,8 +257,7 @@ async function main() {
     process.exit(1)
   }
 
-  const siteSeoRes = await fetchJson(`${EDGE}/site-seo`)
-  const siteSeo = siteSeoRes.seo || {}
+  const siteSeo = await fetchSiteSeoSafe()
   const base = (siteSeo.canonicalBase || siteSeo.siteUrl || SITE_URL).replace(/\/$/, '')
 
   const listRes = await fetchJson(`${EDGE}/blog/posts?forWebsite=1`)
