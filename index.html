@@ -12,6 +12,7 @@
     <meta property="og:title" content="Skister - Share the Slopes">
     <meta property="og:description" content="Family-friendly ski equipment sharing within your trusted network">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://skister.app/">
     <meta property="og:image" id="meta-og-image" content="https://qoqbdiixztolvtcjdnle.supabase.co/storage/v1/object/public/Skister/Skister%20Mascot.png">
     
     <!-- Android/Mobile Meta Tags -->
@@ -19,11 +20,20 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#228B22">
+    <meta name="application-version" content="1.0.0">
+    
+    <link rel="canonical" href="https://skister.app/">
+    <script>
+      if (location.pathname === '/index.html') {
+        location.replace('/' + location.search + location.hash)
+      }
+    </script>
     
     <title>Skister - Share the Slopes</title>
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="apple-touch-icon" href="assets/favicon.png">
     <link rel="preconnect" href="https://ayomhapkzckbhgwxenwr.supabase.co" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -126,6 +136,94 @@
         
         .nav-links a:hover {
             color: var(--text-white);
+        }
+
+        .nav-auth-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-google-signin {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #fff;
+            color: #1f1f1f;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-google-signin:hover {
+            background: #f8f8f8;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-google-signin:focus-visible {
+            outline: 2px solid var(--primary-green);
+            outline-offset: 2px;
+        }
+
+        .btn-google-signin .fa-google {
+            color: #4285f4;
+        }
+
+        .nav-signed-in {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            max-width: min(100%, 20rem);
+        }
+
+        .nav-user-email {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .btn-signout {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: var(--text-white);
+            padding: 0.35rem 0.65rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .btn-signout:hover {
+            border-color: rgba(255, 255, 255, 0.45);
+        }
+
+        .btn-signout:focus-visible {
+            outline: 2px solid var(--primary-green);
+            outline-offset: 2px;
+        }
+
+        .auth-message {
+            margin-top: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            max-width: 28rem;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .auth-message--err {
+            color: #ff8a8a;
+        }
+
+        .auth-hidden {
+            display: none !important;
         }
         
         /* Language Selector */
@@ -815,6 +913,17 @@
             .nav-links {
                 display: none;
             }
+
+            nav {
+                flex-wrap: wrap;
+            }
+
+            .nav-auth-wrap {
+                flex: 1 1 100%;
+                justify-content: center;
+                order: 3;
+                margin-top: 0.5rem;
+            }
             
             .section-title {
                 font-size: 2rem;
@@ -848,6 +957,18 @@
     <nav>
         <div class="logo">
             <span><i class="fa-solid fa-person-skiing"></i> Skister</span>
+        </div>
+        <div class="nav-auth-wrap" id="nav-auth" aria-label="Account">
+            <button type="button" class="btn-google-signin" id="btn-google-signin" onclick="skisterSignInGoogle()" aria-label="Sign in with Google">
+                <i class="fa-brands fa-google" aria-hidden="true"></i>
+                <span data-i18n="auth.signInGoogle">Mit Google anmelden</span>
+            </button>
+            <div id="nav-signed-in" class="nav-signed-in auth-hidden">
+                <span class="nav-user-email" id="nav-user-email" aria-live="polite"></span>
+                <button type="button" class="btn-signout" id="btn-signout" onclick="skisterSignOut()">
+                    <span data-i18n="nav.signOut">Abmelden</span>
+                </button>
+            </div>
         </div>
         <div class="nav-links">
             <a onclick="scrollToSection('features')" data-i18n="nav.features">Features</a>
@@ -886,6 +1007,7 @@
             <button type="submit" class="submit-btn" id="submit-btn" data-i18n="hero.submitBtn">Benachrichtigung erhalten</button>
         </form>
         <p class="waitlist-info" data-i18n="hero.waitlistInfo">Trete der Warteliste bei und sei der Erste, der erfährt, wenn wir starten!</p>
+        <p id="auth-message" class="auth-message auth-hidden" role="status" aria-live="polite" hidden></p>
     </section>
     
     <!-- Features Section -->
@@ -1057,7 +1179,7 @@
                 <h3 data-i18n="footer.support">Support</h3>
                 <div class="footer-links">
                     <a onclick="openModal('contact')" data-i18n="footer.contact">Kontakt</a>
-                    <a href="mailto:support@skister.app">support@skister.app</a>
+                    <a href="mailto:Support@skister.app">Support@skister.app</a>
                     <a href="admin.html">Admin</a>
                 </div>
             </div>
@@ -1081,7 +1203,7 @@
             <p data-i18n="modal.privacy.usageText">Deine Informationen werden verwendet, um unsere Dienste bereitzustellen, dich über Updates zu informieren und dein Erlebnis zu verbessern.</p>
             <h3 data-i18n="modal.privacy.sharing">3. Informationsweitergabe</h3>
             <p data-i18n="modal.privacy.sharingText">Wir verkaufen deine Informationen nicht an Dritte. Deine Profilinformationen sind nur für Mitglieder deines privaten Netzwerks sichtbar.</p>
-            <p data-i18n="modal.privacy.contactEmail">Fragen zum Datenschutz: <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a></p>
+            <p data-i18n="modal.privacy.contactEmail">Fragen zum Datenschutz: <a href="mailto:Privacy@skister.app" style="color: var(--primary-green);">Privacy@skister.app</a></p>
         </div>
     </div>
     
@@ -1104,7 +1226,7 @@
             <button class="modal-close" onclick="closeModal('contact')">×</button>
             <h2 data-i18n="modal.contact.title">Kontaktiere uns</h2>
             <p data-i18n="modal.contact.intro">Wir würden gerne von dir hören!</p>
-            <p data-i18n="modal.contact.email">E-Mail: <a href="mailto:contact@skister.app" style="color: var(--primary-green);">contact@skister.app</a></p>
+            <p data-i18n="modal.contact.email">E-Mail: <a href="mailto:Support@skister.app" style="color: var(--primary-green);">Support@skister.app</a></p>
             <p data-i18n="modal.contact.response">Wir bemühen uns, innerhalb von 24 Stunden zu antworten.</p>
         </div>
     </div>
@@ -1127,6 +1249,8 @@
                 'nav.blog': 'Blog',
                 'nav.download': 'Download',
                 'nav.contact': 'Kontakt',
+                'nav.signOut': 'Abmelden',
+                'auth.signInGoogle': 'Mit Google anmelden',
                 'hero.title': 'Skister',
                 'hero.tagline': 'Teile die Pisten',
                 'hero.subtitle': 'Deine familienfreundliche Plattform zum Teilen von Ski-Ausrüstung innerhalb deines vertrauenswürdigen Netzwerks. Kostenlos, lokal und sicher.',
@@ -1196,7 +1320,7 @@
                 'modal.privacy.usageText': 'Deine Informationen werden verwendet, um unsere Dienste bereitzustellen, dich über Updates zu informieren und dein Erlebnis zu verbessern.',
                 'modal.privacy.sharing': '3. Informationsweitergabe',
                 'modal.privacy.sharingText': 'Wir verkaufen deine Informationen nicht an Dritte. Deine Profilinformationen sind nur für Mitglieder deines privaten Netzwerks sichtbar.',
-                'modal.privacy.contactEmail': 'Fragen zum Datenschutz: <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a>',
+                'modal.privacy.contactEmail': 'Fragen zum Datenschutz: <a href="mailto:Privacy@skister.app" style="color: var(--primary-green);">Privacy@skister.app</a>',
                 'modal.terms.title': 'Nutzungsbedingungen',
                 'modal.terms.intro': 'Letzte Aktualisierung: Februar 2025',
                 'modal.terms.acceptance': '1. Akzeptanz der Bedingungen',
@@ -1207,7 +1331,7 @@
                 'modal.terms.liabilityText': '<strong>WICHTIG:</strong> Skister übernimmt KEINE Verantwortung, Haftung oder Versicherung für geliehene, beschädigte, verlorene oder gestohlene Ausrüstung. Alle Austausche erfolgen auf eigenes Risiko.',
                 'modal.contact.title': 'Kontaktiere uns',
                 'modal.contact.intro': 'Wir würden gerne von dir hören!',
-                'modal.contact.email': 'E-Mail: <a href="mailto:contact@skister.app" style="color: var(--primary-green);">contact@skister.app</a>',
+                'modal.contact.email': 'E-Mail: <a href="mailto:Support@skister.app" style="color: var(--primary-green);">Support@skister.app</a>',
                 'modal.contact.response': 'Wir bemühen uns, innerhalb von 24 Stunden zu antworten.',
                 'modal.feedback.title': 'Feedback geben',
                 'modal.feedback.intro': 'Dein Feedback hilft uns, Skister besser zu machen!',
@@ -1219,6 +1343,8 @@
                 'nav.blog': 'Blog',
                 'nav.download': 'Download',
                 'nav.contact': 'Contact',
+                'nav.signOut': 'Sign out',
+                'auth.signInGoogle': 'Continue with Google',
                 'hero.title': 'Skister',
                 'hero.tagline': 'Share the Slopes',
                 'hero.subtitle': 'Your family-friendly platform for sharing ski equipment within your trusted network. Free, local, and secure.',
@@ -1288,7 +1414,7 @@
                 'modal.privacy.usageText': 'Your information is used to provide our services, notify you about updates, and improve your experience.',
                 'modal.privacy.sharing': '3. Information Sharing',
                 'modal.privacy.sharingText': 'We do not sell your information to third parties. Your profile information is only visible to members of your private network.',
-                'modal.privacy.contactEmail': 'Privacy questions: <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a>',
+                'modal.privacy.contactEmail': 'Privacy questions: <a href="mailto:Privacy@skister.app" style="color: var(--primary-green);">Privacy@skister.app</a>',
                 'modal.terms.title': 'Terms of Service',
                 'modal.terms.intro': 'Last updated: February 2025',
                 'modal.terms.acceptance': '1. Acceptance of Terms',
@@ -1299,7 +1425,7 @@
                 'modal.terms.liabilityText': '<strong>IMPORTANT:</strong> Skister assumes NO responsibility, liability, or insurance for borrowed, damaged, lost, or stolen equipment. All exchanges occur at your own risk.',
                 'modal.contact.title': 'Contact Us',
                 'modal.contact.intro': 'We\'d love to hear from you!',
-                'modal.contact.email': 'Email: <a href="mailto:contact@skister.app" style="color: var(--primary-green);">contact@skister.app</a>',
+                'modal.contact.email': 'Email: <a href="mailto:Support@skister.app" style="color: var(--primary-green);">Support@skister.app</a>',
                 'modal.contact.response': 'We aim to respond within 24 hours.',
                 'modal.feedback.title': 'Give Feedback',
                 'modal.feedback.intro': 'Your feedback helps us make Skister better!',
@@ -1311,6 +1437,8 @@
                 'nav.blog': 'Blog',
                 'nav.download': 'Télécharger',
                 'nav.contact': 'Contact',
+                'nav.signOut': 'Se déconnecter',
+                'auth.signInGoogle': 'Continuer avec Google',
                 'hero.title': 'Skister',
                 'hero.tagline': 'Partagez les Pistes',
                 'hero.subtitle': 'Votre plateforme familiale pour partager du matériel de ski au sein de votre réseau de confiance. Gratuit, local et sécurisé.',
@@ -1380,7 +1508,7 @@
                 'modal.privacy.usageText': 'Vos informations sont utilisées pour fournir nos services, vous informer des mises à jour et améliorer votre expérience.',
                 'modal.privacy.sharing': '3. Partage d\'Informations',
                 'modal.privacy.sharingText': 'Nous ne vendons pas vos informations à des tiers. Vos informations de profil ne sont visibles que par les membres de votre réseau privé.',
-                'modal.privacy.contactEmail': 'Questions sur la confidentialité : <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a>',
+                'modal.privacy.contactEmail': 'Questions sur la confidentialité : <a href="mailto:Privacy@skister.app" style="color: var(--primary-green);">Privacy@skister.app</a>',
                 'modal.terms.title': 'Conditions d\'Utilisation',
                 'modal.terms.intro': 'Dernière mise à jour: Février 2025',
                 'modal.terms.acceptance': '1. Acceptation des Conditions',
@@ -1391,7 +1519,7 @@
                 'modal.terms.liabilityText': '<strong>IMPORTANT:</strong> Skister n\'assume AUCUNE responsabilité, obligation ou assurance pour l\'équipement emprunté, endommagé, perdu ou volé. Tous les échanges se font à vos propres risques.',
                 'modal.contact.title': 'Contactez-Nous',
                 'modal.contact.intro': 'Nous aimerions avoir de vos nouvelles!',
-                'modal.contact.email': 'E-mail: <a href="mailto:contact@skister.app" style="color: var(--primary-green);">contact@skister.app</a>',
+                'modal.contact.email': 'E-mail: <a href="mailto:Support@skister.app" style="color: var(--primary-green);">Support@skister.app</a>',
                 'modal.contact.response': 'Nous visons à répondre dans les 24 heures.',
                 'modal.feedback.title': 'Donner un Avis',
                 'modal.feedback.intro': 'Vos commentaires nous aident à améliorer Skister!',
@@ -1403,6 +1531,8 @@
                 'nav.blog': 'Blog',
                 'nav.download': 'Descargar',
                 'nav.contact': 'Contacto',
+                'nav.signOut': 'Cerrar sesión',
+                'auth.signInGoogle': 'Continuar con Google',
                 'hero.title': 'Skister',
                 'hero.tagline': 'Comparte las Pistas',
                 'hero.subtitle': 'Tu plataforma familiar para compartir equipo de esquí dentro de tu red de confianza. Gratis, local y seguro.',
@@ -1468,7 +1598,7 @@
                 'modal.privacy.usageText': 'Tu información se utiliza para proporcionar nuestros servicios, notificarte sobre actualizaciones y mejorar tu experiencia.',
                 'modal.privacy.sharing': '3. Compartir Información',
                 'modal.privacy.sharingText': 'No vendemos tu información a terceros. Tu información de perfil solo es visible para los miembros de tu red privada.',
-                'modal.privacy.contactEmail': 'Consultas de privacidad: <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a>',
+                'modal.privacy.contactEmail': 'Consultas de privacidad: <a href="mailto:Privacy@skister.app" style="color: var(--primary-green);">Privacy@skister.app</a>',
                 'modal.terms.title': 'Términos de Servicio',
                 'modal.terms.intro': 'Última actualización: Febrero 2025',
                 'modal.terms.acceptance': '1. Aceptación de Términos',
@@ -1479,7 +1609,7 @@
                 'modal.terms.liabilityText': '<strong>IMPORTANTE:</strong> Skister NO asume responsabilidad, obligación o seguro por equipo prestado, dañado, perdido o robado. Todos los intercambios ocurren bajo tu propio riesgo.',
                 'modal.contact.title': 'Contáctanos',
                 'modal.contact.intro': '¡Nos encantaría saber de ti!',
-                'modal.contact.email': 'Correo: <a href="mailto:contact@skister.app" style="color: var(--primary-green);">contact@skister.app</a>',
+                'modal.contact.email': 'Correo: <a href="mailto:Support@skister.app" style="color: var(--primary-green);">Support@skister.app</a>',
                 'modal.contact.response': 'Nuestro objetivo es responder en 24 horas.',
                 'modal.feedback.title': 'Dar Comentarios',
                 'modal.feedback.intro': '¡Tus comentarios nos ayudan a mejorar Skister!',
@@ -1491,6 +1621,8 @@
                 'nav.blog': 'Blog',
                 'nav.download': 'Download',
                 'nav.contact': 'Contatto',
+                'nav.signOut': 'Esci',
+                'auth.signInGoogle': 'Continua con Google',
                 'hero.title': 'Skister',
                 'hero.tagline': 'Condividi le Piste',
                 'hero.subtitle': 'La tua piattaforma per famiglie per condividere attrezzatura da sci all\'interno della tua rete di fiducia. Gratuito, locale e sicuro.',
@@ -1560,7 +1692,7 @@
                 'modal.privacy.usageText': 'Le tue informazioni vengono utilizzate per fornire i nostri servizi, avvisarti sugli aggiornamenti e migliorare la tua esperienza.',
                 'modal.privacy.sharing': '3. Condivisione delle Informazioni',
                 'modal.privacy.sharingText': 'Non vendiamo le tue informazioni a terzi. Le tue informazioni di profilo sono visibili solo ai membri della tua rete privata.',
-                'modal.privacy.contactEmail': 'Domande sulla privacy: <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a>',
+                'modal.privacy.contactEmail': 'Domande sulla privacy: <a href="mailto:Privacy@skister.app" style="color: var(--primary-green);">Privacy@skister.app</a>',
                 'modal.terms.title': 'Termini di Servizio',
                 'modal.terms.intro': 'Ultimo aggiornamento: Febbraio 2025',
                 'modal.terms.acceptance': '1. Accettazione dei Termini',
@@ -1571,7 +1703,7 @@
                 'modal.terms.liabilityText': '<strong>IMPORTANTE:</strong> Skister NON assume responsabilità, obblighi o assicurazione per attrezzatura prestata, danneggiata, persa o rubata. Tutti gli scambi avvengono a tuo rischio.',
                 'modal.contact.title': 'Contattaci',
                 'modal.contact.intro': 'Ci piacerebbe sentirti!',
-                'modal.contact.email': 'Email: <a href="mailto:contact@skister.app" style="color: var(--primary-green);">contact@skister.app</a>',
+                'modal.contact.email': 'Email: <a href="mailto:Support@skister.app" style="color: var(--primary-green);">Support@skister.app</a>',
                 'modal.contact.response': 'Miriamo a rispondere entro 24 ore.',
                 'modal.feedback.title': 'Dai il tuo Feedback',
                 'modal.feedback.intro': 'Il tuo feedback ci aiuta a migliorare Skister!',
@@ -1891,5 +2023,7 @@
             }, 5000);
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="scripts/auth-google.js"></script>
 </body>
 </html>

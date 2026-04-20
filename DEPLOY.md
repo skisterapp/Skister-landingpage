@@ -46,3 +46,21 @@ You need **write access** to the **skisterapp/Skister-landingpage** repo (member
 ## After pushing
 
 GitHub Pages will rebuild automatically. The site will update at https://skisterapp.github.io/Skister-landingpage/ within a few minutes.
+
+## SEO: canonical URL, `robots.txt`, and redirects
+
+**Canonical host:** `https://skister.app/` (HTTPS, no `www`, no `index.html` in the preferred URL).
+
+- **Canonical `<link>` tags** are present on the main HTML entry points (`index.html`, `blog.html`, `blog-post.html`, admin screens, and generated blog pages under `blog/`).
+- **`robots.txt`** at the site root lists `Sitemap: https://skister.app/sitemap.xml` (regenerated with `npm run generate:blogs` when needed).
+- **`_redirects`** (Netlify / Cloudflare Pages–style) is included for hosts that honor it. **GitHub Pages does not apply `_redirects`**, so behavior depends on the platform:
+  - **HTTP → HTTPS** and **`www` → apex** are already handled by GitHub Pages for the custom domain (verify with `curl -sI http://skister.app/` and `curl -sI https://www.skister.app/` — expect a single `301` to `https://skister.app/`).
+  - **`/index.html` → `/`:** `index.html` includes a small script that replaces the location when the path is exactly `/index.html`, plus a canonical pointing at `https://skister.app/`. For a true **301** at the edge, add a redirect rule on your DNS/CDN (e.g. Cloudflare: `https://skister.app/index.html` → `https://skister.app/`).
+
+**Quick checks after deploy:**
+
+```bash
+curl -sI "https://skister.app/robots.txt" | head -5
+curl -sI "https://skister.app/sitemap.xml" | head -5
+curl -sI "http://www.skister.app/" | head -8
+```

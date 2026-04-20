@@ -27,8 +27,16 @@
     <meta property="article:author" id="article-author" content="">
     <meta property="article:published_time" id="article-published" content="">
     
-    <!-- Canonical -->
-    <link rel="canonical" id="canonical-url" href="">
+    <!-- Canonical (default + early slug; JS may refresh after post load) -->
+    <link rel="canonical" id="canonical-url" href="https://skister.app/blog/">
+    <script>
+      (function () {
+        var el = document.getElementById('canonical-url')
+        if (!el) return
+        var slug = new URLSearchParams(window.location.search).get('slug')
+        if (slug) el.href = 'https://skister.app/blog/' + encodeURIComponent(slug) + '/'
+      })()
+    </script>
     
     <!-- Max Image Preview -->
     <meta name="robots" id="max-image-preview" content="max-image-preview:large">
