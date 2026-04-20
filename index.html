@@ -853,7 +853,7 @@
             <a onclick="scrollToSection('features')" data-i18n="nav.features">Features</a>
             <a onclick="scrollToSection('download')" data-i18n="nav.download">Download</a>
             <a onclick="scrollToSection('faq')" data-i18n="nav.faq">FAQ</a>
-            <a href="blog.html" data-i18n="nav.blog">Blog</a>
+            <a href="/blog/" data-i18n="nav.blog">Blog</a>
             <a onclick="openModal('contact')" data-i18n="nav.contact">Contact</a>
             <div class="language-selector">
                 <button class="language-btn" onclick="toggleLanguageDropdown()">
@@ -931,7 +931,7 @@
         <p class="home-blog-subtitle" data-i18n="home.blog.subtitle">Gear tips, product updates, and stories from the Skister team.</p>
         <div class="home-blog-grid" id="home-blog-grid" role="list"></div>
         <div class="home-blog-footer">
-            <a href="blog.html" class="home-blog-all"><span data-i18n="home.blog.viewAll">Browse all posts</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            <a href="/blog/" class="home-blog-all"><span data-i18n="home.blog.viewAll">Browse all posts</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
         </div>
     </section>
     
@@ -1042,7 +1042,7 @@
                     <a onclick="scrollToSection('features')" data-i18n="footer.features">Funktionen</a>
                     <a onclick="scrollToSection('download')" data-i18n="footer.download">Download</a>
                     <a onclick="scrollToSection('faq')" data-i18n="footer.faq">FAQ</a>
-                    <a href="blog.html" data-i18n="nav.blog">Blog</a>
+                    <a href="/blog/" data-i18n="nav.blog">Blog</a>
                     <a onclick="openModal('feedback')" data-i18n="footer.feedback">Feedback</a>
                 </div>
             </div>
@@ -1678,7 +1678,7 @@
                         const title = escapeHtmlHome(post.title || '');
                         const loading = i < 2 ? 'eager' : 'lazy';
                         const fetchpriority = i === 0 ? 'high' : 'auto';
-                        return '<a href="blog-post.html?slug=' + encodeURIComponent(post.slug) + '" class="home-blog-card" role="listitem">' +
+                        return '<a href="/blog/' + encodeURIComponent(post.slug) + '/" class="home-blog-card" role="listitem">' +
                             '<img class="home-blog-card-img" src="' + escapeHtmlHome(imgUrl) + '" alt="" loading="' + loading + '" decoding="async" fetchpriority="' + fetchpriority + '" onerror="this.onerror=null;this.src=window.__homeBlogPlaceholder||\'\'">' +
                             '<div class="home-blog-card-body"><h3 class="home-blog-card-title">' + title + '</h3></div></a>';
                     }).join('');

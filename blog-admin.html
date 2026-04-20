@@ -585,6 +585,21 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="post-status">Status</label>
+                        <select id="post-status" style="padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-white); font-size: 1rem;">
+                            <option value="draft">Draft (saved in CMS only)</option>
+                            <option value="published">Published (visible on site)</option>
+                        </select>
+                        <small>Drafts are stored in the CMS but won’t appear on the public site until published.</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Publishing</label>
+                        <small>After publishing, run <strong>Publish to GitHub</strong> in <code>seo-admin.html</code> to regenerate static pages.</small>
+                    </div>
+                </div>
                 
                 <!-- SEO Section -->
                 <h3 style="margin: 2rem 0 1rem; color: var(--primary-green);">SEO Settings</h3>
@@ -736,6 +751,7 @@
         }
         let allPosts = [];
         let editingSlug = null;
+        let editingPublishedTime = null;
         const BLOG_API = 'https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84';
         const BLOG_HEADERS = { 'Content-Type': 'application/json', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8' };
         const BLOG_STORAGE_BASE = 'https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/make-080ebf84-blog-images';
@@ -818,7 +834,9 @@
                         <div class="blog-list-info">
                             <div>
                                 <h3>${post.title}</h3>
-                                ${post.archived ? '<span class="blog-status-badge archived">Archived</span>' : '<span class="blog-status-badge published">Published</span>'}
+                                ${post.archived
+                                    ? '<span class="blog-status-badge archived">Archived</span>'
+                                    : (post.showOnWebsite === false ? '<span class="blog-status-badge archived">Draft</span>' : '<span class="blog-status-badge published">Published</span>')}
                             </div>
                             <div class="blog-list-meta">
                                 <span><i class="fa-solid fa-user"></i> ${post.author}</span>
@@ -856,6 +874,7 @@
             var headerSaveText = document.getElementById('editor-header-save-text');
             if (headerSaveText) headerSaveText.textContent = 'Save Post';
             editingSlug = null;
+            editingPublishedTime = null;
             resetForm();
             var hs = document.getElementById('history-section');
             if (hs) hs.style.display = 'none';
@@ -875,6 +894,9 @@
             document.getElementById('blog-form').reset();
             document.getElementById('content-editor').innerHTML = '';
             editingSlug = null;
+            editingPublishedTime = null;
+            var status = document.getElementById('post-status');
+            if (status) status.value = 'draft';
         }
         
         // Edit post
@@ -891,6 +913,7 @@
                 if (data.success) {
                     const post = data.post;
                     editingSlug = slug;
+                    editingPublishedTime = post.publishedTime || null;
                     
                     document.getElementById('title').value = post.title;
                     document.getElementById('slug').value = post.slug;
@@ -903,6 +926,7 @@
                     document.getElementById('robots').value = post.robots || '';
                     document.getElementById('max-image-preview').value = post.maxImagePreview || 'large';
                     document.getElementById('content-editor').innerHTML = post.content;
+                    document.getElementById('post-status').value = post.showOnWebsite === false ? 'draft' : 'published';
                     document.getElementById('featured-image').dispatchEvent(new Event('input'));
                     document.getElementById('editor-title').textContent = 'Edit Blog Post';
                     document.getElementById('save-btn-text').textContent = 'Update Post';
@@ -979,6 +1003,10 @@
         async function saveBlogPost(event) {
             event.preventDefault();
             
+            const selectedStatus = document.getElementById('post-status').value;
+            const shouldShowOnWebsite = selectedStatus === 'published';
+            const shouldSetPublishedTime = shouldShowOnWebsite && !editingPublishedTime;
+
             const postData = {
                 title: document.getElementById('title').value,
                 slug: document.getElementById('slug').value,
@@ -990,7 +1018,9 @@
                 ogSiteName: document.getElementById('og-site-name').value,
                 robots: document.getElementById('robots').value || 'index, follow',
                 maxImagePreview: document.getElementById('max-image-preview').value,
-                content: document.getElementById('content-editor').innerHTML
+                content: document.getElementById('content-editor').innerHTML,
+                showOnWebsite: shouldShowOnWebsite,
+                publishedTime: shouldSetPublishedTime ? new Date().toISOString() : (editingPublishedTime || undefined)
             };
             
             try {
