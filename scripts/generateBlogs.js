@@ -538,9 +538,6 @@ async function main() {
     .article-card-title { margin: 0; font-size: 1.1rem; line-height: 1.35; letter-spacing:-0.01em; }
     .article-card-excerpt { margin: 0.45rem 0 0.75rem; color: var(--muted); line-height: 1.55; }
     .article-card-cta { margin: 0; color: var(--accent); font-weight: 700; }
-    details.seo-details { margin-top: 2rem; padding: 1.25rem; border: 1px solid var(--border); border-radius: 16px; background: var(--panel); }
-    details.seo-details summary { cursor:pointer; color: var(--accent); font-weight: 750; }
-    details.seo-details .seo-body { color: var(--muted); line-height: 1.65; margin-top: 0.75rem; }
   </style>
 </head>
 <body>
@@ -585,14 +582,6 @@ ${featuredRowHtml || ''}
     <section class="grid" id="blogGrid" aria-label="All posts">
 ${allCardsHtml}
     </section>
-
-    <details class="seo-details" id="blogSeoDetails">
-      <summary>Why this blog exists</summary>
-      <div class="seo-body">
-        <p>Skister shares practical ski gear guidance for families: sizing, costs, rentals, and trip planning. Every article is published as real HTML so search engines can crawl it reliably.</p>
-        <p>If you’re new to skiing, start with the beginner and kids topics. For planning, check costs and rentals.</p>
-      </div>
-    </details>
   </div>
 
   <script>
