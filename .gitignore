@@ -8,3 +8,16 @@ dist/
 .gradle/
 .DS_Store
 Skister-landingpage-main/
+
+# Local release/build helpers (do not commit)
+release/
+releases/
+capacitor.config.json
+
+# One-off local scripts (do not commit)
+scripts/auth-google.js
+scripts/patch-subscription-bundle.mjs
+scripts/release-new.mjs
+
+# Local QA checklist copy (repo already has docs/ version tracked elsewhere)
+docs/APP_QA_PRE_SUBMISSION.md
