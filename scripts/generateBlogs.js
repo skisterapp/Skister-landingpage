@@ -438,7 +438,7 @@ async function main() {
 
     const redirectTarget = `/blog/${encodeURIComponent(slug)}/`
     const redirectHtml = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">` +
-      `<meta name="robots" content="index, follow">` +
+      `<meta name="robots" content="noindex,follow">` +
       `<link rel="canonical" href="${escapeHtml(canonical)}">` +
       `<meta http-equiv="refresh" content="0;url=${escapeHtml(redirectTarget)}">` +
       `<title>Redirect</title></head><body>` +
