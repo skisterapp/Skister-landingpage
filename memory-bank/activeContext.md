@@ -22,3 +22,19 @@ When any landing-related files change (e.g. `index.html`, `landing-admin.html`, 
 ## Next steps
 
 - Keep mobile app repo in sync if it duplicates these addresses.
+
+## Skisterapp release automation memory
+
+- For `/Users/sharanestone/Semprog/Skister/Skisterapp`, every run of `npm run release:new` must generate locale release notes with automatic translations (not English duplicates) for:
+  - `en-US`
+  - `de-DE`
+  - `es-ES`
+  - `es-US`
+  - `fr-FR`
+  - `it-IT`
+
+## Supabase CLI state (saved)
+
+- Supabase CLI is authenticated and linked to project ref `ayomhapkzckbhgwxenwr` (`Skister`).
+- Re-auth flow used: `supabase logout --yes` -> `supabase login` (or token login) -> `supabase link --project-ref ayomhapkzckbhgwxenwr`.
+- If deploy commands fail with auth errors, re-run login first, then re-link with the same project ref.

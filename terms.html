@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="robots" content="index,follow">
+    <meta name="theme-color" content="#228B22">
+    <link rel="canonical" href="https://skister.app/terms.html">
+    <title>Skister — Terms</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-green: #228B22;
+            --primary-green-light: #2da82d;
+            --bg-dark: #0a0a0a;
+            --text-white: #ffffff;
+            --text-gray: #b0b0b0;
+            --nav-offset: 5.5rem;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .logo a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-white);
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        .nav-links a:hover, .nav-links a:focus-visible { color: var(--primary-green-light); outline: none; }
+        .language-selector { position: relative; }
+        .language-btn {
+            background: rgba(34, 139, 34, 0.2);
+            border: 1px solid var(--primary-green);
+            color: var(--text-white);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 0.5rem 0;
+            min-width: 160px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            z-index: 999;
+        }
+        .language-dropdown.active { opacity: 1; visibility: visible; transform: translateY(0); }
+        .language-option {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            color: var(--text-gray);
+        }
+        .language-option:hover { background: rgba(34, 139, 34, 0.2); color: var(--text-white); }
+        main {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: calc(var(--nav-offset) + 2rem) 1.5rem 3.5rem;
+        }
+        .page-header {
+            display: grid;
+            gap: 0.75rem;
+            margin-bottom: 1.75rem;
+        }
+        .page-header h1 { font-size: 2.25rem; color: var(--primary-green); }
+        .page-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+        .page-card h2 { color: var(--primary-green); margin-bottom: 0.75rem; }
+        .page-card h3 { margin-top: 1.25rem; margin-bottom: 0.5rem; color: var(--text-white); }
+        .page-card p { color: var(--text-gray); margin-bottom: 0.75rem; line-height: 1.8; }
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem 2rem 1.5rem;
+            background: rgba(10, 10, 10, 0.95);
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-section h3 { color: var(--primary-green); margin-bottom: 1rem; }
+        .footer-links { display: flex; flex-direction: column; gap: 0.5rem; }
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover, .footer-links a:focus-visible { color: var(--primary-green-light); outline: none; }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2.5rem;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: rgba(20, 20, 20, 0.98);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 1.75rem;
+            max-width: 860px;
+            width: 100%;
+            position: relative;
+            max-height: 85vh;
+            overflow: auto;
+        }
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        .modal h2 { margin-bottom: 1rem; color: var(--primary-green); }
+        .modal p { color: var(--text-gray); line-height: 1.8; margin-bottom: 1rem; }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            nav { flex-wrap: wrap; }
+            main { padding-top: calc(var(--nav-offset) + 1.25rem); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="/" aria-label="Skister home">
+                <i class="fa-solid fa-person-skiing" aria-hidden="true"></i>
+                <span>Skister</span>
+            </a>
+        </div>
+        <div class="nav-links" aria-label="Primary">
+            <a href="/#features" data-i18n="nav.features">Features</a>
+            <a href="/#download" data-i18n="nav.download">Download</a>
+            <a href="/#faq" data-i18n="nav.faq">FAQ</a>
+            <a href="/blog/" data-i18n="nav.blog">Blog</a>
+            <a onclick="openModal('contact')" data-i18n="nav.contact">Contact</a>
+            <div class="language-selector">
+                <button class="language-btn" onclick="toggleLanguageDropdown()" type="button" aria-label="Language">
+                    <span id="current-language">🇩🇪 DE</span>
+                    <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                </button>
+                <div class="language-dropdown" id="language-dropdown" role="listbox" aria-label="Languages">
+                    <div class="language-option" onclick="changeLanguage('de')">🇩🇪 Deutsch</div>
+                    <div class="language-option" onclick="changeLanguage('en')">🇬🇧 English</div>
+                    <div class="language-option" onclick="changeLanguage('fr')">🇫🇷 Français</div>
+                    <div class="language-option" onclick="changeLanguage('es')">🇪🇸 Español</div>
+                    <div class="language-option" onclick="changeLanguage('it')">🇮🇹 Italiano</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="page-header">
+            <h1 data-i18n="modal.terms.title">Nutzungsbedingungen</h1>
+            <p data-i18n="modal.terms.intro">Letzte Aktualisierung: Februar 2025</p>
+        </div>
+        <section class="page-card" aria-labelledby="terms-title">
+            <h2 id="terms-title" data-i18n="modal.terms.title">Nutzungsbedingungen</h2>
+            <p data-i18n="modal.terms.intro">Letzte Aktualisierung: Februar 2025</p>
+            <h3 data-i18n="modal.terms.acceptance">1. Akzeptanz der Bedingungen</h3>
+            <p data-i18n="modal.terms.acceptanceText">Durch die Nutzung von Skister stimmst du diesen Bedingungen zu. Wenn du nicht zustimmst, nutze bitte nicht unseren Service.</p>
+            <h3 data-i18n="modal.terms.service">2. Beschreibung des Service</h3>
+            <p data-i18n="modal.terms.serviceText">Skister ist eine Koordinationsplattform für das Teilen von Ski-Ausrüstung. Wir übernehmen keine Verantwortung für Ausrüstung, Schäden oder Verluste.</p>
+            <h3 data-i18n="modal.terms.liability">3. Haftungsausschluss</h3>
+            <p data-i18n="modal.terms.liabilityText"><strong>WICHTIG:</strong> Skister übernimmt KEINE Verantwortung, Haftung oder Versicherung für geliehene, beschädigte, verlorene oder gestohlene Ausrüstung. Alle Austausche erfolgen auf eigenes Risiko.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 data-i18n="footer.product">Produkt</h3>
+                <div class="footer-links">
+                    <a href="/#features" data-i18n="footer.features">Funktionen</a>
+                    <a href="/#download" data-i18n="footer.download">Download</a>
+                    <a href="/#faq" data-i18n="footer.faq">FAQ</a>
+                    <a href="/blog/" data-i18n="nav.blog">Blog</a>
+                    <a onclick="openModal('feedback')" data-i18n="footer.feedback">Feedback</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3 data-i18n="footer.legal">Rechtliches</h3>
+                <div class="footer-links">
+                    <a onclick="openModal('privacy')" data-i18n="footer.privacy">Datenschutzrichtlinie</a>
+                    <a href="/terms.html" aria-current="page" data-i18n="footer.terms">Nutzungsbedingungen</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3 data-i18n="footer.support">Support</h3>
+                <div class="footer-links">
+                    <a onclick="openModal('contact')" data-i18n="footer.contact">Kontakt</a>
+                    <a href="mailto:support@skister.app">support@skister.app</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Skister. <span data-i18n="footer.rights">Alle Rechte vorbehalten.</span></p>
+            <p data-i18n="footer.madewith">Made with ❤️ from the alps</p>
+        </div>
+    </footer>
+
+    <div id="modal-privacy" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('privacy')" type="button" aria-label="Close">×</button>
+            <h2 data-i18n="modal.privacy.title">Datenschutzrichtlinie</h2>
+            <p data-i18n="modal.privacy.intro">Letzte Aktualisierung: Februar 2025</p>
+            <p data-i18n="modal.privacy.p1">Bei Skister respektieren wir deine Privatsphäre. Diese Datenschutzrichtlinie erklärt, wie wir Informationen sammeln, verwenden und schützen.</p>
+            <h3 data-i18n="modal.privacy.collection">1. Informationen, die wir sammeln</h3>
+            <p data-i18n="modal.privacy.collectionText">Wir sammeln E-Mail-Adressen von Nutzern, die sich für unsere Warteliste anmelden. Nach dem Start sammeln wir Profilinformationen, Ausrüstungslisten und Nutzungsdaten.</p>
+            <h3 data-i18n="modal.privacy.usage">2. Verwendung von Informationen</h3>
+            <p data-i18n="modal.privacy.usageText">Deine Informationen werden verwendet, um unsere Dienste bereitzustellen, dich über Updates zu informieren und dein Erlebnis zu verbessern.</p>
+            <h3 data-i18n="modal.privacy.sharing">3. Informationsweitergabe</h3>
+            <p data-i18n="modal.privacy.sharingText">Wir verkaufen deine Informationen nicht an Dritte. Deine Profilinformationen sind nur für Mitglieder deines privaten Netzwerks sichtbar.</p>
+            <p data-i18n="modal.privacy.contactEmail">Fragen zum Datenschutz: <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a></p>
+        </div>
+    </div>
+
+    <div id="modal-contact" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('contact')" type="button" aria-label="Close">×</button>
+            <h2 data-i18n="modal.contact.title">Kontaktiere uns</h2>
+            <p data-i18n="modal.contact.intro">Wir würden gerne von dir hören!</p>
+            <p data-i18n="modal.contact.email">E-Mail: <a href="mailto:support@skister.app" style="color: var(--primary-green);">support@skister.app</a></p>
+            <p data-i18n="modal.contact.response">Wir bemühen uns, innerhalb von 24 Stunden zu antworten.</p>
+        </div>
+    </div>
+
+    <div id="modal-feedback" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('feedback')" type="button" aria-label="Close">×</button>
+            <h2 data-i18n="modal.feedback.title">Feedback geben</h2>
+            <p data-i18n="modal.feedback.intro">Dein Feedback hilft uns, Skister besser zu machen!</p>
+            <p data-i18n="modal.feedback.email">Sende uns deine Gedanken an: <a href="mailto:feedback@skister.app" style="color: var(--primary-green);">feedback@skister.app</a></p>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            de: {
+                'nav.features': 'Funktionen',
+                'nav.faq': 'FAQ',
+                'nav.blog': 'Blog',
+                'nav.download': 'Download',
+                'nav.contact': 'Kontakt',
+                'modal.terms.title': 'Nutzungsbedingungen',
+                'modal.terms.intro': 'Letzte Aktualisierung: Februar 2025',
+                'modal.terms.acceptance': '1. Akzeptanz der Bedingungen',
+                'modal.terms.acceptanceText': 'Durch die Nutzung von Skister stimmst du diesen Bedingungen zu. Wenn du nicht zustimmst, nutze bitte nicht unseren Service.',
+                'modal.terms.service': '2. Beschreibung des Service',
+                'modal.terms.serviceText': 'Skister ist eine Koordinationsplattform für das Teilen von Ski-Ausrüstung. Wir übernehmen keine Verantwortung für Ausrüstung, Schäden oder Verluste.',
+                'modal.terms.liability': '3. Haftungsausschluss',
+                'modal.terms.liabilityText': '<strong>WICHTIG:</strong> Skister übernimmt KEINE Verantwortung, Haftung oder Versicherung für geliehene, beschädigte, verlorene oder gestohlene Ausrüstung. Alle Austausche erfolgen auf eigenes Risiko.',
+                'footer.product': 'Produkt',
+                'footer.features': 'Funktionen',
+                'footer.download': 'Download',
+                'footer.faq': 'FAQ',
+                'footer.feedback': 'Feedback',
+                'footer.legal': 'Rechtliches',
+                'footer.privacy': 'Datenschutzrichtlinie',
+                'footer.terms': 'Nutzungsbedingungen',
+                'footer.support': 'Support',
+                'footer.contact': 'Kontakt',
+                'footer.rights': 'Alle Rechte vorbehalten.',
+                'footer.madewith': 'Made with ❤️ from the alps',
+                'modal.privacy.title': 'Datenschutzrichtlinie',
+                'modal.privacy.intro': 'Letzte Aktualisierung: Februar 2025',
+                'modal.privacy.p1': 'Bei Skister respektieren wir deine Privatsphäre. Diese Datenschutzrichtlinie erklärt, wie wir Informationen sammeln, verwenden und schützen.',
+                'modal.privacy.collection': '1. Informationen, die wir sammeln',
+                'modal.privacy.collectionText': 'Wir sammeln E-Mail-Adressen von Nutzern, die sich für unsere Warteliste anmelden. Nach dem Start sammeln wir Profilinformationen, Ausrüstungslisten und Nutzungsdaten.',
+                'modal.privacy.usage': '2. Verwendung von Informationen',
+                'modal.privacy.usageText': 'Deine Informationen werden verwendet, um unsere Dienste bereitzustellen, dich über Updates zu informieren und dein Erlebnis zu verbessern.',
+                'modal.privacy.sharing': '3. Informationsweitergabe',
+                'modal.privacy.sharingText': 'Wir verkaufen deine Informationen nicht an Dritte. Deine Profilinformationen sind nur für Mitglieder deines privaten Netzwerks sichtbar.',
+                'modal.privacy.contactEmail': 'Fragen zum Datenschutz: <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a>',
+                'modal.contact.title': 'Kontaktiere uns',
+                'modal.contact.intro': 'Wir würden gerne von dir hören!',
+                'modal.contact.email': 'E-Mail: <a href="mailto:support@skister.app" style="color: var(--primary-green);">support@skister.app</a>',
+                'modal.contact.response': 'Wir bemühen uns, innerhalb von 24 Stunden zu antworten.',
+                'modal.feedback.title': 'Feedback geben',
+                'modal.feedback.intro': 'Dein Feedback hilft uns, Skister besser zu machen!',
+                'modal.feedback.email': 'Sende uns deine Gedanken an: <a href="mailto:feedback@skister.app" style="color: var(--primary-green);">feedback@skister.app</a>'
+            },
+            en: {
+                'nav.features': 'Features',
+                'nav.faq': 'FAQ',
+                'nav.blog': 'Blog',
+                'nav.download': 'Download',
+                'nav.contact': 'Contact',
+                'modal.terms.title': 'Terms of Service',
+                'modal.terms.intro': 'Last updated: February 2025',
+                'modal.terms.acceptance': '1. Acceptance of Terms',
+                'modal.terms.acceptanceText': 'By using Skister, you agree to these terms. If you do not agree, please do not use our service.',
+                'modal.terms.service': '2. Description of Service',
+                'modal.terms.serviceText': 'Skister is a coordination platform for sharing ski equipment. We assume no responsibility for equipment, damage, or loss.',
+                'modal.terms.liability': '3. Disclaimer of Liability',
+                'modal.terms.liabilityText': '<strong>IMPORTANT:</strong> Skister assumes NO responsibility, liability, or insurance for borrowed, damaged, lost, or stolen equipment. All exchanges occur at your own risk.',
+                'footer.product': 'Product',
+                'footer.features': 'Features',
+                'footer.download': 'Download',
+                'footer.faq': 'FAQ',
+                'footer.feedback': 'Feedback',
+                'footer.legal': 'Legal',
+                'footer.privacy': 'Privacy Policy',
+                'footer.terms': 'Terms of Service',
+                'footer.support': 'Support',
+                'footer.contact': 'Contact',
+                'footer.rights': 'All rights reserved.',
+                'footer.madewith': 'Made with ❤️ from the alps',
+                'modal.privacy.title': 'Privacy Policy',
+                'modal.privacy.intro': 'Last updated: February 2025',
+                'modal.privacy.p1': 'At Skister, we respect your privacy. This Privacy Policy explains how we collect, use, and protect your information.',
+                'modal.privacy.collection': '1. Information We Collect',
+                'modal.privacy.collectionText': 'We collect email addresses from users who sign up for our waitlist. After launch, we collect profile information, equipment listings, and usage data.',
+                'modal.privacy.usage': '2. How We Use Information',
+                'modal.privacy.usageText': 'Your information is used to provide our services, notify you about updates, and improve your experience.',
+                'modal.privacy.sharing': '3. Information Sharing',
+                'modal.privacy.sharingText': 'We do not sell your information to third parties. Your profile information is only visible to members of your private network.',
+                'modal.privacy.contactEmail': 'Privacy questions: <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a>',
+                'modal.contact.title': 'Contact Us',
+                'modal.contact.intro': 'We\'d love to hear from you!',
+                'modal.contact.email': 'Email: <a href="mailto:support@skister.app" style="color: var(--primary-green);">support@skister.app</a>',
+                'modal.contact.response': 'We aim to respond within 24 hours.',
+                'modal.feedback.title': 'Give Feedback',
+                'modal.feedback.intro': 'Your feedback helps us make Skister better!',
+                'modal.feedback.email': 'Send us your thoughts at: <a href="mailto:feedback@skister.app" style="color: var(--primary-green);">feedback@skister.app</a>'
+            },
+            fr: {
+                'nav.features': 'Fonctionnalités',
+                'nav.faq': 'FAQ',
+                'nav.blog': 'Blog',
+                'nav.download': 'Télécharger',
+                'nav.contact': 'Contact',
+                'modal.terms.title': 'Conditions d\'Utilisation',
+                'modal.terms.intro': 'Dernière mise à jour: Février 2025',
+                'modal.terms.acceptance': '1. Acceptation des Conditions',
+                'modal.terms.acceptanceText': 'En utilisant Skister, vous acceptez ces conditions. Si vous n\'êtes pas d\'accord, veuillez ne pas utiliser notre service.',
+                'modal.terms.service': '2. Description du Service',
+                'modal.terms.serviceText': 'Skister est une plateforme de coordination pour le partage de matériel de ski. Nous n\'assumons aucune responsabilité pour l\'équipement, les dommages ou les pertes.',
+                'modal.terms.liability': '3. Exclusion de Responsabilité',
+                'modal.terms.liabilityText': '<strong>IMPORTANT:</strong> Skister n\'assume AUCUNE responsabilité, obligation ou assurance pour l\'équipement emprunté, endommagé, perdu ou volé. Tous les échanges se font à vos propres risques.',
+                'footer.product': 'Produit',
+                'footer.features': 'Fonctionnalités',
+                'footer.download': 'Télécharger',
+                'footer.faq': 'FAQ',
+                'footer.feedback': 'Commentaires',
+                'footer.legal': 'Mentions Légales',
+                'footer.privacy': 'Politique de Confidentialité',
+                'footer.terms': 'Conditions d\'Utilisation',
+                'footer.support': 'Support',
+                'footer.contact': 'Contact',
+                'footer.rights': 'Tous droits réservés.',
+                'footer.madewith': 'Made with ❤️ from the alps',
+                'modal.privacy.title': 'Politique de Confidentialité',
+                'modal.privacy.intro': 'Dernière mise à jour: Février 2025',
+                'modal.privacy.p1': 'Chez Skister, nous respectons votre vie privée. Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos informations.',
+                'modal.privacy.collection': '1. Informations que nous collectons',
+                'modal.privacy.collectionText': 'Nous collectons les adresses e-mail des utilisateurs qui s\'inscrivent à notre liste d\'attente. Après le lancement, nous collectons des informations de profil, des listes d\'équipement et des données d\'utilisation.',
+                'modal.privacy.usage': '2. Utilisation des informations',
+                'modal.privacy.usageText': 'Vos informations sont utilisées pour fournir nos services, vous informer des mises à jour et améliorer votre expérience.',
+                'modal.privacy.sharing': '3. Partage des informations',
+                'modal.privacy.sharingText': 'Nous ne vendons pas vos informations à des tiers. Vos informations de profil ne sont visibles que par les membres de votre réseau privé.',
+                'modal.privacy.contactEmail': 'Questions sur la confidentialité : <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a>',
+                'modal.contact.title': 'Contactez-nous',
+                'modal.contact.intro': 'Nous serions ravis de vous entendre !',
+                'modal.contact.email': 'E-mail: <a href="mailto:support@skister.app" style="color: var(--primary-green);">support@skister.app</a>',
+                'modal.contact.response': 'Nous visons à répondre dans les 24 heures.',
+                'modal.feedback.title': 'Donnez votre avis',
+                'modal.feedback.intro': 'Vos commentaires nous aident à améliorer Skister !',
+                'modal.feedback.email': 'Envoyez-nous vos idées à : <a href="mailto:feedback@skister.app" style="color: var(--primary-green);">feedback@skister.app</a>'
+            },
+            es: {
+                'nav.features': 'Funciones',
+                'nav.faq': 'FAQ',
+                'nav.blog': 'Blog',
+                'nav.download': 'Descargar',
+                'nav.contact': 'Contacto',
+                'modal.terms.title': 'Términos de Servicio',
+                'modal.terms.intro': 'Última actualización: Febrero 2025',
+                'modal.terms.acceptance': '1. Aceptación de Términos',
+                'modal.terms.acceptanceText': 'Al usar Skister, aceptas estos términos. Si no estás de acuerdo, por favor no uses nuestro servicio.',
+                'modal.terms.service': '2. Descripción del Servicio',
+                'modal.terms.serviceText': 'Skister es una plataforma de coordinación para compartir equipo de esquí. No asumimos responsabilidad por equipos, daños o pérdidas.',
+                'modal.terms.liability': '3. Exclusión de Responsabilidad',
+                'modal.terms.liabilityText': '<strong>IMPORTANTE:</strong> Skister NO asume responsabilidad, obligación o seguro por equipo prestado, dañado, perdido o robado. Todos los intercambios ocurren bajo tu propio riesgo.',
+                'footer.product': 'Producto',
+                'footer.features': 'Funciones',
+                'footer.download': 'Descargar',
+                'footer.faq': 'FAQ',
+                'footer.feedback': 'Comentarios',
+                'footer.legal': 'Legal',
+                'footer.privacy': 'Política de Privacidad',
+                'footer.terms': 'Términos de Servicio',
+                'footer.support': 'Soporte',
+                'footer.contact': 'Contacto',
+                'footer.rights': 'Todos los derechos reservados.',
+                'footer.madewith': 'Made with ❤️ from the alps',
+                'modal.privacy.title': 'Política de Privacidad',
+                'modal.privacy.intro': 'Última actualización: Febrero 2025',
+                'modal.privacy.p1': 'En Skister, respetamos tu privacidad. Esta política de privacidad explica cómo recopilamos, usamos y protegemos tu información.',
+                'modal.privacy.collection': '1. Información que recopilamos',
+                'modal.privacy.collectionText': 'Recopilamos direcciones de correo electrónico de usuarios que se registran en nuestra lista de espera. Después del lanzamiento, recopilamos información de perfil, listados de equipo y datos de uso.',
+                'modal.privacy.usage': '2. Uso de la información',
+                'modal.privacy.usageText': 'Tu información se usa para proporcionar nuestros servicios, notificarte sobre actualizaciones y mejorar tu experiencia.',
+                'modal.privacy.sharing': '3. Compartir información',
+                'modal.privacy.sharingText': 'No vendemos tu información a terceros. Tu información de perfil solo es visible para miembros de tu red privada.',
+                'modal.privacy.contactEmail': 'Consultas de privacidad: <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a>',
+                'modal.contact.title': 'Contáctanos',
+                'modal.contact.intro': '¡Nos encantaría saber de ti!',
+                'modal.contact.email': 'Correo: <a href="mailto:support@skister.app" style="color: var(--primary-green);">support@skister.app</a>',
+                'modal.contact.response': 'Nuestro objetivo es responder dentro de 24 horas.',
+                'modal.feedback.title': 'Enviar comentarios',
+                'modal.feedback.intro': '¡Tus comentarios nos ayudan a mejorar Skister!',
+                'modal.feedback.email': 'Envíanos tus ideas a: <a href="mailto:feedback@skister.app" style="color: var(--primary-green);">feedback@skister.app</a>'
+            },
+            it: {
+                'nav.features': 'Funzionalità',
+                'nav.faq': 'FAQ',
+                'nav.blog': 'Blog',
+                'nav.download': 'Download',
+                'nav.contact': 'Contatto',
+                'modal.terms.title': 'Termini di Servizio',
+                'modal.terms.intro': 'Ultimo aggiornamento: Febbraio 2025',
+                'modal.terms.acceptance': '1. Accettazione dei Termini',
+                'modal.terms.acceptanceText': 'Utilizzando Skister, accetti questi termini. Se non sei d\'accordo, per favore non utilizzare il nostro servizio.',
+                'modal.terms.service': '2. Descrizione del Servizio',
+                'modal.terms.serviceText': 'Skister è una piattaforma di coordinamento per la condivisione di attrezzatura da sci. Non assumiamo responsabilità per attrezzatura, danni o perdite.',
+                'modal.terms.liability': '3. Esclusione di Responsabilità',
+                'modal.terms.liabilityText': '<strong>IMPORTANTE:</strong> Skister NON assume responsabilità, obblighi o assicurazione per attrezzatura prestata, danneggiata, persa o rubata. Tutti gli scambi avvengono a tuo rischio.',
+                'footer.product': 'Prodotto',
+                'footer.features': 'Funzionalità',
+                'footer.download': 'Download',
+                'footer.faq': 'FAQ',
+                'footer.feedback': 'Feedback',
+                'footer.legal': 'Legale',
+                'footer.privacy': 'Informativa sulla Privacy',
+                'footer.terms': 'Termini di Servizio',
+                'footer.support': 'Supporto',
+                'footer.contact': 'Contatto',
+                'footer.rights': 'Tutti i diritti riservati.',
+                'footer.madewith': 'Made with ❤️ from the alps',
+                'modal.privacy.title': 'Informativa sulla Privacy',
+                'modal.privacy.intro': 'Ultimo aggiornamento: Febbraio 2025',
+                'modal.privacy.p1': 'In Skister rispettiamo la tua privacy. Questa informativa spiega come raccogliamo, utilizziamo e proteggiamo le tue informazioni.',
+                'modal.privacy.collection': '1. Informazioni che raccogliamo',
+                'modal.privacy.collectionText': 'Raccogliamo indirizzi email dagli utenti che si iscrivono alla nostra lista d\'attesa. Dopo il lancio, raccogliamo informazioni del profilo, elenchi di attrezzatura e dati di utilizzo.',
+                'modal.privacy.usage': '2. Uso delle informazioni',
+                'modal.privacy.usageText': 'Le tue informazioni vengono utilizzate per fornire i nostri servizi, notificarti aggiornamenti e migliorare la tua esperienza.',
+                'modal.privacy.sharing': '3. Condivisione delle informazioni',
+                'modal.privacy.sharingText': 'Non vendiamo le tue informazioni a terze parti. Le informazioni del tuo profilo sono visibili solo ai membri della tua rete privata.',
+                'modal.privacy.contactEmail': 'Domande sulla privacy: <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a>',
+                'modal.contact.title': 'Contattaci',
+                'modal.contact.intro': 'Ci piacerebbe sentirti!',
+                'modal.contact.email': 'Email: <a href="mailto:support@skister.app" style="color: var(--primary-green);">support@skister.app</a>',
+                'modal.contact.response': 'Miriamo a rispondere entro 24 ore.',
+                'modal.feedback.title': 'Dai il tuo Feedback',
+                'modal.feedback.intro': 'Il tuo feedback ci aiuta a migliorare Skister!',
+                'modal.feedback.email': 'Inviaci i tuoi pensieri a: <a href="mailto:feedback@skister.app" style="color: var(--primary-green);">feedback@skister.app</a>'
+            }
+        }
+
+        let currentLang = 'de'
+
+        function applyDataI18n(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n')
+                if (translations[lang] && translations[lang][key]) element.innerHTML = translations[lang][key]
+            })
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang
+            document.documentElement.lang = lang
+            const flags = { de: '🇩🇪 DE', en: '🇬🇧 EN', fr: '🇫🇷 FR', es: '🇪🇸 ES', it: '🇮🇹 IT' }
+            const currentLabel = document.getElementById('current-language')
+            if (currentLabel) currentLabel.textContent = flags[lang] || flags.de
+            applyDataI18n(lang)
+            toggleLanguageDropdown()
+        }
+
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('language-dropdown')
+            if (dropdown) dropdown.classList.toggle('active')
+        }
+
+        document.addEventListener('click', function(event) {
+            const selector = document.querySelector('.language-selector')
+            const dropdown = document.getElementById('language-dropdown')
+            if (!selector || !dropdown) return
+            if (!selector.contains(event.target)) dropdown.classList.remove('active')
+        })
+
+        function openModal(type) {
+            const el = document.getElementById(`modal-${type}`)
+            if (!el) return
+            el.classList.add('active')
+            document.body.style.overflow = 'hidden'
+        }
+
+        function closeModal(type) {
+            const el = document.getElementById(`modal-${type}`)
+            if (!el) return
+            el.classList.remove('active')
+            document.body.style.overflow = 'auto'
+        }
+
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) closeModal(modal.id.replace('modal-', ''))
+            })
+        })
+
+        document.addEventListener('DOMContentLoaded', function() {
+            applyDataI18n(currentLang)
+            const flags = { de: '🇩🇪 DE', en: '🇬🇧 EN', fr: '🇫🇷 FR', es: '🇪🇸 ES', it: '🇮🇹 IT' }
+            const currentLabel = document.getElementById('current-language')
+            if (currentLabel) currentLabel.textContent = flags[currentLang] || flags.de
+        })
+    </script>
+</body>
+</html>
