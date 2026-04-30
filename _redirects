@@ -5,6 +5,10 @@
 # Convenience path for Terms page
 /terms /terms.html 301!
 
+# Convenience paths for Help + Privacy
+/help /help.html 301!
+/privacy /privacy.html 301!
+
 # Consolidate alternate hosts (when deployed on a redirect-capable CDN)
 https://www.skister.app/* https://skister.app/:splat 301!
 http://www.skister.app/* https://skister.app/:splat 301!

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#228B22">
+  <link rel="canonical" href="https://skister.app/privacy.html">
+  <title>Skister — Privacy Policy</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/favicon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary-green: #228B22;
+      --primary-green-light: #2da82d;
+      --bg-dark: #0a0a0a;
+      --text-white: #ffffff;
+      --text-gray: #b0b0b0;
+      --nav-offset: 5.5rem;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .logo a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--text-white);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-links a {
+      color: var(--text-gray);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.3s;
+      font-weight: 500;
+    }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--primary-green-light); outline: none; }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: calc(var(--nav-offset) + 2rem) 1.5rem 3.5rem;
+    }
+    .page-header {
+      display: grid;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+    .page-header h1 { font-size: 2.25rem; color: var(--primary-green); }
+    .page-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: grid;
+      gap: 0.75rem;
+    }
+    .page-card h2 { color: var(--primary-green); }
+    .page-card h3 { color: var(--text-white); margin-top: 0.25rem; }
+    .page-card p, .page-card li { color: var(--text-gray); line-height: 1.8; }
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 3rem 2rem 1.5rem;
+      background: rgba(10, 10, 10, 0.95);
+    }
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-section h3 { color: var(--primary-green); margin-bottom: 1rem; }
+    .footer-links { display: flex; flex-direction: column; gap: 0.5rem; }
+    .footer-links a {
+      color: var(--text-gray);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover, .footer-links a:focus-visible { color: var(--primary-green-light); outline: none; }
+    .footer-bottom {
+      text-align: center;
+      margin-top: 2.5rem;
+      color: var(--text-gray);
+      font-size: 0.9rem;
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      nav { flex-wrap: wrap; }
+      main { padding-top: calc(var(--nav-offset) + 1.25rem); }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">
+      <a href="/" aria-label="Skister home">
+        <i class="fa-solid fa-person-skiing" aria-hidden="true"></i>
+        <span>Skister</span>
+      </a>
+    </div>
+    <div class="nav-links" aria-label="Primary">
+      <a href="/#features">Features</a>
+      <a href="/#download">Download</a>
+      <a href="/help.html">Help</a>
+      <a href="/terms.html">Terms</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <h1>Privacy Policy</h1>
+      <p>Last updated: April 2026</p>
+    </div>
+
+    <section class="page-card" aria-labelledby="privacy-intro">
+      <h2 id="privacy-intro">Overview</h2>
+      <p>This Privacy Policy explains what data Skister collects, how we use it, where it is stored, and your rights under GDPR.</p>
+    </section>
+
+    <section class="page-card" aria-labelledby="data-collected">
+      <h2 id="data-collected">1. Data we collect</h2>
+      <ul style="padding-left: 1.2rem; display: grid; gap: 0.5rem;">
+        <li><strong style="color: var(--text-white);">Account data:</strong> name and email address.</li>
+        <li><strong style="color: var(--text-white);">Gear listings:</strong> item details you provide (photos, descriptions, condition).</li>
+        <li><strong style="color: var(--text-white);">Rental activity:</strong> requests, handoffs, returns, and related timestamps.</li>
+      </ul>
+    </section>
+
+    <section class="page-card" aria-labelledby="usage">
+      <h2 id="usage">2. How we use data</h2>
+      <ul style="padding-left: 1.2rem; display: grid; gap: 0.5rem;">
+        <li>To operate the app and provide its core features (inventory, rentals, reminders).</li>
+        <li>To maintain safety and trust features (condition confirmation, ratings within your network).</li>
+        <li>To improve features and reliability (aggregated insights and troubleshooting).</li>
+      </ul>
+    </section>
+
+    <section class="page-card" aria-labelledby="storage">
+      <h2 id="storage">3. Storage & third-party services</h2>
+      <p>Skister stores and processes app data via <strong style="color: var(--text-white);">Supabase</strong> (a third-party infrastructure provider). Our Supabase project is configured to use an <strong style="color: var(--text-white);">EU region</strong>. Your data may be processed and stored on Supabase-managed services as needed to operate Skister.</p>
+      <p>We may use additional third-party services (e.g., error monitoring) in the future. If we do, this policy will be updated.</p>
+    </section>
+
+    <section class="page-card" aria-labelledby="retention">
+      <h2 id="retention">4. Data retention</h2>
+      <p>We store your data as long as your account is active or as needed to provide Skister’s services.</p>
+      <p>When you request deletion, we delete or anonymize personal data unless we are legally required to keep certain records for a longer period.</p>
+    </section>
+
+    <section class="page-card" aria-labelledby="sharing">
+      <h2 id="sharing">5. Sharing</h2>
+      <p>We do <strong style="color: var(--text-white);">not</strong> sell your data.</p>
+      <ul style="padding-left: 1.2rem; display: grid; gap: 0.5rem;">
+        <li>Your gear and activity details are shared only within your chosen network as part of the app’s normal operation.</li>
+        <li>We disclose data if required by law, or to protect users and the service from abuse.</li>
+      </ul>
+    </section>
+
+    <section class="page-card" aria-labelledby="gdpr-rights">
+      <h2 id="gdpr-rights">6. Your rights (GDPR)</h2>
+      <ul style="padding-left: 1.2rem; display: grid; gap: 0.5rem;">
+        <li>Right of access</li>
+        <li>Right to rectification</li>
+        <li>Right to deletion</li>
+        <li>Right to restriction of processing</li>
+        <li>Right to data portability</li>
+        <li>Right to object</li>
+      </ul>
+      <p style="margin-top: 0.5rem;">To request access, correction, or deletion, contact us at <a href="mailto:privacy@skister.app" style="color: var(--primary-green); text-decoration: none;">privacy@skister.app</a>.</p>
+    </section>
+
+    <section class="page-card" aria-labelledby="children">
+      <h2 id="children">7. Children</h2>
+      <p>Skister is not intended for users under 16. If you believe a user under 16 has provided personal data, contact us at <a href="mailto:privacy@skister.app" style="color: var(--primary-green); text-decoration: none;">privacy@skister.app</a>.</p>
+    </section>
+
+    <section class="page-card" aria-labelledby="contact">
+      <h2 id="contact">8. Contact</h2>
+      <p>Privacy questions: <a href="mailto:privacy@skister.app" style="color: var(--primary-green); text-decoration: none;">privacy@skister.app</a></p>
+      <p>Support: <a href="mailto:support@skister.app" style="color: var(--primary-green); text-decoration: none;">support@skister.app</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Legal</h3>
+        <div class="footer-links">
+          <a href="/privacy.html" aria-current="page">Privacy</a>
+          <a href="/terms.html">Terms</a>
+          <a href="/help.html">Help</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3>Support</h3>
+        <div class="footer-links">
+          <a href="mailto:support@skister.app">support@skister.app</a>
+          <a href="mailto:privacy@skister.app">privacy@skister.app</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Skister. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
+
