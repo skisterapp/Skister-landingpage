@@ -1,15 +1,23 @@
-# Used by Netlify, Cloudflare Pages, and similar hosts. GitHub Pages ignores this file.
-# Root duplicate URL → preferred path (single 301 when the host supports redirects)
+# Canonical host: https://skister.app/
+# Applied on Netlify, Cloudflare Pages, and similar static hosts.
+# GitHub Pages ignores this file — use scripts/site-canonical.js + canonical <link> tags there.
+
+# HTTP → HTTPS and www → apex
+http://skister.app/* https://skister.app/:splat 301!
+http://www.skister.app/* https://skister.app/:splat 301!
+https://www.skister.app/* https://skister.app/:splat 301!
+
+# Root index.html (all host variants)
 /index.html / 301!
+https://skister.app/index.html https://skister.app/ 301!
+http://skister.app/index.html https://skister.app/ 301!
+http://www.skister.app/index.html https://skister.app/ 301!
+https://www.skister.app/index.html https://skister.app/ 301!
 
-# Convenience path for Terms page
+# Directory index.html → trailing-slash URL
+/*/index.html /:splat/ 301!
+
+# Convenience paths
 /terms /terms.html 301!
-
-# Convenience paths for Help + Privacy
 /help /help.html 301!
 /privacy /privacy.html 301!
-
-# Consolidate alternate hosts (when deployed on a redirect-capable CDN)
-https://www.skister.app/* https://skister.app/:splat 301!
-http://www.skister.app/* https://skister.app/:splat 301!
-http://skister.app/* https://skister.app/:splat 301!

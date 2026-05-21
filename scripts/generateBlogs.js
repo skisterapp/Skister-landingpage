@@ -151,6 +151,7 @@ function buildArticlePage({
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/scripts/site-canonical.js"></script>
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">
   <meta name="robots" content="${escapeHtml(robots)}">
@@ -556,6 +557,7 @@ async function main() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/scripts/site-canonical.js"></script>
   <title>${escapeHtml(blogIndexTitle)}</title>
   <meta name="description" content="${escapeHtml(blogIndexDescription)}">
   <meta name="robots" content="index, follow">

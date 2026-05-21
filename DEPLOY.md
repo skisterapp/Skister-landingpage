@@ -51,16 +51,16 @@ GitHub Pages will rebuild automatically. The site will update at https://skister
 
 **Canonical host:** `https://skister.app/` (HTTPS, no `www`, no `index.html` in the preferred URL).
 
-- **Canonical `<link>` tags** are present on the main HTML entry points (`index.html`, `blog.html`, `blog-post.html`, admin screens, and generated blog pages under `blog/`).
-- **`robots.txt`** at the site root lists `Sitemap: https://skister.app/sitemap.xml` (regenerated with `npm run generate:blogs` when needed).
-- **`_redirects`** (Netlify / Cloudflare Pages–style) is included for hosts that honor it. **GitHub Pages does not apply `_redirects`**, so behavior depends on the platform:
-  - **HTTP → HTTPS** and **`www` → apex** are already handled by GitHub Pages for the custom domain (verify with `curl -sI http://skister.app/` and `curl -sI https://www.skister.app/` — expect a single `301` to `https://skister.app/`).
-  - **`/index.html` → `/`:** `index.html` includes a small script that replaces the location when the path is exactly `/index.html`, plus a canonical pointing at `https://skister.app/`. For a true **301** at the edge, add a redirect rule on your DNS/CDN (e.g. Cloudflare: `https://skister.app/index.html` → `https://skister.app/`).
+- **Canonical `<link>` tags** on all public pages (`index.html`, `blog/`, `terms.html`, `help.html`, `privacy.html`, and each `blog/{slug}/index.html`).
+- **`scripts/site-canonical.js`** (loaded in `<head>`) normalizes `*/index.html` paths client-side and aligns the canonical URL with the apex host.
+- **`robots.txt`** lists `Sitemap: https://skister.app/sitemap.xml` (regenerated with `npm run generate:blogs` when needed).
+- **`_redirects`** — server **301** rules for Netlify / Cloudflare Pages. **GitHub Pages (current host) ignores `_redirects`.**
+  - **HTTP → HTTPS** and **`www` → apex:** handled by GitHub Pages (301).
+  - **`/index.html` → `/`:** on GitHub Pages the URL may still return **200**; crawlers use `rel=canonical` and `site-canonical.js`. For a true **301**, use a CDN that honors `_redirects` or add a Cloudflare redirect: `https://skister.app/index.html` → `https://skister.app/`.
 
-**Quick checks after deploy:**
+**Verify after deploy:**
 
 ```bash
-curl -sI "https://skister.app/robots.txt" | head -5
-curl -sI "https://skister.app/sitemap.xml" | head -5
-curl -sI "http://www.skister.app/" | head -8
+npm run validate:seo
+npm run verify:redirects
 ```
