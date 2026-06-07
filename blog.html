@@ -56,16 +56,12 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--text-white);
-            text-decoration: none;
-            transition: color 0.3s;
         }
-        
-        .logo:hover {
-            color: var(--primary-green-light);
+
+        .logo-image {
+            height: 2.25rem;
+            width: auto;
+            display: block;
         }
         
         .nav-links {
@@ -315,9 +311,14 @@
 </head>
 <body>
     <nav>
-        <a href="index.html" class="logo">
-            <i class="fa-solid fa-person-skiing"></i>
-            Skister
+        <a href="index.html" class="logo" aria-label="Skister home">
+            <img
+                src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterLogoWeb.png"
+                alt="Skister"
+                class="logo-image"
+                width="1287"
+                height="337"
+            >
         </a>
         <div class="nav-links">
             <a href="index.html#features" data-i18n="nav.features">Features</a>

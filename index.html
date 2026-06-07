@@ -111,10 +111,18 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--text-white);
+        }
+
+        .logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-image {
+            height: 2.25rem;
+            width: auto;
+            display: block;
         }
         
         .nav-links {
@@ -858,9 +866,15 @@
     
     <!-- Navigation -->
     <nav>
-        <div class="logo">
-            <span><i class="fa-solid fa-person-skiing"></i> Skister</span>
-        </div>
+        <a href="/" class="logo" aria-label="Skister home">
+            <img
+                src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterLogoWeb.png"
+                alt="Skister"
+                class="logo-image"
+                width="1287"
+                height="337"
+            >
+        </a>
         <div class="nav-links">
             <a onclick="scrollToSection('features')" data-i18n="nav.features">Features</a>
             <a onclick="scrollToSection('download')" data-i18n="nav.download">Download</a>
