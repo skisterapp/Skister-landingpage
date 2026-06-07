@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 const ONBOARDING_DONE_KEY = 'onboarding_v1_done'
+const SKISTER_LOGO_URL =
+  'https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png'
 
 export function Onboarding(props: { onDone?: () => void }): React.ReactNode {
   const slides = useMemo(() => getSlides(), [])
@@ -54,51 +56,76 @@ export function Onboarding(props: { onDone?: () => void }): React.ReactNode {
 
   return (
     <div
-      className="min-h-[100dvh] bg-background text-foreground flex items-center justify-center p-6"
+      className="relative min-h-[100dvh] overflow-hidden bg-background text-text-primary flex items-center justify-center p-6"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      <div className="w-full max-w-xl rounded-2xl border border-border bg-card p-6 shadow-sm">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-xl font-semibold">{slide.title}</h1>
-          <p className="text-sm text-muted-foreground">{slide.message}</p>
-        </div>
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(46,232,154,0.2),transparent)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute bottom-0 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl"
+        aria-hidden
+      />
 
-        {slide.imageSrc ? (
-          <div className="mt-5 overflow-hidden rounded-xl border border-border bg-muted/20">
-            <img src={slide.imageSrc} alt={slide.imageAlt} className="h-56 w-full object-contain" />
+      <div className="relative w-full max-w-md text-center">
+        <div className="absolute -inset-px rounded-[1.35rem] bg-gradient-to-br from-primary/40 via-primary/10 to-primary-light/20 opacity-80 blur-sm" aria-hidden />
+        <div className="relative overflow-hidden rounded-[1.25rem] border border-border bg-surface/95 px-6 py-8 shadow-[0_0_60px_var(--glow)] backdrop-blur-xl">
+          <div className="flex flex-col items-center gap-3">
+            <h1 className="text-xl font-bold tracking-tight sm:text-2xl text-text-primary">
+              {slide.title}
+            </h1>
+            <p className="max-w-sm text-sm leading-relaxed text-text-secondary">{slide.message}</p>
           </div>
-        ) : null}
 
-        <div className="mt-4 flex items-center gap-2" aria-label="Onboarding progress">
-          {slides.map((_, i) => (
-            <div
-              // eslint-disable-next-line react/no-array-index-key
-              key={i}
-              className={[
-                'h-2 w-2 rounded-full',
-                i === activeIndex ? 'bg-primary' : 'bg-muted-foreground/30'
-              ].join(' ')}
-            />
-          ))}
-        </div>
+          {slide.imageSrc ? (
+            <div className="mx-auto mt-6 max-w-[220px] overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-3 shadow-inner">
+              <img
+                src={slide.imageSrc}
+                alt={slide.imageAlt}
+                className="mx-auto h-44 w-full object-contain"
+              />
+            </div>
+          ) : null}
 
-        <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-end">
-          <button
-            type="button"
-            onClick={handleBack}
-            disabled={activeIndex === 0}
-            className="inline-flex h-11 items-center justify-center rounded-xl border border-border bg-transparent px-4 text-sm font-semibold disabled:opacity-50"
+          <div
+            className="mt-6 flex items-center justify-center gap-2"
+            aria-label="Onboarding progress"
           >
-            Back
-          </button>
-          <button
-            type="button"
-            onClick={handleNext}
-            className="inline-flex h-11 items-center justify-center rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground"
-          >
-            {primaryLabel}
-          </button>
+            {slides.map((_, i) => (
+              <div
+                key={i}
+                className={[
+                  'h-2 rounded-full transition-all duration-300',
+                  i === activeIndex ? 'w-7 bg-primary shadow-[0_0_12px_var(--glow)]' : 'w-2 bg-border'
+                ].join(' ')}
+                aria-hidden
+              />
+            ))}
+          </div>
+
+          <div className="mt-8 flex items-center justify-center gap-3">
+            <button
+              type="button"
+              onClick={handleBack}
+              disabled={activeIndex === 0}
+              className="inline-flex h-11 min-w-[6.5rem] items-center justify-center rounded-xl border border-border bg-surface-secondary px-5 text-sm font-semibold text-text-primary transition hover:border-primary/30 hover:bg-surface-tertiary disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Back
+            </button>
+            <button
+              type="button"
+              onClick={handleNext}
+              className="inline-flex h-11 min-w-[6.5rem] items-center justify-center rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-[0_0_24px_var(--glow)] transition hover:bg-primary-dark"
+            >
+              {primaryLabel}
+            </button>
+          </div>
+
+          <p className="mt-5 text-center text-xs tracking-wide text-text-tertiary">
+            Swipe left or right to explore
+          </p>
         </div>
       </div>
     </div>
@@ -110,25 +137,25 @@ function getSlides(): Slide[] {
     {
       title: 'Share ski gear with your network',
       message: 'Skister helps you coordinate lending and borrowing with people you trust.',
-      imageSrc: '/assets/Skister Mascot.png',
-      imageAlt: 'Skister mascot'
+      imageSrc: SKISTER_LOGO_URL,
+      imageAlt: 'Skister app logo'
     },
     {
       title: 'List your gear → others can borrow it',
       message: 'Add gear to your inventory so your network can request it.',
-      imageSrc: '/assets/Skister Mascot.png',
+      imageSrc: SKISTER_LOGO_URL,
       imageAlt: 'Inventory'
     },
     {
       title: 'Track rentals & never lose gear',
       message: 'Use QR handoffs and reminders so everyone knows what’s out and what’s due back.',
-      imageSrc: '/assets/Skister Mascot.png',
+      imageSrc: SKISTER_LOGO_URL,
       imageAlt: 'QR and reminders'
     },
     {
       title: 'Stay safe with condition checks & trust ratings',
       message: 'Confirm condition and leave ratings after returns to avoid disputes and build trust.',
-      imageSrc: '/assets/Skister Mascot.png',
+      imageSrc: SKISTER_LOGO_URL,
       imageAlt: 'Condition and ratings'
     }
   ]
@@ -140,4 +167,3 @@ interface Slide {
   imageSrc?: string
   imageAlt: string
 }
-

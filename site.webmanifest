@@ -9,7 +9,7 @@
   "theme_color": "#228B22",
   "icons": [
     {
-      "src": "/assets/favicon.png",
+      "src": "https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
