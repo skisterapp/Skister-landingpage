@@ -364,63 +364,139 @@
             font-size: 1.2rem;
         }
         
-        /* Features Section */
-        .features {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
         .section-title {
             font-size: 2.5rem;
             text-align: center;
             margin-bottom: 3rem;
         }
-        
+
+        /* Features Section */
+        .features {
+            position: relative;
+            z-index: 2;
+            padding: 5.5rem 2rem 6rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            background:
+                radial-gradient(ellipse 70% 45% at 50% 0%, rgba(46, 232, 154, 0.1) 0%, transparent 58%),
+                radial-gradient(ellipse 40% 30% at 10% 90%, rgba(34, 139, 34, 0.07) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 30% at 90% 90%, rgba(34, 139, 34, 0.07) 0%, transparent 50%),
+                var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .features::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px),
+                radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px);
+            background-size: 48px 48px, 64px 64px;
+            pointer-events: none;
+            opacity: 0.55;
+        }
+        .features-inner {
+            position: relative;
+            max-width: 1080px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .features .section-title {
+            margin-bottom: 0.75rem;
+        }
+        .features-subtitle {
+            text-align: center;
+            color: var(--text-gray);
+            max-width: 620px;
+            margin: 0 auto 3rem;
+            font-size: 1.05rem;
+            line-height: 1.75;
+        }
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.25rem;
         }
-        
         .feature-card {
-            background: rgba(255, 255, 255, 0.03);
+            position: relative;
+            background: linear-gradient(155deg, rgba(26, 26, 26, 0.95) 0%, rgba(13, 13, 13, 0.98) 100%);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: all 0.3s;
+            border-radius: 1rem;
+            padding: 1.75rem 1.5rem 1.65rem;
+            transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
         }
-        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(135deg, rgba(46, 232, 154, 0.08) 0%, transparent 45%);
+            opacity: 0;
+            transition: opacity 0.28s ease;
+            pointer-events: none;
+        }
         .feature-card:hover {
-            background: rgba(34, 139, 34, 0.1);
-            border-color: var(--primary-green);
-            transform: translateY(-5px);
+            border-color: rgba(46, 232, 154, 0.45);
+            transform: translateY(-4px);
+            box-shadow:
+                0 12px 36px rgba(0, 0, 0, 0.4),
+                0 0 28px rgba(34, 139, 34, 0.12);
         }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-green);
+        .feature-card:hover::before {
+            opacity: 1;
         }
-        
+        .feature-icon-wrap {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.15rem;
+            background: rgba(34, 139, 34, 0.12);
+            border: 1px solid rgba(46, 232, 154, 0.25);
+            color: var(--primary-green-light);
+            font-size: 1.45rem;
+            transition: background 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease;
+        }
+        .feature-card:hover .feature-icon-wrap {
+            background: rgba(34, 139, 34, 0.22);
+            transform: scale(1.06);
+            box-shadow: 0 0 20px rgba(46, 232, 154, 0.2);
+        }
         .feature-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 0 0 0.55rem;
             color: var(--text-white);
+            letter-spacing: -0.01em;
+            line-height: 1.3;
         }
-        
         .feature-card p {
             color: var(--text-gray);
-            line-height: 1.6;
+            font-size: 0.92rem;
+            line-height: 1.65;
+            margin: 0;
+            max-width: 18rem;
+        }
+        @media (max-width: 960px) {
+            .features-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        @media (max-width: 600px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+                max-width: 22rem;
+                margin: 0 auto;
+            }
         }
 
         /* Onboarding showcase */
@@ -777,8 +853,9 @@
             box-shadow:
                 0 4px 20px rgba(0, 0, 0, 0.45),
                 inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            gap: 0.75rem;
-            padding: 0 1.15rem 0 1rem;
+            gap: 0.65rem;
+            padding: 0 1rem;
+            justify-content: center;
             transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
         }
         .store-badge-flip:hover .store-badge-front {
@@ -808,10 +885,10 @@
         .store-badge-text {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            text-align: left;
+            align-items: center;
+            text-align: center;
             line-height: 1.2;
-            flex: 1;
+            flex: 0 1 auto;
             min-width: 0;
         }
         .store-badge-line1 {
@@ -1335,38 +1412,41 @@
     </section>
     
     <!-- Features Section -->
-    <section class="features snap-section" id="features">
-        <h2 class="section-title" data-i18n="features.title">Funktionen</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-solid fa-person-skiing"></i></div>
-                <h3 data-i18n="features.share.title">Ausrüstung teilen</h3>
-                <p data-i18n="features.share.description">Liste deine Ski-Ausrüstung auf und mache sie deinem vertrauenswürdigen Netzwerk verfügbar.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
-                <h3 data-i18n="features.family.title">Familienfreundlich</h3>
-                <p data-i18n="features.family.description">Nur auf Einladung. Teile nur mit Personen, denen du vertraust - Familie, Freunde und Nachbarn.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-solid fa-gift"></i></div>
-                <h3 data-i18n="features.free.title">100% Kostenlos</h3>
-                <p data-i18n="features.free.description">Keine Zahlungen, keine Gebühren. Nur lokale Abholung und gemeinschaftliches Teilen.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-solid fa-bell"></i></div>
-                <h3 data-i18n="features.reminders.title">Intelligente Erinnerungen</h3>
-                <p data-i18n="features.reminders.description">Erhalte Erinnerungen für Abhol- und Rückgabetermine. Verpasse nie einen wichtigen Termin.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-solid fa-lock"></i></div>
-                <h3 data-i18n="features.private.title">Sicher & Privat</h3>
-                <p data-i18n="features.private.description">Deine Daten bleiben privat. Nur Mitglieder deines Netzwerks können deine Ausrüstung sehen.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fa-solid fa-location-dot"></i></div>
-                <h3 data-i18n="features.local.title">Nur lokal</h3>
-                <p data-i18n="features.local.description">Koordiniere lokale Abholungen. Kein Versand, keine Komplikationen.</p>
+    <section class="features snap-section" id="features" aria-labelledby="features-heading">
+        <div class="features-inner">
+            <h2 class="section-title" id="features-heading" data-i18n="features.title">Funktionen</h2>
+            <p class="features-subtitle" data-i18n="features.subtitle">Alles was du brauchst, um Ski-Ausrüstung sicher in deinem vertrauenswürdigen Netzwerk zu teilen.</p>
+            <div class="features-grid">
+                <article class="feature-card">
+                    <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-person-skiing"></i></div>
+                    <h3 data-i18n="features.share.title">Ausrüstung teilen</h3>
+                    <p data-i18n="features.share.description">Liste deine Ski-Ausrüstung auf und mache sie deinem vertrauenswürdigen Netzwerk verfügbar.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-users"></i></div>
+                    <h3 data-i18n="features.family.title">Familienfreundlich</h3>
+                    <p data-i18n="features.family.description">Nur auf Einladung. Teile nur mit Personen, denen du vertraust - Familie, Freunde und Nachbarn.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-gift"></i></div>
+                    <h3 data-i18n="features.free.title">100% Kostenlos</h3>
+                    <p data-i18n="features.free.description">Keine Zahlungen, keine Gebühren. Nur lokale Abholung und gemeinschaftliches Teilen.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-bell"></i></div>
+                    <h3 data-i18n="features.reminders.title">Intelligente Erinnerungen</h3>
+                    <p data-i18n="features.reminders.description">Erhalte Erinnerungen für Abhol- und Rückgabetermine. Verpasse nie einen wichtigen Termin.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-lock"></i></div>
+                    <h3 data-i18n="features.private.title">Sicher & Privat</h3>
+                    <p data-i18n="features.private.description">Deine Daten bleiben privat. Nur Mitglieder deines Netzwerks können deine Ausrüstung sehen.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></div>
+                    <h3 data-i18n="features.local.title">Nur lokal</h3>
+                    <p data-i18n="features.local.description">Koordiniere lokale Abholungen. Kein Versand, keine Komplikationen.</p>
+                </article>
             </div>
         </div>
     </section>
@@ -1655,6 +1735,7 @@
                 'onboarding.step6.feature2': 'Wachse deine Gemeinschaft',
                 'onboarding.step6.feature3': 'Mehr Auswahl, mehr Spaß',
                 'features.title': 'Funktionen',
+                'features.subtitle': 'Alles was du brauchst, um Ski-Ausrüstung sicher in deinem vertrauenswürdigen Netzwerk zu teilen.',
                 'features.share.title': 'Ausrüstung teilen',
                 'features.share.description': 'Liste deine Ski-Ausrüstung auf und mache sie deinem vertrauenswürdigen Netzwerk verfügbar.',
                 'features.family.title': 'Familienfreundlich',
@@ -1787,6 +1868,7 @@
                 'onboarding.step6.feature2': 'Grow your community',
                 'onboarding.step6.feature3': 'More choices, more fun',
                 'features.title': 'Features',
+                'features.subtitle': 'Everything you need to share ski gear safely within your trusted network.',
                 'features.share.title': 'Share Equipment',
                 'features.share.description': 'List your ski equipment and make it available to your trusted network.',
                 'features.family.title': 'Family-Friendly',
@@ -1919,6 +2001,7 @@
                 'onboarding.step6.feature2': 'Faites grandir votre communauté',
                 'onboarding.step6.feature3': 'Plus de choix, plus de plaisir',
                 'features.title': 'Fonctionnalités',
+                'features.subtitle': 'Tout ce dont vous avez besoin pour partager du matériel de ski en toute sécurité au sein de votre réseau de confiance.',
                 'features.share.title': 'Partager l\'Équipement',
                 'features.share.description': 'Listez votre équipement de ski et rendez-le disponible à votre réseau de confiance.',
                 'features.family.title': 'Convivial',
@@ -2047,6 +2130,7 @@
                 'onboarding.step6.feature2': 'Haz crecer tu comunidad',
                 'onboarding.step6.feature3': 'Más opciones, más diversión',
                 'features.title': 'Características',
+                'features.subtitle': 'Todo lo que necesitas para compartir equipo de esquí de forma segura dentro de tu red de confianza.',
                 'features.share.title': 'Compartir Equipo',
                 'features.share.description': 'Lista tu equipo de esquí y ponlo a disposición de tu red de confianza.',
                 'features.family.title': 'Familiar',
@@ -2179,6 +2263,7 @@
                 'onboarding.step6.feature2': 'Fai crescere la tua comunità',
                 'onboarding.step6.feature3': 'Più scelte, più divertimento',
                 'features.title': 'Funzionalità',
+                'features.subtitle': 'Tutto ciò che ti serve per condividere attrezzatura da sci in sicurezza nella tua rete di fiducia.',
                 'features.share.title': 'Condividi Attrezzatura',
                 'features.share.description': 'Elenca la tua attrezzatura da sci e rendila disponibile alla tua rete di fiducia.',
                 'features.family.title': 'Per Famiglie',
