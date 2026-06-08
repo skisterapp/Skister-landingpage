@@ -66,6 +66,89 @@
             .snowflake {
                 display: none;
             }
+            .glow-orb {
+                animation: none !important;
+                opacity: 0.25;
+            }
+        }
+
+        /* Ambient green glow — drifts across the page */
+        #ambient-glow {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(72px);
+            will-change: transform, opacity;
+        }
+        .glow-orb-1 {
+            width: 28rem;
+            height: 28rem;
+            background: radial-gradient(circle, rgba(46, 232, 154, 0.42) 0%, rgba(34, 139, 34, 0.12) 42%, transparent 72%);
+            top: -6%;
+            left: -4%;
+            animation: glowDrift1 22s ease-in-out infinite;
+        }
+        .glow-orb-2 {
+            width: 22rem;
+            height: 22rem;
+            background: radial-gradient(circle, rgba(34, 139, 34, 0.38) 0%, rgba(46, 232, 154, 0.1) 45%, transparent 70%);
+            top: 38%;
+            right: -8%;
+            animation: glowDrift2 28s ease-in-out infinite;
+        }
+        .glow-orb-3 {
+            width: 32rem;
+            height: 32rem;
+            background: radial-gradient(circle, rgba(46, 232, 154, 0.28) 0%, rgba(34, 139, 34, 0.08) 50%, transparent 75%);
+            bottom: -12%;
+            left: 22%;
+            animation: glowDrift3 26s ease-in-out infinite;
+        }
+        .glow-orb-4 {
+            width: 18rem;
+            height: 18rem;
+            background: radial-gradient(circle, rgba(45, 168, 45, 0.35) 0%, transparent 68%);
+            top: 18%;
+            left: 48%;
+            animation: glowDrift4 19s ease-in-out infinite;
+        }
+        .glow-orb-5 {
+            width: 20rem;
+            height: 20rem;
+            background: radial-gradient(circle, rgba(46, 232, 154, 0.3) 0%, transparent 65%);
+            bottom: 22%;
+            right: 18%;
+            animation: glowDrift5 24s ease-in-out infinite;
+        }
+        @keyframes glowDrift1 {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.45; }
+            33% { transform: translate(18vw, 14vh) scale(1.08); opacity: 0.62; }
+            66% { transform: translate(8vw, 28vh) scale(0.95); opacity: 0.38; }
+        }
+        @keyframes glowDrift2 {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+            40% { transform: translate(-16vw, 10vh) scale(1.12); opacity: 0.58; }
+            70% { transform: translate(-8vw, -12vh) scale(0.92); opacity: 0.35; }
+        }
+        @keyframes glowDrift3 {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.42; }
+            30% { transform: translate(14vw, -10vh) scale(1.06); opacity: 0.55; }
+            65% { transform: translate(-10vw, -6vh) scale(1.1); opacity: 0.48; }
+        }
+        @keyframes glowDrift4 {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.32; }
+            50% { transform: translate(-12vw, 18vh) scale(1.15); opacity: 0.5; }
+        }
+        @keyframes glowDrift5 {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.36; }
+            45% { transform: translate(10vw, -14vh) scale(0.9); opacity: 0.52; }
+            80% { transform: translate(-6vw, 8vh) scale(1.08); opacity: 0.4; }
         }
         
         body {
@@ -271,28 +354,25 @@
             align-items: center;
         }
         .hero-mascot-wrap {
-            width: 9.5rem;
-            height: 9.5rem;
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 1.75rem;
-            background: rgba(34, 139, 34, 0.1);
-            border: 1px solid rgba(46, 232, 154, 0.28);
-            box-shadow:
-                0 0 40px rgba(46, 232, 154, 0.12),
-                0 8px 32px rgba(0, 0, 0, 0.35);
+            background: transparent;
+            border: none;
+            box-shadow: none;
             animation: heroMascotFloat 5s ease-in-out infinite;
+            filter: drop-shadow(0 8px 28px rgba(0, 0, 0, 0.35)) drop-shadow(0 0 32px rgba(46, 232, 154, 0.18));
         }
         @keyframes heroMascotFloat {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
         .hero-mascot {
-            width: 7.5rem;
-            height: 7.5rem;
+            width: 10.5rem;
+            height: 10.5rem;
             object-fit: contain;
+            display: block;
         }
         .hero-content {
             margin-bottom: 2rem;
@@ -1301,13 +1381,9 @@
         
         /* Responsive */
         @media (max-width: 768px) {
-            .hero-mascot-wrap {
-                width: 8.5rem;
-                height: 8.5rem;
-            }
             .hero-mascot {
-                width: 6.5rem;
-                height: 6.5rem;
+                width: 8.75rem;
+                height: 8.75rem;
             }
             .hero .tagline {
                 font-size: 0.82rem;
@@ -1356,6 +1432,15 @@
     </style>
 </head>
 <body>
+    <!-- Ambient background glow -->
+    <div id="ambient-glow" aria-hidden="true">
+        <span class="glow-orb glow-orb-1"></span>
+        <span class="glow-orb glow-orb-2"></span>
+        <span class="glow-orb glow-orb-3"></span>
+        <span class="glow-orb glow-orb-4"></span>
+        <span class="glow-orb glow-orb-5"></span>
+    </div>
+
     <!-- Snow Effect -->
     <div id="snow-container"></div>
     
