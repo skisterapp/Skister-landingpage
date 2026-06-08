@@ -60,6 +60,12 @@
             html {
                 scroll-snap-type: y proximity;
             }
+            .hero-mascot-wrap {
+                animation: none;
+            }
+            .snowflake {
+                display: none;
+            }
         }
         
         body {
@@ -70,26 +76,43 @@
             line-height: 1.6;
         }
         
-        /* Snow Animation */
+        /* Snow Animation — subtle background drift */
+        #snow-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
         .snowflake {
             position: fixed;
-            top: -10px;
+            top: -12px;
             z-index: 1;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.5em;
+            pointer-events: none;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 0.3em;
             font-family: Arial, sans-serif;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            text-shadow: none;
             animation: fall linear infinite;
+            will-change: transform, opacity;
         }
         
         @keyframes fall {
             0% {
-                top: -10%;
-                opacity: 1;
+                top: -8%;
+                opacity: 0;
+                transform: translateX(0);
+            }
+            8% {
+                opacity: var(--snow-opacity, 0.2);
+            }
+            92% {
+                opacity: var(--snow-opacity, 0.15);
             }
             100% {
-                top: 100%;
-                opacity: 0.3;
+                top: 105%;
+                opacity: 0;
+                transform: translateX(var(--snow-drift, 0px));
             }
         }
         
@@ -221,100 +244,167 @@
             padding-top: calc(2rem + var(--nav-offset));
             position: relative;
             z-index: 2;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse 75% 50% at 50% -10%, rgba(46, 232, 154, 0.16) 0%, transparent 55%),
+                radial-gradient(ellipse 45% 35% at 12% 85%, rgba(34, 139, 34, 0.09) 0%, transparent 50%),
+                radial-gradient(ellipse 45% 35% at 88% 85%, rgba(34, 139, 34, 0.09) 0%, transparent 50%),
+                var(--bg-dark);
         }
-        
-        .mascot {
-            width: 180px;
-            height: 180px;
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 22% 28%, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px),
+                radial-gradient(circle at 78% 72%, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px);
+            background-size: 48px 48px, 64px 64px;
+            pointer-events: none;
+            opacity: 0.55;
+        }
+        .hero-inner {
+            position: relative;
+            width: 100%;
+            max-width: 640px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .hero-mascot-wrap {
+            width: 9.5rem;
+            height: 9.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.75rem;
+            background: rgba(34, 139, 34, 0.1);
+            border: 1px solid rgba(46, 232, 154, 0.28);
+            box-shadow:
+                0 0 40px rgba(46, 232, 154, 0.12),
+                0 8px 32px rgba(0, 0, 0, 0.35);
+            animation: heroMascotFloat 5s ease-in-out infinite;
+        }
+        @keyframes heroMascotFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .hero-mascot {
+            width: 7.5rem;
+            height: 7.5rem;
+            object-fit: contain;
+        }
+        .hero-content {
             margin-bottom: 2rem;
-            animation: float 3s ease-in-out infinite;
         }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-        
         .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--text-white), var(--primary-green-light));
+            font-size: clamp(2.75rem, 6vw, 3.75rem);
+            margin-bottom: 0.65rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(160deg, #ffffff 0%, #c8f5d8 45%, var(--primary-green-light) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
         .hero .tagline {
-            font-size: 1.5rem;
-            color: var(--primary-green);
+            display: inline-block;
+            font-size: 1rem;
+            color: rgba(46, 232, 154, 0.95);
             margin-bottom: 1rem;
             font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            padding: 0.35rem 0.9rem;
+            border-radius: 999px;
+            border: 1px solid rgba(46, 232, 154, 0.3);
+            background: rgba(34, 139, 34, 0.12);
         }
-        
         .hero .subtitle {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: var(--text-gray);
-            max-width: 600px;
-            margin: 0 auto 3rem;
-            line-height: 1.8;
+            max-width: 34rem;
+            margin: 0 auto;
+            line-height: 1.75;
+        }
+        .hero-waitlist-card {
+            width: 100%;
+            max-width: 32rem;
+            padding: 1.5rem 1.35rem 1.25rem;
+            border-radius: 1.1rem;
+            background: linear-gradient(155deg, rgba(26, 26, 26, 0.92) 0%, rgba(13, 13, 13, 0.96) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow:
+                0 12px 40px rgba(0, 0, 0, 0.4),
+                0 0 32px rgba(34, 139, 34, 0.06);
+        }
+        .hero-waitlist-card #message-container {
+            margin-bottom: 0.75rem;
+        }
+        .hero-waitlist-card #message-container:empty {
+            margin-bottom: 0;
         }
         
         /* Email Form */
         .email-form {
             display: flex;
-            gap: 1rem;
-            max-width: 500px;
+            gap: 0.75rem;
             width: 100%;
-            margin-bottom: 1rem;
+            margin-bottom: 0.85rem;
         }
         
         .email-input {
             flex: 1;
-            padding: 1rem 1.5rem;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.05);
+            min-width: 0;
+            padding: 0.9rem 1.15rem;
+            border-radius: 0.7rem;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.04);
             color: var(--text-white);
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
-            transition: all 0.3s;
+            transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
         }
         
         .email-input:focus {
-            border-color: var(--primary-green);
-            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(46, 232, 154, 0.55);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 0 3px rgba(34, 139, 34, 0.15);
         }
         
         .email-input::placeholder {
-            color: var(--text-gray);
+            color: rgba(176, 176, 176, 0.85);
         }
         
         .submit-btn {
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
+            padding: 0.9rem 1.35rem;
+            border-radius: 0.7rem;
             border: none;
-            background: var(--primary-green);
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
             color: var(--text-white);
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
             white-space: nowrap;
+            box-shadow: 0 4px 20px rgba(34, 139, 34, 0.35);
         }
         
         .submit-btn:hover {
-            background: var(--primary-green-light);
+            filter: brightness(1.08);
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(34, 139, 34, 0.3);
+            box-shadow: 0 8px 28px rgba(34, 139, 34, 0.45);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
         }
         
         .waitlist-info {
-            color: var(--text-gray);
-            font-size: 0.9rem;
+            color: rgba(176, 176, 176, 0.8);
+            font-size: 0.82rem;
+            line-height: 1.5;
+            margin: 0;
         }
         
         /* Success and Error Messages */
@@ -1211,16 +1301,26 @@
         
         /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+            .hero-mascot-wrap {
+                width: 8.5rem;
+                height: 8.5rem;
             }
-            
+            .hero-mascot {
+                width: 6.5rem;
+                height: 6.5rem;
+            }
             .hero .tagline {
-                font-size: 1.2rem;
+                font-size: 0.82rem;
+                letter-spacing: 0.1em;
             }
-            
+            .hero-waitlist-card {
+                padding: 1.25rem 1rem 1rem;
+            }
             .email-form {
                 flex-direction: column;
+            }
+            .submit-btn {
+                width: 100%;
             }
             
             .nav-links {
@@ -1294,20 +1394,25 @@
     </nav>
     
     <!-- Hero Section -->
-    <section class="hero snap-section" id="home">
-        <img id="hero-mascot" src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png" alt="Skister app logo" class="mascot">
-        <h1 data-i18n="hero.title">Skister</h1>
-        <p class="tagline" data-i18n="hero.tagline">Teile die Pisten</p>
-        <p class="subtitle" data-i18n="hero.subtitle">Deine familienfreundliche Plattform zum Teilen von Ski-Ausrüstung innerhalb deines vertrauenswürdigen Netzwerks. Kostenlos, lokal und sicher.</p>
-        
-        <!-- Message box for success/error -->
-        <div id="message-container"></div>
-        
-        <form class="email-form" id="waitlist-form" onsubmit="handleEmailSubmit(event)">
-            <input type="email" class="email-input" placeholder="Deine E-Mail-Adresse eingeben" data-i18n-placeholder="hero.emailPlaceholder" required id="email-input">
-            <button type="submit" class="submit-btn" id="submit-btn" data-i18n="hero.submitBtn">Benachrichtigung erhalten</button>
-        </form>
-        <p class="waitlist-info" data-i18n="hero.waitlistInfo">Trete der Warteliste bei und sei der Erste, der erfährt, wenn wir starten!</p>
+    <section class="hero snap-section" id="home" aria-labelledby="hero-heading">
+        <div class="hero-inner">
+            <div class="hero-mascot-wrap" aria-hidden="true">
+                <img id="hero-mascot" src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png" alt="" class="hero-mascot">
+            </div>
+            <div class="hero-content">
+                <h1 id="hero-heading" data-i18n="hero.title">Skister</h1>
+                <p class="tagline" data-i18n="hero.tagline">Teile die Pisten</p>
+                <p class="subtitle" data-i18n="hero.subtitle">Deine familienfreundliche Plattform zum Teilen von Ski-Ausrüstung innerhalb deines vertrauenswürdigen Netzwerks. Kostenlos, lokal und sicher.</p>
+            </div>
+            <div class="hero-waitlist-card">
+                <div id="message-container"></div>
+                <form class="email-form" id="waitlist-form" onsubmit="handleEmailSubmit(event)">
+                    <input type="email" class="email-input" placeholder="Deine E-Mail-Adresse eingeben" data-i18n-placeholder="hero.emailPlaceholder" required id="email-input" aria-label="Email address">
+                    <button type="submit" class="submit-btn" id="submit-btn" data-i18n="hero.submitBtn">Benachrichtigung erhalten</button>
+                </form>
+                <p class="waitlist-info" data-i18n="hero.waitlistInfo">Trete der Warteliste bei und sei der Erste, der erfährt, wenn wir starten!</p>
+            </div>
+        </div>
     </section>
 
     <!-- Onboarding showcase -->
@@ -2582,24 +2687,37 @@
             }
         });
         
-        // Snow Animation
+        // Snow Animation — slow, subtle background drift
+        const MAX_SNOWFLAKES = 24;
+        const SNOW_SPAWN_MS = 1100;
+
         function createSnowflake() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const container = document.getElementById('snow-container');
+            if (!container || container.childElementCount >= MAX_SNOWFLAKES) return;
+
             const snowflake = document.createElement('div');
             snowflake.classList.add('snowflake');
-            snowflake.textContent = '❄';
+            snowflake.textContent = '•';
+            snowflake.setAttribute('aria-hidden', 'true');
             snowflake.style.left = Math.random() * 100 + '%';
-            snowflake.style.animationDuration = Math.random() * 3 + 5 + 's';
-            snowflake.style.fontSize = Math.random() * 0.5 + 0.2 + 'em';
-            snowflake.style.opacity = Math.random() * 0.6 + 0.4;
-            
-            document.getElementById('snow-container').appendChild(snowflake);
-            
-            setTimeout(() => {
+            const duration = Math.random() * 10 + 16;
+            snowflake.style.animationDuration = duration + 's';
+            snowflake.style.fontSize = (Math.random() * 0.22 + 0.12) + 'em';
+            const opacity = Math.random() * 0.14 + 0.06;
+            snowflake.style.setProperty('--snow-opacity', String(opacity));
+            snowflake.style.setProperty('--snow-drift', (Math.random() * 40 - 20) + 'px');
+
+            container.appendChild(snowflake);
+
+            setTimeout(function () {
                 snowflake.remove();
-            }, 10000);
+            }, duration * 1000 + 500);
         }
-        
-        setInterval(createSnowflake, 200);
+
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            setInterval(createSnowflake, SNOW_SPAWN_MS);
+        }
         
         // FAQ Toggle
         function toggleFAQ(element) {
