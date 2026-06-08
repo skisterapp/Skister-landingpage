@@ -676,20 +676,36 @@
             font-size: 0.85em;
         }
         
-        /* Download / app stores — centered, light touch */
+        /* Download / app stores */
         .download-section {
             position: relative;
             z-index: 2;
             padding: 5.5rem 2rem 6rem;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
-            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(34, 139, 34, 0.12) 0%, transparent 55%),
+            background:
+                radial-gradient(ellipse 70% 45% at 50% 0%, rgba(46, 232, 154, 0.14) 0%, transparent 58%),
+                radial-gradient(ellipse 50% 30% at 15% 80%, rgba(34, 139, 34, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 30% at 85% 80%, rgba(34, 139, 34, 0.08) 0%, transparent 50%),
                 var(--bg-dark);
             display: flex;
             flex-direction: column;
             justify-content: center;
+            overflow: hidden;
+        }
+        .download-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px),
+                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px);
+            background-size: 48px 48px, 64px 64px;
+            pointer-events: none;
+            opacity: 0.6;
         }
         .download-inner {
-            max-width: 920px;
+            position: relative;
+            max-width: 960px;
             margin: 0 auto;
             text-align: center;
         }
@@ -700,81 +716,228 @@
             color: var(--text-gray);
             font-size: 1.05rem;
             line-height: 1.75;
-            max-width: 520px;
-            margin: 0 auto 2.75rem;
+            max-width: 540px;
+            margin: 0 auto 3rem;
         }
-        .download-cards {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1.25rem;
-            align-items: stretch;
+        .store-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 2rem 2.5rem;
         }
-        .download-card {
-            font: inherit;
-            cursor: pointer;
+        .store-badge-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem 1.25rem;
-            border-radius: 1.25rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.04);
-            color: var(--text-white);
-            gap: 0.65rem;
-            transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
-            box-shadow: none;
+            gap: 0.85rem;
+            min-width: 0;
         }
-        .download-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(34, 139, 34, 0.45);
-            background: rgba(34, 139, 34, 0.08);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+        .store-badge-flip {
+            font: inherit;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            perspective: 900px;
+            width: min(100%, 15.5rem);
+            height: 3.35rem;
+            position: relative;
         }
-        .download-card:focus-visible {
+        .store-badge-flip:focus-visible {
             outline: 2px solid var(--primary-green);
-            outline-offset: 3px;
+            outline-offset: 6px;
+            border-radius: 0.75rem;
         }
-        .download-card:active {
-            transform: translateY(-1px);
+        .store-badge-flip-inner {
+            display: block;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.65s cubic-bezier(0.34, 1.2, 0.64, 1);
         }
-        .download-card-icon-wrap {
-            width: 5.25rem;
-            height: 5.25rem;
-            border-radius: 50%;
+        .store-badge-flip.is-flipped .store-badge-flip-inner {
+            transform: rotateY(180deg);
+        }
+        .store-badge-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 0.7rem;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        .store-badge-front {
+            background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
+            border: 1.5px solid rgba(255, 255, 255, 0.88);
+            box-shadow:
+                0 4px 20px rgba(0, 0, 0, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            gap: 0.65rem;
+            padding: 0 1rem 0 0.85rem;
+            transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+        }
+        .store-badge-flip:hover .store-badge-front {
+            border-color: rgba(46, 232, 154, 0.55);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.5),
+                0 0 24px rgba(34, 139, 34, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        .store-badge-flip:active .store-badge-front {
+            transform: translateY(0);
+        }
+        .store-badge-icon {
+            flex-shrink: 0;
+            width: 1.75rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto;
-            background: rgba(34, 139, 34, 0.12);
-            border: 1px solid rgba(34, 139, 34, 0.25);
-            font-size: 2.35rem;
-            color: var(--primary-green-light);
-            transition: background 0.22s ease, transform 0.22s ease;
+            font-size: 1.65rem;
+            color: #fff;
+            line-height: 1;
         }
-        .download-card:hover .download-card-icon-wrap {
-            background: rgba(34, 139, 34, 0.2);
-            transform: scale(1.05);
+        .store-badge-icon--android {
+            font-size: 1.45rem;
         }
-        .download-card h3 {
-            font-size: 1.35rem;
+        .store-badge-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            line-height: 1.15;
+            min-width: 0;
+        }
+        .store-badge-line1 {
+            font-size: 0.62rem;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            color: rgba(255, 255, 255, 0.92);
+            text-transform: none;
+            white-space: nowrap;
+        }
+        .store-badge-line2 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: #fff;
+            white-space: nowrap;
+        }
+        .store-badge-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, rgba(34, 139, 34, 0.35) 0%, rgba(20, 80, 20, 0.5) 100%);
+            border: 1.5px solid rgba(46, 232, 154, 0.65);
+            box-shadow:
+                0 0 30px rgba(46, 232, 154, 0.25),
+                0 8px 28px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            justify-content: center;
+            gap: 0.45rem;
+            animation: storeBadgeGlow 2.2s ease-in-out infinite;
+        }
+        @keyframes storeBadgeGlow {
+            0%, 100% { box-shadow: 0 0 24px rgba(46, 232, 154, 0.2), 0 8px 28px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12); }
+            50% { box-shadow: 0 0 40px rgba(46, 232, 154, 0.38), 0 8px 28px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15); }
+        }
+        .store-badge-back-text {
+            font-size: 1rem;
             font-weight: 700;
-            margin: 0.35rem 0 0;
-            letter-spacing: -0.02em;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #fff 0%, #a8f5c8 45%, #fff 90%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: storeBadgeShimmer 2.5s linear infinite;
         }
-        .download-card-store {
-            font-size: 0.92rem;
-            color: var(--text-gray);
+        @keyframes storeBadgeShimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        .store-badge-back-icon {
+            font-size: 0.85rem;
+            color: rgba(46, 232, 154, 0.9);
+            animation: storeBadgePulse 1.4s ease-in-out infinite;
+        }
+        @keyframes storeBadgePulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.15); }
+        }
+        .store-badge-flip.is-flipped::after {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 1rem;
+            background: radial-gradient(circle, rgba(46, 232, 154, 0.35) 0%, transparent 70%);
+            animation: storeBadgeBurst 0.7s ease-out forwards;
+            pointer-events: none;
+            z-index: -1;
+        }
+        @keyframes storeBadgeBurst {
+            0% { opacity: 0.9; transform: scale(0.85); }
+            100% { opacity: 0; transform: scale(1.35); }
+        }
+        .store-badge-caption {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(176, 176, 176, 0.85);
             margin: 0;
-            line-height: 1.5;
-            max-width: 11rem;
+            transition: color 0.4s ease, transform 0.4s ease;
         }
-        @media (max-width: 900px) {
-            .download-cards {
-                grid-template-columns: 1fr;
-                max-width: 22rem;
-                margin: 0 auto;
+        .store-badge-item.is-active .store-badge-caption {
+            color: var(--primary-green-light);
+            transform: scale(1.04);
+        }
+        .store-badge-hint {
+            margin-top: 2rem;
+            font-size: 0.88rem;
+            color: rgba(176, 176, 176, 0.7);
+            letter-spacing: 0.02em;
+        }
+        @media (max-width: 700px) {
+            .store-badges {
+                flex-direction: column;
+                align-items: center;
+                gap: 1.75rem;
+            }
+            .store-badge-flip {
+                width: min(100%, 16.5rem);
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .store-badge-flip-inner {
+                transition: opacity 0.3s ease, transform 0.3s ease;
+            }
+            .store-badge-flip.is-flipped .store-badge-flip-inner {
+                transform: none;
+            }
+            .store-badge-front {
+                transition: opacity 0.3s ease;
+            }
+            .store-badge-flip.is-flipped .store-badge-front {
+                opacity: 0;
+                pointer-events: none;
+            }
+            .store-badge-back {
+                transform: none;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+            .store-badge-flip.is-flipped .store-badge-back {
+                opacity: 1;
+            }
+            .store-badge-back,
+            .store-badge-back-text,
+            .store-badge-back-icon,
+            .store-badge-flip.is-flipped::after {
+                animation: none;
             }
         }
         
@@ -1228,23 +1391,63 @@
         <div class="download-inner">
             <h2 class="section-title" id="download-heading" data-i18n="download.title">Get Skister</h2>
             <p class="download-subtitle" data-i18n="download.subtitle">iOS, Android, and the web — launching soon. Pick your platform; store links will appear here.</p>
-            <div class="download-cards" role="group" aria-label="App stores">
-                <button type="button" class="download-card" onclick="showComingSoon()" aria-label="iOS — App Store (coming soon)">
-                    <span class="download-card-icon-wrap" aria-hidden="true"><i class="fa-brands fa-apple"></i></span>
-                    <h3>iOS</h3>
-                    <p class="download-card-store" data-i18n="platform.ios">App Store</p>
-                </button>
-                <button type="button" class="download-card" onclick="showComingSoon()" aria-label="Android — Google Play (coming soon)">
-                    <span class="download-card-icon-wrap" aria-hidden="true"><i class="fa-brands fa-android"></i></span>
-                    <h3>Android</h3>
-                    <p class="download-card-store" data-i18n="platform.android">Google Play</p>
-                </button>
-                <button type="button" class="download-card" onclick="showComingSoon()" aria-label="Web app — browser (coming soon)">
-                    <span class="download-card-icon-wrap" aria-hidden="true"><i class="fa-solid fa-globe"></i></span>
-                    <h3>Web</h3>
-                    <p class="download-card-store" data-i18n="platform.web">Browser</p>
-                </button>
+            <div class="store-badges" role="group" aria-label="App stores">
+                <div class="store-badge-item">
+                    <button type="button" class="store-badge-flip" onclick="toggleStoreBadge(this)" aria-label="App Store — coming soon" data-store="ios">
+                        <span class="store-badge-flip-inner">
+                            <span class="store-badge-face store-badge-front">
+                                <span class="store-badge-icon" aria-hidden="true"><i class="fa-brands fa-apple"></i></span>
+                                <span class="store-badge-text">
+                                    <span class="store-badge-line1" data-i18n="download.apple.line1">Download on the</span>
+                                    <span class="store-badge-line2" data-i18n="download.apple.line2">App Store</span>
+                                </span>
+                            </span>
+                            <span class="store-badge-face store-badge-back" aria-hidden="true">
+                                <i class="fa-solid fa-sparkles store-badge-back-icon" aria-hidden="true"></i>
+                                <span class="store-badge-back-text" data-i18n="download.badge">Coming soon</span>
+                            </span>
+                        </span>
+                    </button>
+                    <p class="store-badge-caption" data-i18n="download.badge">Coming soon</p>
+                </div>
+                <div class="store-badge-item">
+                    <button type="button" class="store-badge-flip" onclick="toggleStoreBadge(this)" aria-label="Google Play — coming soon" data-store="android">
+                        <span class="store-badge-flip-inner">
+                            <span class="store-badge-face store-badge-front">
+                                <span class="store-badge-icon store-badge-icon--android" aria-hidden="true"><i class="fa-brands fa-google-play"></i></span>
+                                <span class="store-badge-text">
+                                    <span class="store-badge-line1" data-i18n="download.android.line1">Get it on</span>
+                                    <span class="store-badge-line2" data-i18n="download.android.line2">Google Play</span>
+                                </span>
+                            </span>
+                            <span class="store-badge-face store-badge-back" aria-hidden="true">
+                                <i class="fa-solid fa-sparkles store-badge-back-icon" aria-hidden="true"></i>
+                                <span class="store-badge-back-text" data-i18n="download.badge">Coming soon</span>
+                            </span>
+                        </span>
+                    </button>
+                    <p class="store-badge-caption" data-i18n="download.badge">Coming soon</p>
+                </div>
+                <div class="store-badge-item">
+                    <button type="button" class="store-badge-flip" onclick="toggleStoreBadge(this)" aria-label="Web app — coming soon" data-store="web">
+                        <span class="store-badge-flip-inner">
+                            <span class="store-badge-face store-badge-front">
+                                <span class="store-badge-icon" aria-hidden="true"><i class="fa-solid fa-globe"></i></span>
+                                <span class="store-badge-text">
+                                    <span class="store-badge-line1" data-i18n="download.web.line1">Open in your</span>
+                                    <span class="store-badge-line2" data-i18n="download.web.line2">Browser</span>
+                                </span>
+                            </span>
+                            <span class="store-badge-face store-badge-back" aria-hidden="true">
+                                <i class="fa-solid fa-sparkles store-badge-back-icon" aria-hidden="true"></i>
+                                <span class="store-badge-back-text" data-i18n="download.badge">Coming soon</span>
+                            </span>
+                        </span>
+                    </button>
+                    <p class="store-badge-caption" data-i18n="download.badge">Coming soon</p>
+                </div>
             </div>
+            <p class="store-badge-hint" data-i18n="download.hint">Tap a badge to preview</p>
         </div>
     </section>
     
@@ -1481,8 +1684,14 @@
                 'home.blog.viewAll': 'Alle Beiträge lesen',
                 'download.title': 'Skister holen',
                 'download.subtitle': 'iOS, Android und Web — bald startklar. Wähle deine Plattform; die Store-Links folgen in Kürze.',
+                'download.apple.line1': 'Laden im',
+                'download.apple.line2': 'App Store',
+                'download.android.line1': 'Jetzt bei',
+                'download.android.line2': 'Google Play',
+                'download.web.line1': 'Öffnen im',
+                'download.web.line2': 'Browser',
                 'download.badge': 'Demnächst',
-                'download.hint': 'Tippen für Infos',
+                'download.hint': 'Tippe auf ein Badge für die Vorschau',
                 'download.comingSoonAlert': 'Demnächst! Wir melden uns, sobald die App verfügbar ist.',
                 'faq.title': 'Häufig gestellte Fragen',
                 'faq.q1': 'Wie funktioniert Skister?',
@@ -1607,8 +1816,14 @@
                 'home.blog.viewAll': 'Browse all posts',
                 'download.title': 'Get Skister',
                 'download.subtitle': 'iOS, Android, and the web — launching soon. Choose your platform; store links will appear here.',
+                'download.apple.line1': 'Download on the',
+                'download.apple.line2': 'App Store',
+                'download.android.line1': 'Get it on',
+                'download.android.line2': 'Google Play',
+                'download.web.line1': 'Open in your',
+                'download.web.line2': 'Browser',
                 'download.badge': 'Coming soon',
-                'download.hint': 'Tap for updates',
+                'download.hint': 'Tap a badge to preview',
                 'download.comingSoonAlert': 'Coming soon! We will notify you when the app is ready.',
                 'faq.title': 'Frequently Asked Questions',
                 'faq.q1': 'How does Skister work?',
@@ -1733,8 +1948,14 @@
                 'home.blog.viewAll': 'Tous les articles',
                 'download.title': 'Obtenir Skister',
                 'download.subtitle': 'iOS, Android et web — lancement imminent. Choisissez votre plateforme ; les liens des stores arrivent.',
+                'download.apple.line1': 'Télécharger dans l’',
+                'download.apple.line2': 'App Store',
+                'download.android.line1': 'Disponible sur',
+                'download.android.line2': 'Google Play',
+                'download.web.line1': 'Ouvrir dans le',
+                'download.web.line2': 'Navigateur',
                 'download.badge': 'Bientôt',
-                'download.hint': 'Appuyer pour plus d’infos',
+                'download.hint': 'Appuyez sur un badge pour l’aperçu',
                 'download.comingSoonAlert': 'Bientôt disponible ! Nous vous préviendrons quand l’app sera prête.',
                 'faq.title': 'Questions Fréquemment Posées',
                 'faq.q1': 'Comment fonctionne Skister?',
@@ -1855,8 +2076,14 @@
                 'home.blog.viewAll': 'Ver todas las entradas',
                 'download.title': 'Consigue Skister',
                 'download.subtitle': 'iOS, Android y web — muy pronto. Elige tu plataforma; los enlaces a las tiendas llegarán aquí.',
+                'download.apple.line1': 'Descargar en la',
+                'download.apple.line2': 'App Store',
+                'download.android.line1': 'Disponible en',
+                'download.android.line2': 'Google Play',
+                'download.web.line1': 'Abrir en el',
+                'download.web.line2': 'Navegador',
                 'download.badge': 'Próximamente',
-                'download.hint': 'Toca para más información',
+                'download.hint': 'Toca un badge para la vista previa',
                 'download.comingSoonAlert': '¡Próximamente! Te avisaremos cuando la app esté lista.',
                 'faq.title': 'Preguntas Frecuentes',
                 'faq.q1': '¿Cómo funciona Skister?',
@@ -1981,8 +2208,14 @@
                 'home.blog.viewAll': 'Vedi tutti gli articoli',
                 'download.title': 'Scarica Skister',
                 'download.subtitle': 'iOS, Android e web — in arrivo. Scegli la tua piattaforma; i link agli store arriveranno qui.',
+                'download.apple.line1': 'Scarica su',
+                'download.apple.line2': 'App Store',
+                'download.android.line1': 'Disponibile su',
+                'download.android.line2': 'Google Play',
+                'download.web.line1': 'Apri nel',
+                'download.web.line2': 'Browser',
                 'download.badge': 'In arrivo',
-                'download.hint': 'Tocca per aggiornamenti',
+                'download.hint': 'Tocca un badge per l’anteprima',
                 'download.comingSoonAlert': 'In arrivo! Ti avvisiamo quando l’app sarà pronta.',
                 'faq.title': 'Domande Frequenti',
                 'faq.q1': 'Come funziona Skister?',
@@ -2324,10 +2557,17 @@
             }
         }
 
-        function showComingSoon() {
-            const lang = document.documentElement.getAttribute('lang') || 'de';
-            const t = translations[lang] || translations['de'];
-            alert(t['download.comingSoonAlert'] || 'Coming soon!');
+        function toggleStoreBadge(button) {
+            if (!(button instanceof HTMLElement)) return;
+            const item = button.closest('.store-badge-item');
+            const isFlipped = button.classList.toggle('is-flipped');
+            if (item) item.classList.toggle('is-active', isFlipped);
+            document.querySelectorAll('.store-badge-flip').forEach(function (other) {
+                if (other === button) return;
+                other.classList.remove('is-flipped');
+                const otherItem = other.closest('.store-badge-item');
+                if (otherItem) otherItem.classList.remove('is-active');
+            });
         }
         
         // Admin Panel Access
