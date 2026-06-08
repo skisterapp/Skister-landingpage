@@ -422,6 +422,166 @@
             color: var(--text-gray);
             line-height: 1.6;
         }
+
+        /* Onboarding showcase */
+        .onboarding-showcase {
+            padding: 5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .onboarding-showcase .section-title {
+            margin-bottom: 0.75rem;
+        }
+        .onboarding-subtitle {
+            text-align: center;
+            color: var(--text-gray);
+            max-width: 640px;
+            margin: 0 auto 3rem;
+            font-size: 1.08rem;
+            line-height: 1.7;
+        }
+        .onboarding-carousel-wrap {
+            position: relative;
+            max-width: 920px;
+            margin: 0 auto;
+        }
+        .onboarding-slide {
+            display: none;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+            gap: 2.5rem;
+            align-items: center;
+            animation: onboardingFade 0.35s ease;
+        }
+        .onboarding-slide.active {
+            display: grid;
+        }
+        @keyframes onboardingFade {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .onboarding-mascot-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            min-height: 280px;
+        }
+        .onboarding-mascot {
+            width: 100%;
+            max-width: 280px;
+            height: auto;
+            object-fit: contain;
+        }
+        .onboarding-content h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-white);
+        }
+        .onboarding-content p {
+            color: var(--text-gray);
+            line-height: 1.7;
+            margin-bottom: 1.25rem;
+        }
+        .onboarding-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+        .onboarding-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.65rem;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .onboarding-features li i {
+            color: var(--primary-green);
+            margin-top: 0.15rem;
+            flex-shrink: 0;
+        }
+        .onboarding-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.25rem;
+            margin-top: 2.5rem;
+        }
+        .onboarding-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s;
+        }
+        .onboarding-btn:hover:not(:disabled) {
+            background: rgba(34, 139, 34, 0.25);
+            border-color: var(--primary-green);
+        }
+        .onboarding-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+        .onboarding-dots {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .onboarding-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            padding: 0;
+            transition: all 0.3s;
+        }
+        .onboarding-dot.active {
+            width: 28px;
+            border-radius: 4px;
+            background: var(--primary-green);
+        }
+        @media (max-width: 768px) {
+            .onboarding-slide.active {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .onboarding-mascot-wrap {
+                min-height: 200px;
+                padding: 1rem;
+            }
+            .onboarding-mascot {
+                max-width: 200px;
+            }
+            .onboarding-content h3 {
+                font-size: 1.4rem;
+                text-align: center;
+            }
+            .onboarding-content p {
+                text-align: center;
+            }
+        }
         
         /* Home: latest blog strip (2×2) */
         .home-blog-strip {
@@ -876,6 +1036,7 @@
             >
         </a>
         <div class="nav-links">
+            <a onclick="scrollToSection('how-it-works')" data-i18n="nav.howItWorks">So funktioniert's</a>
             <a onclick="scrollToSection('features')" data-i18n="nav.features">Features</a>
             <a onclick="scrollToSection('download')" data-i18n="nav.download">Download</a>
             <a onclick="scrollToSection('faq')" data-i18n="nav.faq">FAQ</a>
@@ -912,6 +1073,107 @@
             <button type="submit" class="submit-btn" id="submit-btn" data-i18n="hero.submitBtn">Benachrichtigung erhalten</button>
         </form>
         <p class="waitlist-info" data-i18n="hero.waitlistInfo">Trete der Warteliste bei und sei der Erste, der erfährt, wenn wir starten!</p>
+    </section>
+
+    <!-- Onboarding showcase -->
+    <section class="onboarding-showcase snap-section" id="how-it-works" aria-labelledby="onboarding-heading">
+        <h2 class="section-title" id="onboarding-heading" data-i18n="onboarding.title">So funktioniert Skister</h2>
+        <p class="onboarding-subtitle" data-i18n="onboarding.subtitle">Teile Ski-Ausrüstung mit deinem vertrauenswürdigen Netzwerk — kostenlos, lokal und sicher.</p>
+        <div class="onboarding-carousel-wrap">
+            <div class="onboarding-slide active" data-onboarding-step="0">
+                <div class="onboarding-mascot-wrap">
+                    <img class="onboarding-mascot" src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/Share%20Your%20Gear.png" alt="" data-i18n-alt="onboarding.step1.title" loading="lazy" decoding="async">
+                </div>
+                <div class="onboarding-content">
+                    <h3 data-i18n="onboarding.step1.title">Teile deine Ausrüstung</h3>
+                    <p data-i18n="onboarding.step1.description">Liste deine Ski-Ausrüstung auf und mache sie für dein vertrauenswürdiges Netzwerk verfügbar. Von Kinderskiern bis zu Dachboxen, teile was du hast.</p>
+                    <ul class="onboarding-features">
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step1.feature1">Lade Fotos deiner Artikel hoch</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step1.feature2">Lege Verfügbarkeitsdaten fest</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step1.feature3">Verfolge, wer was ausgeliehen hat</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="onboarding-slide" data-onboarding-step="1">
+                <div class="onboarding-mascot-wrap">
+                    <img class="onboarding-mascot" src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/Borrow%20from%20Friends.png" alt="" data-i18n-alt="onboarding.step2.title" loading="lazy" decoding="async">
+                </div>
+                <div class="onboarding-content">
+                    <h3 data-i18n="onboarding.step2.title">Von Freunden ausleihen</h3>
+                    <p data-i18n="onboarding.step2.description">Durchsuche Ausrüstung von Familien, die du kennst. Alle Austausche sind kostenlos innerhalb deines privaten Netzwerks.</p>
+                    <ul class="onboarding-features">
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step2.feature1">Keine Zahlungen oder Gebühren</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step2.feature2">Nur lokale Abholung</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step2.feature3">Familienfreundliche Gemeinschaft</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="onboarding-slide" data-onboarding-step="2">
+                <div class="onboarding-mascot-wrap">
+                    <img class="onboarding-mascot" src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/Coordinate%20Easily.png" alt="" data-i18n-alt="onboarding.step3.title" loading="lazy" decoding="async">
+                </div>
+                <div class="onboarding-content">
+                    <h3 data-i18n="onboarding.step3.title">Einfach koordinieren</h3>
+                    <p data-i18n="onboarding.step3.description">Anfrage Artikel, koordiniere Abholzeiten und erhalte Erinnerungen. Halte alle organisiert.</p>
+                    <ul class="onboarding-features">
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step3.feature1">Einfacher Anfrageablauf</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step3.feature2">Abhol-Erinnerungen</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step3.feature3">Rückgabe-Verfolgung</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="onboarding-slide" data-onboarding-step="3">
+                <div class="onboarding-mascot-wrap">
+                    <img class="onboarding-mascot" src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/Secure%20&%20Private.png" alt="" data-i18n-alt="onboarding.step4.title" loading="lazy" decoding="async">
+                </div>
+                <div class="onboarding-content">
+                    <h3 data-i18n="onboarding.step4.title">Sicher &amp; Privat</h3>
+                    <p data-i18n="onboarding.step4.description">Nur auf Einladung. Teile nur mit Personen, denen du vertraust - Familie, Freunde und Nachbarn.</p>
+                    <ul class="onboarding-features">
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step4.feature1">Geschlossenes Netzwerk</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step4.feature2">Keine Fremden</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step4.feature3">Deine Daten bleiben privat</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="onboarding-slide" data-onboarding-step="4">
+                <div class="onboarding-mascot-wrap">
+                    <img class="onboarding-mascot" src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/Free%20to%20Share.png" alt="" data-i18n-alt="onboarding.step5.title" loading="lazy" decoding="async">
+                </div>
+                <div class="onboarding-content">
+                    <h3 data-i18n="onboarding.step5.title">Kostenlos Teilen</h3>
+                    <p data-i18n="onboarding.step5.description">Skister ist zu 100% kostenlos. Keine Gebühren, keine Zahlungen - nur ein gemeinschaftlicher Geist.</p>
+                    <ul class="onboarding-features">
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step5.feature1">Niemals Geld bezahlen</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step5.feature2">Keine versteckten Kosten</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step5.feature3">Gemeinschaftsbasiert</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="onboarding-slide" data-onboarding-step="5">
+                <div class="onboarding-mascot-wrap">
+                    <img class="onboarding-mascot" src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/Invite%20Friends.png" alt="" data-i18n-alt="onboarding.step6.title" loading="lazy" decoding="async">
+                </div>
+                <div class="onboarding-content">
+                    <h3 data-i18n="onboarding.step6.title">Lade Freunde ein</h3>
+                    <p data-i18n="onboarding.step6.description">Beginne mit dem Aufbau deines vertrauenswürdigen Netzwerks. Je mehr Personen beitreten, desto mehr Ausrüstung zum Teilen!</p>
+                    <ul class="onboarding-features">
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step6.feature1">Einfache Einladungen</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step6.feature2">Wachse deine Gemeinschaft</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step6.feature3">Mehr Auswahl, mehr Spaß</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="onboarding-controls" role="group" aria-label="Onboarding slides">
+                <button type="button" class="onboarding-btn" id="onboarding-prev" aria-label="Previous slide" onclick="onboardingPrev()">
+                    <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+                </button>
+                <div class="onboarding-dots" id="onboarding-dots" aria-hidden="true"></div>
+                <button type="button" class="onboarding-btn" id="onboarding-next" aria-label="Next slide" onclick="onboardingNext()">
+                    <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
     </section>
     
     <!-- Features Section -->
@@ -1148,6 +1410,7 @@
         // Translations
         const translations = {
             de: {
+                'nav.howItWorks': 'So funktioniert\'s',
                 'nav.features': 'Funktionen',
                 'nav.faq': 'FAQ',
                 'nav.blog': 'Blog',
@@ -1164,6 +1427,38 @@
                 'messages.duplicate': 'Diese E-Mail ist bereits auf unserer Warteliste!',
                 'messages.error': 'Fehler beim Hinzufügen der E-Mail. Bitte versuche es erneut.',
                 'messages.serverError': 'Verbindung zum Server fehlgeschlagen. Bitte versuche es später erneut.',
+                'onboarding.title': 'So funktioniert Skister',
+                'onboarding.subtitle': 'Teile Ski-Ausrüstung mit deinem vertrauenswürdigen Netzwerk — kostenlos, lokal und sicher.',
+                'onboarding.step1.title': 'Teile deine Ausrüstung',
+                'onboarding.step1.description': 'Liste deine Ski-Ausrüstung auf und mache sie für dein vertrauenswürdiges Netzwerk verfügbar. Von Kinderskiern bis zu Dachboxen, teile was du hast.',
+                'onboarding.step1.feature1': 'Lade Fotos deiner Artikel hoch',
+                'onboarding.step1.feature2': 'Lege Verfügbarkeitsdaten fest',
+                'onboarding.step1.feature3': 'Verfolge, wer was ausgeliehen hat',
+                'onboarding.step2.title': 'Von Freunden ausleihen',
+                'onboarding.step2.description': 'Durchsuche Ausrüstung von Familien, die du kennst. Alle Austausche sind kostenlos innerhalb deines privaten Netzwerks.',
+                'onboarding.step2.feature1': 'Keine Zahlungen oder Gebühren',
+                'onboarding.step2.feature2': 'Nur lokale Abholung',
+                'onboarding.step2.feature3': 'Familienfreundliche Gemeinschaft',
+                'onboarding.step3.title': 'Einfach koordinieren',
+                'onboarding.step3.description': 'Anfrage Artikel, koordiniere Abholzeiten und erhalte Erinnerungen. Halte alle organisiert.',
+                'onboarding.step3.feature1': 'Einfacher Anfrageablauf',
+                'onboarding.step3.feature2': 'Abhol-Erinnerungen',
+                'onboarding.step3.feature3': 'Rückgabe-Verfolgung',
+                'onboarding.step4.title': 'Sicher & Privat',
+                'onboarding.step4.description': 'Nur auf Einladung. Teile nur mit Personen, denen du vertraust - Familie, Freunde und Nachbarn.',
+                'onboarding.step4.feature1': 'Geschlossenes Netzwerk',
+                'onboarding.step4.feature2': 'Keine Fremden',
+                'onboarding.step4.feature3': 'Deine Daten bleiben privat',
+                'onboarding.step5.title': 'Kostenlos Teilen',
+                'onboarding.step5.description': 'Skister ist zu 100% kostenlos. Keine Gebühren, keine Zahlungen - nur ein gemeinschaftlicher Geist.',
+                'onboarding.step5.feature1': 'Niemals Geld bezahlen',
+                'onboarding.step5.feature2': 'Keine versteckten Kosten',
+                'onboarding.step5.feature3': 'Gemeinschaftsbasiert',
+                'onboarding.step6.title': 'Lade Freunde ein',
+                'onboarding.step6.description': 'Beginne mit dem Aufbau deines vertrauenswürdigen Netzwerks. Je mehr Personen beitreten, desto mehr Ausrüstung zum Teilen!',
+                'onboarding.step6.feature1': 'Einfache Einladungen',
+                'onboarding.step6.feature2': 'Wachse deine Gemeinschaft',
+                'onboarding.step6.feature3': 'Mehr Auswahl, mehr Spaß',
                 'features.title': 'Funktionen',
                 'features.share.title': 'Ausrüstung teilen',
                 'features.share.description': 'Liste deine Ski-Ausrüstung auf und mache sie deinem vertrauenswürdigen Netzwerk verfügbar.',
@@ -1241,6 +1536,7 @@
                 'modal.feedback.email': 'Sende uns deine Gedanken an: <a href="mailto:feedback@skister.app" style="color: var(--primary-green);">feedback@skister.app</a>'
             },
             en: {
+                'nav.howItWorks': 'How it works',
                 'nav.features': 'Features',
                 'nav.faq': 'FAQ',
                 'nav.blog': 'Blog',
@@ -1257,6 +1553,38 @@
                 'messages.duplicate': 'This email is already on our waitlist!',
                 'messages.error': 'Failed to add email. Please try again.',
                 'messages.serverError': 'Failed to connect to server. Please try again later.',
+                'onboarding.title': 'How Skister works',
+                'onboarding.subtitle': 'Share ski gear with your trusted network — free, local, and secure.',
+                'onboarding.step1.title': 'Share Your Gear',
+                'onboarding.step1.description': 'List your ski equipment and make it available to your trusted network. From kids\' skis to roofboxes, share what you have.',
+                'onboarding.step1.feature1': 'Upload photos of your items',
+                'onboarding.step1.feature2': 'Set availability dates',
+                'onboarding.step1.feature3': 'Track who borrowed what',
+                'onboarding.step2.title': 'Borrow from Friends',
+                'onboarding.step2.description': 'Browse equipment from families you know. All exchanges are free within your private network.',
+                'onboarding.step2.feature1': 'No payments or fees',
+                'onboarding.step2.feature2': 'Local pickup only',
+                'onboarding.step2.feature3': 'Family-friendly community',
+                'onboarding.step3.title': 'Coordinate Easily',
+                'onboarding.step3.description': 'Request items, coordinate pickup times, and get reminders. Keep everyone organized.',
+                'onboarding.step3.feature1': 'Simple request flow',
+                'onboarding.step3.feature2': 'Pickup reminders',
+                'onboarding.step3.feature3': 'Return tracking',
+                'onboarding.step4.title': 'Secure & Private',
+                'onboarding.step4.description': 'Invitation only. Share only with people you trust - family, friends, and neighbors.',
+                'onboarding.step4.feature1': 'Closed network',
+                'onboarding.step4.feature2': 'No strangers',
+                'onboarding.step4.feature3': 'Your data stays private',
+                'onboarding.step5.title': 'Free to Share',
+                'onboarding.step5.description': 'Skister is 100% free. No fees, no payments - just a community spirit.',
+                'onboarding.step5.feature1': 'Never pay money',
+                'onboarding.step5.feature2': 'No hidden costs',
+                'onboarding.step5.feature3': 'Community-based',
+                'onboarding.step6.title': 'Invite Friends',
+                'onboarding.step6.description': 'Start building your trusted network. The more people join, the more gear to share!',
+                'onboarding.step6.feature1': 'Simple invitations',
+                'onboarding.step6.feature2': 'Grow your community',
+                'onboarding.step6.feature3': 'More choices, more fun',
                 'features.title': 'Features',
                 'features.share.title': 'Share Equipment',
                 'features.share.description': 'List your ski equipment and make it available to your trusted network.',
@@ -1334,6 +1662,7 @@
                 'modal.feedback.email': 'Send us your thoughts at: <a href="mailto:feedback@skister.app" style="color: var(--primary-green);">feedback@skister.app</a>'
             },
             fr: {
+                'nav.howItWorks': 'Comment ça marche',
                 'nav.features': 'Fonctionnalités',
                 'nav.faq': 'FAQ',
                 'nav.blog': 'Blog',
@@ -1350,6 +1679,38 @@
                 'messages.duplicate': 'Cet e-mail est déjà sur notre liste d\'attente!',
                 'messages.error': 'Échec de l\'ajout de l\'e-mail. Veuillez réessayer.',
                 'messages.serverError': 'Échec de la connexion au serveur. Veuillez réessayer plus tard.',
+                'onboarding.title': 'Comment fonctionne Skister',
+                'onboarding.subtitle': 'Partagez du matériel de ski avec votre réseau de confiance — gratuit, local et sécurisé.',
+                'onboarding.step1.title': 'Partagez votre équipement',
+                'onboarding.step1.description': 'Listez votre équipement de ski et rendez-le disponible à votre réseau de confiance. Des skis pour enfants aux coffres de toit, partagez ce que vous avez.',
+                'onboarding.step1.feature1': 'Téléchargez des photos de vos articles',
+                'onboarding.step1.feature2': 'Définir les dates de disponibilité',
+                'onboarding.step1.feature3': 'Suivez qui a emprunté quoi',
+                'onboarding.step2.title': 'Emprunter à des amis',
+                'onboarding.step2.description': 'Parcourez l\'équipement des familles que vous connaissez. Tous les échanges sont gratuits dans votre réseau privé.',
+                'onboarding.step2.feature1': 'Aucun paiement ni frais',
+                'onboarding.step2.feature2': 'Retrait local uniquement',
+                'onboarding.step2.feature3': 'Communauté familiale',
+                'onboarding.step3.title': 'Coordonnez facilement',
+                'onboarding.step3.description': 'Demandez des articles, coordonnez les heures de retrait et recevez des rappels. Gardez tout le monde organisé.',
+                'onboarding.step3.feature1': 'Flux de demande simple',
+                'onboarding.step3.feature2': 'Rappels de retrait',
+                'onboarding.step3.feature3': 'Suivi des retours',
+                'onboarding.step4.title': 'Sécurisé & Privé',
+                'onboarding.step4.description': 'Invitation uniquement. Partagez uniquement avec des personnes que vous faites confiance - famille, amis et voisins.',
+                'onboarding.step4.feature1': 'Réseau fermé',
+                'onboarding.step4.feature2': 'Pas d\'étrangers',
+                'onboarding.step4.feature3': 'Vos données restent privées',
+                'onboarding.step5.title': 'Partagez gratuitement',
+                'onboarding.step5.description': 'Skister est 100% gratuit. Pas de frais, pas de paiements - juste un esprit de communauté.',
+                'onboarding.step5.feature1': 'Ne payez jamais d\'argent',
+                'onboarding.step5.feature2': 'Pas de coûts cachés',
+                'onboarding.step5.feature3': 'Basé sur la communauté',
+                'onboarding.step6.title': 'Invitez des amis',
+                'onboarding.step6.description': 'Commencez à construire votre réseau de confiance. Plus de personnes rejoignent, plus d\'équipement à partager !',
+                'onboarding.step6.feature1': 'Invitations simples',
+                'onboarding.step6.feature2': 'Faites grandir votre communauté',
+                'onboarding.step6.feature3': 'Plus de choix, plus de plaisir',
                 'features.title': 'Fonctionnalités',
                 'features.share.title': 'Partager l\'Équipement',
                 'features.share.description': 'Listez votre équipement de ski et rendez-le disponible à votre réseau de confiance.',
@@ -1427,6 +1788,7 @@
                 'modal.feedback.email': 'Envoyez-nous vos réflexions à: <a href="mailto:feedback@skister.app" style="color: var(--primary-green);">feedback@skister.app</a>'
             },
             es: {
+                'nav.howItWorks': 'Cómo funciona',
                 'nav.features': 'Características',
                 'nav.faq': 'Preguntas Frecuentes',
                 'nav.blog': 'Blog',
@@ -1439,6 +1801,38 @@
                 'hero.emailPlaceholder': 'Ingresa tu dirección de correo',
                 'hero.submitBtn': 'Recibir Notificación',
                 'hero.waitlistInfo': '¡Únete a la lista de espera y sé el primero en saber cuándo lancemos!',
+                'onboarding.title': 'Cómo funciona Skister',
+                'onboarding.subtitle': 'Comparte equipo de esquí con tu red de confianza — gratis, local y seguro.',
+                'onboarding.step1.title': 'Comparte tu equipo',
+                'onboarding.step1.description': 'Lista tu equipo de esquí y ponlo a disposición de tu red de confianza. Desde esquís infantiles hasta portaequipajes, comparte lo que tienes.',
+                'onboarding.step1.feature1': 'Sube fotos de tus artículos',
+                'onboarding.step1.feature2': 'Establece fechas de disponibilidad',
+                'onboarding.step1.feature3': 'Rastrea quién pidió prestado qué',
+                'onboarding.step2.title': 'Pide prestado a amigos',
+                'onboarding.step2.description': 'Explora el equipo de familias que conoces. Todos los intercambios son gratuitos dentro de tu red privada.',
+                'onboarding.step2.feature1': 'Sin pagos ni tarifas',
+                'onboarding.step2.feature2': 'Solo recogida local',
+                'onboarding.step2.feature3': 'Comunidad familiar',
+                'onboarding.step3.title': 'Coordina fácilmente',
+                'onboarding.step3.description': 'Solicita artículos, coordina horarios de recogida y recibe recordatorios. Mantén a todos organizados.',
+                'onboarding.step3.feature1': 'Flujo de solicitud simple',
+                'onboarding.step3.feature2': 'Recordatorios de recogida',
+                'onboarding.step3.feature3': 'Seguimiento de devoluciones',
+                'onboarding.step4.title': 'Seguro y Privado',
+                'onboarding.step4.description': 'Solo por invitación. Comparte solo con personas de confianza: familia, amigos y vecinos.',
+                'onboarding.step4.feature1': 'Red cerrada',
+                'onboarding.step4.feature2': 'Sin desconocidos',
+                'onboarding.step4.feature3': 'Tus datos permanecen privados',
+                'onboarding.step5.title': 'Comparte gratis',
+                'onboarding.step5.description': 'Skister es 100% gratuito. Sin tarifas, sin pagos — solo espíritu comunitario.',
+                'onboarding.step5.feature1': 'Nunca pagues dinero',
+                'onboarding.step5.feature2': 'Sin costos ocultos',
+                'onboarding.step5.feature3': 'Basado en la comunidad',
+                'onboarding.step6.title': 'Invita amigos',
+                'onboarding.step6.description': 'Empieza a construir tu red de confianza. ¡Cuantas más personas se unan, más equipo para compartir!',
+                'onboarding.step6.feature1': 'Invitaciones simples',
+                'onboarding.step6.feature2': 'Haz crecer tu comunidad',
+                'onboarding.step6.feature3': 'Más opciones, más diversión',
                 'features.title': 'Características',
                 'features.share.title': 'Compartir Equipo',
                 'features.share.description': 'Lista tu equipo de esquí y ponlo a disposición de tu red de confianza.',
@@ -1516,6 +1910,7 @@
                 'modal.feedback.email': 'Envíanos tus pensamientos a: <a href="mailto:feedback@skister.app" style="color: var(--primary-green);">feedback@skister.app</a>'
             },
             it: {
+                'nav.howItWorks': 'Come funziona',
                 'nav.features': 'Funzionalità',
                 'nav.faq': 'Domande Frequenti',
                 'nav.blog': 'Blog',
@@ -1532,6 +1927,38 @@
                 'messages.duplicate': 'Questa email è già nella nostra lista d\'attesa!',
                 'messages.error': 'Impossibile aggiungere l\'email. Riprova.',
                 'messages.serverError': 'Impossibile connettersi al server. Riprova più tardi.',
+                'onboarding.title': 'Come funziona Skister',
+                'onboarding.subtitle': 'Condividi attrezzatura da sci con la tua rete di fiducia — gratuito, locale e sicuro.',
+                'onboarding.step1.title': 'Condividi la tua attrezzatura',
+                'onboarding.step1.description': 'Elenca la tua attrezzatura sciistica e rendila disponibile alla tua rete di fiducia. Dalla sci per bambini alle box da tetto, condividi ciò che hai.',
+                'onboarding.step1.feature1': 'Carica foto dei tuoi articoli',
+                'onboarding.step1.feature2': 'Imposta date di disponibilità',
+                'onboarding.step1.feature3': 'Traccia chi ha preso in prestito cosa',
+                'onboarding.step2.title': 'Prestito da amici',
+                'onboarding.step2.description': 'Sfoglia l\'attrezzatura delle famiglie che conosci. Tutti gli scambi sono gratuiti all\'interno della tua rete privata.',
+                'onboarding.step2.feature1': 'Nessun pagamento o tasse',
+                'onboarding.step2.feature2': 'Solo ritiro locale',
+                'onboarding.step2.feature3': 'Comunità familiare',
+                'onboarding.step3.title': 'Coordinamento facile',
+                'onboarding.step3.description': 'Richiedi articoli, coordina orari di ritiro e ricevi promemoria. Mantieni tutti organizzati.',
+                'onboarding.step3.feature1': 'Flusso di richiesta semplice',
+                'onboarding.step3.feature2': 'Promemoria di ritiro',
+                'onboarding.step3.feature3': 'Tracciamento dei restituiti',
+                'onboarding.step4.title': 'Sicuro & Privato',
+                'onboarding.step4.description': 'Solo su invito. Condividi solo con persone di cui ti fidi: famiglia, amici e vicini.',
+                'onboarding.step4.feature1': 'Rete chiusa',
+                'onboarding.step4.feature2': 'Nessun estraneo',
+                'onboarding.step4.feature3': 'I tuoi dati rimangono privati',
+                'onboarding.step5.title': 'Condividi gratuitamente',
+                'onboarding.step5.description': 'Skister è 100% gratuito. Nessun costo, nessun pagamento — solo spirito di comunità.',
+                'onboarding.step5.feature1': 'Non pagare mai denaro',
+                'onboarding.step5.feature2': 'Nessun costo nascosto',
+                'onboarding.step5.feature3': 'Basato sulla comunità',
+                'onboarding.step6.title': 'Invita amici',
+                'onboarding.step6.description': 'Inizia a costruire la tua rete di fiducia. Più persone si uniscono, più attrezzatura da condividere!',
+                'onboarding.step6.feature1': 'Inviti semplici',
+                'onboarding.step6.feature2': 'Fai crescere la tua comunità',
+                'onboarding.step6.feature3': 'Più scelte, più divertimento',
                 'features.title': 'Funzionalità',
                 'features.share.title': 'Condividi Attrezzatura',
                 'features.share.description': 'Elenca la tua attrezzatura da sci e rendila disponibile alla tua rete di fiducia.',
@@ -1725,6 +2152,7 @@
         }
         
         document.addEventListener('DOMContentLoaded', function() {
+            initOnboardingCarousel();
             loadHomeBlogStrip();
             fetch('https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84/landing-content', {
                 method: 'GET',
@@ -1751,6 +2179,68 @@
                     element.placeholder = translations[lang][key];
                 }
             });
+            document.querySelectorAll('[data-i18n-alt]').forEach(element => {
+                const key = element.getAttribute('data-i18n-alt');
+                if (translations[lang] && translations[lang][key]) {
+                    element.alt = translations[lang][key];
+                }
+            });
+        }
+
+        let onboardingStep = 0;
+        const ONBOARDING_STEP_COUNT = 6;
+
+        function renderOnboardingDots() {
+            const dotsEl = document.getElementById('onboarding-dots');
+            if (!dotsEl) return;
+            dotsEl.innerHTML = '';
+            for (let i = 0; i < ONBOARDING_STEP_COUNT; i++) {
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'onboarding-dot' + (i === onboardingStep ? ' active' : '');
+                dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+                dot.addEventListener('click', function () { setOnboardingStep(i); });
+                dotsEl.appendChild(dot);
+            }
+        }
+
+        function setOnboardingStep(step) {
+            onboardingStep = Math.max(0, Math.min(ONBOARDING_STEP_COUNT - 1, step));
+            document.querySelectorAll('.onboarding-slide').forEach(function (slide, i) {
+                slide.classList.toggle('active', i === onboardingStep);
+            });
+            const prevBtn = document.getElementById('onboarding-prev');
+            const nextBtn = document.getElementById('onboarding-next');
+            if (prevBtn) prevBtn.disabled = onboardingStep === 0;
+            if (nextBtn) nextBtn.disabled = onboardingStep === ONBOARDING_STEP_COUNT - 1;
+            renderOnboardingDots();
+        }
+
+        function onboardingPrev() {
+            setOnboardingStep(onboardingStep - 1);
+        }
+
+        function onboardingNext() {
+            setOnboardingStep(onboardingStep + 1);
+        }
+
+        function initOnboardingCarousel() {
+            renderOnboardingDots();
+            setOnboardingStep(0);
+            const wrap = document.querySelector('.onboarding-carousel-wrap');
+            if (!wrap) return;
+            let touchStartX = null;
+            wrap.addEventListener('touchstart', function (e) {
+                touchStartX = e.touches[0].clientX;
+            }, { passive: true });
+            wrap.addEventListener('touchend', function (e) {
+                if (touchStartX === null) return;
+                const deltaX = e.changedTouches[0].clientX - touchStartX;
+                touchStartX = null;
+                if (Math.abs(deltaX) < 40) return;
+                if (deltaX < 0) onboardingNext();
+                else onboardingPrev();
+            }, { passive: true });
         }
 
         function changeLanguage(lang) {
