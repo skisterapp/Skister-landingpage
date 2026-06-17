@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <script src="/scripts/site-canonical.js"></script>
     <script src="scripts/seo-inject.js" defer></script>
+    <script>
+    (function () {
+        if (new URLSearchParams(location.search).get('cmsPreview') !== '1') return;
+        var s = document.createElement('script');
+        s.src = 'assets/cms-preview-bridge.js';
+        document.head.appendChild(s);
+    })();
+    </script>
     <meta name="description" content="Skister - Family-friendly ski equipment sharing app for private networks. Share gear, coordinate pickups, and connect with your trusted community.">
     <meta name="keywords" content="ski equipment sharing, ski gear, family app, community sharing, free ski rental">
     <meta name="author" content="Skister">
@@ -2537,7 +2545,14 @@
             }
         };
         
-        let currentLang = 'de';
+        let currentLang = (function () {
+            const p = new URLSearchParams(location.search);
+            if (p.get('cmsPreview') === '1') {
+                const l = p.get('lang');
+                if (l && ['de', 'en', 'fr', 'es', 'it'].indexOf(l) !== -1) return l;
+            }
+            return 'de';
+        })();
         const DEFAULT_HERO_IMAGE = 'https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png';
         
         // Load landing content from API and merge with defaults
@@ -2576,6 +2591,19 @@
                 }
             }
             changeLanguage(currentLang);
+        }
+
+        window.skisterCmsApplyPreview = function (payload) {
+            if (!payload) return;
+            applyLandingContent({
+                translations: payload.translations || {},
+                images: payload.images || {}
+            });
+            if (payload.lang) changeLanguage(payload.lang);
+        };
+        if (window.__skisterCmsPreviewQueue && window.__skisterCmsPreviewQueue.length) {
+            window.__skisterCmsPreviewQueue.forEach(function (item) { window.skisterCmsApplyPreview(item); });
+            window.__skisterCmsPreviewQueue = [];
         }
         
         const HOME_BLOG_PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 400 200'%3E%3Crect fill='%231a1a1a' width='400' height='200'/%3E%3Cg fill='%23b0b0b0'%3E%3Cpath d='M160 70a30 30 0 1 1 80 0 30 30 0 1 1-80 0zm120 10H120a20 20 0 0 0-20 20v60a20 20 0 0 0 20 20h160a20 20 0 0 0 20-20v-60a20 20 0 0 0-20-20zm-80 60a25 25 0 1 1 0-50 25 25 0 0 1 0 50z'/%3E%3C/g%3E%3Ctext x='200' y='165' fill='%23666' font-family='sans-serif' font-size='14' text-anchor='middle'%3ENo image%3C/text%3E%3C/svg%3E";

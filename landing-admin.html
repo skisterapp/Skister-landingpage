@@ -8,157 +8,12 @@
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="apple-touch-icon" href="assets/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --primary-green: #228B22;
-            --primary-green-light: #2da82d;
-            --bg-dark: #0a0a0a;
-            --bg-card: #1a1a1a;
-            --bg-sidebar: #111;
-            --text-white: #ffffff;
-            --text-gray: #b0b0b0;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --sidebar-width: 260px;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-white);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-        .cms-layout { display: flex; min-height: 100vh; }
-        .cms-sidebar {
-            width: var(--sidebar-width);
-            min-width: var(--sidebar-width);
-            background: var(--bg-sidebar);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-            overflow-y: auto;
-        }
-        .cms-sidebar .sidebar-brand { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-color); font-size: 1.25rem; font-weight: 700; color: var(--primary-green); display: flex; align-items: center; gap: 0.5rem; }
-        .cms-sidebar .sidebar-nav { flex: 1; padding: 1rem 0; overflow-y: auto; }
-        .cms-sidebar .nav-section { margin-bottom: 0.5rem; }
-        .cms-sidebar .nav-section-title { padding: 0.5rem 1.5rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-gray); }
-        .cms-sidebar .nav-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 1.5rem; color: var(--text-gray); text-decoration: none; font-weight: 500; transition: background 0.2s, color 0.2s; font-size: 0.95rem; }
-        .cms-sidebar .nav-link:hover { background: rgba(255,255,255,0.05); color: var(--text-white); }
-        .cms-sidebar .nav-link.active { background: rgba(34,139,34,0.15); color: var(--primary-green); border-right: 3px solid var(--primary-green); }
-        .cms-sidebar .nav-link i { width: 1.25rem; text-align: center; }
-        .cms-sidebar .sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border-color); }
-        .cms-main { flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: auto; padding: 2rem; }
-        .container { max-width: 1000px; margin: 0 auto; width: 100%; }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 2px solid var(--border-color);
-        }
-        .header h1 { font-size: 1.75rem; color: var(--primary-green); display: flex; align-items: center; gap: 0.5rem; }
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s;
-        }
-        .btn-primary { background: var(--primary-green); color: var(--text-white); }
-        .btn-primary:hover { background: var(--primary-green-light); transform: translateY(-2px); }
-        .btn-secondary { background: rgba(255,255,255,0.05); color: var(--text-white); border: 1px solid var(--border-color); }
-        .btn-secondary:hover { background: rgba(255,255,255,0.1); }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        .login-container { display: flex; justify-content: center; align-items: center; flex: 1; min-height: 280px; }
-        .login-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2.5rem;
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-        }
-        .login-box h1 { margin-bottom: 0.5rem; font-size: 1.5rem; }
-        .login-box .subtitle { color: var(--text-gray); margin-bottom: 1.5rem; font-size: 0.9rem; }
-        .form-group { text-align: left; margin-bottom: 1rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-gray); font-weight: 500; }
-        .form-group input { width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px; color: white; font-size: 1rem; }
-        .form-group input:focus { outline: none; border-color: var(--primary-green); }
-        .login-btn { width: 100%; padding: 0.875rem; background: var(--primary-green); color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 0.5rem; }
-        .login-btn:hover { background: var(--primary-green-light); }
-        .login-error { display: none; background: rgba(255,59,48,0.15); border: 1px solid rgba(255,59,48,0.3); border-radius: 8px; padding: 0.75rem; color: #ff6b6b; font-size: 0.9rem; margin-bottom: 1rem; }
-        .login-error.show { display: block; }
-        .editor-container { display: none; }
-        .editor-container.show { display: block; }
-        .section-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .section-card h2 { color: var(--primary-green); font-size: 1.25rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); }
-        .field-row { margin-bottom: 1rem; }
-        .field-row label { display: block; color: var(--text-gray); font-size: 0.85rem; margin-bottom: 0.35rem; }
-        .field-row input, .field-row textarea {
-            width: 100%;
-            padding: 0.6rem 0.75rem;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-white);
-            font-size: 0.95rem;
-            font-family: inherit;
-        }
-        .field-row textarea { min-height: 80px; resize: vertical; }
-        .field-row input:focus, .field-row textarea:focus { outline: none; border-color: var(--primary-green); }
-        .field-row .key-name { color: var(--text-gray); font-size: 0.8rem; }
-        .tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-        .tab { padding: 0.6rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-gray); cursor: pointer; font-weight: 500; }
-        .tab:hover { color: var(--text-white); }
-        .tab.active { background: rgba(34,139,34,0.2); border-color: var(--primary-green); color: var(--primary-green); }
-        .message { padding: 1rem; border-radius: 8px; margin-bottom: 1rem; display: none; }
-        .message.show { display: block; }
-        .message.success { background: rgba(34,139,34,0.2); border: 1px solid var(--primary-green); color: var(--primary-green); }
-        .message.error { background: rgba(255,59,48,0.15); border: 1px solid rgba(255,59,48,0.3); color: #ff6b6b; }
-        .image-upload { display: flex; gap: 0.5rem; align-items: flex-start; flex-wrap: wrap; }
-        .image-upload input[type="text"] { flex: 1; min-width: 200px; }
-        .image-preview { max-width: 120px; max-height: 120px; border-radius: 8px; border: 1px solid var(--border-color); margin-top: 0.5rem; }
-        input[type="file"] { display: none; }
-        .links-ref { display: flex; flex-direction: column; gap: 0.5rem; }
-        .link-row { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); }
-        .link-row:last-child { border-bottom: none; }
-        .link-label { color: var(--text-gray); min-width: 140px; }
-        .link-url { background: rgba(255,255,255,0.05); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem; color: var(--primary-green); }
-        .section-tab-nav { display: flex; gap: 0; flex-wrap: wrap; border-bottom: 2px solid var(--border-color); margin-bottom: 1.5rem; }
-        .section-tab-btn {
-            padding: 0.75rem 1rem;
-            background: none;
-            border: none;
-            border-bottom: 3px solid transparent;
-            color: var(--text-gray);
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-        .section-tab-btn:hover { color: var(--text-white); }
-        .section-tab-btn.active { color: var(--primary-green); border-bottom-color: var(--primary-green); }
-        .section-tab-content { display: none; }
-        .section-tab-content.active { display: block; }
-    </style>
+    <link rel="stylesheet" href="assets/cms-shared.css">
 </head>
-<body>
+<body class="cms-body">
     <div class="cms-layout">
         <aside class="cms-sidebar">
-            <div class="sidebar-brand"><i class="fa-solid fa-person-skiing"></i> Skister CMS</div>
+            <div class="sidebar-brand"><img src="assets/favicon.png" alt="" width="28" height="28" style="border-radius:6px;"> Skister CMS</div>
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <div class="nav-section-title">Overview</div>
@@ -168,7 +23,7 @@
                 </div>
                 <div class="nav-section">
                     <div class="nav-section-title">Content</div>
-                    <a href="landing-admin.html" class="nav-link active"><i class="fa-solid fa-pen-to-square"></i> Landing page</a>
+                    <a href="landing-admin.html" class="nav-link active"><i class="fa-solid fa-pen-to-square"></i> Landing (live preview)</a>
                     <a href="blog-admin.html" class="nav-link"><i class="fa-solid fa-newspaper"></i> Blog</a>
                     <a href="admin.html#seo" class="nav-link"><i class="fa-solid fa-magnifying-glass-chart"></i> SEO &amp; publish</a>
                 </div>
@@ -183,421 +38,141 @@
                 </div>
             </nav>
             <div class="sidebar-footer">
-                <button type="button" class="btn btn-secondary" style="width:100%;" onclick="cmsLogout()"><i class="fa-solid fa-right-from-bracket"></i> Log out</button>
+                <button type="button" class="cms-btn cms-btn-secondary" style="width:100%;" onclick="cmsLogout()"><i class="fa-solid fa-right-from-bracket"></i> Log out</button>
             </div>
         </aside>
         <main class="cms-main">
-    <div class="login-container" id="login-page">
-        <div class="login-box">
-            <h1><i class="fa-solid fa-pen-to-square"></i> Edit Landing Page</h1>
-            <p class="subtitle">Enter your admin password to edit content and images.</p>
-            <div class="login-error" id="login-error">Incorrect password.</div>
-            <form onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Admin password" required autocomplete="current-password">
+            <div class="cms-login-wrap" id="login-page">
+                <div class="cms-login-box">
+                    <h1><i class="fa-solid fa-pen-to-square"></i> Edit Landing Page</h1>
+                    <p class="subtitle">Enter your admin password to edit content with live preview.</p>
+                    <div class="cms-login-error" id="login-error">Incorrect password.</div>
+                    <form onsubmit="handleLogin(event)">
+                        <div class="cms-form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" placeholder="Admin password" required autocomplete="current-password">
+                        </div>
+                        <button type="submit" class="cms-login-btn"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+                    </form>
                 </div>
-                <button type="submit" class="login-btn"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
-            </form>
-        </div>
-    </div>
+            </div>
 
-    <div class="editor-container" id="editor">
-        <div class="container">
-            <div class="header">
-                <h1><i class="fa-solid fa-pen-to-square"></i> Landing Page Content</h1>
-                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-                    <a href="admin.html" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Back to Admin</a>
-                    <a href="index.html" class="btn btn-secondary" target="_blank" rel="noopener"><i class="fa-solid fa-external-link"></i> View Landing Page</a>
-                    <button class="btn btn-primary" id="save-btn" onclick="saveContent()"><i class="fa-solid fa-save"></i> Save</button>
-                </div>
-            </div>
-            <div id="message" class="message"></div>
-            <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 0.5rem;">Select a language and section to edit. Each language has its own content—update each panel per language, then Save to publish.</p>
-            <p style="margin-bottom: 1rem;">
-                <button type="button" class="btn btn-secondary" id="auto-translate-btn" disabled title="Auto-translate will be available in a future update">
-                    <i class="fa-solid fa-language"></i> Auto-translate — Coming soon
-                </button>
-            </p>
-            <p style="color: var(--text-gray); font-size: 0.85rem; margin-bottom: 0.35rem;">Language to edit</p>
-            <div class="tabs" id="lang-tabs"></div>
-            <p style="color: var(--text-gray); font-size: 0.85rem; margin-top: 1rem; margin-bottom: 0.35rem;">Section to edit</p>
-            <div class="section-tab-nav" id="section-tab-nav"></div>
-            <div id="tab-content-links" class="section-tab-content active">
-                <div class="section-card">
-                    <h2><i class="fa-solid fa-link"></i> Links used on the site</h2>
-                    <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 1rem;">Reference for pages and CMS. Use these in your content or share with your team.</p>
-                    <div class="links-ref">
-                        <div class="link-row"><span class="link-label">Landing page</span><code class="link-url">index.html</code></div>
-                        <div class="link-row"><span class="link-label">Blog</span><code class="link-url">blog.html</code></div>
-                        <div class="link-row"><span class="link-label">Edit landing (this CMS)</span><code class="link-url">landing-admin.html</code></div>
-                        <div class="link-row"><span class="link-label">Manage blog</span><code class="link-url">blog-admin.html</code></div>
-                        <div class="link-row"><span class="link-label">Admin dashboard</span><code class="link-url">admin.html</code></div>
-                        <div class="link-row"><span class="link-label">SEO &amp; publish (in Admin)</span><code class="link-url">admin.html#seo</code></div>
-                    </div>
-                </div>
-            </div>
-            <div id="tab-content-images" class="section-tab-content">
-                <div class="section-card">
-                    <h2><i class="fa-solid fa-image"></i> Images</h2>
-                    <div class="field-row">
-                        <label>Hero mascot image URL</label>
-                        <div class="image-upload">
-                            <input type="text" id="img-heroMascot" placeholder="https://...">
-                            <button type="button" class="btn btn-secondary" onclick="document.getElementById('file-heroMascot').click()">Upload</button>
-                            <input type="file" id="file-heroMascot" accept="image/*" onchange="handleImageUpload('heroMascot', this)">
+            <div class="landing-editor" id="editor">
+                <div class="landing-toolbar">
+                    <div class="landing-toolbar-row">
+                        <div class="landing-toolbar-title"><i class="fa-solid fa-pen-to-square"></i> Landing editor</div>
+                        <div class="landing-toolbar-actions">
+                            <span class="landing-unsaved" id="unsaved-indicator"><i class="fa-solid fa-circle"></i> Unsaved changes</span>
+                            <a href="admin.html" class="cms-btn cms-btn-secondary"><i class="fa-solid fa-arrow-left"></i> Dashboard</a>
+                            <div class="landing-translate-wrap">
+                                <button type="button" class="cms-btn cms-btn-secondary" id="translate-menu-btn" onclick="toggleTranslateMenu(event)">
+                                    <i class="fa-solid fa-language"></i> Translate <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i>
+                                </button>
+                                <div class="landing-translate-menu" id="translate-menu">
+                                    <button type="button" onclick="openTranslateModal('section')">Translate this section</button>
+                                    <button type="button" onclick="openTranslateModal('all')">Translate all languages</button>
+                                </div>
+                            </div>
+                            <button type="button" class="cms-btn cms-btn-primary" id="save-btn" onclick="saveContent()"><i class="fa-solid fa-save"></i> Save</button>
                         </div>
-                        <img id="preview-heroMascot" class="image-preview" alt="" style="display:none">
                     </div>
-                    <div class="field-row">
-                        <label>OG / Social share image URL</label>
-                        <div class="image-upload">
-                            <input type="text" id="img-ogImage" placeholder="https://...">
-                            <button type="button" class="btn btn-secondary" onclick="document.getElementById('file-ogImage').click()">Upload</button>
-                            <input type="file" id="file-ogImage" accept="image/*" onchange="handleImageUpload('ogImage', this)">
+                    <div id="message" class="cms-message"></div>
+                    <div class="landing-toolbar-row">
+                        <div class="landing-lang-tabs" id="lang-tabs"></div>
+                    </div>
+                    <div class="landing-toolbar-row">
+                        <div class="landing-section-tabs" id="section-tab-nav"></div>
+                    </div>
+                </div>
+
+                <div class="landing-split">
+                    <div class="landing-form-panel" id="form-panel">
+                        <p class="landing-section-hint" id="section-hint">Loading section content…</p>
+                        <input type="search" class="landing-search" id="field-search" placeholder="Filter fields in this section…" aria-label="Filter fields">
+                        <div id="tab-content-links" class="landing-section-tab-content active">
+                            <div class="landing-section-card">
+                                <h2><i class="fa-solid fa-link"></i> Links</h2>
+                                <p style="color:var(--cms-text-muted);font-size:0.88rem;margin-bottom:0.75rem;">Quick reference for site pages and CMS tools.</p>
+                                <div class="landing-links-ref">
+                                    <div class="landing-link-row"><span class="landing-link-label">Landing</span><code class="landing-link-url">index.html</code></div>
+                                    <div class="landing-link-row"><span class="landing-link-label">Blog</span><code class="landing-link-url">blog.html</code></div>
+                                    <div class="landing-link-row"><span class="landing-link-label">This editor</span><code class="landing-link-url">landing-admin.html</code></div>
+                                    <div class="landing-link-row"><span class="landing-link-label">Admin</span><code class="landing-link-url">admin.html</code></div>
+                                </div>
+                            </div>
                         </div>
-                        <img id="preview-ogImage" class="image-preview" alt="" style="display:none">
+                        <div id="tab-content-images" class="landing-section-tab-content">
+                            <div class="landing-section-card">
+                                <h2><i class="fa-solid fa-image"></i> Images</h2>
+                                <div class="landing-field-row">
+                                    <label>Hero mascot image URL</label>
+                                    <div class="landing-image-upload">
+                                        <input type="text" id="img-heroMascot" placeholder="https://...">
+                                        <button type="button" class="cms-btn cms-btn-secondary" onclick="document.getElementById('file-heroMascot').click()">Upload</button>
+                                        <input type="file" id="file-heroMascot" class="cms-file-input" accept="image/*" onchange="handleImageUpload('heroMascot', this)">
+                                    </div>
+                                    <img id="preview-heroMascot" class="landing-image-preview" alt="" style="display:none">
+                                </div>
+                                <div class="landing-field-row">
+                                    <label>OG / social share image URL</label>
+                                    <div class="landing-image-upload">
+                                        <input type="text" id="img-ogImage" placeholder="https://...">
+                                        <button type="button" class="cms-btn cms-btn-secondary" onclick="document.getElementById('file-ogImage').click()">Upload</button>
+                                        <input type="file" id="file-ogImage" class="cms-file-input" accept="image/*" onchange="handleImageUpload('ogImage', this)">
+                                    </div>
+                                    <img id="preview-ogImage" class="landing-image-preview" alt="" style="display:none">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-content-nav" class="landing-section-tab-content"><div id="section-fields-nav" class="landing-section-card"></div></div>
+                        <div id="tab-content-hero" class="landing-section-tab-content"><div id="section-fields-hero" class="landing-section-card"></div></div>
+                        <div id="tab-content-messages" class="landing-section-tab-content"><div id="section-fields-messages" class="landing-section-card"></div></div>
+                        <div id="tab-content-onboarding" class="landing-section-tab-content"><div id="section-fields-onboarding" class="landing-section-card"></div></div>
+                        <div id="tab-content-features" class="landing-section-tab-content"><div id="section-fields-features" class="landing-section-card"></div></div>
+                        <div id="tab-content-platform" class="landing-section-tab-content"><div id="section-fields-platform" class="landing-section-card"></div></div>
+                        <div id="tab-content-home" class="landing-section-tab-content"><div id="section-fields-home" class="landing-section-card"></div></div>
+                        <div id="tab-content-download" class="landing-section-tab-content"><div id="section-fields-download" class="landing-section-card"></div></div>
+                        <div id="tab-content-faq" class="landing-section-tab-content"><div id="section-fields-faq" class="landing-section-card"></div></div>
+                        <div id="tab-content-disclaimer" class="landing-section-tab-content"><div id="section-fields-disclaimer" class="landing-section-card"></div></div>
+                        <div id="tab-content-footer" class="landing-section-tab-content"><div id="section-fields-footer" class="landing-section-card"></div></div>
+                        <div id="tab-content-modal" class="landing-section-tab-content"><div id="section-fields-modal" class="landing-section-card"></div></div>
+                    </div>
+                    <div class="landing-preview-panel" id="preview-panel">
+                        <div class="landing-preview-header">
+                            <span><i class="fa-solid fa-eye"></i> Live preview</span>
+                            <button type="button" class="cms-btn cms-btn-secondary" style="padding:0.3rem 0.6rem;font-size:0.75rem;" onclick="togglePreviewPanel()">Toggle</button>
+                        </div>
+                        <iframe id="preview-frame" class="landing-preview-frame" title="Landing page preview" src="about:blank"></iframe>
                     </div>
                 </div>
             </div>
-            <div id="tab-content-nav" class="section-tab-content"><div id="section-fields-nav" class="section-card"></div></div>
-            <div id="tab-content-hero" class="section-tab-content"><div id="section-fields-hero" class="section-card"></div></div>
-            <div id="tab-content-messages" class="section-tab-content"><div id="section-fields-messages" class="section-card"></div></div>
-            <div id="tab-content-features" class="section-tab-content"><div id="section-fields-features" class="section-card"></div></div>
-            <div id="tab-content-platform" class="section-tab-content"><div id="section-fields-platform" class="section-card"></div></div>
-            <div id="tab-content-faq" class="section-tab-content"><div id="section-fields-faq" class="section-card"></div></div>
-            <div id="tab-content-disclaimer" class="section-tab-content"><div id="section-fields-disclaimer" class="section-card"></div></div>
-            <div id="tab-content-footer" class="section-tab-content"><div id="section-fields-footer" class="section-card"></div></div>
-            <div id="tab-content-modal" class="section-tab-content"><div id="section-fields-modal" class="section-card"></div></div>
-        </div>
-    </div>
         </main>
     </div>
 
-    <script>
-        function cmsLogout() {
-            sessionStorage.removeItem('landingAdminAuth');
-            sessionStorage.removeItem('landingAdminPassword');
-            sessionStorage.removeItem('adminAuthenticated');
-            window.location.href = 'admin.html';
-        }
-        const API_BASE = 'https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84';
-        const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF5b21oYXBremNrYmhnd3hlbndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MDU5NzEsImV4cCI6MjA4NzE4MTk3MX0.z5ZOt2q6wG75jgr2qM9cSguDAwrq9scwt6YzRlXuKO8';
-        const LANGUAGES = [{ code: 'de', name: 'Deutsch' }, { code: 'en', name: 'English' }, { code: 'fr', name: 'Français' }, { code: 'es', name: 'Español' }, { code: 'it', name: 'Italiano' }];
-        const SECTIONS = [
-            { id: 'nav', title: 'Navigation' },
-            { id: 'hero', title: 'Hero' },
-            { id: 'messages', title: 'Messages' },
-            { id: 'features', title: 'Features' },
-            { id: 'platform', title: 'Platform' },
-            { id: 'faq', title: 'FAQ' },
-            { id: 'disclaimer', title: 'Disclaimer' },
-            { id: 'footer', title: 'Footer' },
-            { id: 'modal', title: 'Modals' }
-        ];
-        const SECTION_TABS = [
-            { id: 'links', title: 'Links' },
-            { id: 'images', title: 'Images' }
-        ].concat(SECTIONS);
-        const ALL_KEYS = [
-            'nav.howItWorks','nav.features','nav.faq','nav.blog','nav.contact',
-            'hero.title','hero.tagline','hero.subtitle','hero.emailPlaceholder','hero.submitBtn','hero.waitlistInfo',
-            'messages.success','messages.duplicate','messages.error','messages.serverError',
-            'onboarding.title','onboarding.subtitle',
-            'onboarding.step1.title','onboarding.step1.description','onboarding.step1.feature1','onboarding.step1.feature2','onboarding.step1.feature3',
-            'onboarding.step2.title','onboarding.step2.description','onboarding.step2.feature1','onboarding.step2.feature2','onboarding.step2.feature3',
-            'onboarding.step3.title','onboarding.step3.description','onboarding.step3.feature1','onboarding.step3.feature2','onboarding.step3.feature3',
-            'onboarding.step4.title','onboarding.step4.description','onboarding.step4.feature1','onboarding.step4.feature2','onboarding.step4.feature3',
-            'onboarding.step5.title','onboarding.step5.description','onboarding.step5.feature1','onboarding.step5.feature2','onboarding.step5.feature3',
-            'onboarding.step6.title','onboarding.step6.description','onboarding.step6.feature1','onboarding.step6.feature2','onboarding.step6.feature3',
-            'features.title','features.subtitle','features.share.title','features.share.description','features.family.title','features.family.description','features.free.title','features.free.description','features.reminders.title','features.reminders.description','features.private.title','features.private.description','features.local.title','features.local.description',
-            'platform.title','platform.ios','platform.android','platform.web',
-            'download.title','download.subtitle','download.apple.line1','download.apple.line2','download.android.line1','download.android.line2','download.web.line1','download.web.line2','download.badge','download.hint',
-            'faq.title','faq.q1','faq.a1','faq.q2','faq.a2','faq.q3','faq.a3','faq.q4','faq.a4','faq.q5','faq.a5',
-            'disclaimer.title','disclaimer.text',
-            'footer.product','footer.features','footer.faq','footer.feedback','footer.legal','footer.privacy','footer.terms','footer.support','footer.contact','footer.rights','footer.madewith',
-            'modal.privacy.title','modal.privacy.intro','modal.privacy.p1','modal.privacy.collection','modal.privacy.collectionText','modal.privacy.usage','modal.privacy.usageText','modal.privacy.sharing','modal.privacy.sharingText','modal.privacy.contactEmail',
-            'modal.terms.title','modal.terms.intro','modal.terms.acceptance','modal.terms.acceptanceText','modal.terms.service','modal.terms.serviceText','modal.terms.liability','modal.terms.liabilityText',
-            'modal.contact.title','modal.contact.intro','modal.contact.email','modal.contact.response',
-            'modal.feedback.title','modal.feedback.intro','modal.feedback.email'
-        ];
+    <div class="cms-modal-overlay" id="translate-modal" role="dialog" aria-modal="true" aria-labelledby="translate-modal-title">
+        <div class="cms-modal">
+            <h3 id="translate-modal-title">Auto-translate</h3>
+            <p id="translate-modal-desc">Translate content from a source language into other languages using Google Translate.</p>
+            <fieldset>
+                <legend>Source language</legend>
+                <select id="translate-source" class="landing-search" style="max-width:100%;"></select>
+            </fieldset>
+            <fieldset>
+                <legend>Target languages</legend>
+                <div id="translate-targets"></div>
+            </fieldset>
+            <fieldset>
+                <legend>Mode</legend>
+                <label class="cms-check-row"><input type="radio" name="translate-mode" value="fill" checked> Fill empty fields only (recommended)</label>
+                <label class="cms-check-row"><input type="radio" name="translate-mode" value="overwrite"> Overwrite existing translations</label>
+            </fieldset>
+            <div class="cms-modal-actions">
+                <button type="button" class="cms-btn cms-btn-secondary" onclick="closeTranslateModal()">Cancel</button>
+                <button type="button" class="cms-btn cms-btn-primary" id="translate-run-btn" onclick="runTranslate()">Translate</button>
+            </div>
+        </div>
+    </div>
 
-        let content = { translations: {}, images: {} };
-        let currentLang = 'de';
-        let currentSectionTab = 'links';
-
-        function getSection(key) {
-            const parts = key.split('.');
-            if (parts[0] === 'modal') return 'modal';
-            return parts[0];
-        }
-
-        async function handleLogin(e) {
-            e.preventDefault();
-            const password = document.getElementById('password').value;
-            const errEl = document.getElementById('login-error');
-            errEl.classList.remove('show');
-            try {
-                const res = await fetch(`${API_BASE}/landing-admin-verify`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${ANON_KEY}`, 'X-Admin-Password': password }
-                });
-                const data = await res.json().catch(function () { return {}; });
-                if (res.ok && data.ok) {
-                    sessionStorage.setItem('landingAdminAuth', 'true');
-                    sessionStorage.setItem('landingAdminPassword', password);
-                    document.getElementById('login-page').style.display = 'none';
-                    document.getElementById('editor').classList.add('show');
-                    await loadContent();
-                    renderSectionTabs();
-                    renderLangTabs();
-                    renderFields();
-                    initSectionTabFromHash();
-                } else {
-                    errEl.classList.add('show');
-                }
-            } catch (err) {
-                errEl.classList.add('show');
-            }
-        }
-
-        async function checkAuth() {
-            if (sessionStorage.getItem('landingAdminAuth')) {
-                document.getElementById('login-page').style.display = 'none';
-                document.getElementById('editor').classList.add('show');
-                await loadContent();
-                renderSectionTabs();
-                renderLangTabs();
-                renderFields();
-                initSectionTabFromHash();
-            }
-        }
-
-        function renderSectionTabs() {
-            var container = document.getElementById('section-tab-nav');
-            if (!container) return;
-            var html = SECTION_TABS.map(function (t) {
-                var active = t.id === currentSectionTab ? ' active' : '';
-                return '<button type="button" class="section-tab-btn' + active + '" id="section-tab-' + t.id + '" onclick="switchSectionTab(\'' + t.id + '\')">' + t.title + '</button>';
-            }).join('');
-            container.innerHTML = html;
-        }
-
-        function initSectionTabFromHash() {
-            var hash = (location.hash || '').replace(/^#/, '');
-            var valid = SECTION_TABS.some(function (t) { return t.id === hash; });
-            if (valid) {
-                currentSectionTab = hash;
-                switchSectionTab(hash);
-            } else {
-                switchSectionTab('links');
-            }
-        }
-
-        function normalizeLoadedContent(data) {
-            if (!data || typeof data !== 'object') return null;
-            var translations = {};
-            var images = {};
-            var c = data.content;
-            if (c && typeof c === 'object') {
-                if (c.translations && typeof c.translations === 'object') {
-                    translations = c.translations;
-                } else if (c.de || c.en || c.fr || c.es || c.it) {
-                    translations = c;
-                }
-                if (c.images && typeof c.images === 'object') images = c.images;
-            }
-            if (data.translations && typeof data.translations === 'object') translations = data.translations;
-            if (data.images && typeof data.images === 'object') images = data.images;
-            return { translations: translations, images: images };
-        }
-
-        async function loadContent() {
-            try {
-                const res = await fetch(`${API_BASE}/landing-content`, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${ANON_KEY}` }
-                });
-                const data = await res.json().catch(function () { return {}; });
-                if (res.ok) {
-                    var loaded = normalizeLoadedContent(data);
-                    if (loaded) {
-                        content = {
-                            translations: loaded.translations && typeof loaded.translations === 'object' ? loaded.translations : {},
-                            images: loaded.images && typeof loaded.images === 'object' ? loaded.images : {}
-                        };
-                    }
-                } else {
-                    showMessage('Failed to load content: ' + (data.error || res.status), true);
-                }
-                applyContentToForm();
-            } catch (err) {
-                showMessage('Failed to load content.', true);
-            }
-        }
-
-        function applyContentToForm() {
-            var imgHero = document.getElementById('img-heroMascot');
-            var imgOg = document.getElementById('img-ogImage');
-            if (imgHero) imgHero.value = content.images.heroMascot || content.images.heroMascotUrl || '';
-            if (imgOg) imgOg.value = content.images.ogImage || '';
-            toggleImagePreviews();
-            fillFieldValues();
-        }
-
-        function applyFormToContent() {
-            content.images.heroMascot = document.getElementById('img-heroMascot').value.trim() || undefined;
-            content.images.ogImage = document.getElementById('img-ogImage').value.trim() || undefined;
-            if (!content.translations[currentLang]) content.translations[currentLang] = {};
-            ALL_KEYS.forEach(key => {
-                const el = document.getElementById(`key-${currentLang}-${key.replace(/\./g, '-')}`);
-                if (el) content.translations[currentLang][key] = el.value;
-            });
-        }
-
-        function renderLangTabs() {
-            const html = LANGUAGES.map(l => `<button type="button" class="tab ${l.code === currentLang ? 'active' : ''}" onclick="switchLang('${l.code}')">${l.name}</button>`).join('');
-            document.getElementById('lang-tabs').innerHTML = html;
-        }
-
-        function switchLang(lang) {
-            applyFormToContent();
-            currentLang = lang;
-            renderLangTabs();
-            renderFields();
-        }
-
-        function switchSectionTab(sectionId) {
-            currentSectionTab = sectionId;
-            document.querySelectorAll('.section-tab-btn').forEach(function (b) { b.classList.remove('active'); });
-            document.querySelectorAll('.section-tab-content').forEach(function (c) { c.classList.remove('active'); });
-            var btn = document.getElementById('section-tab-' + sectionId);
-            var content = document.getElementById('tab-content-' + sectionId);
-            if (btn) btn.classList.add('active');
-            if (content) content.classList.add('active');
-            var hash = sectionId === 'links' ? '' : sectionId;
-            if (location.hash !== '#' + hash) location.hash = hash ? '#' + hash : '#';
-        }
-
-        function fillFieldValues() {
-            ALL_KEYS.forEach(key => {
-                const id = `key-${currentLang}-${key.replace(/\./g, '-')}`;
-                const el = document.getElementById(id);
-                if (el) el.value = (content.translations[currentLang] || {})[key] || '';
-            });
-        }
-
-        function renderFields() {
-            var bySection = {};
-            ALL_KEYS.forEach(function (key) {
-                var section = getSection(key);
-                if (!bySection[section]) bySection[section] = [];
-                bySection[section].push(key);
-            });
-            SECTIONS.forEach(function (sec) {
-                var keys = bySection[sec.id];
-                if (!keys || keys.length === 0) return;
-                var container = document.getElementById('section-fields-' + sec.id);
-                if (!container) return;
-                var html = '<h2>' + sec.title + '</h2>';
-                keys.forEach(function (key) {
-                    var id = 'key-' + currentLang + '-' + key.replace(/\./g, '-');
-                    var isLong = key.indexOf('faq.a') === 0 || key.indexOf('modal.') === 0 || key === 'disclaimer.text' || key.indexOf('description') !== -1 || key.indexOf('Text') !== -1 || key.indexOf('intro') !== -1 || key.indexOf('email') !== -1;
-                    html += '<div class="field-row">';
-                    html += '<label><span class="key-name">' + key + '</span></label>';
-                    html += isLong ? '<textarea id="' + id + '" data-key="' + key + '"></textarea>' : '<input type="text" id="' + id + '" data-key="' + key + '">';
-                    html += '</div>';
-                });
-                container.innerHTML = html;
-            });
-            fillFieldValues();
-        }
-
-        function toggleImagePreviews() {
-            const mascot = document.getElementById('img-heroMascot').value.trim();
-            const og = document.getElementById('img-ogImage').value.trim();
-            const p1 = document.getElementById('preview-heroMascot');
-            const p2 = document.getElementById('preview-ogImage');
-            if (mascot) { p1.src = mascot; p1.style.display = 'block'; } else { p1.style.display = 'none'; }
-            if (og) { p2.src = og; p2.style.display = 'block'; } else { p2.style.display = 'none'; }
-        }
-        function attachImagePreviewListeners() {
-            var mascot = document.getElementById('img-heroMascot');
-            var og = document.getElementById('img-ogImage');
-            if (mascot) mascot.addEventListener('input', toggleImagePreviews);
-            if (og) og.addEventListener('input', toggleImagePreviews);
-        }
-        attachImagePreviewListeners();
-
-        function handleImageUpload(field, input) {
-            const file = input.files && input.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = async () => {
-                const base64 = reader.result;
-                try {
-                    const res = await fetch(`${API_BASE}/landing/upload-image`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${ANON_KEY}` },
-                        body: JSON.stringify({ image: base64, fileName: file.name })
-                    });
-                    const data = await res.json();
-                    if (data.url) {
-                        document.getElementById(`img-${field}`).value = data.url;
-                        toggleImagePreviews();
-                        showMessage('Image uploaded. Click Save to publish.', false);
-                    } else showMessage(data.error || 'Upload failed', true);
-                } catch (e) { showMessage('Upload failed', true); }
-            };
-            reader.readAsDataURL(file);
-            input.value = '';
-        }
-
-        function showMessage(text, isError) {
-            const el = document.getElementById('message');
-            el.textContent = text;
-            el.className = 'message show ' + (isError ? 'error' : 'success');
-            setTimeout(() => el.classList.remove('show'), 4000);
-        }
-
-        async function saveContent() {
-            applyFormToContent();
-            const password = sessionStorage.getItem('landingAdminPassword');
-            const btn = document.getElementById('save-btn');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-            try {
-                const res = await fetch(`${API_BASE}/landing-content`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${ANON_KEY}`,
-                        'X-Admin-Password': password || ''
-                    },
-                    body: JSON.stringify({ translations: content.translations, images: content.images })
-                });
-                const data = await res.json();
-                if (data.success) showMessage('Content saved. Refresh the landing page to see changes.', false);
-                else showMessage(data.error || 'Save failed', true);
-            } catch (e) { showMessage('Save failed', true); }
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fa-solid fa-save"></i> Save';
-        }
-
-        function autoTranslate() {
-            showMessage('Auto-translate is coming soon. Edit each language using the language and section tabs above.', false);
-        }
-
-        window.addEventListener('DOMContentLoaded', checkAuth);
-        window.addEventListener('hashchange', function () {
-            if (document.getElementById('editor') && document.getElementById('editor').classList.contains('show')) {
-                var hash = (location.hash || '').replace(/^#/, '');
-                if (SECTION_TABS.some(function (t) { return t.id === hash; })) {
-                    currentSectionTab = hash;
-                    switchSectionTab(hash);
-                }
-            }
-        });
-    </script>
+    <script src="assets/landing-admin.js"></script>
 </body>
 </html>
