@@ -583,12 +583,31 @@ function showMessage(text, isError) {
     setTimeout(function () { el.classList.remove('show'); }, 5000);
 }
 
+function stripEmptyTranslationOverrides(translations) {
+    const out = {};
+    Object.keys(translations || {}).forEach(function (lang) {
+        const langPack = translations[lang];
+        if (!langPack || typeof langPack !== 'object') return;
+        const cleaned = {};
+        Object.keys(langPack).forEach(function (key) {
+            const value = langPack[key];
+            if (value != null && String(value).trim() !== '') cleaned[key] = value;
+        });
+        if (Object.keys(cleaned).length) out[lang] = cleaned;
+    });
+    return out;
+}
+
 async function saveContent() {
     applyFormToContent();
     const password = sessionStorage.getItem('landingAdminPassword');
     const btn = document.getElementById('save-btn');
     btn.disabled = true;
     btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving…';
+    const payload = {
+        translations: stripEmptyTranslationOverrides(content.translations),
+        images: content.images
+    };
     try {
         const res = await fetch(API_BASE + '/landing-content', {
             method: 'POST',
@@ -597,7 +616,7 @@ async function saveContent() {
                 Authorization: 'Bearer ' + ANON_KEY,
                 'X-Admin-Password': password || ''
             },
-            body: JSON.stringify({ translations: content.translations, images: content.images })
+            body: JSON.stringify(payload)
         });
         const data = await res.json();
                 if (data.success) {

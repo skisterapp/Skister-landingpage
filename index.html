@@ -2568,13 +2568,22 @@
             return out;
         }
         
+        function mergeTranslationOverrides(base, overrides) {
+            const out = Object.assign({}, base);
+            Object.keys(overrides || {}).forEach(function (key) {
+                const value = overrides[key];
+                if (value != null && String(value).trim() !== '') out[key] = value;
+            });
+            return out;
+        }
+        
         function applyLandingContent(content) {
             if (!content) return;
             if (content.translations && typeof content.translations === 'object') {
                 const langs = ['de', 'en', 'fr', 'es', 'it'];
-                langs.forEach(lang => {
+                langs.forEach(function (lang) {
                     if (content.translations[lang]) {
-                        translations[lang] = deepMerge(translations[lang] || {}, content.translations[lang]);
+                        translations[lang] = mergeTranslationOverrides(translations[lang] || {}, content.translations[lang]);
                     }
                 });
             }
