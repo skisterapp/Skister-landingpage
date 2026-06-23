@@ -2551,6 +2551,10 @@
                 const l = p.get('lang');
                 if (l && ['de', 'en', 'fr', 'es', 'it'].indexOf(l) !== -1) return l;
             }
+            try {
+                const stored = localStorage.getItem('skister-lang');
+                if (stored && ['de', 'en', 'fr', 'es', 'it'].indexOf(stored) !== -1) return stored;
+            } catch (e) {}
             return 'de';
         })();
         const DEFAULT_HERO_IMAGE = 'https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png';
@@ -2798,6 +2802,7 @@
         function changeLanguage(lang) {
             currentLang = lang;
             document.documentElement.lang = lang;
+            try { localStorage.setItem('skister-lang', lang); } catch (e) {}
             
             // Update current language display
             const flags = { de: '🇩🇪 DE', en: '🇬🇧 EN', fr: '🇫🇷 FR', es: '🇪🇸 ES', it: '🇮🇹 IT' };

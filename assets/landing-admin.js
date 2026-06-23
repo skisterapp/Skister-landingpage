@@ -598,14 +598,48 @@ function stripEmptyTranslationOverrides(translations) {
     return out;
 }
 
+/** Only persist values that differ from baked-in index.html defaults (per language). */
+function getTranslationOverridesOnly(translations, defaults) {
+    const out = {};
+    LANGUAGES.forEach(function (lang) {
+        const pack = (translations && translations[lang.code]) || {};
+        const defPack = (defaults && defaults[lang.code]) || {};
+        const cleaned = {};
+        ALL_KEYS.forEach(function (key) {
+            const value = pack[key];
+            if (value == null || String(value).trim() === '') return;
+            const defVal = defPack[key];
+            if (defVal != null && String(defVal) === String(value)) return;
+            cleaned[key] = value;
+        });
+        Object.keys(pack).forEach(function (key) {
+            if (cleaned[key] !== undefined || ALL_KEYS.indexOf(key) === -1) {
+                const value = pack[key];
+                if (value != null && String(value).trim() !== '' && cleaned[key] === undefined) {
+                    cleaned[key] = value;
+                }
+            }
+        });
+        if (Object.keys(cleaned).length) out[lang.code] = cleaned;
+    });
+    return out;
+}
+
+function countOverrideLangs(overrides) {
+    return LANGUAGES.filter(function (l) {
+        return overrides[l.code] && Object.keys(overrides[l.code]).length > 0;
+    }).length;
+}
+
 async function saveContent() {
     applyFormToContent();
     const password = sessionStorage.getItem('landingAdminPassword');
     const btn = document.getElementById('save-btn');
     btn.disabled = true;
     btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving…';
+    const overrides = getTranslationOverridesOnly(content.translations, siteDefaults);
     const payload = {
-        translations: stripEmptyTranslationOverrides(content.translations),
+        translations: overrides,
         images: content.images
     };
     try {
@@ -622,7 +656,12 @@ async function saveContent() {
                 if (data.success) {
                     savedSnapshot = snapshotContent();
                     updateUnsavedIndicator();
-                    showMessage('Content saved and published to the live site.', false);
+                    const langCount = countOverrideLangs(overrides);
+                    if (langCount === 1 && overrides.de && !overrides.en) {
+                        showMessage('German saved. Other languages still use their defaults — use Translate → “All languages from Deutsch” to update EN, FR, ES, IT.', false);
+                    } else {
+                        showMessage('Content saved and published to the live site.', false);
+                    }
                     reloadPreviewFrame();
                 } else {
             showMessage(data.error || 'Save failed', true);
@@ -713,6 +752,26 @@ document.addEventListener('click', function () {
     if (menu) menu.classList.remove('show');
 });
 
+function openTranslateFromDeutsch() {
+    document.getElementById('translate-menu').classList.remove('show');
+    translateScope = 'all';
+    document.getElementById('translate-modal-title').textContent = 'Translate all from Deutsch';
+    document.getElementById('translate-modal-desc').textContent =
+        'Translates every German field you customized into EN, FR, ES, and IT, replacing existing text in those languages.';
+    const sourceSelect = document.getElementById('translate-source');
+    sourceSelect.innerHTML = LANGUAGES.map(function (l) {
+        return '<option value="' + l.code + '"' + (l.code === 'de' ? ' selected' : '') + '>' + l.name + '</option>';
+    }).join('');
+    sourceSelect.value = 'de';
+    const targetsEl = document.getElementById('translate-targets');
+    targetsEl.innerHTML = LANGUAGES.map(function (l) {
+        return '<label class="cms-check-row"><input type="checkbox" class="translate-target-cb" value="' + l.code + '"' +
+            (l.code !== 'de' ? ' checked' : '') + '> ' + l.name + '</label>';
+    }).join('');
+    document.querySelector('input[name="translate-mode"][value="overwrite"]').checked = true;
+    document.getElementById('translate-modal').classList.add('show');
+}
+
 function openTranslateModal(scope) {
     translateScope = scope;
     document.getElementById('translate-menu').classList.remove('show');
@@ -745,7 +804,17 @@ function closeTranslateModal() {
 }
 
 function getKeysForTranslateScope() {
-    if (translateScope === 'all') return ALL_KEYS.slice();
+    if (translateScope === 'all') {
+        const sourceLang = document.getElementById('translate-source')?.value || currentLang;
+        const src = content.translations[sourceLang] || {};
+        const defPack = (siteDefaults && siteDefaults[sourceLang]) || {};
+        return ALL_KEYS.filter(function (key) {
+            const val = src[key];
+            if (!val || !String(val).trim()) return false;
+            const defVal = defPack[key];
+            return defVal == null || String(defVal) !== String(val);
+        });
+    }
     if (currentSectionTab === 'links' || currentSectionTab === 'images') return [];
     return ALL_KEYS.filter(function (key) { return getSection(key) === currentSectionTab; });
 }
