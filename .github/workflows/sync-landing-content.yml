@@ -1,0 +1,34 @@
+name: Sync landing CMS to git
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Every 12 hours (00:00 and 12:00 UTC)
+    - cron: '0 */12 * * *'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Pull landing CMS from Supabase
+        id: sync
+        env:
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: node scripts/syncLandingContent.js
+
+      - name: Commit and push landing snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/landing-content.json
+          git diff --staged --quiet && echo "Nothing to commit." && exit 0
+          git commit -m "chore: sync landing CMS content from Supabase"
+          git push

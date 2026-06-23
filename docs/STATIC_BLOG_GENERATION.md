@@ -26,6 +26,8 @@ Writes:
 
 Workflow: `.github/workflows/generate-blogs.yml` (manual + daily). Configure repository secret `SUPABASE_ANON_KEY` and optionally variable `SKISTER_SITE_URL`.
 
+Landing CMS overrides are synced to `data/landing-content.json` by `.github/workflows/sync-landing-content.yml` (manual + every 12 hours). The live site loads this file and refreshes from the API on each visit.
+
 ## CMS publish button (optional)
 
 The **SEO CMS** (`seo-admin.html`) can trigger GitHub Actions to regenerate the static site from the admin panel.

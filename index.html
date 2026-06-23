@@ -2679,18 +2679,33 @@
                 });
         }
         
+        function loadLandingContentFromSite() {
+            function applyApiContent() {
+                return fetch('https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84/landing-content', {
+                    method: 'GET',
+                    headers: HOME_BLOG_AUTH
+                })
+                .then(function (res) { return res.json(); })
+                .then(function (data) {
+                    if (data.success && data.content) applyLandingContent(data.content);
+                })
+                .catch(function () {});
+            }
+            return fetch('data/landing-content.json', { cache: 'no-store' })
+                .then(function (res) { return res.ok ? res.json() : null; })
+                .then(function (snapshot) {
+                    if (snapshot && (snapshot.translations || snapshot.images)) {
+                        applyLandingContent(snapshot);
+                    }
+                })
+                .catch(function () {})
+                .then(applyApiContent);
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             initOnboardingCarousel();
             loadHomeBlogStrip();
-            fetch('https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84/landing-content', {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' }
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success && data.content) applyLandingContent(data.content);
-            })
-            .catch(() => {});
+            loadLandingContentFromSite();
         });
         
         // Language Functions

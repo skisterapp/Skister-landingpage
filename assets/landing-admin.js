@@ -600,12 +600,12 @@ async function saveContent() {
             body: JSON.stringify({ translations: content.translations, images: content.images })
         });
         const data = await res.json();
-        if (data.success) {
-            savedSnapshot = snapshotContent();
-            updateUnsavedIndicator();
-            showMessage('Content saved and published.', false);
-            reloadPreviewFrame();
-        } else {
+                if (data.success) {
+                    savedSnapshot = snapshotContent();
+                    updateUnsavedIndicator();
+                    showMessage('Content saved and published to the live site.', false);
+                    reloadPreviewFrame();
+                } else {
             showMessage(data.error || 'Save failed', true);
         }
     } catch (e) {
