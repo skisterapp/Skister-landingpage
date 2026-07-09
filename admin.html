@@ -254,6 +254,10 @@
                     <button type="button" class="nav-link" data-page="comments"><i class="fa-solid fa-comments"></i> Comments</button>
                 </div>
                 <div class="nav-section">
+                    <div class="nav-section-title">Resorts</div>
+                    <a href="resort-admin.html" class="nav-link"><i class="fa-solid fa-mountain-sun"></i> Resort directory</a>
+                </div>
+                <div class="nav-section">
                     <div class="nav-section-title">Content</div>
                     <a href="landing-admin.html" class="nav-link"><i class="fa-solid fa-pen-to-square"></i> Landing (live preview)</a>
                     <a href="blog-admin.html" class="nav-link"><i class="fa-solid fa-newspaper"></i> Blog</a>
@@ -502,7 +506,7 @@
             setWaitlistIndicator('saving');
             wrap.innerHTML = '<div class="loading"><i class="fa-solid fa-spinner"></i><p>Loading waitlist…</p></div>';
             try {
-                const res = await fetch(API_BASE + '/waitlist/all', { headers: { 'Authorization': 'Bearer ' + ANON_KEY } });
+                const res = await fetch(API_BASE + '/waitlist/all', { headers: getAuthHeaders() });
                 const data = await res.json();
                 if (data.success) {
                     allEmails = data.emails || [];
@@ -658,7 +662,7 @@
                     const landRes = await fetch(API_BASE + '/landing-content', { headers: { 'Authorization': 'Bearer ' + ANON_KEY } });
                     const landData = await landRes.json();
                     backup.landing = (landData.success && landData.content) ? landData.content : null;
-                    const waitRes = await fetch(API_BASE + '/waitlist/all', { headers: { 'Authorization': 'Bearer ' + ANON_KEY } });
+                    const waitRes = await fetch(API_BASE + '/waitlist/all', { headers: getAuthHeaders() });
                     const waitData = await waitRes.json();
                     backup.waitlist = (waitData.success && waitData.emails) ? waitData.emails : [];
                 }

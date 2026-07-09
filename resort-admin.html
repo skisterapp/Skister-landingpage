@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://skister.app/resort-admin.html">
+    <title>Skister — Resort CMS</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+    <link rel="stylesheet" href="assets/resort-admin.css">
+</head>
+<body>
+    <div id="login-view" class="login-wrap">
+        <div class="login-box">
+            <h1><i class="fa-solid fa-mountain-sun"></i> Resort CMS</h1>
+            <p class="sub">Sign in with your Supabase admin account</p>
+            <div id="login-error" class="login-error" role="alert"></div>
+            <form id="login-form">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" required autocomplete="username">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" required autocomplete="current-password">
+                <button type="submit" class="btn btn-primary" id="login-btn"><i class="fa-solid fa-right-to-bracket"></i> Sign in</button>
+            </form>
+            <p class="hint"><a href="admin.html">← Back to Skister CMS</a></p>
+        </div>
+    </div>
+
+    <div id="app" class="app hidden">
+        <aside class="sidebar">
+            <div class="sidebar-brand"><i class="fa-solid fa-mountain-sun"></i> Resorts</div>
+            <div class="user-bar" id="user-bar"></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Resorts</div>
+                    <button type="button" class="nav-link active" data-page="dashboard"><i class="fa-solid fa-gauge-high"></i> Dashboard</button>
+                    <button type="button" class="nav-link" data-page="resorts"><i class="fa-solid fa-person-skiing"></i> All Resorts</button>
+                    <button type="button" class="nav-link" data-page="pending"><i class="fa-solid fa-clock"></i> Pending Requests</button>
+                    <button type="button" class="nav-link" data-page="countries"><i class="fa-solid fa-flag"></i> Countries</button>
+                    <button type="button" class="nav-link" data-page="regions"><i class="fa-solid fa-map"></i> Regions</button>
+                    <button type="button" class="nav-link" data-page="areas"><i class="fa-solid fa-map-location-dot"></i> Areas</button>
+                    <button type="button" class="nav-link" data-page="import"><i class="fa-solid fa-file-import"></i> Import / Sync</button>
+                    <button type="button" class="nav-link" data-page="analytics"><i class="fa-solid fa-chart-line"></i> Analytics</button>
+                    <button type="button" class="nav-link" data-page="settings"><i class="fa-solid fa-gear"></i> Settings</button>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="admin.html" class="btn btn-secondary btn-block"><i class="fa-solid fa-arrow-left"></i> Main CMS</a>
+                <button type="button" class="btn btn-secondary btn-block" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Sign out</button>
+            </div>
+        </aside>
+        <main class="main">
+            <header class="topbar">
+                <h1 id="page-title">Dashboard</h1>
+                <div id="topbar-actions" class="topbar-actions"></div>
+            </header>
+            <div id="toast" class="toast hidden" role="status"></div>
+            <div class="content" id="content"></div>
+        </main>
+    </div>
+
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-panel">
+            <div class="modal-header">
+                <h2 id="modal-title"></h2>
+                <button type="button" class="btn-icon" data-close-modal aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="modal-body" class="modal-body"></div>
+            <div id="modal-footer" class="modal-footer"></div>
+        </div>
+    </div>
+
+    <script src="assets/resort-admin.js"></script>
+</body>
+</html>
