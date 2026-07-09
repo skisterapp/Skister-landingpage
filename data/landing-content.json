@@ -30,6 +30,7 @@
       "onboarding.step3.title": "Ausrüstung entdecken",
       "onboarding.step4.title": "Reservierung anfragen",
       "onboarding.step5.title": "Bestätigen & koordinieren",
+      "onboarding.step6.title": "Abholen & zurückgeben",
       "download.comingSoonAlert": "Demnächst! Wir melden uns, sobald die App verfügbar ist.",
       "features.reminders.title": "Automatische Erinnerungen",
       "features.free.description": "Freie Zeiträume werden automatisch angezeigt. Reservierungen laufen direkt über die App.",
@@ -61,8 +62,7 @@
       "onboarding.step4.description": "Wähle den gewünschten Zeitraum aus und sende deine Anfrage direkt an den Besitzer.",
       "onboarding.step5.description": "Der Besitzer bestätigt die Anfrage und ihr organisiert die Übergabe ganz unkompliziert.",
       "onboarding.step6.description": "Automatische Erinnerungen helfen euch, keine Abholung oder Rückgabe zu vergessen.",
-      "features.reminders.description": "Skister erinnert euch an Abholung und Rückgabe.",
-      "onboarding.step6.title": "Abholen & zurückgeben"
+      "features.reminders.description": "Skister erinnert euch an Abholung und Rückgabe."
     },
     "en": {
       "faq.a1": "Skister is an app that allows families, friends, and clubs to organize and share their ski and winter equipment within a private network. This makes better use of existing equipment – simply, securely, and free of charge.",
@@ -346,5 +346,5 @@
     "onboardingStep4": "assets/onboarding/reservation-request.png",
     "onboardingStep5": "assets/onboarding/confirm-coordinate.png"
   },
-  "syncedAt": "2026-07-09T01:27:43.827Z"
+  "syncedAt": "2026-07-09T14:23:24.374Z"
 }
