@@ -67,6 +67,10 @@
       areas: 'Areas',
       import: 'Import / Sync',
       analytics: 'Home Resort Analytics',
+      communities: 'Communities',
+      clubs: 'Ski Clubs',
+      events: 'Resort Events',
+      moderation: 'Moderation',
       settings: 'Settings',
       editor: 'Resort Editor',
     }
@@ -81,6 +85,10 @@
     else if (page === 'areas') renderHierarchy('areas')
     else if (page === 'import') renderImport()
     else if (page === 'analytics') renderAnalytics()
+    else if (page === 'communities') renderCommunities()
+    else if (page === 'clubs') renderClubs()
+    else if (page === 'events') renderEvents()
+    else if (page === 'moderation') renderModeration()
     else if (page === 'settings') renderSettings()
   }
 
@@ -316,6 +324,14 @@
           <div class="form-group"><label><input type="checkbox" name="hasParking" ${resort.hasParking ? 'checked' : ''}> Parking</label></div>
           <div class="form-group"><label><input type="checkbox" name="hasRentals" ${resort.hasRentals ? 'checked' : ''}> Rentals</label></div>
           <div class="form-group"><label><input type="checkbox" name="hasSkiSchool" ${resort.hasSkiSchool ? 'checked' : ''}> Ski school</label></div>
+          <div class="form-group"><label><input type="checkbox" name="hasSnowmaking" ${resort.hasSnowmaking ? 'checked' : ''}> Snowmaking</label></div>
+          <div class="form-group"><label><input type="checkbox" name="hasRestaurants" ${resort.hasRestaurants ? 'checked' : ''}> Restaurants</label></div>
+          <div class="form-group"><label><input type="checkbox" name="hasHotels" ${resort.hasHotels ? 'checked' : ''}> Hotels</label></div>
+          <div class="form-group"><label>Opening date</label><input name="openingDate" type="date" value="${esc(resort.openingDate || '')}"></div>
+          <div class="form-group"><label>Closing date</label><input name="closingDate" type="date" value="${esc(resort.closingDate || '')}"></div>
+          <div class="form-group full"><label>Parking info</label><textarea name="parkingInfo">${esc(resort.parkingInfo || '')}</textarea></div>
+          <div class="form-group full"><label>Ski school info</label><textarea name="skiSchoolInfo">${esc(resort.skiSchoolInfo || '')}</textarea></div>
+          <div class="form-group full"><label>Rental info</label><textarea name="rentalInfo">${esc(resort.rentalInfo || '')}</textarea></div>
           <div class="form-group"><label>Visibility</label><select name="visibilityStatus">
             ${['active', 'hidden', 'closed', 'seasonal'].map((v) => `<option value="${v}" ${resort.visibilityStatus === v ? 'selected' : ''}>${v}</option>`).join('')}
           </select></div>
@@ -387,6 +403,9 @@
       body.hasParking = !!fd.get('hasParking')
       body.hasRentals = !!fd.get('hasRentals')
       body.hasSkiSchool = !!fd.get('hasSkiSchool')
+      body.hasSnowmaking = !!fd.get('hasSnowmaking')
+      body.hasRestaurants = !!fd.get('hasRestaurants')
+      body.hasHotels = !!fd.get('hasHotels')
       try {
         if (id) {
           await api('/ski-resorts/admin/resorts/' + id, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
@@ -593,11 +612,113 @@
   async function renderAnalytics() {
     content.innerHTML = '<div class="loading">Loading analytics…</div>'
     try {
-      const data = await api('/ski-resorts/admin/analytics/home-resorts')
-      const rows = data.topHomeResorts || []
-      content.innerHTML = `<div class="card"><div class="card-header">Top 50 home resorts</div><div class="card-body table-wrap">
+      const [homeData, platformData] = await Promise.all([
+        api('/ski-resorts/admin/analytics/home-resorts'),
+        api('/ski-resorts/admin/analytics/platform').catch(() => null),
+      ])
+      const rows = homeData.topHomeResorts || []
+      const platform = platformData?.stats
+      content.innerHTML = `
+        ${platform ? `<div class="stats">
+          <div class="stat"><div class="num">${platform.totalCommunities}</div><div class="lbl">Communities</div></div>
+          <div class="stat"><div class="num">${platform.totalClubs}</div><div class="lbl">Clubs</div></div>
+          <div class="stat"><div class="num">${platform.upcomingEvents}</div><div class="lbl">Upcoming Events</div></div>
+          <div class="stat"><div class="num">${platform.gearListingsAtResorts}</div><div class="lbl">Gear at Resorts</div></div>
+          <div class="stat"><div class="num">${platform.pendingReports}</div><div class="lbl">Pending Reports</div></div>
+        </div>` : ''}
+        <div class="card"><div class="card-header">Top 50 home resorts</div><div class="card-body table-wrap">
         <table><thead><tr><th>Resort</th><th>Users</th><th>Searches</th></tr></thead>
         <tbody>${rows.map((r) => `<tr><td>${esc(r.official_name)}</td><td>${r.home_selection_count ?? 0}</td><td>${r.search_hit_count ?? 0}</td></tr>`).join('')}</tbody></table></div></div>`
+    } catch (err) {
+      content.innerHTML = '<div class="card"><div class="card-body">' + esc(err.message) + '</div></div>'
+    }
+  }
+
+  async function renderCommunities() {
+    content.innerHTML = '<div class="loading">Loading communities…</div>'
+    try {
+      const data = await api('/ski-resorts/admin/communities')
+      const rows = data.communities || []
+      content.innerHTML = `<div class="card"><div class="card-header">Resort communities (${rows.length})</div>
+        <div class="card-body table-wrap">${rows.length ? `<table><thead><tr><th>Name</th><th>Resort</th><th>Members</th><th>Slug</th></tr></thead>
+        <tbody>${rows.map((r) => {
+          const resort = r.ski_resorts
+          return `<tr><td>${esc(r.name)}</td><td>${esc(resort?.official_name || r.resort_id)}</td><td>${r.member_count ?? 0}</td><td>${esc(r.slug)}</td></tr>`
+        }).join('')}</tbody></table>` : '<p style="color:var(--text-muted)">No communities yet.</p>'}</div></div>`
+    } catch (err) {
+      content.innerHTML = '<div class="card"><div class="card-body">' + esc(err.message) + '</div></div>'
+    }
+  }
+
+  async function renderClubs() {
+    content.innerHTML = '<div class="loading">Loading clubs…</div>'
+    try {
+      const data = await api('/ski-resorts/admin/clubs')
+      const rows = data.clubs || []
+      content.innerHTML = `<div class="card"><div class="card-header">Ski clubs</div><div class="card-body table-wrap">
+        ${rows.length ? `<table><thead><tr><th>Name</th><th>Resort</th><th>Members</th><th>Verified</th><th>Featured</th></tr></thead>
+        <tbody>${rows.map((r) => `<tr><td>${esc(r.name)}</td><td>${esc(r.ski_resorts?.official_name || '')}</td><td>${r.member_count ?? 0}</td><td>${r.is_verified ? 'Yes' : 'No'}</td><td>${r.is_featured ? 'Yes' : 'No'}</td></tr>`).join('')}</tbody></table>` : '<p style="color:var(--text-muted)">No clubs yet.</p>'}
+      </div></div>`
+    } catch (err) {
+      content.innerHTML = '<div class="card"><div class="card-body">' + esc(err.message) + '</div></div>'
+    }
+  }
+
+  async function renderEvents() {
+    content.innerHTML = '<div class="loading">Loading events…</div>'
+    try {
+      const data = await api('/ski-resorts/admin/events')
+      const rows = data.events || []
+      content.innerHTML = `<div class="card"><div class="card-header">Resort events</div><div class="card-body table-wrap">
+        ${rows.length ? `<table><thead><tr><th>Title</th><th>Resort</th><th>Type</th><th>Starts</th><th>Attendees</th></tr></thead>
+        <tbody>${rows.map((r) => `<tr><td>${esc(r.title)}</td><td>${esc(r.ski_resorts?.official_name || '')}</td><td>${esc(r.event_type)}</td><td>${esc(new Date(r.starts_at).toLocaleString())}</td><td>${r.attendee_count ?? 0}</td></tr>`).join('')}</tbody></table>` : '<p style="color:var(--text-muted)">No events yet.</p>'}
+      </div></div>`
+    } catch (err) {
+      content.innerHTML = '<div class="card"><div class="card-body">' + esc(err.message) + '</div></div>'
+    }
+  }
+
+  async function renderModeration() {
+    content.innerHTML = '<div class="loading">Loading moderation queue…</div>'
+    try {
+      const [reports, feed] = await Promise.all([
+        api('/ski-resorts/admin/reports?status=pending'),
+        api('/ski-resorts/admin/feed?status=approved'),
+      ])
+      const reportRows = reports.reports || []
+      const feedRows = feed.posts || []
+      content.innerHTML = `
+        <div class="card"><div class="card-header">Pending reports (${reportRows.length})</div><div class="card-body table-wrap">
+          ${reportRows.length ? `<table><thead><tr><th>Type</th><th>Reason</th><th>Reporter</th><th>Date</th><th></th></tr></thead>
+          <tbody>${reportRows.map((r) => `<tr>
+            <td>${esc(r.target_type)}</td><td>${esc(r.reason)}</td><td>${esc(r.reporter?.name || '—')}</td>
+            <td>${esc(new Date(r.created_at).toLocaleDateString())}</td>
+            <td><button class="btn btn-small btn-secondary" data-dismiss-report="${r.id}" data-target="${r.target_id}">Dismiss</button>
+            <button class="btn btn-small btn-danger" data-hide-report="${r.id}" data-target="${r.target_id}">Hide post</button></td>
+          </tr>`).join('')}</tbody></table>` : '<p style="color:var(--text-muted)">No pending reports.</p>'}
+        </div></div>
+        <div class="card" style="margin-top:1rem"><div class="card-header">Recent community posts</div><div class="card-body">
+          ${feedRows.slice(0, 10).map((p) => `<div style="padding:0.75rem 0;border-bottom:1px solid var(--border)"><strong>${esc(p.profiles?.name || 'User')}</strong><p style="margin:0.25rem 0;font-size:0.9rem">${esc(p.content)}</p><span style="font-size:0.75rem;color:var(--text-muted)">${esc(new Date(p.created_at).toLocaleString())}</span></div>`).join('') || '<p style="color:var(--text-muted)">No posts.</p>'}
+        </div></div>`
+      content.querySelectorAll('[data-dismiss-report]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          await api('/ski-resorts/admin/reports/' + btn.getAttribute('data-dismiss-report') + '/moderate', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'dismiss' }),
+          })
+          toast('Report dismissed')
+          renderModeration()
+        })
+      })
+      content.querySelectorAll('[data-hide-report]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          await api('/ski-resorts/admin/reports/' + btn.getAttribute('data-hide-report') + '/moderate', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'hide', targetId: btn.getAttribute('data-target') }),
+          })
+          toast('Content hidden')
+          renderModeration()
+        })
+      })
     } catch (err) {
       content.innerHTML = '<div class="card"><div class="card-body">' + esc(err.message) + '</div></div>'
     }

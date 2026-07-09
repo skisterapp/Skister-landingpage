@@ -730,17 +730,26 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.5rem;
+            background: transparent;
+            border: none;
             border-radius: 20px;
             min-height: 280px;
         }
+        .onboarding-mascot-wrap--scene {
+            padding: 0;
+            min-height: auto;
+        }
         .onboarding-mascot {
             width: 100%;
-            max-width: 280px;
+            max-width: 320px;
             height: auto;
             object-fit: contain;
+        }
+        .onboarding-mascot--scene {
+            max-width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
         }
         .onboarding-content h3 {
             font-size: 1.75rem;
@@ -774,6 +783,14 @@
             color: var(--primary-green);
             margin-top: 0.15rem;
             flex-shrink: 0;
+        }
+        .onboarding-inline-link {
+            color: var(--primary-green);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        .onboarding-inline-link:hover {
+            color: var(--primary-green-light, #3cb043);
         }
         .onboarding-controls {
             display: flex;
@@ -1604,6 +1621,20 @@
                     </ul>
                 </div>
             </div>
+            <div class="onboarding-slide" data-onboarding-step="6">
+                <div class="onboarding-mascot-wrap onboarding-mascot-wrap--scene">
+                    <img class="onboarding-mascot onboarding-mascot--scene" src="assets/onboarding/mascot-scenery.png" alt="" data-i18n-alt="onboarding.step7.title" loading="lazy" decoding="async">
+                </div>
+                <div class="onboarding-content">
+                    <h3 data-i18n="onboarding.step7.title">Skigebiete entdecken</h3>
+                    <p data-i18n="onboarding.step7.description">Wähle dein Heimatskigebiet in der App und sieh Lifte, Pistenkilometer, Höhenmeter und Saisonzeiten auf einen Blick. Im <a href="/blog/" class="onboarding-inline-link">Skister-Blog</a> findest du Rankings und Guides zu Hunderten Skigebieten.</p>
+                    <ul class="onboarding-features">
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step7.feature1">Heimatskigebiet festlegen</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step7.feature2">Lifte, Pisten &amp; Berginfos</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step7.feature3">Guides im Skister-Blog</span></li>
+                    </ul>
+                </div>
+            </div>
             <div class="onboarding-controls" role="group" aria-label="Onboarding slides">
                 <button type="button" class="onboarding-btn" id="onboarding-prev" aria-label="Previous slide" onclick="onboardingPrev()">
                     <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
@@ -1656,6 +1687,11 @@
                     </div>
                     <h3 data-i18n="features.local.title">Nur lokal</h3>
                     <p data-i18n="features.local.description">Koordiniere lokale Abholungen. Kein Versand, keine Komplikationen.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-mountain"></i></div>
+                    <h3 data-i18n="features.resorts.title">Skigebiete entdecken</h3>
+                    <p data-i18n="features.resorts.description">Heimatskigebiet wählen, Lifte und Pisten einsehen — plus Skigebiet-Guides im Blog für Deutschland, Österreich, die Schweiz und mehr.</p>
                 </article>
             </div>
         </div>
@@ -1927,6 +1963,11 @@
                 'onboarding.step6.feature1': 'Einfache Einladungen',
                 'onboarding.step6.feature2': 'Wachse deine Gemeinschaft',
                 'onboarding.step6.feature3': 'Mehr Auswahl, mehr Spaß',
+                'onboarding.step7.title': 'Skigebiete entdecken',
+                'onboarding.step7.description': 'Wähle dein Heimatskigebiet in der App und sieh Lifte, Pistenkilometer, Höhenmeter und Saisonzeiten auf einen Blick. Im <a href="/blog/" class="onboarding-inline-link">Skister-Blog</a> findest du Rankings und Guides zu Hunderten Skigebieten.',
+                'onboarding.step7.feature1': 'Heimatskigebiet festlegen',
+                'onboarding.step7.feature2': 'Lifte, Pisten & Berginfos',
+                'onboarding.step7.feature3': 'Guides im Skister-Blog',
                 'features.title': 'Funktionen',
                 'features.subtitle': 'Alles was du brauchst, um Ski-Ausrüstung sicher in deinem vertrauenswürdigen Netzwerk zu teilen.',
                 'features.share.title': 'Ausrüstung teilen',
@@ -1941,6 +1982,8 @@
                 'features.private.description': 'Deine Daten bleiben privat. Nur Mitglieder deines Netzwerks können deine Ausrüstung sehen.',
                 'features.local.title': 'Nur lokal',
                 'features.local.description': 'Koordiniere lokale Abholungen. Kein Versand, keine Komplikationen.',
+                'features.resorts.title': 'Skigebiete entdecken',
+                'features.resorts.description': 'Heimatskigebiet wählen, Lifte und Pisten einsehen — plus Skigebiet-Guides im Blog für Deutschland, Österreich, die Schweiz und mehr.',
                 'platform.title': 'Bald verfügbar auf',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -2057,6 +2100,11 @@
                 'onboarding.step6.feature1': 'Simple invitations',
                 'onboarding.step6.feature2': 'Grow your community',
                 'onboarding.step6.feature3': 'More choices, more fun',
+                'onboarding.step7.title': 'Discover ski resorts',
+                'onboarding.step7.description': 'Set your home resort in the app and see lifts, slope kilometres, elevation and season dates at a glance. The <a href="/blog/" class="onboarding-inline-link">Skister blog</a> has rankings and guides to hundreds of ski areas.',
+                'onboarding.step7.feature1': 'Set your home resort',
+                'onboarding.step7.feature2': 'Lifts, pistes & mountain info',
+                'onboarding.step7.feature3': 'Guides on the Skister blog',
                 'features.title': 'Features',
                 'features.subtitle': 'Everything you need to share ski gear safely within your trusted network.',
                 'features.share.title': 'Share Equipment',
@@ -2071,6 +2119,8 @@
                 'features.private.description': 'Your data stays private. Only members of your network can see your equipment.',
                 'features.local.title': 'Local Only',
                 'features.local.description': 'Coordinate local pickups. No shipping, no complications.',
+                'features.resorts.title': 'Discover ski resorts',
+                'features.resorts.description': 'Choose your home resort, browse lifts and pistes — plus ski-area guides on the blog for Germany, Austria, Switzerland and more.',
                 'platform.title': 'Coming Soon to',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -2187,6 +2237,11 @@
                 'onboarding.step6.feature1': 'Invitations simples',
                 'onboarding.step6.feature2': 'Faites grandir votre communauté',
                 'onboarding.step6.feature3': 'Plus de choix, plus de plaisir',
+                'onboarding.step7.title': 'Découvrir les stations de ski',
+                'onboarding.step7.description': 'Choisissez votre station dans l\'app et consultez remontées, kilomètres de pistes, altitude et dates de saison. Le <a href="/blog/" class="onboarding-inline-link">blog Skister</a> propose des classements et guides pour des centaines de stations.',
+                'onboarding.step7.feature1': 'Définir votre station',
+                'onboarding.step7.feature2': 'Remontées, pistes & infos montagne',
+                'onboarding.step7.feature3': 'Guides sur le blog Skister',
                 'features.title': 'Fonctionnalités',
                 'features.subtitle': 'Tout ce dont vous avez besoin pour partager du matériel de ski en toute sécurité au sein de votre réseau de confiance.',
                 'features.share.title': 'Partager l\'Équipement',
@@ -2201,6 +2256,8 @@
                 'features.private.description': 'Vos données restent privées. Seuls les membres de votre réseau peuvent voir votre équipement.',
                 'features.local.title': 'Local Seulement',
                 'features.local.description': 'Coordonnez les retraits locaux. Pas d\'expédition, pas de complications.',
+                'features.resorts.title': 'Découvrir les stations de ski',
+                'features.resorts.description': 'Choisissez votre station, consultez remontées et pistes — plus des guides sur le blog pour l\'Allemagne, l\'Autriche, la Suisse et plus encore.',
                 'platform.title': 'Bientôt Disponible sur',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -2313,6 +2370,11 @@
                 'onboarding.step6.feature1': 'Invitaciones simples',
                 'onboarding.step6.feature2': 'Haz crecer tu comunidad',
                 'onboarding.step6.feature3': 'Más opciones, más diversión',
+                'onboarding.step7.title': 'Descubre estaciones de esquí',
+                'onboarding.step7.description': 'Elige tu estación en la app y consulta remontes, kilómetros de pistas, altitud y fechas de temporada. En el <a href="/blog/" class="onboarding-inline-link">blog de Skister</a> hay rankings y guías de cientos de estaciones.',
+                'onboarding.step7.feature1': 'Establecer tu estación',
+                'onboarding.step7.feature2': 'Remontes, pistas e info de montaña',
+                'onboarding.step7.feature3': 'Guías en el blog de Skister',
                 'features.title': 'Características',
                 'features.subtitle': 'Todo lo que necesitas para compartir equipo de esquí de forma segura dentro de tu red de confianza.',
                 'features.share.title': 'Compartir Equipo',
@@ -2327,6 +2389,8 @@
                 'features.private.description': 'Tus datos permanecen privados. Solo los miembros de tu red pueden ver tu equipo.',
                 'features.local.title': 'Solo Local',
                 'features.local.description': 'Coordina recogidas locales. Sin envíos, sin complicaciones.',
+                'features.resorts.title': 'Descubre estaciones de esquí',
+                'features.resorts.description': 'Elige tu estación, consulta remontes y pistas — más guías de estaciones en el blog para Alemania, Austria, Suiza y más.',
                 'platform.title': 'Próximamente en',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -2443,6 +2507,11 @@
                 'onboarding.step6.feature1': 'Inviti semplici',
                 'onboarding.step6.feature2': 'Fai crescere la tua comunità',
                 'onboarding.step6.feature3': 'Più scelte, più divertimento',
+                'onboarding.step7.title': 'Scopri le località sciistiche',
+                'onboarding.step7.description': 'Scegli la tua località nell\'app e consulta impianti, chilometri di piste, altitudine e date di stagione. Sul <a href="/blog/" class="onboarding-inline-link">blog Skister</a> trovi classifiche e guide per centinaia di località.',
+                'onboarding.step7.feature1': 'Imposta la tua località',
+                'onboarding.step7.feature2': 'Impianti, piste e info montagna',
+                'onboarding.step7.feature3': 'Guide sul blog Skister',
                 'features.title': 'Funzionalità',
                 'features.subtitle': 'Tutto ciò che ti serve per condividere attrezzatura da sci in sicurezza nella tua rete di fiducia.',
                 'features.share.title': 'Condividi Attrezzatura',
@@ -2457,6 +2526,8 @@
                 'features.private.description': 'I tuoi dati rimangono privati. Solo i membri della tua rete possono vedere la tua attrezzatura.',
                 'features.local.title': 'Solo Locale',
                 'features.local.description': 'Coordina ritiri locali. Nessuna spedizione, nessuna complicazione.',
+                'features.resorts.title': 'Scopri le località sciistiche',
+                'features.resorts.description': 'Scegli la tua località, consulta impianti e piste — più guide sul blog per Germania, Austria, Svizzera e altro.',
                 'platform.title': 'Prossimamente su',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -2584,7 +2655,8 @@
                 }
                 const onboardingImageKeys = [
                     { imageKey: 'onboardingStep4', step: 3 },
-                    { imageKey: 'onboardingStep5', step: 4 }
+                    { imageKey: 'onboardingStep5', step: 4 },
+                    { imageKey: 'onboardingStep7', step: 6 }
                 ];
                 onboardingImageKeys.forEach(function (entry) {
                     const imageUrl = content.images[entry.imageKey];
@@ -2736,7 +2808,7 @@
         }
 
         let onboardingStep = 0;
-        const ONBOARDING_STEP_COUNT = 6;
+        const ONBOARDING_STEP_COUNT = 7;
 
         function renderOnboardingDots() {
             const dotsEl = document.getElementById('onboarding-dots');

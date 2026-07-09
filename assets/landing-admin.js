@@ -61,9 +61,11 @@ const ALL_KEYS = [
     'onboarding.step4.title', 'onboarding.step4.description', 'onboarding.step4.feature1', 'onboarding.step4.feature2', 'onboarding.step4.feature3',
     'onboarding.step5.title', 'onboarding.step5.description', 'onboarding.step5.feature1', 'onboarding.step5.feature2', 'onboarding.step5.feature3',
     'onboarding.step6.title', 'onboarding.step6.description', 'onboarding.step6.feature1', 'onboarding.step6.feature2', 'onboarding.step6.feature3',
+    'onboarding.step7.title', 'onboarding.step7.description', 'onboarding.step7.feature1', 'onboarding.step7.feature2', 'onboarding.step7.feature3',
     'features.title', 'features.subtitle', 'features.share.title', 'features.share.description', 'features.family.title', 'features.family.description',
     'features.free.title', 'features.free.description', 'features.reminders.title', 'features.reminders.description',
     'features.private.title', 'features.private.description', 'features.local.title', 'features.local.description',
+    'features.resorts.title', 'features.resorts.description',
     'platform.title', 'platform.ios', 'platform.android',
     'home.blog.title', 'home.blog.subtitle', 'home.blog.viewAll',
     'download.title', 'download.subtitle', 'download.apple.line1', 'download.apple.line2', 'download.android.line1', 'download.android.line2',
@@ -486,7 +488,7 @@ function renderFields() {
         } else if (sec.id === 'onboarding') {
             const headerKeys = keys.filter(function (k) { return k === 'onboarding.title' || k === 'onboarding.subtitle'; });
             headerKeys.forEach(function (key) { html += renderFieldInput(key); });
-            for (let i = 1; i <= 6; i++) {
+            for (let i = 1; i <= 7; i++) {
                 const stepKeys = keys.filter(function (k) { return k.indexOf('onboarding.step' + i + '.') === 0; });
                 if (!stepKeys.length) continue;
                 html += '<div class="landing-field-group"><div class="landing-field-group-title">Step ' + i + '</div>';

@@ -3,6 +3,8 @@
   "version": "1.0.3",
   "private": true,
   "scripts": {
+    "dev": "cd ../Skisterapp && npm run dev",
+    "dev:landing": "npx --yes serve . -l 3000",
     "build:cap": "cd ../Skisterapp && npm run build:cap",
     "cap:copy": "cap copy",
     "cap:sync": "cap copy",

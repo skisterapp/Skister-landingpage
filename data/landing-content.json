@@ -62,7 +62,14 @@
       "onboarding.step4.description": "Wähle den gewünschten Zeitraum aus und sende deine Anfrage direkt an den Besitzer.",
       "onboarding.step5.description": "Der Besitzer bestätigt die Anfrage und ihr organisiert die Übergabe ganz unkompliziert.",
       "onboarding.step6.description": "Automatische Erinnerungen helfen euch, keine Abholung oder Rückgabe zu vergessen.",
-      "features.reminders.description": "Skister erinnert euch an Abholung und Rückgabe."
+      "features.reminders.description": "Skister erinnert euch an Abholung und Rückgabe.",
+      "onboarding.step7.title": "Skigebiete entdecken",
+      "onboarding.step7.description": "Wähle dein Heimatskigebiet in der App und sieh Lifte, Pistenkilometer, Höhenmeter und Saisonzeiten auf einen Blick. Im <a href=\"/blog/\" class=\"onboarding-inline-link\">Skister-Blog</a> findest du Rankings und Guides zu Hunderten Skigebieten.",
+      "onboarding.step7.feature1": "Heimatskigebiet festlegen",
+      "onboarding.step7.feature2": "Lifte, Pisten & Berginfos",
+      "onboarding.step7.feature3": "Guides im Skister-Blog",
+      "features.resorts.title": "Skigebiete entdecken",
+      "features.resorts.description": "Heimatskigebiet wählen, Lifte und Pisten einsehen — plus Skigebiet-Guides im Blog für Deutschland, Österreich, die Schweiz und mehr."
     },
     "en": {
       "faq.a1": "Skister is an app that allows families, friends, and clubs to organize and share their ski and winter equipment within a private network. This makes better use of existing equipment – simply, securely, and free of charge.",
@@ -129,7 +136,14 @@
       "onboarding.step4.description": "Select your desired time period and send your request directly to the owner.",
       "onboarding.step5.description": "The owner confirms the request and you organize the handover in a very straightforward manner.",
       "onboarding.step6.description": "Automatic reminders help you avoid forgetting any pickups or returns.",
-      "features.reminders.description": "Skister will remind you about pickup and return times."
+      "features.reminders.description": "Skister will remind you about pickup and return times.",
+      "onboarding.step7.title": "Discover ski resorts",
+      "onboarding.step7.description": "Set your home resort in the app and see lifts, slope kilometres, elevation and season dates at a glance. The <a href=\"/blog/\" class=\"onboarding-inline-link\">Skister blog</a> has rankings and guides to hundreds of ski areas.",
+      "onboarding.step7.feature1": "Set your home resort",
+      "onboarding.step7.feature2": "Lifts, pistes & mountain info",
+      "onboarding.step7.feature3": "Guides on the Skister blog",
+      "features.resorts.title": "Discover ski resorts",
+      "features.resorts.description": "Choose your home resort, browse lifts and pistes — plus ski-area guides on the blog for Germany, Austria, Switzerland and more."
     },
     "es": {
       "faq.a1": "Skister es una aplicación que permite a familias, amigos y clubes organizar y compartir su equipo de esquí y de invierno dentro de una red privada. Esto permite aprovechar mejor el equipo existente de forma sencilla, segura y gratuita.",
@@ -199,7 +213,14 @@
       "onboarding.step4.description": "Seleccione el período de tiempo deseado y envíe su solicitud directamente al propietario.",
       "onboarding.step5.description": "El propietario confirma la solicitud y usted organiza la entrega de forma muy sencilla.",
       "onboarding.step6.description": "Los recordatorios automáticos te ayudan a no olvidarte de recoger o devolver artículos.",
-      "features.reminders.description": "Skister te recordará los horarios de recogida y devolución."
+      "features.reminders.description": "Skister te recordará los horarios de recogida y devolución.",
+      "onboarding.step7.title": "Descubre estaciones de esquí",
+      "onboarding.step7.description": "Elige tu estación en la app y consulta remontes, kilómetros de pistas, altitud y fechas de temporada. En el <a href=\"/blog/\" class=\"onboarding-inline-link\">blog de Skister</a> hay rankings y guías de cientos de estaciones.",
+      "onboarding.step7.feature1": "Establecer tu estación",
+      "onboarding.step7.feature2": "Remontes, pistas e info de montaña",
+      "onboarding.step7.feature3": "Guías en el blog de Skister",
+      "features.resorts.title": "Descubre estaciones de esquí",
+      "features.resorts.description": "Elige tu estación, consulta remontes y pistas — más guías de estaciones en el blog para Alemania, Austria, Suiza y más."
     },
     "fr": {
       "faq.a1": "Skister est une application qui permet aux familles, aux amis et aux clubs d&#39;organiser et de partager leur matériel de ski et d&#39;hiver au sein d&#39;un réseau privé. Cela permet une meilleure utilisation du matériel existant, de manière simple, sécurisée et gratuite.",
@@ -268,7 +289,14 @@
       "onboarding.step4.description": "Sélectionnez la période souhaitée et envoyez votre demande directement au propriétaire.",
       "onboarding.step5.description": "Le propriétaire confirme la demande et vous organisez la remise des clés de manière très simple.",
       "onboarding.step6.description": "Les rappels automatiques vous aident à éviter d&#39;oublier des enlèvements ou des retours.",
-      "features.reminders.description": "Skister vous rappellera les heures de prise en charge et de retour."
+      "features.reminders.description": "Skister vous rappellera les heures de prise en charge et de retour.",
+      "onboarding.step7.title": "Découvrir les stations de ski",
+      "onboarding.step7.description": "Choisissez votre station dans l&#39;app et consultez remontées, kilomètres de pistes, altitude et dates de saison. Le <a href=\"/blog/\" class=\"onboarding-inline-link\">blog Skister</a> propose des classements et guides pour des centaines de stations.",
+      "onboarding.step7.feature1": "Définir votre station",
+      "onboarding.step7.feature2": "Remontées, pistes & infos montagne",
+      "onboarding.step7.feature3": "Guides sur le blog Skister",
+      "features.resorts.title": "Découvrir les stations de ski",
+      "features.resorts.description": "Choisissez votre station, consultez remontées et pistes — plus des guides sur le blog pour l&#39;Allemagne, l&#39;Autriche, la Suisse et plus encore."
     },
     "it": {
       "faq.a1": "Skister è un&#39;app che permette a famiglie, amici e club di organizzare e condividere la propria attrezzatura da sci e da sport invernali all&#39;interno di una rete privata. In questo modo si sfrutta al meglio l&#39;attrezzatura già in possesso, in modo semplice, sicuro e gratuito.",
@@ -338,13 +366,21 @@
       "onboarding.step4.description": "Seleziona il periodo di tempo desiderato e invia la tua richiesta direttamente al proprietario.",
       "onboarding.step5.description": "Il proprietario conferma la richiesta e voi organizzate la consegna in modo molto semplice.",
       "onboarding.step6.description": "I promemoria automatici ti aiutano a non dimenticare ritiri o resi.",
-      "features.reminders.description": "Skister ti ricorderà gli orari di ritiro e di riconsegna."
+      "features.reminders.description": "Skister ti ricorderà gli orari di ritiro e di riconsegna.",
+      "onboarding.step7.title": "Scopri le località sciistiche",
+      "onboarding.step7.description": "Scegli la tua località nell'app e consulta impianti, chilometri di piste, altitudine e date di stagione. Sul <a href=\"/blog/\" class=\"onboarding-inline-link\">blog Skister</a> trovi classifiche e guide per centinaia di località.",
+      "onboarding.step7.feature1": "Imposta la tua località",
+      "onboarding.step7.feature2": "Impianti, piste e info montagna",
+      "onboarding.step7.feature3": "Guide sul blog Skister",
+      "features.resorts.title": "Scopri le località sciistiche",
+      "features.resorts.description": "Scegli la tua località, consulta impianti e piste — più guide sul blog per Germania, Austria, Svizzera e altro."
     }
   },
   "images": {
     "heroMascot": "https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png",
     "onboardingStep4": "assets/onboarding/reservation-request.png",
-    "onboardingStep5": "assets/onboarding/confirm-coordinate.png"
+    "onboardingStep5": "assets/onboarding/confirm-coordinate.png",
+    "onboardingStep7": "assets/onboarding/mascot-scenery.png"
   },
   "syncedAt": "2026-07-09T14:23:24.374Z"
 }
