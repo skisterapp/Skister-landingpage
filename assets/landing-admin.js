@@ -70,7 +70,7 @@ const ALL_KEYS = [
     'home.blog.title', 'home.blog.subtitle', 'home.blog.viewAll',
     'download.title', 'download.subtitle', 'download.apple.line1', 'download.apple.line2', 'download.android.line1', 'download.android.line2',
     'download.badge', 'download.hint',
-    'faq.title', 'faq.q1', 'faq.a1', 'faq.q2', 'faq.a2', 'faq.q3', 'faq.a3', 'faq.q4', 'faq.a4', 'faq.q5', 'faq.a5',
+    'faq.title', 'faq.q1', 'faq.a1', 'faq.q2', 'faq.a2', 'faq.q3', 'faq.a3', 'faq.q4', 'faq.a4', 'faq.q5', 'faq.a5', 'faq.q6', 'faq.a6',
     'disclaimer.title', 'disclaimer.text',
     'footer.product', 'footer.features', 'footer.faq', 'footer.feedback', 'footer.legal', 'footer.privacy', 'footer.terms',
     'footer.support', 'footer.contact', 'footer.rights', 'footer.madewith',
@@ -465,7 +465,7 @@ function renderFields() {
 
         if (sec.id === 'faq') {
             if (keys.includes('faq.title')) html += renderFieldInput('faq.title');
-            for (let i = 1; i <= 5; i++) {
+            for (let i = 1; i <= 6; i++) {
                 const qKey = 'faq.q' + i;
                 const aKey = 'faq.a' + i;
                 html += '<div class="landing-faq-pair">';

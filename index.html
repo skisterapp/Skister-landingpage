@@ -29,7 +29,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#228B22">
-    <meta name="application-version" content="1.0.2">
+    <meta name="application-version" content="1.0.4">
     
     <link rel="canonical" href="https://skister.app/">
     <title>Skister - Share the Slopes</title>
@@ -1289,6 +1289,7 @@
             margin-right: auto;
             position: relative;
             z-index: 2;
+            text-align: center;
         }
         
         .disclaimer h3 {
@@ -1404,6 +1405,62 @@
         .modal p, .modal ul {
             color: var(--text-gray);
             line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .legal-document-body {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .legal-section {
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+        }
+
+        .legal-section h3 {
+            color: var(--text-white);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .legal-section p,
+        .legal-section li {
+            color: var(--text-gray);
+            line-height: 1.7;
+            margin-bottom: 0.5rem;
+        }
+
+        .legal-section ul {
+            padding-left: 1.2rem;
+            margin-left: 0;
+        }
+
+        .legal-section--warning {
+            background: rgba(220, 38, 38, 0.12);
+            border-color: rgba(248, 113, 113, 0.35);
+        }
+
+        .legal-section--warning h3,
+        .legal-section--warning p,
+        .legal-section--warning li {
+            color: #fecaca;
+        }
+
+        .legal-section--info {
+            background: rgba(37, 99, 235, 0.12);
+            border-color: rgba(96, 165, 250, 0.35);
+        }
+
+        .legal-section--info h3,
+        .legal-section--info p,
+        .legal-section--info li {
+            color: #bfdbfe;
+        }
+
+        .legal-updated {
+            color: var(--text-gray);
             margin-bottom: 1rem;
         }
         
@@ -1626,12 +1683,12 @@
                     <img class="onboarding-mascot onboarding-mascot--scene" src="assets/onboarding/mascot-scenery.png" alt="" data-i18n-alt="onboarding.step7.title" loading="lazy" decoding="async">
                 </div>
                 <div class="onboarding-content">
-                    <h3 data-i18n="onboarding.step7.title">Skigebiete entdecken</h3>
-                    <p data-i18n="onboarding.step7.description">Wähle dein Heimatskigebiet in der App und sieh Lifte, Pistenkilometer, Höhenmeter und Saisonzeiten auf einen Blick. Im <a href="/blog/" class="onboarding-inline-link">Skister-Blog</a> findest du Rankings und Guides zu Hunderten Skigebieten.</p>
+                    <h3 data-i18n="onboarding.step7.title">Dein Ski-Netzwerk entdecken</h3>
+                    <p data-i18n="onboarding.step7.description">Wähle in der App dein Ski-Netzwerk — rund um Skigebiete, Clubs, Communities und Events. Sieh Lifte, Pisten und Saisoninfos auf einen Blick. Im <a href="/blog/" class="onboarding-inline-link">Skister-Blog</a> findest du zusätzlich Guides zu Skigebieten.</p>
                     <ul class="onboarding-features">
-                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step7.feature1">Heimatskigebiet festlegen</span></li>
-                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step7.feature2">Lifte, Pisten &amp; Berginfos</span></li>
-                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step7.feature3">Guides im Skister-Blog</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step7.feature1">Ski-Netzwerk wählen</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step7.feature2">Community, Events &amp; Skifahrer</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="onboarding.step7.feature3">Skigebiet-Infos &amp; Blog-Guides</span></li>
                     </ul>
                 </div>
             </div>
@@ -1690,8 +1747,8 @@
                 </article>
                 <article class="feature-card">
                     <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-mountain"></i></div>
-                    <h3 data-i18n="features.resorts.title">Skigebiete entdecken</h3>
-                    <p data-i18n="features.resorts.description">Heimatskigebiet wählen, Lifte und Pisten einsehen — plus Skigebiet-Guides im Blog für Deutschland, Österreich, die Schweiz und mehr.</p>
+                    <h3 data-i18n="features.resorts.title">Dein Ski-Netzwerk</h3>
+                    <p data-i18n="features.resorts.description">Verbinde dich mit Skifahrern, Clubs und Communities — nicht nur mit einem Skigebiet. Entdecke Ausrüstung, Events und Skifahrer in deiner Umgebung.</p>
                 </article>
             </div>
         </div>
@@ -1818,6 +1875,17 @@
     </section>
     
     <!-- Disclaimer -->
+    
+        <div class="faq-item" onclick="toggleFAQ(this)">
+            <div class="faq-question">
+                <span data-i18n="faq.q6">Was ist ein Ski-Netzwerk?</span>
+                <i class="fa-solid fa-chevron-down faq-arrow"></i>
+            </div>
+            <div class="faq-answer">
+                <div class="faq-answer-content" data-i18n="faq.a6">Ein Ski-Netzwerk ist Skisters Weg, Skifahrern zu helfen, sich rund um die Orte und Communities zu verbinden, in denen sie ski fahren. Es kann Skigebiete, Skiclubs, lokale Communities, Events, Skifahrer in der Nähe und zukünftige Community-Funktionen umfassen.</div>
+            </div>
+        </div>
+
     <div class="disclaimer">
         <h3><i class="fa-solid fa-triangle-exclamation"></i> <span data-i18n="disclaimer.title">Wichtiger Hinweis</span></h3>
         <p data-i18n="disclaimer.text">
@@ -1855,7 +1923,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 Skister. <span data-i18n="footer.rights">Alle Rechte vorbehalten.</span></p>
+            <p>© 2026 Skister. <span data-i18n="footer.rights">Alle Rechte vorbehalten.</span></p>
             <p data-i18n="footer.madewith">Made with ❤️ from the alps</p>
         </div>
     </footer>
@@ -1865,15 +1933,9 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal('privacy')">×</button>
             <h2 data-i18n="modal.privacy.title">Datenschutzrichtlinie</h2>
-            <p data-i18n="modal.privacy.intro">Letzte Aktualisierung: Februar 2025</p>
-            <p data-i18n="modal.privacy.p1">Bei Skister respektieren wir deine Privatsphäre. Diese Datenschutzrichtlinie erklärt, wie wir Informationen sammeln, verwenden und schützen.</p>
-            <h3 data-i18n="modal.privacy.collection">1. Informationen, die wir sammeln</h3>
-            <p data-i18n="modal.privacy.collectionText">Wir sammeln E-Mail-Adressen von Nutzern, die sich für unsere Warteliste anmelden. Nach dem Start sammeln wir Profilinformationen, Ausrüstungslisten und Nutzungsdaten.</p>
-            <h3 data-i18n="modal.privacy.usage">2. Verwendung von Informationen</h3>
-            <p data-i18n="modal.privacy.usageText">Deine Informationen werden verwendet, um unsere Dienste bereitzustellen, dich über Updates zu informieren und dein Erlebnis zu verbessern.</p>
-            <h3 data-i18n="modal.privacy.sharing">3. Informationsweitergabe</h3>
-            <p data-i18n="modal.privacy.sharingText">Wir verkaufen deine Informationen nicht an Dritte. Deine Profilinformationen sind nur für Mitglieder deines privaten Netzwerks sichtbar.</p>
-            <p data-i18n="modal.privacy.contactEmail">Fragen zum Datenschutz: <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a></p>
+            <p id="modal-privacy-updated" class="legal-updated"></p>
+            <div id="modal-privacy-body" class="legal-document-body"></div>
+            <p style="margin-top: 1rem;"><a href="/privacy.html" style="color: var(--primary-green);" data-i18n="modal.privacy.fullPage">Vollständige Datenschutzrichtlinie</a></p>
         </div>
     </div>
     
@@ -1881,13 +1943,9 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal('terms')">×</button>
             <h2 data-i18n="modal.terms.title">Nutzungsbedingungen</h2>
-            <p data-i18n="modal.terms.intro">Letzte Aktualisierung: Februar 2025</p>
-            <h3 data-i18n="modal.terms.acceptance">1. Akzeptanz der Bedingungen</h3>
-            <p data-i18n="modal.terms.acceptanceText">Durch die Nutzung von Skister stimmst du diesen Bedingungen zu. Wenn du nicht zustimmst, nutze bitte nicht unseren Service.</p>
-            <h3 data-i18n="modal.terms.service">2. Beschreibung des Service</h3>
-            <p data-i18n="modal.terms.serviceText">Skister ist eine Koordinationsplattform für das Teilen von Ski-Ausrüstung. Wir übernehmen keine Verantwortung für Ausrüstung, Schäden oder Verluste.</p>
-            <h3 data-i18n="modal.terms.liability">3. Haftungsausschluss</h3>
-            <p data-i18n="modal.terms.liabilityText"><strong>WICHTIG:</strong> Skister übernimmt KEINE Verantwortung, Haftung oder Versicherung für geliehene, beschädigte, verlorene oder gestohlene Ausrüstung. Alle Austausche erfolgen auf eigenes Risiko.</p>
+            <p id="modal-terms-updated" class="legal-updated"></p>
+            <div id="modal-terms-body" class="legal-document-body"></div>
+            <p style="margin-top: 1rem;"><a href="/terms.html" style="color: var(--primary-green);" data-i18n="modal.terms.fullPage">Vollständige Nutzungsbedingungen</a></p>
         </div>
     </div>
     
@@ -1910,6 +1968,8 @@
         </div>
     </div>
     
+    <script src="/scripts/legal-content.js"></script>
+    <script src="/scripts/legal-render.js"></script>
     <script>
         // Translations
         const translations = {
@@ -1963,11 +2023,11 @@
                 'onboarding.step6.feature1': 'Einfache Einladungen',
                 'onboarding.step6.feature2': 'Wachse deine Gemeinschaft',
                 'onboarding.step6.feature3': 'Mehr Auswahl, mehr Spaß',
-                'onboarding.step7.title': 'Skigebiete entdecken',
-                'onboarding.step7.description': 'Wähle dein Heimatskigebiet in der App und sieh Lifte, Pistenkilometer, Höhenmeter und Saisonzeiten auf einen Blick. Im <a href="/blog/" class="onboarding-inline-link">Skister-Blog</a> findest du Rankings und Guides zu Hunderten Skigebieten.',
-                'onboarding.step7.feature1': 'Heimatskigebiet festlegen',
-                'onboarding.step7.feature2': 'Lifte, Pisten & Berginfos',
-                'onboarding.step7.feature3': 'Guides im Skister-Blog',
+                'onboarding.step7.title': 'Dein Ski-Netzwerk entdecken',
+                'onboarding.step7.description': 'Wähle in der App dein Ski-Netzwerk — rund um Skigebiete, Clubs, Communities und Events. Sieh Lifte, Pisten und Saisoninfos auf einen Blick. Im <a href="/blog/" class="onboarding-inline-link">Skister-Blog</a> findest du zusätzlich Guides zu Skigebieten.',
+                'onboarding.step7.feature1': 'Ski-Netzwerk wählen',
+                'onboarding.step7.feature2': 'Community, Events & Skifahrer',
+                'onboarding.step7.feature3': 'Skigebiet-Infos & Blog-Guides',
                 'features.title': 'Funktionen',
                 'features.subtitle': 'Alles was du brauchst, um Ski-Ausrüstung sicher in deinem vertrauenswürdigen Netzwerk zu teilen.',
                 'features.share.title': 'Ausrüstung teilen',
@@ -1982,8 +2042,8 @@
                 'features.private.description': 'Deine Daten bleiben privat. Nur Mitglieder deines Netzwerks können deine Ausrüstung sehen.',
                 'features.local.title': 'Nur lokal',
                 'features.local.description': 'Koordiniere lokale Abholungen. Kein Versand, keine Komplikationen.',
-                'features.resorts.title': 'Skigebiete entdecken',
-                'features.resorts.description': 'Heimatskigebiet wählen, Lifte und Pisten einsehen — plus Skigebiet-Guides im Blog für Deutschland, Österreich, die Schweiz und mehr.',
+                'features.resorts.title': 'Dein Ski-Netzwerk',
+                'features.resorts.description': 'Verbinde dich mit Skifahrern, Clubs und Communities — nicht nur mit einem Skigebiet. Entdecke Ausrüstung, Events und Skifahrer in deiner Umgebung.',
                 'platform.title': 'Bald verfügbar auf',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -2010,8 +2070,10 @@
                 'faq.a4': 'Nein. Skister ist nur eine Koordinations-App, ähnlich wie soziale Medien, um dir zu helfen, mit deinem vertrauenswürdigen Netzwerk zu kommunizieren. Wir übernehmen keine Verantwortung, Haftung oder Versicherung für geliehene, beschädigte oder verlorene Ausrüstung.',
                 'faq.q5': 'Kann ich Artikel an Ausleiher versenden?',
                 'faq.a5': 'Nein, Skister ist nur für lokale Austausche konzipiert. Das hält die Dinge einfach und stellt sicher, dass Artikel innerhalb deiner vertrauenswürdigen Gemeinschaft bleiben.',
+                'faq.q6': 'Was ist ein Ski-Netzwerk?',
+                'faq.a6': 'Ein Ski-Netzwerk ist Skisters Weg, Skifahrern zu helfen, sich rund um die Orte und Communities zu verbinden, in denen sie ski fahren. Es kann Skigebiete, Skiclubs, lokale Communities, Events, Skifahrer in der Nähe und zukünftige Community-Funktionen umfassen. Ein Skigebiet ist ein realer Ort; dein Ski-Netzwerk in Skister ist die Community-Funktion in der App.',
                 'disclaimer.title': 'Wichtiger Hinweis',
-                'disclaimer.text': 'Skister ist nur ein Kommunikations-Tool. Wir übernehmen keine Verantwortung für geliehene, beschädigte oder verlorene Ausrüstung. Nutze die App auf eigenes Risiko. Alle Austausche erfolgen direkt zwischen dir und deinen Bekannten.',
+                'disclaimer.text': 'Skister stellt ausschließlich die Plattform zur Organisation privater Ausleihen bereit. Leihvereinbarungen kommen direkt zwischen den beteiligten Personen zustande. Für geliehene, beschädigte oder verlorene Ausrüstung übernimmt Skister keine Haftung. Skister ist eine unabhängige Community-Plattform. Wir sind nicht verbunden mit, von oder offiziell assoziiert mit Skigebieten, Skiclubs, Eventveranstaltern oder anderen Organisationen in der App.',
                 'footer.product': 'Produkt',
                 'footer.features': 'Funktionen',
                 'footer.download': 'Download',
@@ -2025,6 +2087,7 @@
                 'footer.rights': 'Alle Rechte vorbehalten.',
                 'footer.madewith': 'Made with ❤️ from the alps',
                 'modal.privacy.title': 'Datenschutzrichtlinie',
+                'modal.privacy.fullPage': 'Vollständige Datenschutzrichtlinie',
                 'modal.privacy.intro': 'Letzte Aktualisierung: Februar 2025',
                 'modal.privacy.p1': 'Bei Skister respektieren wir deine Privatsphäre. Diese Datenschutzrichtlinie erklärt, wie wir Informationen sammeln, verwenden und schützen.',
                 'modal.privacy.collection': '1. Informationen, die wir sammeln',
@@ -2035,6 +2098,7 @@
                 'modal.privacy.sharingText': 'Wir verkaufen deine Informationen nicht an Dritte. Deine Profilinformationen sind nur für Mitglieder deines privaten Netzwerks sichtbar.',
                 'modal.privacy.contactEmail': 'Fragen zum Datenschutz: <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a>',
                 'modal.terms.title': 'Nutzungsbedingungen',
+                'modal.terms.fullPage': 'Vollständige Nutzungsbedingungen',
                 'modal.terms.intro': 'Letzte Aktualisierung: Februar 2025',
                 'modal.terms.acceptance': '1. Akzeptanz der Bedingungen',
                 'modal.terms.acceptanceText': 'Durch die Nutzung von Skister stimmst du diesen Bedingungen zu. Wenn du nicht zustimmst, nutze bitte nicht unseren Service.',
@@ -2100,11 +2164,11 @@
                 'onboarding.step6.feature1': 'Simple invitations',
                 'onboarding.step6.feature2': 'Grow your community',
                 'onboarding.step6.feature3': 'More choices, more fun',
-                'onboarding.step7.title': 'Discover ski resorts',
-                'onboarding.step7.description': 'Set your home resort in the app and see lifts, slope kilometres, elevation and season dates at a glance. The <a href="/blog/" class="onboarding-inline-link">Skister blog</a> has rankings and guides to hundreds of ski areas.',
-                'onboarding.step7.feature1': 'Set your home resort',
-                'onboarding.step7.feature2': 'Lifts, pistes & mountain info',
-                'onboarding.step7.feature3': 'Guides on the Skister blog',
+                'onboarding.step7.title': 'Discover your Ski Network',
+                'onboarding.step7.description': 'Choose your Ski Network in the app — built around resorts, clubs, communities, and events. See lifts, pistes, and season info at a glance. The <a href="/blog/" class="onboarding-inline-link">Skister blog</a> also has guides to ski areas.',
+                'onboarding.step7.feature1': 'Choose your Ski Network',
+                'onboarding.step7.feature2': 'Community, events & nearby skiers',
+                'onboarding.step7.feature3': 'Resort info & blog guides',
                 'features.title': 'Features',
                 'features.subtitle': 'Everything you need to share ski gear safely within your trusted network.',
                 'features.share.title': 'Share Equipment',
@@ -2119,8 +2183,8 @@
                 'features.private.description': 'Your data stays private. Only members of your network can see your equipment.',
                 'features.local.title': 'Local Only',
                 'features.local.description': 'Coordinate local pickups. No shipping, no complications.',
-                'features.resorts.title': 'Discover ski resorts',
-                'features.resorts.description': 'Choose your home resort, browse lifts and pistes — plus ski-area guides on the blog for Germany, Austria, Switzerland and more.',
+                'features.resorts.title': 'Your Ski Network',
+                'features.resorts.description': 'Connect with skiers, clubs, and communities — not just a single resort. Discover gear, events, and people around where you ski.',
                 'platform.title': 'Coming Soon to',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -2147,8 +2211,10 @@
                 'faq.a4': 'No. Skister is only a coordination app, similar to social media, to help you communicate with your trusted network. We assume no responsibility, liability, or insurance for borrowed, damaged, or lost equipment.',
                 'faq.q5': 'Can I ship items to borrowers?',
                 'faq.a5': 'No, Skister is designed for local exchanges only. This keeps things simple and ensures items stay within your trusted community.',
+                'faq.q6': 'What is a Ski Network?',
+                'faq.a6': 'A Ski Network is Skister\'s way of helping skiers connect around the places and communities they ski. It may include ski resorts, ski clubs, local communities, events, nearby skiers, and future community features. A ski resort is a real-world place; your Ski Network in Skister is the community feature in the app.',
                 'disclaimer.title': 'Important Notice',
-                'disclaimer.text': 'Skister is only a communication tool. We assume no responsibility for borrowed, damaged, or lost equipment. Use the app at your own risk. All exchanges occur directly between you and your acquaintances.',
+                'disclaimer.text': 'Skister merely provides the platform for organizing private rentals. Rental agreements are made directly between the parties involved. Skister assumes no liability for rented, damaged, or lost equipment. Skister is an independent community platform. We are not affiliated with, endorsed by, or officially associated with any ski resort, ski club, event organizer, or other organization displayed within the app.',
                 'footer.product': 'Product',
                 'footer.features': 'Features',
                 'footer.download': 'Download',
@@ -2162,6 +2228,7 @@
                 'footer.rights': 'All rights reserved.',
                 'footer.madewith': 'Made with ❤️ from the alps',
                 'modal.privacy.title': 'Privacy Policy',
+                'modal.privacy.fullPage': 'Full privacy policy',
                 'modal.privacy.intro': 'Last updated: February 2025',
                 'modal.privacy.p1': 'At Skister, we respect your privacy. This Privacy Policy explains how we collect, use, and protect your information.',
                 'modal.privacy.collection': '1. Information We Collect',
@@ -2172,6 +2239,7 @@
                 'modal.privacy.sharingText': 'We do not sell your information to third parties. Your profile information is only visible to members of your private network.',
                 'modal.privacy.contactEmail': 'Privacy questions: <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a>',
                 'modal.terms.title': 'Terms of Service',
+                'modal.terms.fullPage': 'Full terms of service',
                 'modal.terms.intro': 'Last updated: February 2025',
                 'modal.terms.acceptance': '1. Acceptance of Terms',
                 'modal.terms.acceptanceText': 'By using Skister, you agree to these terms. If you do not agree, please do not use our service.',
@@ -2237,11 +2305,11 @@
                 'onboarding.step6.feature1': 'Invitations simples',
                 'onboarding.step6.feature2': 'Faites grandir votre communauté',
                 'onboarding.step6.feature3': 'Plus de choix, plus de plaisir',
-                'onboarding.step7.title': 'Découvrir les stations de ski',
-                'onboarding.step7.description': 'Choisissez votre station dans l\'app et consultez remontées, kilomètres de pistes, altitude et dates de saison. Le <a href="/blog/" class="onboarding-inline-link">blog Skister</a> propose des classements et guides pour des centaines de stations.',
-                'onboarding.step7.feature1': 'Définir votre station',
-                'onboarding.step7.feature2': 'Remontées, pistes & infos montagne',
-                'onboarding.step7.feature3': 'Guides sur le blog Skister',
+                'onboarding.step7.title': 'Découvrez votre Ski Network',
+                'onboarding.step7.description': 'Choisissez votre Ski Network dans l\'app — autour de stations, clubs, communautés et événements. Consultez remontées, pistes et infos saison. Le <a href="/blog/" class="onboarding-inline-link">blog Skister</a> propose aussi des guides de stations.',
+                'onboarding.step7.feature1': 'Choisir votre Ski Network',
+                'onboarding.step7.feature2': 'Communauté, événements & skieurs proches',
+                'onboarding.step7.feature3': 'Infos station & guides blog',
                 'features.title': 'Fonctionnalités',
                 'features.subtitle': 'Tout ce dont vous avez besoin pour partager du matériel de ski en toute sécurité au sein de votre réseau de confiance.',
                 'features.share.title': 'Partager l\'Équipement',
@@ -2256,8 +2324,8 @@
                 'features.private.description': 'Vos données restent privées. Seuls les membres de votre réseau peuvent voir votre équipement.',
                 'features.local.title': 'Local Seulement',
                 'features.local.description': 'Coordonnez les retraits locaux. Pas d\'expédition, pas de complications.',
-                'features.resorts.title': 'Découvrir les stations de ski',
-                'features.resorts.description': 'Choisissez votre station, consultez remontées et pistes — plus des guides sur le blog pour l\'Allemagne, l\'Autriche, la Suisse et plus encore.',
+                'features.resorts.title': 'Votre Ski Network',
+                'features.resorts.description': 'Connectez-vous avec skieurs, clubs et communautés — pas seulement une station. Découvrez matériel, événements et personnes autour de vos lieux de ski.',
                 'platform.title': 'Bientôt Disponible sur',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -2284,8 +2352,10 @@
                 'faq.a4': 'Non. Skister est uniquement une application de coordination, similaire aux médias sociaux, pour vous aider à communiquer avec votre réseau de confiance. Nous n\'assumons aucune responsabilité, obligation ou assurance pour l\'équipement emprunté, endommagé ou perdu.',
                 'faq.q5': 'Puis-je expédier des articles aux emprunteurs?',
                 'faq.a5': 'Non, Skister est conçu pour les échanges locaux uniquement. Cela garde les choses simples et garantit que les articles restent dans votre communauté de confiance.',
+                'faq.q6': 'Qu\'est-ce qu\'un Ski Network ?',
+                'faq.a6': 'Un Ski Network est la façon dont Skister aide les skieurs à se connecter autour des lieux et communautés où ils skient. Il peut inclure stations, clubs, communautés locales, événements, skieurs à proximité et futures fonctionnalités communautaires. Une station est un lieu réel ; votre Ski Network dans Skister est la fonction communauté dans l\'app.',
                 'disclaimer.title': 'Avis Important',
-                'disclaimer.text': 'Skister n\'est qu\'un outil de communication. Nous n\'assumons aucune responsabilité pour l\'équipement emprunté, endommagé ou perdu. Utilisez l\'application à vos propres risques. Tous les échanges se font directement entre vous et vos connaissances.',
+                'disclaimer.text': 'Skister fournit uniquement la plateforme pour l\'organisation de locations entre particuliers. Les contrats de location sont conclus directement entre les parties concernées. Skister décline toute responsabilité en cas de perte, de dommage ou de détérioration du matériel loué. Skister est une plateforme communautaire indépendante. Nous ne sommes affiliés à, approuvés par ou officiellement associés à aucune station, club de ski, organisateur d\'événements ou autre organisation affichée dans l\'app.',
                 'footer.product': 'Produit',
                 'footer.features': 'Fonctionnalités',
                 'footer.download': 'Télécharger',
@@ -2299,6 +2369,7 @@
                 'footer.rights': 'Tous droits réservés.',
                 'footer.madewith': 'Fait avec ❤️ depuis les Alpes',
                 'modal.privacy.title': 'Politique de Confidentialité',
+                'modal.privacy.fullPage': 'Politique de confidentialité complète',
                 'modal.privacy.intro': 'Dernière mise à jour: Février 2025',
                 'modal.privacy.p1': 'Chez Skister, nous respectons votre vie privée. Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos informations.',
                 'modal.privacy.collection': '1. Informations que Nous Collectons',
@@ -2309,6 +2380,7 @@
                 'modal.privacy.sharingText': 'Nous ne vendons pas vos informations à des tiers. Vos informations de profil ne sont visibles que par les membres de votre réseau privé.',
                 'modal.privacy.contactEmail': 'Questions sur la confidentialité : <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a>',
                 'modal.terms.title': 'Conditions d\'Utilisation',
+                'modal.terms.fullPage': 'Conditions d\'utilisation complètes',
                 'modal.terms.intro': 'Dernière mise à jour: Février 2025',
                 'modal.terms.acceptance': '1. Acceptation des Conditions',
                 'modal.terms.acceptanceText': 'En utilisant Skister, vous acceptez ces conditions. Si vous n\'êtes pas d\'accord, veuillez ne pas utiliser notre service.',
@@ -2370,11 +2442,11 @@
                 'onboarding.step6.feature1': 'Invitaciones simples',
                 'onboarding.step6.feature2': 'Haz crecer tu comunidad',
                 'onboarding.step6.feature3': 'Más opciones, más diversión',
-                'onboarding.step7.title': 'Descubre estaciones de esquí',
-                'onboarding.step7.description': 'Elige tu estación en la app y consulta remontes, kilómetros de pistas, altitud y fechas de temporada. En el <a href="/blog/" class="onboarding-inline-link">blog de Skister</a> hay rankings y guías de cientos de estaciones.',
-                'onboarding.step7.feature1': 'Establecer tu estación',
-                'onboarding.step7.feature2': 'Remontes, pistas e info de montaña',
-                'onboarding.step7.feature3': 'Guías en el blog de Skister',
+                'onboarding.step7.title': 'Descubre tu Ski Network',
+                'onboarding.step7.description': 'Elige tu Ski Network en la app — alrededor de estaciones, clubs, comunidades y eventos. Consulta remontes, pistas e info de temporada. En el <a href="/blog/" class="onboarding-inline-link">blog de Skister</a> hay guías de estaciones.',
+                'onboarding.step7.feature1': 'Elige tu Ski Network',
+                'onboarding.step7.feature2': 'Comunidad, eventos y esquiadores cercanos',
+                'onboarding.step7.feature3': 'Info de estación y guías del blog',
                 'features.title': 'Características',
                 'features.subtitle': 'Todo lo que necesitas para compartir equipo de esquí de forma segura dentro de tu red de confianza.',
                 'features.share.title': 'Compartir Equipo',
@@ -2389,8 +2461,8 @@
                 'features.private.description': 'Tus datos permanecen privados. Solo los miembros de tu red pueden ver tu equipo.',
                 'features.local.title': 'Solo Local',
                 'features.local.description': 'Coordina recogidas locales. Sin envíos, sin complicaciones.',
-                'features.resorts.title': 'Descubre estaciones de esquí',
-                'features.resorts.description': 'Elige tu estación, consulta remontes y pistas — más guías de estaciones en el blog para Alemania, Austria, Suiza y más.',
+                'features.resorts.title': 'Tu Ski Network',
+                'features.resorts.description': 'Conéctate con esquiadores, clubs y comunidades — no solo con una estación. Descubre equipo, eventos y personas donde esquías.',
                 'platform.title': 'Próximamente en',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -2417,8 +2489,10 @@
                 'faq.a4': 'No. Skister es solo una aplicación de coordinación, similar a las redes sociales, para ayudarte a comunicarte con tu red de confianza. No asumimos responsabilidad, obligación o seguro por equipo prestado, dañado o perdido.',
                 'faq.q5': '¿Puedo enviar artículos a los prestatarios?',
                 'faq.a5': 'No, Skister está diseñado solo para intercambios locales. Esto mantiene las cosas simples y garantiza que los artículos permanezcan dentro de tu comunidad de confianza.',
+                'faq.q6': '¿Qué es un Ski Network?',
+                'faq.a6': 'Un Ski Network es la forma de Skister de ayudar a los esquiadores a conectarse en torno a los lugares y comunidades donde esquían. Puede incluir estaciones, clubs, comunidades locales, eventos, esquiadores cercanos y futuras funciones comunitarias. Una estación es un lugar real; tu Ski Network en Skister es la función de comunidad en la app.',
                 'disclaimer.title': 'Aviso Importante',
-                'disclaimer.text': 'Skister es solo una herramienta de comunicación. No asumimos responsabilidad por equipo prestado, dañado o perdido. Usa la aplicación bajo tu propio riesgo. Todos los intercambios ocurren directamente entre tú y tus conocidos.',
+                'disclaimer.text': 'Skister simplemente proporciona la plataforma para organizar alquileres privados. Los contratos de alquiler se formalizan directamente entre las partes involucradas. Skister no se responsabiliza por el equipo alquilado, dañado o extraviado. Skister es una plataforma comunitaria independiente. No estamos afiliados, respaldados ni asociados oficialmente con estaciones, clubs, organizadores de eventos u otras organizaciones mostradas en la app.',
                 'footer.product': 'Producto',
                 'footer.features': 'Características',
                 'footer.download': 'Descargar',
@@ -2432,6 +2506,7 @@
                 'footer.rights': 'Todos los derechos reservados.',
                 'footer.madewith': 'Hecho con ❤️ desde los Alpes',
                 'modal.privacy.title': 'Política de Privacidad',
+                'modal.privacy.fullPage': 'Política de privacidad completa',
                 'modal.privacy.intro': 'Última actualización: Febrero 2025',
                 'modal.privacy.p1': 'En Skister, respetamos tu privacidad. Esta Política de Privacidad explica cómo recopilamos, usamos y protegemos tu información.',
                 'modal.privacy.collection': '1. Información que Recopilamos',
@@ -2442,6 +2517,7 @@
                 'modal.privacy.sharingText': 'No vendemos tu información a terceros. Tu información de perfil solo es visible para los miembros de tu red privada.',
                 'modal.privacy.contactEmail': 'Consultas de privacidad: <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a>',
                 'modal.terms.title': 'Términos de Servicio',
+                'modal.terms.fullPage': 'Términos de servicio completos',
                 'modal.terms.intro': 'Última actualización: Febrero 2025',
                 'modal.terms.acceptance': '1. Aceptación de Términos',
                 'modal.terms.acceptanceText': 'Al usar Skister, aceptas estos términos. Si no estás de acuerdo, por favor no uses nuestro servicio.',
@@ -2507,11 +2583,11 @@
                 'onboarding.step6.feature1': 'Inviti semplici',
                 'onboarding.step6.feature2': 'Fai crescere la tua comunità',
                 'onboarding.step6.feature3': 'Più scelte, più divertimento',
-                'onboarding.step7.title': 'Scopri le località sciistiche',
-                'onboarding.step7.description': 'Scegli la tua località nell\'app e consulta impianti, chilometri di piste, altitudine e date di stagione. Sul <a href="/blog/" class="onboarding-inline-link">blog Skister</a> trovi classifiche e guide per centinaia di località.',
-                'onboarding.step7.feature1': 'Imposta la tua località',
-                'onboarding.step7.feature2': 'Impianti, piste e info montagna',
-                'onboarding.step7.feature3': 'Guide sul blog Skister',
+                'onboarding.step7.title': 'Scopri il tuo Ski Network',
+                'onboarding.step7.description': 'Scegli il tuo Ski Network nell\'app — intorno a comprensori, club, community ed eventi. Consulta impianti, piste e info stagionali. Sul <a href="/blog/" class="onboarding-inline-link">blog Skister</a> trovi anche guide ai comprensori.',
+                'onboarding.step7.feature1': 'Scegli il tuo Ski Network',
+                'onboarding.step7.feature2': 'Community, eventi e sciatori vicini',
+                'onboarding.step7.feature3': 'Info comprensorio e guide blog',
                 'features.title': 'Funzionalità',
                 'features.subtitle': 'Tutto ciò che ti serve per condividere attrezzatura da sci in sicurezza nella tua rete di fiducia.',
                 'features.share.title': 'Condividi Attrezzatura',
@@ -2526,8 +2602,8 @@
                 'features.private.description': 'I tuoi dati rimangono privati. Solo i membri della tua rete possono vedere la tua attrezzatura.',
                 'features.local.title': 'Solo Locale',
                 'features.local.description': 'Coordina ritiri locali. Nessuna spedizione, nessuna complicazione.',
-                'features.resorts.title': 'Scopri le località sciistiche',
-                'features.resorts.description': 'Scegli la tua località, consulta impianti e piste — più guide sul blog per Germania, Austria, Svizzera e altro.',
+                'features.resorts.title': 'Il tuo Ski Network',
+                'features.resorts.description': 'Connettiti con sciatori, club e community — non solo un comprensorio. Scopri attrezzatura, eventi e persone dove scii.',
                 'platform.title': 'Prossimamente su',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -2554,8 +2630,10 @@
                 'faq.a4': 'No. Skister è solo un\'app di coordinamento, simile ai social media, per aiutarti a comunicare con la tua rete di fiducia. Non assumiamo responsabilità, obblighi o assicurazione per attrezzatura prestata, danneggiata o persa.',
                 'faq.q5': 'Posso spedire articoli ai mutuatari?',
                 'faq.a5': 'No, Skister è progettato solo per scambi locali. Questo mantiene le cose semplici e garantisce che gli articoli rimangano all\'interno della tua comunità di fiducia.',
+                'faq.q6': 'Cos\'è un Ski Network?',
+                'faq.a6': 'Un Ski Network è il modo in cui Skister aiuta gli sciatori a connettersi intorno ai luoghi e alle community dove sciano. Può includere comprensori, club, community locali, eventi, sciatori nelle vicinanze e future funzionalità community. Un comprensorio è un luogo reale; il tuo Ski Network in Skister è la funzione community nell\'app.',
                 'disclaimer.title': 'Avviso Importante',
-                'disclaimer.text': 'Skister è solo uno strumento di comunicazione. Non assumiamo responsabilità per attrezzatura prestata, danneggiata o persa. Usa l\'app a tuo rischio. Tutti gli scambi avvengono direttamente tra te e i tuoi conoscenti.',
+                'disclaimer.text': 'Skister fornisce esclusivamente la piattaforma per l\'organizzazione di noleggi privati. I contratti di noleggio vengono stipulati direttamente tra le parti coinvolte. Skister non si assume alcuna responsabilità per attrezzature noleggiate, danneggiate o smarrite. Skister è una piattaforma community indipendente. Non siamo affiliati, approvati o ufficialmente associati a comprensori, club sciistici, organizzatori di eventi o altre organizzazioni mostrate nell\'app.',
                 'footer.product': 'Prodotto',
                 'footer.features': 'Funzionalità',
                 'footer.download': 'Download',
@@ -2569,6 +2647,7 @@
                 'footer.rights': 'Tutti i diritti riservati.',
                 'footer.madewith': 'Fatto con ❤️ dalle Alpi',
                 'modal.privacy.title': 'Informativa sulla Privacy',
+                'modal.privacy.fullPage': 'Informativa privacy completa',
                 'modal.privacy.intro': 'Ultimo aggiornamento: Febbraio 2025',
                 'modal.privacy.p1': 'Su Skister, rispettiamo la tua privacy. Questa Informativa sulla Privacy spiega come raccogliamo, utilizziamo e proteggiamo le tue informazioni.',
                 'modal.privacy.collection': '1. Informazioni che Raccogliamo',
@@ -2579,6 +2658,7 @@
                 'modal.privacy.sharingText': 'Non vendiamo le tue informazioni a terzi. Le tue informazioni di profilo sono visibili solo ai membri della tua rete privata.',
                 'modal.privacy.contactEmail': 'Domande sulla privacy: <a href="mailto:privacy@skister.app" style="color: var(--primary-green);">privacy@skister.app</a>',
                 'modal.terms.title': 'Termini di Servizio',
+                'modal.terms.fullPage': 'Termini di servizio completi',
                 'modal.terms.intro': 'Ultimo aggiornamento: Febbraio 2025',
                 'modal.terms.acceptance': '1. Accettazione dei Termini',
                 'modal.terms.acceptanceText': 'Utilizzando Skister, accetti questi termini. Se non sei d\'accordo, per favore non utilizzare il nostro servizio.',
@@ -2783,6 +2863,7 @@
             initOnboardingCarousel();
             loadHomeBlogStrip();
             loadLandingContentFromSite();
+            if (window.SkisterLegalRender) SkisterLegalRender.renderModals(currentLang);
         });
         
         // Language Functions
@@ -2873,6 +2954,7 @@
             document.getElementById('current-language').textContent = flags[lang];
             
             applyDataI18n(lang);
+            if (window.SkisterLegalRender) SkisterLegalRender.renderModals(lang);
             
             // Close dropdown
             toggleLanguageDropdown();

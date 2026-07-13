@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -7,7 +7,7 @@
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#228B22">
   <link rel="canonical" href="https://skister.app/privacy.html">
-  <title>Skister — Privacy Policy</title>
+  <title>Skister — Privacy</title>
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="apple-touch-icon" href="assets/favicon.png">
   <link rel="manifest" href="/site.webmanifest">
@@ -43,21 +43,9 @@
       z-index: 1000;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
-    .logo a {
-      display: inline-flex;
-      align-items: center;
-      text-decoration: none;
-    }
-    .logo-image {
-      height: 2.25rem;
-      width: auto;
-      display: block;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
+    .logo a { display: inline-flex; align-items: center; text-decoration: none; }
+    .logo-image { height: 2.25rem; width: auto; display: block; }
+    .nav-links { display: flex; align-items: center; gap: 1.5rem; }
     .nav-links a {
       color: var(--text-gray);
       text-decoration: none;
@@ -66,28 +54,68 @@
       font-weight: 500;
     }
     .nav-links a:hover, .nav-links a:focus-visible { color: var(--primary-green-light); outline: none; }
+    .language-selector { position: relative; }
+    .language-btn {
+      background: rgba(34, 139, 34, 0.2);
+      border: 1px solid var(--primary-green);
+      color: var(--text-white);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .language-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 0.5rem;
+      background: rgba(20, 20, 20, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 0.5rem 0;
+      min-width: 160px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s;
+      z-index: 999;
+    }
+    .language-dropdown.active { opacity: 1; visibility: visible; transform: translateY(0); }
+    .language-option {
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      color: var(--text-gray);
+    }
+    .language-option:hover { background: rgba(34, 139, 34, 0.2); color: var(--text-white); }
     main {
       max-width: 980px;
       margin: 0 auto;
       padding: calc(var(--nav-offset) + 2rem) 1.5rem 3.5rem;
     }
-    .page-header {
-      display: grid;
-      gap: 0.75rem;
-      margin-bottom: 1.75rem;
-    }
+    .page-header { display: grid; gap: 0.75rem; margin-bottom: 1.75rem; }
     .page-header h1 { font-size: 2.25rem; color: var(--primary-green); }
-    .page-card {
+    #legal-page-content { display: grid; gap: 1.25rem; }
+    .legal-section {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 16px;
       padding: 1.5rem;
-      display: grid;
-      gap: 0.75rem;
     }
-    .page-card h2 { color: var(--primary-green); }
-    .page-card h3 { color: var(--text-white); margin-top: 0.25rem; }
-    .page-card p, .page-card li { color: var(--text-gray); line-height: 1.8; }
+    .legal-section h3 { margin: 0 0 0.75rem; color: var(--text-white); }
+    .legal-section p, .legal-section li { color: var(--text-gray); line-height: 1.8; margin-bottom: 0.75rem; }
+    .legal-section ul { padding-left: 1.2rem; display: grid; gap: 0.4rem; }
+    .legal-section--warning {
+      background: rgba(220, 38, 38, 0.12);
+      border-color: rgba(248, 113, 113, 0.35);
+    }
+    .legal-section--info {
+      background: rgba(37, 99, 235, 0.12);
+      border-color: rgba(96, 165, 250, 0.35);
+    }
+    .legal-section--info h3, .legal-section--info p, .legal-section--info li { color: #bfdbfe; }
+    .legal-updated { color: var(--text-gray); }
     footer {
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       padding: 3rem 2rem 1.5rem;
@@ -102,22 +130,11 @@
     }
     .footer-section h3 { color: var(--primary-green); margin-bottom: 1rem; }
     .footer-links { display: flex; flex-direction: column; gap: 0.5rem; }
-    .footer-links a {
-      color: var(--text-gray);
-      text-decoration: none;
-      cursor: pointer;
-      transition: color 0.3s;
-    }
-    .footer-links a:hover, .footer-links a:focus-visible { color: var(--primary-green-light); outline: none; }
-    .footer-bottom {
-      text-align: center;
-      margin-top: 2.5rem;
-      color: var(--text-gray);
-      font-size: 0.9rem;
-    }
+    .footer-links a { color: var(--text-gray); text-decoration: none; }
+    .footer-links a:hover { color: var(--primary-green-light); }
+    .footer-bottom { text-align: center; margin-top: 2.5rem; color: var(--text-gray); font-size: 0.9rem; }
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      nav { flex-wrap: wrap; }
       main { padding-top: calc(var(--nav-offset) + 1.25rem); }
     }
   </style>
@@ -126,110 +143,51 @@
   <nav>
     <div class="logo">
       <a href="/" aria-label="Skister home">
-        <img
-          src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterLogoWeb.png"
-          alt="Skister"
-          class="logo-image"
-          width="1287"
-          height="337"
-        >
+        <img src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterLogoWeb.png" alt="Skister" class="logo-image" width="1287" height="337">
       </a>
     </div>
     <div class="nav-links" aria-label="Primary">
-      <a href="/#features">Features</a>
-      <a href="/#download">Download</a>
-      <a href="/help.html">Help</a>
-      <a href="/terms.html">Terms</a>
+      <a href="/#features" data-i18n="nav.features">Features</a>
+      <a href="/#download" data-i18n="nav.download">Download</a>
+      <a href="/#faq" data-i18n="nav.faq">FAQ</a>
+      <a href="/blog/" data-i18n="nav.blog">Blog</a>
+      <a href="/terms.html" data-i18n="footer.terms">Terms</a>
+      <div class="language-selector">
+        <button class="language-btn" onclick="toggleLanguageDropdown()" type="button" aria-label="Language">
+          <span id="current-language">🇩🇪 DE</span>
+          <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+        </button>
+        <div class="language-dropdown" id="language-dropdown" role="listbox" aria-label="Languages">
+          <div class="language-option" onclick="changeLanguage('de')">🇩🇪 Deutsch</div>
+          <div class="language-option" onclick="changeLanguage('en')">🇬🇧 English</div>
+          <div class="language-option" onclick="changeLanguage('fr')">🇫🇷 Français</div>
+          <div class="language-option" onclick="changeLanguage('es')">🇪🇸 Español</div>
+          <div class="language-option" onclick="changeLanguage('it')">🇮🇹 Italiano</div>
+        </div>
+      </div>
     </div>
   </nav>
 
   <main>
     <div class="page-header">
-      <h1>Privacy Policy</h1>
-      <p>Last updated: April 2026</p>
+      <h1 data-i18n="modal.privacy.title">Datenschutzrichtlinie</h1>
+      <p id="legal-page-updated" class="legal-updated"></p>
     </div>
-
-    <section class="page-card" aria-labelledby="privacy-intro">
-      <h2 id="privacy-intro">Overview</h2>
-      <p>This Privacy Policy explains what data Skister collects, how we use it, where it is stored, and your rights under GDPR.</p>
-    </section>
-
-    <section class="page-card" aria-labelledby="data-collected">
-      <h2 id="data-collected">1. Data we collect</h2>
-      <ul style="padding-left: 1.2rem; display: grid; gap: 0.5rem;">
-        <li><strong style="color: var(--text-white);">Account data:</strong> name and email address.</li>
-        <li><strong style="color: var(--text-white);">Gear listings:</strong> item details you provide (photos, descriptions, condition).</li>
-        <li><strong style="color: var(--text-white);">Rental activity:</strong> requests, handoffs, returns, and related timestamps.</li>
-      </ul>
-    </section>
-
-    <section class="page-card" aria-labelledby="usage">
-      <h2 id="usage">2. How we use data</h2>
-      <ul style="padding-left: 1.2rem; display: grid; gap: 0.5rem;">
-        <li>To operate the app and provide its core features (inventory, rentals, reminders).</li>
-        <li>To maintain safety and trust features (condition confirmation, ratings within your network).</li>
-        <li>To improve features and reliability (aggregated insights and troubleshooting).</li>
-      </ul>
-    </section>
-
-    <section class="page-card" aria-labelledby="storage">
-      <h2 id="storage">3. Storage & third-party services</h2>
-      <p>Skister stores and processes app data via <strong style="color: var(--text-white);">Supabase</strong> (a third-party infrastructure provider). Our Supabase project is configured to use an <strong style="color: var(--text-white);">EU region</strong>. Your data may be processed and stored on Supabase-managed services as needed to operate Skister.</p>
-      <p>We may use additional third-party services (e.g., error monitoring) in the future. If we do, this policy will be updated.</p>
-    </section>
-
-    <section class="page-card" aria-labelledby="retention">
-      <h2 id="retention">4. Data retention</h2>
-      <p>We store your data as long as your account is active or as needed to provide Skister’s services.</p>
-      <p>When you request deletion, we delete or anonymize personal data unless we are legally required to keep certain records for a longer period.</p>
-    </section>
-
-    <section class="page-card" aria-labelledby="sharing">
-      <h2 id="sharing">5. Sharing</h2>
-      <p>We do <strong style="color: var(--text-white);">not</strong> sell your data.</p>
-      <ul style="padding-left: 1.2rem; display: grid; gap: 0.5rem;">
-        <li>Your gear and activity details are shared only within your chosen network as part of the app’s normal operation.</li>
-        <li>We disclose data if required by law, or to protect users and the service from abuse.</li>
-      </ul>
-    </section>
-
-    <section class="page-card" aria-labelledby="gdpr-rights">
-      <h2 id="gdpr-rights">6. Your rights (GDPR)</h2>
-      <ul style="padding-left: 1.2rem; display: grid; gap: 0.5rem;">
-        <li>Right of access</li>
-        <li>Right to rectification</li>
-        <li>Right to deletion</li>
-        <li>Right to restriction of processing</li>
-        <li>Right to data portability</li>
-        <li>Right to object</li>
-      </ul>
-      <p style="margin-top: 0.5rem;">To request access, correction, or deletion, contact us at <a href="mailto:privacy@skister.app" style="color: var(--primary-green); text-decoration: none;">privacy@skister.app</a>.</p>
-    </section>
-
-    <section class="page-card" aria-labelledby="children">
-      <h2 id="children">7. Children</h2>
-      <p>Skister is not intended for users under 16. If you believe a user under 16 has provided personal data, contact us at <a href="mailto:privacy@skister.app" style="color: var(--primary-green); text-decoration: none;">privacy@skister.app</a>.</p>
-    </section>
-
-    <section class="page-card" aria-labelledby="contact">
-      <h2 id="contact">8. Contact</h2>
-      <p>Privacy questions: <a href="mailto:privacy@skister.app" style="color: var(--primary-green); text-decoration: none;">privacy@skister.app</a></p>
-      <p>Support: <a href="mailto:support@skister.app" style="color: var(--primary-green); text-decoration: none;">support@skister.app</a></p>
-    </section>
+    <div id="legal-page-content" aria-live="polite"></div>
   </main>
 
   <footer>
     <div class="footer-content">
       <div class="footer-section">
-        <h3>Legal</h3>
+        <h3 data-i18n="footer.legal">Rechtliches</h3>
         <div class="footer-links">
-          <a href="/privacy.html" aria-current="page">Privacy</a>
-          <a href="/terms.html">Terms</a>
+          <a href="/privacy.html" aria-current="page" data-i18n="footer.privacy">Datenschutzrichtlinie</a>
+          <a href="/terms.html" data-i18n="footer.terms">Nutzungsbedingungen</a>
           <a href="/help.html">Help</a>
         </div>
       </div>
       <div class="footer-section">
-        <h3>Support</h3>
+        <h3 data-i18n="footer.support">Support</h3>
         <div class="footer-links">
           <a href="mailto:support@skister.app">support@skister.app</a>
           <a href="mailto:privacy@skister.app">privacy@skister.app</a>
@@ -237,9 +195,112 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Skister. All rights reserved.</p>
+      <p>© 2026 Skister. <span data-i18n="footer.rights">Alle Rechte vorbehalten.</span></p>
     </div>
   </footer>
+
+  <script src="/scripts/legal-content.js"></script>
+  <script src="/scripts/legal-render.js"></script>
+  <script>
+    const translations = {
+      de: {
+        'nav.features': 'Funktionen',
+        'nav.faq': 'FAQ',
+        'nav.blog': 'Blog',
+        'nav.download': 'Download',
+        'footer.legal': 'Rechtliches',
+        'footer.privacy': 'Datenschutzrichtlinie',
+        'footer.terms': 'Nutzungsbedingungen',
+        'footer.support': 'Support',
+        'footer.rights': 'Alle Rechte vorbehalten.',
+        'modal.privacy.title': 'Datenschutzrichtlinie',
+      },
+      en: {
+        'nav.features': 'Features',
+        'nav.faq': 'FAQ',
+        'nav.blog': 'Blog',
+        'nav.download': 'Download',
+        'footer.legal': 'Legal',
+        'footer.privacy': 'Privacy Policy',
+        'footer.terms': 'Terms of Service',
+        'footer.support': 'Support',
+        'footer.rights': 'All rights reserved.',
+        'modal.privacy.title': 'Privacy Policy',
+      },
+      fr: {
+        'nav.features': 'Fonctionnalités',
+        'nav.faq': 'FAQ',
+        'nav.blog': 'Blog',
+        'nav.download': 'Télécharger',
+        'footer.legal': 'Mentions Légales',
+        'footer.privacy': 'Politique de Confidentialité',
+        'footer.terms': 'Conditions d\'Utilisation',
+        'footer.support': 'Support',
+        'footer.rights': 'Tous droits réservés.',
+        'modal.privacy.title': 'Politique de Confidentialité',
+      },
+      es: {
+        'nav.features': 'Funciones',
+        'nav.faq': 'FAQ',
+        'nav.blog': 'Blog',
+        'nav.download': 'Descargar',
+        'footer.legal': 'Legal',
+        'footer.privacy': 'Política de Privacidad',
+        'footer.terms': 'Términos de Servicio',
+        'footer.support': 'Soporte',
+        'footer.rights': 'Todos los derechos reservados.',
+        'modal.privacy.title': 'Política de Privacidad',
+      },
+      it: {
+        'nav.features': 'Funzionalità',
+        'nav.faq': 'FAQ',
+        'nav.blog': 'Blog',
+        'nav.download': 'Download',
+        'footer.legal': 'Legale',
+        'footer.privacy': 'Informativa sulla Privacy',
+        'footer.terms': 'Termini di Servizio',
+        'footer.support': 'Supporto',
+        'footer.rights': 'Tutti i diritti riservati.',
+        'modal.privacy.title': 'Informativa sulla Privacy',
+      },
+    }
+
+    let currentLang = 'de'
+
+    function applyDataI18n(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(function (element) {
+        const key = element.getAttribute('data-i18n')
+        if (translations[lang] && translations[lang][key]) element.innerHTML = translations[lang][key]
+      })
+    }
+
+    function changeLanguage(lang) {
+      currentLang = lang
+      document.documentElement.lang = lang
+      const flags = { de: '🇩🇪 DE', en: '🇬🇧 EN', fr: '🇫🇷 FR', es: '🇪🇸 ES', it: '🇮🇹 IT' }
+      const currentLabel = document.getElementById('current-language')
+      if (currentLabel) currentLabel.textContent = flags[lang] || flags.de
+      applyDataI18n(lang)
+      if (window.SkisterLegalRender) SkisterLegalRender.initPage('privacy', lang)
+      toggleLanguageDropdown()
+    }
+
+    function toggleLanguageDropdown() {
+      const dropdown = document.getElementById('language-dropdown')
+      if (dropdown) dropdown.classList.toggle('active')
+    }
+
+    document.addEventListener('click', function (event) {
+      const selector = document.querySelector('.language-selector')
+      const dropdown = document.getElementById('language-dropdown')
+      if (!selector || !dropdown) return
+      if (!selector.contains(event.target)) dropdown.classList.remove('active')
+    })
+
+    document.addEventListener('DOMContentLoaded', function () {
+      applyDataI18n(currentLang)
+      if (window.SkisterLegalRender) SkisterLegalRender.initPage('privacy', currentLang)
+    })
+  </script>
 </body>
 </html>
-

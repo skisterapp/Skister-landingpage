@@ -81,6 +81,20 @@ export function Help(): React.ReactNode {
 function getHelpSections(): HelpSection[] {
   return [
     {
+      id: 'ski-network',
+      title: 'Ski Network',
+      items: [
+        {
+          title: 'What is a Ski Network?',
+          description: 'Skister\'s community feature for connecting around resorts, clubs, events, and nearby skiers. A ski resort is a real-world place; your Ski Network in Skister is the community layer in the app — not the resort itself.'
+        },
+        {
+          title: 'Choosing your Ski Network',
+          description: 'Pick a network based on your preferred resort, club, or local community in Profile or onboarding.'
+        }
+      ]
+    },
+    {
       id: 'getting-started',
       title: 'Getting started',
       items: [

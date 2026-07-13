@@ -60,19 +60,19 @@
     })
     const titles = {
       dashboard: 'Dashboard',
-      resorts: 'All Resorts',
+      resorts: 'Ski Resorts',
       pending: 'Pending Requests',
       countries: 'Countries',
       regions: 'Regions',
       areas: 'Areas',
       import: 'Import / Sync',
-      analytics: 'Home Resort Analytics',
+      analytics: 'Home Ski Network Analytics',
       communities: 'Communities',
       clubs: 'Ski Clubs',
-      events: 'Resort Events',
+      events: 'Ski Network Events',
       moderation: 'Moderation',
       settings: 'Settings',
-      editor: 'Resort Editor',
+      editor: 'Ski Resort Editor',
     }
     pageTitle.textContent = titles[page] || page
     topbarActions.innerHTML = ''
@@ -154,7 +154,7 @@
       const s = data.stats
       content.innerHTML = `
         <div class="stats">
-          <div class="stat"><div class="num">${s.totalResorts}</div><div class="lbl">Total Resorts</div></div>
+          <div class="stat"><div class="num">${s.totalResorts}</div><div class="lbl">Ski Resorts</div></div>
           <div class="stat"><div class="num">${s.pendingRequests}</div><div class="lbl">Pending Requests</div></div>
           <div class="stat"><div class="num">${s.countries}</div><div class="lbl">Countries</div></div>
           <div class="stat"><div class="num">${s.regions}</div><div class="lbl">Regions</div></div>
@@ -162,9 +162,9 @@
           <div class="stat"><div class="num">${s.resortsThisMonth}</div><div class="lbl">Added This Month</div></div>
         </div>
         <div class="charts">
-          <div class="chart-card"><h3>New resorts over time</h3><canvas id="chart-growth"></canvas></div>
+          <div class="chart-card"><h3>New ski resorts over time</h3><canvas id="chart-growth"></canvas></div>
           <div class="chart-card"><h3>Pending requests</h3><canvas id="chart-pending"></canvas></div>
-          <div class="chart-card"><h3>Top home resorts</h3><canvas id="chart-home"></canvas></div>
+          <div class="chart-card"><h3>Top home Ski Networks</h3><canvas id="chart-home"></canvas></div>
           <div class="chart-card"><h3>Most searched</h3><canvas id="chart-search"></canvas></div>
         </div>`
       const charts = data.charts
@@ -212,13 +212,13 @@
   let resortsState = { q: '', sort: 'name', page: 1 }
 
   async function renderResortsList() {
-    topbarActions.innerHTML = '<button type="button" class="btn btn-primary btn-small" id="btn-new-resort"><i class="fa-solid fa-plus"></i> Add resort</button>'
+    topbarActions.innerHTML = '<button type="button" class="btn btn-primary btn-small" id="btn-new-resort"><i class="fa-solid fa-plus"></i> Add ski resort</button>'
     $('#btn-new-resort')?.addEventListener('click', () => openResortEditor(null))
 
     content.innerHTML = `
       <div class="card">
         <div class="card-header">
-          <span>All resorts</span>
+          <span>Ski resorts</span>
           <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
             <input type="search" class="search-input" id="resort-search" placeholder="Search name, slug…" value="${esc(resortsState.q)}">
             <select id="resort-sort" class="search-input">
@@ -626,7 +626,7 @@
           <div class="stat"><div class="num">${platform.gearListingsAtResorts}</div><div class="lbl">Gear at Resorts</div></div>
           <div class="stat"><div class="num">${platform.pendingReports}</div><div class="lbl">Pending Reports</div></div>
         </div>` : ''}
-        <div class="card"><div class="card-header">Top 50 home resorts</div><div class="card-body table-wrap">
+        <div class="card"><div class="card-header">Top 50 home Ski Networks</div><div class="card-body table-wrap">
         <table><thead><tr><th>Resort</th><th>Users</th><th>Searches</th></tr></thead>
         <tbody>${rows.map((r) => `<tr><td>${esc(r.official_name)}</td><td>${r.home_selection_count ?? 0}</td><td>${r.search_hit_count ?? 0}</td></tr>`).join('')}</tbody></table></div></div>`
     } catch (err) {
