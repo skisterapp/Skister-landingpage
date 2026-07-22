@@ -1468,36 +1468,300 @@
             margin-left: 1.5rem;
         }
         
-        /* Responsive */
+        /* Responsive — tablet & mobile */
         @media (max-width: 768px) {
-            .hero-mascot {
-                width: 8.75rem;
-                height: 8.75rem;
+            :root {
+                --nav-offset: 3.75rem;
             }
-            .hero .tagline {
-                font-size: 0.82rem;
-                letter-spacing: 0.1em;
+
+            html {
+                scroll-snap-type: none;
+                overflow-x: clip;
             }
-            .hero-waitlist-card {
-                padding: 1.25rem 1rem 1rem;
+
+            body {
+                overflow-x: clip;
             }
-            .email-form {
-                flex-direction: column;
-            }
-            .submit-btn {
-                width: 100%;
-            }
-            
-            .nav-links {
-                display: none;
+
+            .snap-section {
+                min-height: 0;
+                scroll-snap-align: none;
+                scroll-snap-stop: normal;
             }
 
             nav {
-                flex-wrap: wrap;
+                padding: 0.65rem 0.9rem;
+                gap: 0.5rem;
+            }
+
+            .logo-image {
+                height: 1.75rem;
+                max-width: min(42vw, 9.5rem);
+                width: auto;
+            }
+
+            /* Keep language switcher; hide section links on narrow screens */
+            .nav-links {
+                display: flex;
+                gap: 0.35rem;
+                align-items: center;
+                flex-shrink: 0;
+            }
+
+            .nav-links > a {
+                display: none;
+            }
+
+            .language-btn {
+                padding: 0.4rem 0.65rem;
+                font-size: 0.85rem;
+                min-height: 44px;
+            }
+
+            .language-dropdown {
+                z-index: 1100;
+                max-height: min(70vh, 20rem);
+                overflow-y: auto;
+            }
+
+            .hero {
+                min-height: 0;
+                justify-content: flex-start;
+                padding: 0.75rem 1rem 1.5rem;
+                padding-top: calc(0.65rem + var(--nav-offset));
+            }
+
+            .hero-inner {
+                max-width: 100%;
+            }
+
+            .hero-mascot-wrap {
+                margin-bottom: 0.65rem;
+            }
+
+            .hero-mascot {
+                width: 5.25rem;
+                height: 5.25rem;
+            }
+
+            .hero-content {
+                margin-bottom: 0.9rem;
+            }
+
+            .hero h1 {
+                font-size: clamp(1.35rem, 6.2vw, 1.75rem);
+                line-height: 1.22;
+                margin-bottom: 0.45rem;
+                letter-spacing: -0.02em;
+                overflow-wrap: anywhere;
+            }
+
+            .hero .tagline {
+                font-size: 0.68rem;
+                letter-spacing: 0.08em;
+                padding: 0.28rem 0.65rem;
+                margin-bottom: 0.55rem;
+                max-width: 100%;
+                white-space: normal;
+                line-height: 1.35;
+            }
+
+            .hero .subtitle {
+                font-size: 0.9rem;
+                line-height: 1.5;
+                max-width: 100%;
+                padding: 0 0.15rem;
+            }
+
+            .hero-waitlist-card {
+                padding: 1rem 0.85rem 0.85rem;
+                max-width: 100%;
+            }
+
+            .email-form {
+                flex-direction: column;
+            }
+
+            .email-input,
+            .submit-btn {
+                width: 100%;
+                min-height: 44px;
             }
 
             .section-title {
-                font-size: 2rem;
+                font-size: clamp(1.55rem, 6vw, 1.9rem);
+                margin-bottom: 1.25rem;
+                padding: 0 0.25rem;
+                overflow-wrap: anywhere;
+            }
+
+            .onboarding-showcase,
+            .features,
+            .home-blog-strip,
+            .download-section,
+            .faq-section {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .onboarding-showcase {
+                padding-top: 3rem;
+                padding-bottom: 3rem;
+            }
+
+            .onboarding-subtitle,
+            .features-subtitle,
+            .download-subtitle,
+            .home-blog-subtitle {
+                font-size: 0.95rem;
+                margin-bottom: 1.75rem;
+                padding: 0 0.15rem;
+            }
+
+            .onboarding-mascot-wrap {
+                min-height: 0;
+                padding: 0.35rem;
+            }
+
+            .onboarding-mascot {
+                max-width: 9.5rem;
+            }
+
+            .onboarding-features li {
+                font-size: 0.88rem;
+                padding: 0.65rem 0.8rem;
+            }
+
+            .features {
+                padding-top: 3rem;
+                padding-bottom: 3.25rem;
+            }
+
+            .feature-card {
+                padding: 1.15rem 1rem;
+            }
+
+            .feature-card p {
+                max-width: none;
+            }
+
+            .home-blog-strip {
+                padding-top: 3rem;
+                padding-bottom: 3.25rem;
+            }
+
+            .home-blog-grid {
+                grid-template-columns: 1fr;
+                gap: 0.85rem;
+            }
+
+            .download-section {
+                padding-top: 3rem;
+                padding-bottom: 3.25rem;
+            }
+
+            .store-badge-flip {
+                max-width: 100%;
+            }
+
+            .faq-section {
+                padding-top: 3rem;
+                padding-bottom: 2.5rem;
+            }
+
+            .faq-question {
+                font-size: 0.98rem;
+                padding: 1.1rem 1rem;
+                gap: 0.75rem;
+                align-items: flex-start;
+            }
+
+            .faq-answer-content {
+                padding: 0 1rem 1.15rem;
+                font-size: 0.92rem;
+            }
+
+            .faq-item.active .faq-answer {
+                max-height: none;
+            }
+
+            .disclaimer {
+                margin: 1.5rem 1rem;
+                padding: 1.15rem 1rem;
+            }
+
+            footer {
+                padding: 2.25rem 1rem;
+                margin-top: 2.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .modal-content {
+                width: calc(100% - 1.5rem);
+                max-height: min(88dvh, 88vh);
+                margin: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-mascot {
+                width: 4.75rem;
+                height: 4.75rem;
+            }
+
+            .hero h1 {
+                font-size: clamp(1.25rem, 7vw, 1.55rem);
+            }
+
+            .hero .subtitle {
+                font-size: 0.86rem;
+            }
+
+            .glow-orb-1,
+            .glow-orb-2,
+            .glow-orb-3,
+            .glow-orb-4,
+            .glow-orb-5 {
+                width: 14rem;
+                height: 14rem;
+                filter: blur(48px);
+            }
+        }
+
+        @media (max-height: 740px) and (max-width: 768px) {
+            .hero-mascot {
+                width: 4.25rem;
+                height: 4.25rem;
+            }
+
+            .hero-mascot-wrap {
+                margin-bottom: 0.4rem;
+            }
+
+            .hero h1 {
+                font-size: clamp(1.2rem, 5.5vw, 1.45rem);
+                margin-bottom: 0.3rem;
+            }
+
+            .hero .tagline {
+                margin-bottom: 0.4rem;
+            }
+
+            .hero .subtitle {
+                font-size: 0.82rem;
+                line-height: 1.4;
+            }
+
+            .hero-content {
+                margin-bottom: 0.65rem;
+            }
+
+            .hero-waitlist-card {
+                padding: 0.85rem 0.75rem 0.75rem;
             }
         }
         
