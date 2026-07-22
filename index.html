@@ -2842,9 +2842,13 @@
                 })
                 .then(function (res) { return res.json(); })
                 .then(function (data) {
-                    if (data.success && data.content) applyLandingContent(data.content);
+                    if (data.success && data.content) {
+                        applyLandingContent(data.content);
+                        return true;
+                    }
+                    return false;
                 })
-                .catch(function () {});
+                .catch(function () { return false; });
             }
             function applyLocalSnapshot() {
                 return fetch('data/landing-content.json', { cache: 'no-store' })
@@ -2856,7 +2860,11 @@
                     })
                     .catch(function () {});
             }
-            return applyApiContent().then(applyLocalSnapshot);
+            // Prefer live CMS (Supabase). Only use the git snapshot if the API fails,
+            // otherwise a stale landing-content.json overwrites newer saves for hours.
+            return applyApiContent().then(function (applied) {
+                if (!applied) return applyLocalSnapshot();
+            });
         }
         
         document.addEventListener('DOMContentLoaded', function() {

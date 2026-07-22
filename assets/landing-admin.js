@@ -660,9 +660,9 @@ async function saveContent() {
                     updateUnsavedIndicator();
                     const langCount = countOverrideLangs(overrides);
                     if (langCount === 1 && overrides.de && !overrides.en) {
-                        showMessage('German saved. Other languages still use their defaults — use Translate → “All languages from Deutsch” to update EN, FR, ES, IT.', false);
+                        showMessage('German saved. Other languages still use their defaults — use Translate → “All languages from Deutsch” to update EN, FR, ES, IT. Publishing to GitHub…', false);
                     } else {
-                        showMessage('Content saved and published to the live site.', false);
+                        showMessage('Content saved. Live site updates immediately; GitHub publish runs in the background.', false);
                     }
                     reloadPreviewFrame();
                 } else {
