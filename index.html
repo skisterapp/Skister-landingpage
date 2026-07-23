@@ -333,22 +333,22 @@
         .snap-section {
             scroll-snap-align: start;
             scroll-snap-stop: always;
-            min-height: 100vh;
-            min-height: 100dvh;
+            min-height: calc(100vh - var(--nav-offset));
+            min-height: calc(100dvh - var(--nav-offset));
             box-sizing: border-box;
         }
 
         /* Hero Section */
         .hero {
-            min-height: 100vh;
-            min-height: 100dvh;
+            min-height: calc(100vh - var(--nav-offset));
+            min-height: calc(100dvh - var(--nav-offset));
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             padding: 2rem;
-            padding-top: calc(2rem + var(--nav-offset));
+            padding-top: calc(1.25rem + var(--nav-offset));
             position: relative;
             z-index: 2;
             overflow: hidden;
@@ -1694,8 +1694,8 @@
 
             /* Keep block-by-block full-viewport sections on mobile */
             .snap-section {
-                min-height: 100vh;
-                min-height: 100dvh;
+                min-height: calc(100vh - var(--nav-offset));
+                min-height: calc(100dvh - var(--nav-offset));
                 scroll-snap-align: start;
                 scroll-snap-stop: always;
                 display: flex;
@@ -1738,8 +1738,8 @@
             }
 
             .hero {
-                min-height: 100vh;
-                min-height: 100dvh;
+                min-height: calc(100vh - var(--nav-offset));
+                min-height: calc(100dvh - var(--nav-offset));
                 justify-content: center;
                 padding: 0.75rem 1rem 1.25rem;
                 padding-top: calc(0.55rem + var(--nav-offset));
