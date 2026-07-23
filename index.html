@@ -1674,12 +1674,13 @@
         @media (max-width: 768px) {
             :root {
                 --nav-offset: 3.35rem;
-                --section-space: 3.5rem;
-                --card-pad: 1.2rem;
+                --section-space: 2.5rem;
+                --card-pad: 1.1rem;
             }
 
             html {
-                scroll-snap-type: none;
+                scroll-snap-type: y proximity;
+                scroll-padding-top: var(--nav-offset);
                 overflow-x: clip;
             }
 
@@ -1687,10 +1688,15 @@
                 overflow-x: clip;
             }
 
+            /* Keep block-by-block full-viewport sections on mobile */
             .snap-section {
-                min-height: 0;
-                scroll-snap-align: none;
-                scroll-snap-stop: normal;
+                min-height: 100vh;
+                min-height: 100dvh;
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
             }
 
             nav {
@@ -1728,9 +1734,10 @@
             }
 
             .hero {
-                min-height: 0;
-                justify-content: flex-start;
-                padding: 0.65rem 1rem 1.35rem;
+                min-height: 100vh;
+                min-height: 100dvh;
+                justify-content: center;
+                padding: 0.75rem 1rem 1.25rem;
                 padding-top: calc(0.55rem + var(--nav-offset));
             }
 
@@ -1743,18 +1750,18 @@
             }
 
             .hero-mascot {
-                width: 6.75rem;
-                height: 6.75rem;
+                width: 5.75rem;
+                height: 5.75rem;
             }
 
             .hero-content {
-                margin-bottom: 1rem;
+                margin-bottom: 0.85rem;
             }
 
             .hero h1 {
-                font-size: 2.125rem;
-                line-height: 1.15;
-                margin-bottom: 0.45rem;
+                font-size: 1.85rem;
+                line-height: 1.18;
+                margin-bottom: 0.4rem;
                 letter-spacing: -0.02em;
             }
 
@@ -1790,12 +1797,6 @@
                 min-height: 44px;
             }
 
-            .section-title {
-                font-size: 1.75rem;
-                margin-bottom: 0.85rem;
-                padding: 0 0.2rem;
-            }
-
             .onboarding-showcase,
             .features,
             .benefits,
@@ -1807,25 +1808,51 @@
             }
 
             .onboarding-showcase {
-                padding-top: 3rem;
-                padding-bottom: 3rem;
+                padding-top: 1.5rem;
+                padding-bottom: 1.5rem;
             }
 
             .features,
             .benefits {
-                padding-top: 3rem;
-                padding-bottom: 3.25rem;
+                padding-top: 1.75rem;
+                padding-bottom: 1.75rem;
+            }
+
+            .features,
+            .download-section {
+                overflow: visible;
+            }
+
+            .features-grid {
+                gap: 0.65rem;
+            }
+
+            .feature-card {
+                padding: 0.95rem 0.9rem;
+            }
+
+            .feature-card h3 {
+                font-size: 1.15rem;
+            }
+
+            .feature-icon-wrap {
+                width: 2.1rem;
+                height: 2.1rem;
+                font-size: 0.9rem;
+                margin-bottom: 0.55rem;
             }
 
             .home-blog-strip,
             .download-section {
-                padding-top: 3rem;
-                padding-bottom: 3.25rem;
+                padding-top: 1.75rem;
+                padding-bottom: 1.75rem;
             }
 
             .faq-section {
-                padding-top: 3rem;
-                padding-bottom: 2.5rem;
+                padding-top: 1.5rem;
+                padding-bottom: 1.5rem;
+                justify-content: flex-start;
+                padding-top: calc(1rem + var(--nav-offset));
             }
 
             .onboarding-subtitle,
@@ -1833,8 +1860,8 @@
             .benefits-subtitle,
             .download-subtitle,
             .home-blog-subtitle {
-                font-size: 0.95rem;
-                margin-bottom: 1.35rem;
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
                 padding: 0 0.1rem;
             }
 
@@ -1843,7 +1870,17 @@
             }
 
             .onboarding-mascot {
-                max-width: 10.75rem;
+                max-width: 9.25rem;
+            }
+
+            .onboarding-controls {
+                margin-top: 0.85rem;
+            }
+
+            .section-title {
+                font-size: 1.55rem;
+                margin-bottom: 0.65rem;
+                padding: 0 0.2rem;
             }
 
             .onboarding-features li {
@@ -1916,16 +1953,16 @@
 
         @media (max-width: 480px) {
             .hero-mascot {
-                width: 6rem;
-                height: 6rem;
+                width: 5.25rem;
+                height: 5.25rem;
             }
 
             .hero h1 {
-                font-size: 2.125rem;
+                font-size: 1.75rem;
             }
 
             .hero .subtitle {
-                font-size: 0.92rem;
+                font-size: 0.88rem;
             }
 
             .glow-orb-1,
@@ -1941,34 +1978,38 @@
 
         @media (max-height: 740px) and (max-width: 768px) {
             .hero-mascot {
-                width: 5.5rem;
-                height: 5.5rem;
+                width: 4.75rem;
+                height: 4.75rem;
             }
 
             .hero-mascot-wrap {
-                margin-bottom: 0.45rem;
+                margin-bottom: 0.4rem;
             }
 
             .hero h1 {
-                font-size: 1.95rem;
+                font-size: 1.65rem;
                 margin-bottom: 0.3rem;
             }
 
             .hero .tagline {
-                margin-bottom: 0.4rem;
+                margin-bottom: 0.35rem;
             }
 
             .hero .subtitle {
-                font-size: 0.88rem;
-                line-height: 1.45;
+                font-size: 0.84rem;
+                line-height: 1.4;
             }
 
             .hero-content {
-                margin-bottom: 0.7rem;
+                margin-bottom: 0.6rem;
             }
 
             .hero-waitlist-card {
-                padding: 0.85rem 0.75rem 0.75rem;
+                padding: 0.8rem 0.7rem 0.7rem;
+            }
+
+            .onboarding-mascot {
+                max-width: 8rem;
             }
         }
         
