@@ -3703,11 +3703,62 @@
         }
         
         document.addEventListener('DOMContentLoaded', function() {
+            initHeroBackgroundVideos();
             initOnboardingCarousel();
             loadHomeBlogStrip();
             loadLandingContentFromSite();
             if (window.SkisterLegalRender) SkisterLegalRender.renderModals(currentLang);
         });
+
+        function initHeroBackgroundVideos() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const videoA = document.getElementById('hero-bg-video-a');
+            const videoB = document.getElementById('hero-bg-video-b');
+            if (!videoA || !videoB) return;
+            const playlist = [videoA, videoB];
+            let index = 0;
+
+            function playActive() {
+                const active = playlist[index];
+                const idle = playlist[(index + 1) % playlist.length];
+                playlist.forEach(function (video) {
+                    video.classList.toggle('is-active', video === active);
+                    video.muted = true;
+                    video.defaultMuted = true;
+                    video.setAttribute('muted', '');
+                    video.volume = 0;
+                });
+                idle.pause();
+                const playPromise = active.play();
+                if (playPromise && typeof playPromise.catch === 'function') {
+                    playPromise.catch(function () {});
+                }
+            }
+
+            function advance() {
+                index = (index + 1) % playlist.length;
+                const next = playlist[index];
+                next.currentTime = 0;
+                playActive();
+            }
+
+            playlist.forEach(function (video) {
+                video.muted = true;
+                video.defaultMuted = true;
+                video.setAttribute('muted', '');
+                video.playsInline = true;
+                video.addEventListener('ended', advance);
+            });
+
+            playActive();
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden) {
+                    playlist.forEach(function (video) { video.pause(); });
+                    return;
+                }
+                playActive();
+            });
+        }
         
         // Language Functions
         function applyDataI18n(lang) {
