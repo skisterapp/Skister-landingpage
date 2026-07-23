@@ -40,7 +40,7 @@ When any landing-related files change (e.g. `index.html`, `landing-admin.html`, 
 - Branch: `fix/production-polish` (backup commit + polish commit). Not a redesign.
 - Shared `.content-container`: `--content-max: 1240px`, gutters 48 / 32 / 20, section gaps 72 / 56 / 48.
 - All major sections + nav + footer align to the same container; FAQ list stays readable at ~720px inside it.
-- Desktop keeps snap sections; mobile uses natural scrolling (`scroll-snap-type: none`).
+- Web + mobile use full-viewport `scroll-snap-type: y mandatory`; hero fills `100svh` so the next section never peeks on load.
 - Mascot/onboarding artwork URLs and order unchanged; no business-logic/CMS/i18n/routing changes.
 
 ## Next steps

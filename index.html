@@ -99,7 +99,7 @@
 
         html {
             scroll-behavior: smooth;
-            scroll-snap-type: y proximity;
+            scroll-snap-type: y mandatory;
             scroll-padding-top: var(--nav-offset);
         }
 
@@ -378,7 +378,7 @@
             background: rgba(34, 139, 34, 0.18);
         }
         
-        /* Full-viewport snap sections (one screen per scroll stop) — desktop */
+        /* Full-viewport snap sections — one screen per scroll stop (web + mobile) */
         .snap-section {
             scroll-snap-align: start;
             scroll-snap-stop: always;
@@ -387,10 +387,11 @@
             box-sizing: border-box;
         }
 
-        /* Hero Section */
+        /* Hero Section — full viewport so the next page never peeks on load */
         .hero {
-            min-height: calc(100vh - var(--nav-offset));
-            min-height: calc(100dvh - var(--nav-offset));
+            min-height: 100vh;
+            min-height: 100dvh;
+            min-height: 100svh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1819,7 +1820,7 @@
             }
 
             html {
-                scroll-snap-type: none;
+                scroll-snap-type: y mandatory;
                 scroll-padding-top: var(--nav-offset);
                 overflow-x: clip;
             }
@@ -1828,11 +1829,12 @@
                 overflow-x: clip;
             }
 
-            /* Natural scrolling on mobile — desktop snap must not leak */
             .snap-section {
-                min-height: 0;
-                scroll-snap-align: none;
-                scroll-snap-stop: normal;
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+                min-height: calc(100vh - var(--nav-offset));
+                min-height: calc(100dvh - var(--nav-offset));
+                min-height: calc(100svh - var(--nav-offset));
             }
 
             .nav-bar {
@@ -1876,7 +1878,9 @@
             }
 
             .hero {
-                min-height: auto;
+                min-height: 100vh;
+                min-height: 100dvh;
+                min-height: 100svh;
                 justify-content: center;
                 padding: var(--section-gap) 0;
                 padding-top: calc(0.55rem + var(--nav-offset));
