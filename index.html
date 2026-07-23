@@ -451,6 +451,16 @@
             opacity: 0.22;
             filter: saturate(0.8) brightness(0.5);
         }
+        .section-bg-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 35%;
+            opacity: 0.28;
+            filter: saturate(0.85) brightness(0.55);
+        }
         .section-bg-scrim {
             position: absolute;
             inset: 0;
@@ -459,7 +469,7 @@
         }
         @media (prefers-reduced-motion: reduce) {
             .hero-bg,
-            .section-bg {
+            .section-bg:has(video) {
                 display: none;
             }
         }
@@ -704,6 +714,7 @@
             content: '';
             position: absolute;
             inset: 0;
+            z-index: 1;
             background-image:
                 radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.02) 0 1px, transparent 1px);
             background-size: 56px 56px;
@@ -712,6 +723,7 @@
         }
         .features-inner {
             position: relative;
+            z-index: 2;
             width: 100%;
             flex: 0 1 auto;
         }
@@ -1952,7 +1964,7 @@
             }
 
             .features {
-                overflow: visible;
+                overflow: hidden;
             }
 
             .features-grid {
@@ -2444,6 +2456,18 @@
     
     <!-- Features Section -->
     <section class="features snap-section" id="features" aria-labelledby="features-heading">
+        <div class="section-bg" aria-hidden="true">
+            <img
+                class="section-bg-image"
+                src="assets/images/features-snowboard.jpg"
+                alt=""
+                width="585"
+                height="1024"
+                decoding="async"
+                loading="lazy"
+            >
+            <div class="section-bg-scrim"></div>
+        </div>
         <div class="content-container features-inner">
             <h2 class="section-title" id="features-heading" data-i18n="features.title">Alles was du brauchst</h2>
             <p class="features-subtitle" data-i18n="features.subtitle">Alles, was du brauchst, um privates Teilen von Ski-Ausrüstung zu organisieren — ohne Tabellen, Chatgruppen oder Marktplätze.</p>
