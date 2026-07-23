@@ -683,8 +683,8 @@
             transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            text-align: left;
+            align-items: center;
+            text-align: center;
             height: 100%;
             box-shadow: var(--shadow-card);
         }
@@ -707,7 +707,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 0.85rem;
+            margin: 0 auto 0.85rem;
             background: rgba(34, 139, 34, 0.1);
             border: 1px solid rgba(46, 232, 154, 0.2);
             color: var(--primary-green-light);
@@ -733,6 +733,8 @@
             color: var(--text-white);
             letter-spacing: -0.015em;
             line-height: 1.3;
+            text-align: center;
+            width: 100%;
         }
         .feature-card p {
             color: var(--text-gray);
@@ -741,6 +743,7 @@
             margin: 0;
             max-width: none;
             flex: 1;
+            text-align: center;
         }
         @media (max-width: 960px) {
             .features-grid {
@@ -797,6 +800,7 @@
             box-shadow: var(--shadow-soft);
             transition: transform 0.22s ease, border-color 0.22s ease;
             height: 100%;
+            text-align: center;
         }
         .benefit-card:nth-child(2) {
             background: linear-gradient(160deg, rgba(34, 139, 34, 0.1) 0%, rgba(255, 255, 255, 0.02) 70%);
@@ -814,6 +818,7 @@
             text-transform: uppercase;
             color: rgba(46, 232, 154, 0.9);
             margin-bottom: 0.55rem;
+            text-align: center;
         }
         .benefit-card h3 {
             font-size: 1.375rem;
@@ -821,12 +826,14 @@
             margin: 0 0 0.45rem;
             letter-spacing: -0.015em;
             line-height: 1.3;
+            text-align: center;
         }
         .benefit-card p {
             margin: 0;
             color: var(--text-gray);
             font-size: 0.95rem;
             line-height: 1.55;
+            text-align: center;
         }
         @media (max-width: 900px) {
             .benefits-grid {
@@ -918,12 +925,14 @@
             color: var(--text-white);
             letter-spacing: -0.015em;
             line-height: 1.25;
+            text-align: center;
         }
         .onboarding-content p {
             color: var(--text-gray);
             line-height: 1.6;
             margin-bottom: 0.95rem;
             font-size: 1rem;
+            text-align: center;
         }
         .onboarding-features {
             list-style: none;
@@ -1448,6 +1457,12 @@
             font-size: 0.98rem;
             line-height: 1.35;
             user-select: none;
+            text-align: center;
+        }
+
+        .faq-question span {
+            flex: 1;
+            text-align: center;
         }
         
         .faq-question:hover {
@@ -1476,6 +1491,7 @@
         .faq-answer-content {
             padding: 0 1rem 0.85rem;
             font-size: 0.94rem;
+            text-align: center;
         }
         
         .faq-item.active .faq-answer {
@@ -1526,7 +1542,7 @@
             max-width: 16rem;
         }
         .footer-brand-logo {
-            height: 1.65rem;
+            height: 3.3rem;
             width: auto;
             display: block;
             margin-bottom: 0.85rem;
