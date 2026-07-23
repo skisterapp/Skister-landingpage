@@ -12,6 +12,7 @@
 - Fixed live site CMS overwrite bug (stale `landing-content.json` after API apply) — pushed to Skister-landingpage
 - Wired Edge Function auto GitHub publish on landing/blog CMS save (`github_landing_publish.tsx`)
 - Yesterday’s blog posts were already regenerated on remote (tegernsee, augsburg, wallis, etc.)
+- `fix/production-polish`: shared content container, vertical rhythm, header/FAQ/footer polish, desktop snap + mobile natural scroll — pending review/merge
 
 ## Known gaps / risks
 

@@ -35,8 +35,17 @@ When any landing-related files change (e.g. `index.html`, `landing-admin.html`, 
 - Follow-up fix: restored desktop `min-height` snap sections + original desktop nav/section spacing; mobile (`max-width: 768px`) keeps compact spacing.
 - Mobile UI regression fixes merged to `main` (`fix/mobile-ui-regression` → `e2616d4`): block-by-block snap, benefits/FAQ snap sections, `calc(100dvh - nav-offset)` under sticky nav, centered mobile cards/FAQ/footer, larger footer logo.
 
+## Production polish branch (Jul 2026)
+
+- Branch: `fix/production-polish` (backup commit + polish commit). Not a redesign.
+- Shared `.content-container`: `--content-max: 1240px`, gutters 48 / 32 / 20, section gaps 72 / 56 / 48.
+- All major sections + nav + footer align to the same container; FAQ list stays readable at ~720px inside it.
+- Desktop keeps snap sections; mobile uses natural scrolling (`scroll-snap-type: none`).
+- Mascot/onboarding artwork URLs and order unchanged; no business-logic/CMS/i18n/routing changes.
+
 ## Next steps
 
+- Review/merge `fix/production-polish` after visual sign-off.
 - Keep mobile app repo in sync if it duplicates these addresses.
 - If CMS save does not create a GitHub Actions run, rotate/recheck `GITHUB_LANDING_DISPATCH_TOKEN` (needs `actions:write` on the landing repo).
 - Re-save Landing CMS features subtitle (or Publish) so live API matches the new “Everything you need” copy.
