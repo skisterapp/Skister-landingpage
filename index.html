@@ -55,12 +55,46 @@
             --bg-dark: #0a0a0a;
             --text-white: #ffffff;
             --text-gray: #b0b0b0;
-            --nav-offset: 5.5rem;
-            --section-space: clamp(3.5rem, 6vw, 4.5rem);
+            --nav-offset: 4.75rem;
+            --content-max: 1240px;
+            --gutter: 48px;
+            --section-gap: 72px;
+            --title-subtitle-gap: 16px;
+            --subtitle-content-gap: 32px;
+            --card-gap: 24px;
             --card-pad: 1.35rem;
             --radius-sm: 0.75rem;
+            --radius-md: 10px;
+            --radius-lg: 14px;
             --border-soft: 1px solid rgba(255, 255, 255, 0.08);
             --shadow-soft: 0 6px 20px rgba(0, 0, 0, 0.22);
+            --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.16);
+            --shadow-card-hover: 0 8px 22px rgba(0, 0, 0, 0.28);
+        }
+
+        /* Shared content width — every major section aligns to this */
+        .content-container {
+            width: 100%;
+            max-width: var(--content-max);
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: var(--gutter);
+            padding-right: var(--gutter);
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 1024px) {
+            :root {
+                --gutter: 32px;
+                --section-gap: 56px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --gutter: 20px;
+                --section-gap: 48px;
+            }
         }
 
         html {
@@ -218,16 +252,21 @@
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 0;
             background: rgba(10, 10, 10, 0.9);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.05rem;
+            padding-bottom: 1.05rem;
+            min-height: 0;
         }
         nav.is-scrolled {
             background: rgba(10, 10, 10, 0.94);
@@ -293,6 +332,16 @@
             background: rgba(34, 139, 34, 0.22);
             border-color: rgba(46, 232, 154, 0.55);
         }
+
+        .language-btn:focus-visible,
+        .nav-links a:focus-visible,
+        .submit-btn:focus-visible,
+        .email-input:focus-visible,
+        .footer-links a:focus-visible,
+        .footer-social a:focus-visible {
+            outline: 2px solid var(--primary-green);
+            outline-offset: 2px;
+        }
         
         .language-dropdown {
             position: absolute;
@@ -302,7 +351,7 @@
             background: rgba(16, 16, 16, 0.98);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+            border-radius: var(--radius-md);
             overflow: hidden;
             display: none;
             min-width: 148px;
@@ -347,8 +396,8 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 2rem;
-            padding-top: calc(1.25rem + var(--nav-offset));
+            padding: var(--section-gap) 0;
+            padding-top: calc(1rem + var(--nav-offset));
             position: relative;
             z-index: 2;
             overflow: hidden;
@@ -372,10 +421,12 @@
         .hero-inner {
             position: relative;
             width: 100%;
-            max-width: 640px;
+            max-width: 40rem;
             display: flex;
             flex-direction: column;
             align-items: center;
+            margin-left: auto;
+            margin-right: auto;
         }
         .hero-mascot-wrap {
             display: flex;
@@ -430,11 +481,13 @@
             color: var(--text-gray);
             max-width: 34rem;
             margin: 0 auto;
-            line-height: 1.75;
+            line-height: 1.7;
         }
         .hero-waitlist-card {
             width: 100%;
             max-width: 32rem;
+            margin-left: auto;
+            margin-right: auto;
             padding: 1.5rem 1.35rem 1.25rem;
             border-radius: var(--radius-sm);
             background: linear-gradient(155deg, rgba(26, 26, 26, 0.92) 0%, rgba(13, 13, 13, 0.96) 100%);
@@ -515,7 +568,7 @@
             max-width: 500px;
             width: 100%;
             padding: 0.85rem 1.1rem;
-            border-radius: 10px;
+            border-radius: var(--radius-md);
             margin-bottom: 0.85rem;
             display: flex;
             align-items: center;
@@ -558,18 +611,19 @@
         }
         
         .section-title {
-            font-size: 2.5rem;
+            font-size: clamp(1.85rem, 3.2vw, 2.5rem);
             text-align: center;
-            margin-bottom: 3rem;
+            margin: 0 auto var(--title-subtitle-gap);
             font-weight: 750;
             letter-spacing: -0.02em;
             line-height: 1.2;
+            max-width: 36rem;
         }
         .section-subtitle {
             text-align: center;
             color: var(--text-gray);
             max-width: 36rem;
-            margin: 0 auto 2rem;
+            margin: 0 auto var(--subtitle-content-gap);
             font-size: 1rem;
             line-height: 1.65;
         }
@@ -578,7 +632,7 @@
         .features {
             position: relative;
             z-index: 2;
-            padding: 5.5rem 2rem 6rem;
+            padding: var(--section-gap) 0;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
             background:
                 radial-gradient(ellipse 65% 40% at 50% 0%, rgba(46, 232, 154, 0.06) 0%, transparent 58%),
@@ -600,26 +654,25 @@
         }
         .features-inner {
             position: relative;
-            max-width: 1040px;
-            margin: 0 auto;
             width: 100%;
             flex: 0 1 auto;
         }
         .features .section-title {
-            margin-bottom: 0.65rem;
+            margin-bottom: var(--title-subtitle-gap);
         }
         .features-subtitle {
             text-align: center;
             color: var(--text-gray);
             max-width: 38rem;
-            margin: 0 auto 3rem;
+            margin: 0 auto var(--subtitle-content-gap);
             font-size: 1.05rem;
-            line-height: 1.75;
+            line-height: 1.7;
         }
         .features-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 0.85rem;
+            gap: var(--card-gap);
+            align-items: stretch;
         }
         .feature-card {
             position: relative;
@@ -632,7 +685,8 @@
             flex-direction: column;
             align-items: flex-start;
             text-align: left;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+            height: 100%;
+            box-shadow: var(--shadow-card);
         }
         .feature-card:nth-child(even) {
             background: rgba(255, 255, 255, 0.035);
@@ -643,12 +697,12 @@
         .feature-card:hover {
             border-color: rgba(46, 232, 154, 0.35);
             transform: translateY(-2px);
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+            box-shadow: var(--shadow-card-hover);
             background: rgba(255, 255, 255, 0.04);
         }
         .feature-icon-wrap {
-            width: 2.35rem;
-            height: 2.35rem;
+            width: 2.5rem;
+            height: 2.5rem;
             border-radius: 0.55rem;
             display: flex;
             align-items: center;
@@ -657,8 +711,9 @@
             background: rgba(34, 139, 34, 0.1);
             border: 1px solid rgba(46, 232, 154, 0.2);
             color: var(--primary-green-light);
-            font-size: 1rem;
+            font-size: 1.05rem;
             transition: background 0.22s ease, border-color 0.22s ease;
+            flex-shrink: 0;
         }
         .feature-card:hover .feature-icon-wrap {
             background: rgba(34, 139, 34, 0.18);
@@ -685,6 +740,7 @@
             line-height: 1.55;
             margin: 0;
             max-width: none;
+            flex: 1;
         }
         @media (max-width: 960px) {
             .features-grid {
@@ -703,7 +759,7 @@
         .benefits {
             position: relative;
             z-index: 2;
-            padding: 5.5rem 2rem 6rem;
+            padding: var(--section-gap) 0;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
             background:
                 linear-gradient(180deg, rgba(34, 139, 34, 0.04) 0%, transparent 40%),
@@ -713,26 +769,25 @@
             justify-content: center;
         }
         .benefits-inner {
-            max-width: 1040px;
-            margin: 0 auto;
             width: 100%;
             flex: 0 1 auto;
         }
         .benefits .section-title {
-            margin-bottom: 0.65rem;
+            margin-bottom: var(--title-subtitle-gap);
         }
         .benefits-subtitle {
             text-align: center;
             color: var(--text-gray);
             max-width: 34rem;
-            margin: 0 auto 2rem;
+            margin: 0 auto var(--subtitle-content-gap);
             font-size: 1rem;
             line-height: 1.65;
         }
         .benefits-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 0.9rem;
+            gap: var(--card-gap);
+            align-items: stretch;
         }
         .benefit-card {
             padding: var(--card-pad);
@@ -741,6 +796,7 @@
             background: rgba(255, 255, 255, 0.03);
             box-shadow: var(--shadow-soft);
             transition: transform 0.22s ease, border-color 0.22s ease;
+            height: 100%;
         }
         .benefit-card:nth-child(2) {
             background: linear-gradient(160deg, rgba(34, 139, 34, 0.1) 0%, rgba(255, 255, 255, 0.02) 70%);
@@ -782,8 +838,7 @@
 
         /* Onboarding showcase */
         .onboarding-showcase {
-            padding: 5rem 2rem;
-            max-width: 1100px;
+            padding: var(--section-gap) 0;
             margin: 0 auto;
             position: relative;
             z-index: 2;
@@ -791,15 +846,16 @@
             flex-direction: column;
             justify-content: center;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
+            width: 100%;
         }
         .onboarding-showcase .section-title {
-            margin-bottom: 0.65rem;
+            margin-bottom: var(--title-subtitle-gap);
         }
         .onboarding-subtitle {
             text-align: center;
             color: var(--text-gray);
             max-width: 36rem;
-            margin: 0 auto 3rem;
+            margin: 0 auto var(--subtitle-content-gap);
             font-size: 1.08rem;
             line-height: 1.7;
         }
@@ -807,6 +863,7 @@
             position: relative;
             max-width: 920px;
             margin: 0 auto;
+            width: 100%;
             touch-action: pan-y;
             user-select: none;
         }
@@ -837,7 +894,7 @@
             padding: 0.5rem;
             background: transparent;
             border: none;
-            border-radius: 16px;
+            border-radius: var(--radius-lg);
             min-height: 280px;
         }
         .onboarding-mascot-wrap--scene {
@@ -852,8 +909,8 @@
         }
         .onboarding-mascot--scene {
             max-width: 100%;
-            border-radius: 14px;
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card-hover);
         }
         .onboarding-content h3 {
             font-size: clamp(1.35rem, 2.5vw, 1.65rem);
@@ -905,7 +962,7 @@
             align-items: center;
             justify-content: center;
             gap: 1rem;
-            margin-top: 2.5rem;
+            margin-top: var(--subtitle-content-gap);
         }
         .onboarding-btn {
             width: 44px;
@@ -987,37 +1044,37 @@
         /* Home: latest blog strip (2×2) */
         .home-blog-strip {
             display: none;
-            padding: 6rem 2rem 6.5rem;
-            max-width: 960px;
+            padding: var(--section-gap) 0;
             margin: 0 auto;
             position: relative;
             z-index: 2;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
             flex-direction: column;
             justify-content: center;
+            width: 100%;
         }
         .home-blog-strip .section-title {
-            margin-bottom: 0.75rem;
+            margin-bottom: var(--title-subtitle-gap);
         }
         .home-blog-subtitle {
             text-align: center;
             color: var(--text-gray);
             max-width: 560px;
-            margin: 0 auto 3rem;
+            margin: 0 auto var(--subtitle-content-gap);
             font-size: 1.08rem;
             line-height: 1.7;
         }
         .home-blog-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 1.5rem;
+            gap: var(--card-gap);
         }
         .home-blog-card {
             display: flex;
             flex-direction: column;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 14px;
+            border-radius: var(--radius-lg);
             overflow: hidden;
             text-decoration: none;
             color: inherit;
@@ -1026,7 +1083,7 @@
         .home-blog-card:hover {
             border-color: var(--primary-green);
             transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+            box-shadow: var(--shadow-card-hover);
         }
         .home-blog-card:focus-visible {
             outline: 2px solid var(--primary-green);
@@ -1081,7 +1138,7 @@
         .download-section {
             position: relative;
             z-index: 2;
-            padding: 5.5rem 2rem 6rem;
+            padding: var(--section-gap) 0;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
             background:
                 radial-gradient(ellipse 70% 45% at 50% 0%, rgba(46, 232, 154, 0.14) 0%, transparent 58%),
@@ -1106,21 +1163,19 @@
         }
         .download-inner {
             position: relative;
-            max-width: 960px;
-            margin: 0 auto;
             text-align: center;
             width: 100%;
             flex: 0 1 auto;
         }
         .download-section .section-title {
-            margin-bottom: 1rem;
+            margin-bottom: var(--title-subtitle-gap);
         }
         .download-subtitle {
             color: var(--text-gray);
             font-size: 1.05rem;
-            line-height: 1.75;
+            line-height: 1.7;
             max-width: 540px;
-            margin: 0 auto 3rem;
+            margin: 0 auto var(--subtitle-content-gap);
         }
         .store-badges {
             display: flex;
@@ -1342,8 +1397,7 @@
         
         /* FAQ Section */
         .faq-section {
-            padding: 6rem 2rem 5rem;
-            max-width: 800px;
+            padding: var(--section-gap) 0;
             margin: 0 auto;
             position: relative;
             z-index: 2;
@@ -1354,15 +1408,24 @@
             width: 100%;
             box-sizing: border-box;
         }
+        .faq-inner {
+            width: 100%;
+        }
+        .faq-list {
+            max-width: 720px;
+            margin: 0 auto;
+            width: 100%;
+        }
         .faq-section .section-title {
-            margin-bottom: 1.35rem;
+            margin-bottom: var(--subtitle-content-gap);
+            max-width: 36rem;
         }
         
         .faq-item {
             background: rgba(255, 255, 255, 0.025);
             border: var(--border-soft);
-            border-radius: 10px;
-            margin-bottom: 0.55rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 0.5rem;
             overflow: hidden;
             transition: border-color 0.22s ease, background 0.22s ease;
         }
@@ -1375,14 +1438,14 @@
         }
         
         .faq-question {
-            padding: 0.95rem 1.05rem;
+            padding: 0.8rem 1rem;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 0.85rem;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.98rem;
             line-height: 1.35;
             user-select: none;
         }
@@ -1411,8 +1474,8 @@
         }
         
         .faq-answer-content {
-            padding: 0 1.05rem 1rem;
-            font-size: 0.95rem;
+            padding: 0 1rem 0.85rem;
+            font-size: 0.94rem;
         }
         
         .faq-item.active .faq-answer {
@@ -1423,15 +1486,14 @@
         .disclaimer {
             background: rgba(255, 59, 48, 0.08);
             border: 1px solid rgba(255, 59, 48, 0.28);
-            border-radius: 10px;
+            border-radius: var(--radius-md);
             padding: 1.1rem 1.15rem;
-            margin: 1.75rem 1.5rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto var(--section-gap);
+            max-width: 720px;
             position: relative;
             z-index: 2;
             text-align: center;
+            width: 100%;
         }
         
         .disclaimer h3 {
@@ -1448,18 +1510,16 @@
         footer {
             background: linear-gradient(180deg, rgba(12, 12, 12, 0.98) 0%, #070707 100%);
             border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 3rem 1.5rem 1.75rem;
-            margin-top: 2.5rem;
+            padding: calc(var(--section-gap) * 0.75) 0 1.75rem;
+            margin-top: 0;
             position: relative;
             z-index: 2;
         }
         
         .footer-top {
-            max-width: 1100px;
-            margin: 0 auto;
             display: grid;
             grid-template-columns: minmax(0, 1.15fr) repeat(3, minmax(0, 1fr));
-            gap: 2rem 1.75rem;
+            gap: 2rem var(--card-gap);
             align-items: start;
         }
         .footer-brand {
@@ -1531,7 +1591,6 @@
         }
         
         .footer-bottom {
-            max-width: 1100px;
             margin: 2rem auto 0;
             padding-top: 1.25rem;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -1678,12 +1737,11 @@
         @media (max-width: 768px) {
             :root {
                 --nav-offset: 3.35rem;
-                --section-space: 2.5rem;
                 --card-pad: 1.1rem;
             }
 
             html {
-                scroll-snap-type: y proximity;
+                scroll-snap-type: none;
                 scroll-padding-top: var(--nav-offset);
                 overflow-x: clip;
             }
@@ -1692,19 +1750,16 @@
                 overflow-x: clip;
             }
 
-            /* Keep block-by-block full-viewport sections on mobile */
+            /* Natural scrolling on mobile — desktop snap must not leak */
             .snap-section {
-                min-height: calc(100vh - var(--nav-offset));
-                min-height: calc(100dvh - var(--nav-offset));
-                scroll-snap-align: start;
-                scroll-snap-stop: always;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
+                min-height: 0;
+                scroll-snap-align: none;
+                scroll-snap-stop: normal;
             }
 
-            nav {
-                padding: 0.55rem 0.85rem;
+            .nav-bar {
+                padding-top: 0.55rem;
+                padding-bottom: 0.55rem;
                 gap: 0.5rem;
             }
 
@@ -1726,9 +1781,14 @@
             }
 
             .language-btn {
-                padding: 0.3rem 0.55rem;
-                font-size: 0.78rem;
-                min-height: 2.2rem;
+                padding: 0.26rem 0.47rem;
+                font-size: 0.66rem;
+                min-height: 1.85rem;
+                gap: 0.35rem;
+            }
+
+            .language-btn i {
+                font-size: 0.55rem;
             }
 
             .language-dropdown {
@@ -1738,10 +1798,9 @@
             }
 
             .hero {
-                min-height: calc(100vh - var(--nav-offset));
-                min-height: calc(100dvh - var(--nav-offset));
+                min-height: auto;
                 justify-content: center;
-                padding: 0.75rem 1rem 1.25rem;
+                padding: var(--section-gap) 0;
                 padding-top: calc(0.55rem + var(--nav-offset));
             }
 
@@ -1783,7 +1842,6 @@
                 font-size: 0.95rem;
                 line-height: 1.55;
                 max-width: 100%;
-                padding: 0 0.1rem;
             }
 
             .hero-waitlist-card {
@@ -1807,19 +1865,8 @@
             .home-blog-strip,
             .download-section,
             .faq-section {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-
-            .onboarding-showcase {
-                padding-top: 1.5rem;
-                padding-bottom: 1.5rem;
-            }
-
-            .features,
-            .benefits {
-                padding-top: 1.75rem;
-                padding-bottom: 1.75rem;
+                padding-top: var(--section-gap);
+                padding-bottom: var(--section-gap);
             }
 
             .features,
@@ -1828,7 +1875,7 @@
             }
 
             .features-grid {
-                gap: 0.65rem;
+                gap: var(--card-gap);
             }
 
             .feature-card {
@@ -1848,9 +1895,9 @@
             }
 
             .feature-icon-wrap {
-                width: 2.1rem;
-                height: 2.1rem;
-                font-size: 0.9rem;
+                width: 2.25rem;
+                height: 2.25rem;
+                font-size: 0.95rem;
                 margin-bottom: 0.55rem;
                 margin-left: auto;
                 margin-right: auto;
@@ -1879,27 +1926,13 @@
                 margin-right: auto;
             }
 
-            .home-blog-strip,
-            .download-section {
-                padding-top: 1.75rem;
-                padding-bottom: 1.75rem;
-            }
-
-            .faq-section {
-                padding-top: 1.5rem;
-                padding-bottom: 1.5rem;
-                justify-content: flex-start;
-                padding-top: calc(1rem + var(--nav-offset));
-            }
-
             .onboarding-subtitle,
             .features-subtitle,
             .benefits-subtitle,
             .download-subtitle,
             .home-blog-subtitle {
                 font-size: 0.9rem;
-                margin-bottom: 1rem;
-                padding: 0 0.1rem;
+                margin-bottom: var(--subtitle-content-gap);
             }
 
             .onboarding-mascot-wrap {
@@ -1911,13 +1944,12 @@
             }
 
             .onboarding-controls {
-                margin-top: 0.85rem;
+                margin-top: 1.15rem;
             }
 
             .section-title {
                 font-size: 1.55rem;
-                margin-bottom: 0.65rem;
-                padding: 0 0.2rem;
+                max-width: 20rem;
             }
 
             .onboarding-features li {
@@ -1939,12 +1971,12 @@
 
             .home-blog-grid {
                 grid-template-columns: 1fr;
-                gap: 0.85rem;
+                gap: var(--card-gap);
             }
 
             .faq-question {
-                font-size: 0.95rem;
-                padding: 0.85rem 0.95rem;
+                font-size: 0.92rem;
+                padding: 0.7rem 0.85rem;
                 gap: 0.65rem;
                 align-items: center;
                 text-align: center;
@@ -1956,7 +1988,7 @@
             }
 
             .faq-answer-content {
-                padding: 0 0.95rem 0.95rem;
+                padding: 0 0.85rem 0.8rem;
                 font-size: 0.9rem;
             }
 
@@ -1965,13 +1997,13 @@
             }
 
             .disclaimer {
-                margin: 1.35rem 1rem;
+                margin-left: 0;
+                margin-right: 0;
                 padding: 1rem 0.95rem;
             }
 
             footer {
-                padding: 2.25rem 1rem 1.5rem;
-                margin-top: 1.75rem;
+                padding: calc(var(--section-gap) * 0.85) 0 1.5rem;
             }
 
             .footer-top {
@@ -2131,33 +2163,35 @@
     
     <!-- Navigation -->
     <nav>
-        <a href="/" class="logo" aria-label="Skister home">
-            <img
-                src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterLogoWeb.png"
-                alt="Skister"
-                class="logo-image"
-                width="1287"
-                height="337"
-            >
-        </a>
-        <div class="nav-links">
-            <a onclick="scrollToSection('how-it-works')" data-i18n="nav.howItWorks">So funktioniert's</a>
-            <a onclick="scrollToSection('features')" data-i18n="nav.features">Features</a>
-            <a onclick="scrollToSection('download')" data-i18n="nav.download">Download</a>
-            <a onclick="scrollToSection('faq')" data-i18n="nav.faq">FAQ</a>
-            <a href="/blog/" data-i18n="nav.blog">Blog</a>
-            <a onclick="openModal('contact')" data-i18n="nav.contact">Contact</a>
-            <div class="language-selector">
-                <button class="language-btn" onclick="toggleLanguageDropdown()">
-                    <span id="current-language">🇩🇪 DE</span>
-                    <i class="fa-solid fa-chevron-down"></i>
-                </button>
-                <div class="language-dropdown" id="language-dropdown">
-                    <div class="language-option" onclick="changeLanguage('de')">🇩🇪 Deutsch</div>
-                    <div class="language-option" onclick="changeLanguage('en')">🇬🇧 English</div>
-                    <div class="language-option" onclick="changeLanguage('fr')">🇫🇷 Français</div>
-                    <div class="language-option" onclick="changeLanguage('es')">🇪🇸 Español</div>
-                    <div class="language-option" onclick="changeLanguage('it')">🇮🇹 Italiano</div>
+        <div class="content-container nav-bar">
+            <a href="/" class="logo" aria-label="Skister home">
+                <img
+                    src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterLogoWeb.png"
+                    alt="Skister"
+                    class="logo-image"
+                    width="1287"
+                    height="337"
+                >
+            </a>
+            <div class="nav-links">
+                <a onclick="scrollToSection('how-it-works')" data-i18n="nav.howItWorks">So funktioniert's</a>
+                <a onclick="scrollToSection('features')" data-i18n="nav.features">Features</a>
+                <a onclick="scrollToSection('download')" data-i18n="nav.download">Download</a>
+                <a onclick="scrollToSection('faq')" data-i18n="nav.faq">FAQ</a>
+                <a href="/blog/" data-i18n="nav.blog">Blog</a>
+                <a onclick="openModal('contact')" data-i18n="nav.contact">Contact</a>
+                <div class="language-selector">
+                    <button class="language-btn" onclick="toggleLanguageDropdown()">
+                        <span id="current-language">🇩🇪 DE</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="language-dropdown" id="language-dropdown">
+                        <div class="language-option" onclick="changeLanguage('de')">🇩🇪 Deutsch</div>
+                        <div class="language-option" onclick="changeLanguage('en')">🇬🇧 English</div>
+                        <div class="language-option" onclick="changeLanguage('fr')">🇫🇷 Français</div>
+                        <div class="language-option" onclick="changeLanguage('es')">🇪🇸 Español</div>
+                        <div class="language-option" onclick="changeLanguage('it')">🇮🇹 Italiano</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2165,31 +2199,34 @@
     
     <!-- Hero Section -->
     <section class="hero snap-section" id="home" aria-labelledby="hero-heading">
-        <div class="hero-inner">
-            <div class="hero-mascot-wrap" aria-hidden="true">
-                <img id="hero-mascot" src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png" alt="" class="hero-mascot">
-            </div>
-            <div class="hero-content">
-                <h1 id="hero-heading" data-i18n="hero.title">Skister</h1>
-                <p class="tagline" data-i18n="hero.tagline">Teile die Pisten</p>
-                <p class="subtitle" data-i18n="hero.subtitle">Deine familienfreundliche Plattform zum Teilen von Ski-Ausrüstung innerhalb deines vertrauenswürdigen Netzwerks. Kostenlos, lokal und sicher.</p>
-            </div>
-            <div class="hero-waitlist-card">
-                <div id="message-container"></div>
-                <form class="email-form" id="waitlist-form" onsubmit="handleEmailSubmit(event)">
-                    <input type="email" class="email-input" placeholder="Deine E-Mail-Adresse eingeben" data-i18n-placeholder="hero.emailPlaceholder" required id="email-input" aria-label="Email address">
-                    <button type="submit" class="submit-btn" id="submit-btn" data-i18n="hero.submitBtn">Benachrichtigung erhalten</button>
-                </form>
-                <p class="waitlist-info" data-i18n="hero.waitlistInfo">Trete der Warteliste bei und sei der Erste, der erfährt, wenn wir starten!</p>
+        <div class="content-container">
+            <div class="hero-inner">
+                <div class="hero-mascot-wrap" aria-hidden="true">
+                    <img id="hero-mascot" src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png" alt="" class="hero-mascot">
+                </div>
+                <div class="hero-content">
+                    <h1 id="hero-heading" data-i18n="hero.title">Skister</h1>
+                    <p class="tagline" data-i18n="hero.tagline">Teile die Pisten</p>
+                    <p class="subtitle" data-i18n="hero.subtitle">Deine familienfreundliche Plattform zum Teilen von Ski-Ausrüstung innerhalb deines vertrauenswürdigen Netzwerks. Kostenlos, lokal und sicher.</p>
+                </div>
+                <div class="hero-waitlist-card">
+                    <div id="message-container"></div>
+                    <form class="email-form" id="waitlist-form" onsubmit="handleEmailSubmit(event)">
+                        <input type="email" class="email-input" placeholder="Deine E-Mail-Adresse eingeben" data-i18n-placeholder="hero.emailPlaceholder" required id="email-input" aria-label="Email address">
+                        <button type="submit" class="submit-btn" id="submit-btn" data-i18n="hero.submitBtn">Benachrichtigung erhalten</button>
+                    </form>
+                    <p class="waitlist-info" data-i18n="hero.waitlistInfo">Trete der Warteliste bei und sei der Erste, der erfährt, wenn wir starten!</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Onboarding showcase -->
     <section class="onboarding-showcase snap-section" id="how-it-works" aria-labelledby="onboarding-heading">
-        <h2 class="section-title" id="onboarding-heading" data-i18n="onboarding.title">So funktioniert Skister</h2>
-        <p class="onboarding-subtitle" data-i18n="onboarding.subtitle">Teile Ski-Ausrüstung mit deinem vertrauenswürdigen Netzwerk — kostenlos, lokal und sicher.</p>
-        <div class="onboarding-carousel-wrap">
+        <div class="content-container">
+            <h2 class="section-title" id="onboarding-heading" data-i18n="onboarding.title">So funktioniert Skister</h2>
+            <p class="onboarding-subtitle" data-i18n="onboarding.subtitle">Teile Ski-Ausrüstung mit deinem vertrauenswürdigen Netzwerk — kostenlos, lokal und sicher.</p>
+            <div class="onboarding-carousel-wrap">
             <div class="onboarding-slide active" data-onboarding-step="0">
                 <div class="onboarding-mascot-wrap">
                     <img class="onboarding-mascot" src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/Invite%20Friends.png" alt="" data-i18n-alt="onboarding.step1.title" loading="lazy" decoding="async">
@@ -2297,12 +2334,13 @@
                     <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
                 </button>
             </div>
+            </div>
         </div>
     </section>
     
     <!-- Features Section -->
     <section class="features snap-section" id="features" aria-labelledby="features-heading">
-        <div class="features-inner">
+        <div class="content-container features-inner">
             <h2 class="section-title" id="features-heading" data-i18n="features.title">Alles was du brauchst</h2>
             <p class="features-subtitle" data-i18n="features.subtitle">Alles, was du brauchst, um privates Teilen von Ski-Ausrüstung zu organisieren — ohne Tabellen, Chatgruppen oder Marktplätze.</p>
             <div class="features-grid">
@@ -2352,7 +2390,7 @@
 
     <!-- Benefits -->
     <section class="benefits snap-section" id="benefits" aria-labelledby="benefits-heading">
-        <div class="benefits-inner">
+        <div class="content-container benefits-inner">
             <h2 class="section-title" id="benefits-heading" data-i18n="benefits.title">Warum Menschen Skister lieben</h2>
             <p class="benefits-subtitle" data-i18n="benefits.subtitle">Weniger Aufwand, mehr Gemeinsamkeit — und Ausrüstung, die wirklich genutzt wird.</p>
             <div class="benefits-grid">
@@ -2377,17 +2415,19 @@
     
     <!-- Latest from the blog (2×2) -->
     <section class="home-blog-strip snap-section" id="home-blog-strip" aria-labelledby="home-blog-heading">
-        <h2 class="section-title" id="home-blog-heading" data-i18n="home.blog.title">News from the slopes</h2>
-        <p class="home-blog-subtitle" data-i18n="home.blog.subtitle">Gear tips, product updates, and stories from the Skister team.</p>
-        <div class="home-blog-grid" id="home-blog-grid" role="list"></div>
-        <div class="home-blog-footer">
-            <a href="/blog/" class="home-blog-all"><span data-i18n="home.blog.viewAll">Browse all posts</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        <div class="content-container">
+            <h2 class="section-title" id="home-blog-heading" data-i18n="home.blog.title">News from the slopes</h2>
+            <p class="home-blog-subtitle" data-i18n="home.blog.subtitle">Gear tips, product updates, and stories from the Skister team.</p>
+            <div class="home-blog-grid" id="home-blog-grid" role="list"></div>
+            <div class="home-blog-footer">
+                <a href="/blog/" class="home-blog-all"><span data-i18n="home.blog.viewAll">Browse all posts</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
         </div>
     </section>
     
     <!-- Get the app — full-width download section -->
     <section class="download-section snap-section" id="download" aria-labelledby="download-heading">
-        <div class="download-inner">
+        <div class="content-container download-inner">
             <h2 class="section-title" id="download-heading" data-i18n="download.title">Get Skister</h2>
             <p class="download-subtitle" data-i18n="download.subtitle">iOS and Android — launching soon. Pick your platform; store links will appear here.</p>
             <div class="store-badges" role="group" aria-label="App stores">
@@ -2432,7 +2472,9 @@
     
     <!-- FAQ Section -->
     <section class="faq-section snap-section" id="faq" aria-labelledby="faq-heading">
-        <h2 class="section-title" id="faq-heading" data-i18n="faq.title">Häufig gestellte Fragen</h2>
+        <div class="content-container faq-inner">
+            <h2 class="section-title" id="faq-heading" data-i18n="faq.title">Häufig gestellte Fragen</h2>
+            <div class="faq-list">
         
         <div class="faq-item" onclick="toggleFAQ(this)">
             <div class="faq-question">
@@ -2503,18 +2545,23 @@
                 <div class="faq-answer-content" data-i18n="faq.a6">Ein Ski-Netzwerk ist Skisters Weg, Skifahrern zu helfen, sich rund um die Orte und Communities zu verbinden, in denen sie ski fahren. Es kann Skigebiete, Skiclubs, lokale Communities, Events, Skifahrer in der Nähe und zukünftige Community-Funktionen umfassen.</div>
             </div>
         </div>
+            </div>
+        </div>
     </section>
     
     <!-- Disclaimer -->
-    <div class="disclaimer">
-        <h3><i class="fa-solid fa-triangle-exclamation"></i> <span data-i18n="disclaimer.title">Wichtiger Hinweis</span></h3>
-        <p data-i18n="disclaimer.text">
-            Skister ist nur ein Kommunikations-Tool. Wir übernehmen keine Verantwortung für geliehene, beschädigte oder verlorene Ausrüstung. Nutze die App auf eigenes Risiko. Alle Austausche erfolgen direkt zwischen dir und deinen Bekannten.
-        </p>
+    <div class="content-container">
+        <div class="disclaimer">
+            <h3><i class="fa-solid fa-triangle-exclamation"></i> <span data-i18n="disclaimer.title">Wichtiger Hinweis</span></h3>
+            <p data-i18n="disclaimer.text">
+                Skister ist nur ein Kommunikations-Tool. Wir übernehmen keine Verantwortung für geliehene, beschädigte oder verlorene Ausrüstung. Nutze die App auf eigenes Risiko. Alle Austausche erfolgen direkt zwischen dir und deinen Bekannten.
+            </p>
+        </div>
     </div>
     
     <!-- Footer -->
     <footer>
+        <div class="content-container">
         <div class="footer-top">
             <div class="footer-brand">
                 <img
@@ -2564,6 +2611,7 @@
         <div class="footer-bottom">
             <p>© 2026 Skister. <span data-i18n="footer.rights">Alle Rechte vorbehalten.</span></p>
             <p data-i18n="footer.madewith">Made with ❤️ from the alps</p>
+        </div>
         </div>
     </footer>
     
