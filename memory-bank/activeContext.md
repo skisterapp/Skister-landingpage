@@ -33,7 +33,7 @@ When any landing-related files change (e.g. `index.html`, `landing-admin.html`, 
 - Features section renamed to “Everything you need” / “Alles was du brauchst” with updated subtitle; benefits keys added for CMS (`benefits.*`).
 - Live CMS API may still override `features.subtitle` until Landing CMS is re-saved or content sync publishes `data/landing-content.json`.
 - Follow-up fix: restored desktop `min-height` snap sections + original desktop nav/section spacing; mobile (`max-width: 768px`) keeps compact spacing.
-- Safety branch `fix/mobile-ui-regression`: re-enabled mobile block-by-block snap; benefits/FAQ are snap sections; section height uses `calc(100dvh - nav-offset)` under sticky nav. Not merged to `main` until approved.
+- Mobile UI regression fixes merged to `main` (`fix/mobile-ui-regression` → `e2616d4`): block-by-block snap, benefits/FAQ snap sections, `calc(100dvh - nav-offset)` under sticky nav, centered mobile cards/FAQ/footer, larger footer logo.
 
 ## Next steps
 
