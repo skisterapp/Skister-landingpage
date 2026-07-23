@@ -1033,7 +1033,7 @@
                 padding: 0.15rem;
             }
             .onboarding-mascot {
-                max-width: 11.5rem;
+                max-width: 15rem;
             }
             .onboarding-content h3 {
                 font-size: 1.3rem;
@@ -1956,7 +1956,7 @@
             }
 
             .onboarding-mascot {
-                max-width: 9.25rem;
+                max-width: 15rem;
             }
 
             .onboarding-controls {
@@ -2141,7 +2141,7 @@
             }
 
             .onboarding-mascot {
-                max-width: 8rem;
+                max-width: 12.5rem;
             }
         }
         
@@ -3676,6 +3676,8 @@
 
         let onboardingStep = 0;
         const ONBOARDING_STEP_COUNT = 7;
+        const ONBOARDING_AUTO_MS = 4500;
+        let onboardingAutoTimer = null;
 
         function renderOnboardingDots() {
             const dotsEl = document.getElementById('onboarding-dots');
@@ -3686,7 +3688,10 @@
                 dot.type = 'button';
                 dot.className = 'onboarding-dot' + (i === onboardingStep ? ' active' : '');
                 dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-                dot.addEventListener('click', function () { setOnboardingStep(i); });
+                dot.addEventListener('click', function () {
+                    setOnboardingStep(i);
+                    resetOnboardingAutoplay();
+                });
                 dotsEl.appendChild(dot);
             }
         }
@@ -3705,10 +3710,33 @@
 
         function onboardingPrev() {
             setOnboardingStep(onboardingStep - 1);
+            resetOnboardingAutoplay();
         }
 
         function onboardingNext() {
             setOnboardingStep(onboardingStep + 1);
+            resetOnboardingAutoplay();
+        }
+
+        function onboardingAdvanceAuto() {
+            setOnboardingStep((onboardingStep + 1) % ONBOARDING_STEP_COUNT);
+        }
+
+        function stopOnboardingAutoplay() {
+            if (onboardingAutoTimer) {
+                clearInterval(onboardingAutoTimer);
+                onboardingAutoTimer = null;
+            }
+        }
+
+        function startOnboardingAutoplay() {
+            stopOnboardingAutoplay();
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            onboardingAutoTimer = setInterval(onboardingAdvanceAuto, ONBOARDING_AUTO_MS);
+        }
+
+        function resetOnboardingAutoplay() {
+            startOnboardingAutoplay();
         }
 
         function initOnboardingCarousel() {
@@ -3722,26 +3750,42 @@
                 if (e.pointerType === 'mouse' && e.button !== 0) return;
                 pointerActive = true;
                 pointerStartX = e.clientX;
+                stopOnboardingAutoplay();
             });
             wrap.addEventListener('pointerup', function (e) {
                 if (!pointerActive || pointerStartX === null) return;
                 const deltaX = e.clientX - pointerStartX;
                 pointerActive = false;
                 pointerStartX = null;
-                if (Math.abs(deltaX) < 48) return;
+                if (Math.abs(deltaX) < 48) {
+                    resetOnboardingAutoplay();
+                    return;
+                }
                 if (deltaX < 0) onboardingNext();
                 else onboardingPrev();
             });
             wrap.addEventListener('pointercancel', function () {
                 pointerActive = false;
                 pointerStartX = null;
+                resetOnboardingAutoplay();
             });
             wrap.addEventListener('keydown', function (e) {
                 if (e.key === 'ArrowRight') { e.preventDefault(); onboardingNext(); }
                 if (e.key === 'ArrowLeft') { e.preventDefault(); onboardingPrev(); }
             });
+            wrap.addEventListener('mouseenter', stopOnboardingAutoplay);
+            wrap.addEventListener('mouseleave', resetOnboardingAutoplay);
+            wrap.addEventListener('focusin', stopOnboardingAutoplay);
+            wrap.addEventListener('focusout', function (e) {
+                if (!wrap.contains(e.relatedTarget)) resetOnboardingAutoplay();
+            });
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden) stopOnboardingAutoplay();
+                else resetOnboardingAutoplay();
+            });
             if (!wrap.hasAttribute('tabindex')) wrap.setAttribute('tabindex', '0');
             wrap.setAttribute('aria-roledescription', 'carousel');
+            startOnboardingAutoplay();
         }
 
         (function initStickyNav() {
