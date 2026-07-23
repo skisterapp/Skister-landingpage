@@ -707,6 +707,9 @@
             background:
                 linear-gradient(180deg, rgba(34, 139, 34, 0.04) 0%, transparent 40%),
                 var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         .benefits-inner {
             max-width: 1040px;
@@ -1343,7 +1346,9 @@
             border-top: 1px solid rgba(255, 255, 255, 0.06);
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: center;
+            width: 100%;
+            box-sizing: border-box;
         }
         .faq-section .section-title {
             margin-bottom: 1.35rem;
@@ -2221,7 +2226,7 @@
     </section>
 
     <!-- Benefits -->
-    <section class="benefits" id="benefits" aria-labelledby="benefits-heading">
+    <section class="benefits snap-section" id="benefits" aria-labelledby="benefits-heading">
         <div class="benefits-inner">
             <h2 class="section-title" id="benefits-heading" data-i18n="benefits.title">Warum Menschen Skister lieben</h2>
             <p class="benefits-subtitle" data-i18n="benefits.subtitle">Weniger Aufwand, mehr Gemeinsamkeit — und Ausrüstung, die wirklich genutzt wird.</p>
@@ -2301,7 +2306,7 @@
     </section>
     
     <!-- FAQ Section -->
-    <section class="faq-section" id="faq" aria-labelledby="faq-heading">
+    <section class="faq-section snap-section" id="faq" aria-labelledby="faq-heading">
         <h2 class="section-title" id="faq-heading" data-i18n="faq.title">Häufig gestellte Fragen</h2>
         
         <div class="faq-item" onclick="toggleFAQ(this)">
