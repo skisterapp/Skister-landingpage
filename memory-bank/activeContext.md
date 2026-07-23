@@ -24,11 +24,20 @@ When any landing-related files change (e.g. `index.html`, `landing-admin.html`, 
 - Live homepage must prefer Supabase `GET /landing-content` and only fall back to `data/landing-content.json` if the API fails. Applying the JSON snapshot after the API overwrote fresh CMS saves (up to the 12h sync cron).
 - Edge Function (`Skisterapp`) queues GitHub Actions on landing/blog saves via `GITHUB_LANDING_DISPATCH_TOKEN` + `GITHUB_LANDING_DISPATCH_REPO=skisterapp/Skister-landingpage` (workflows: `sync-landing-content.yml`, `generate-blogs.yml`). Manual trigger: `seo-admin` → Publish.
 - Deploy Edge from **Skisterapp**: `npm run supabase:deploy`. Landing HTML lives in **Skister-landingpage** (`skister-live` remote).
+- Onboarding mascots for Confirm & Ski Network: `SkisterApp/Mascot Confirm & coordinate.png` and `SkisterApp/Mascot Ski Network.png` (transparent). Opaque `mascot-scenery.png` removed.
+
+## Landing polish (Jul 2026)
+
+- Production UI refinement of `index.html`: tighter header/hero, compact feature cards, new benefits section, cleaner FAQ accordion, premium SaaS footer.
+- Onboarding mascot sequence left intact (same image URLs); only spacing, carousel swipe/controls, and typography refined.
+- Features section renamed to “Everything you need” / “Alles was du brauchst” with updated subtitle; benefits keys added for CMS (`benefits.*`).
+- Live CMS API may still override `features.subtitle` until Landing CMS is re-saved or content sync publishes `data/landing-content.json`.
 
 ## Next steps
 
 - Keep mobile app repo in sync if it duplicates these addresses.
 - If CMS save does not create a GitHub Actions run, rotate/recheck `GITHUB_LANDING_DISPATCH_TOKEN` (needs `actions:write` on the landing repo).
+- Re-save Landing CMS features subtitle (or Publish) so live API matches the new “Everything you need” copy.
 
 ## Skisterapp release automation memory
 
