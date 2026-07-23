@@ -364,7 +364,8 @@
   "images": {
     "heroMascot": "https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png",
     "onboardingStep4": "assets/onboarding/reservation-request.png",
-    "onboardingStep5": "assets/onboarding/confirm-coordinate.png"
+    "onboardingStep5": "https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/Mascot%20Confirm%20%26%20coordinate.png",
+    "onboardingStep7": "https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/Mascot%20Ski%20Network.png"
   },
-  "syncedAt": "2026-07-23T01:24:36.615Z"
+  "syncedAt": "2026-07-23T10:10:55.875Z"
 }
