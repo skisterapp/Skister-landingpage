@@ -135,14 +135,14 @@ export function Onboarding(props: { onDone?: () => void }): React.ReactNode {
 function getSlides(): Slide[] {
   return [
     {
-      title: 'Share ski gear with your network',
-      message: 'Skister helps you coordinate lending and borrowing with people you trust.',
+      title: 'Share ski gear with people you trust',
+      message: 'Skister is the easiest way to share ski gear with friends, family and communities you trust. You can also share camping, hiking and other outdoor equipment.',
       imageSrc: SKISTER_LOGO_URL,
       imageAlt: 'Skister app logo'
     },
     {
       title: 'List your gear → others can borrow it',
-      message: 'Add gear to your inventory so your network can request it.',
+      message: 'Add skis, boots and helmets first — plus camping, hiking or other outdoor gear when you need it — so your trusted network can request what they need.',
       imageSrc: SKISTER_LOGO_URL,
       imageAlt: 'Inventory'
     },

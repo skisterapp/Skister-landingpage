@@ -86,11 +86,11 @@ function getHelpSections(): HelpSection[] {
       items: [
         {
           title: 'What is a Ski Network?',
-          description: 'Skister\'s community feature for connecting around resorts, clubs, events, and nearby skiers. A ski resort is a real-world place; your Ski Network in Skister is the community layer in the app — not the resort itself.'
+          description: 'Skister\'s community feature for connecting around ski resorts, clubs, events, and nearby skiers you trust. A ski resort is a real-world place; your Ski Network in Skister is the community layer in the app — not the resort itself. Within it you can also share camping, hiking and other outdoor equipment.'
         },
         {
           title: 'Choosing your Ski Network',
-          description: 'Pick a network based on your preferred resort, club, or local community in Profile or onboarding.'
+          description: 'Pick a network based on your preferred ski resort, club, or local community in Profile or onboarding.'
         }
       ]
     },
@@ -98,15 +98,15 @@ function getHelpSections(): HelpSection[] {
       id: 'getting-started',
       title: 'Getting started',
       items: [
-        { title: 'How to add gear', description: 'Open Inventory, tap Add, and include photos + condition.' },
-        { title: 'How to invite people', description: 'Use the invite flow to add friends/family to your network.' }
+        { title: 'How to add gear', description: 'Open My Gear, tap Add, and include photos + condition. Start with skis, boots and helmets — camping, hiking and other outdoor gear are supported too.' },
+        { title: 'How to invite people', description: 'Use the invite flow to add friends, family and community members you trust.' }
       ]
     },
     {
       id: 'borrowing-gear',
-      title: 'Borrowing gear',
+      title: 'Borrowing ski gear',
       items: [
-        { title: 'How requests work', description: 'Request an item from someone in your network and agree on pickup.' },
+        { title: 'How requests work', description: 'Request an item from someone in your trusted network and agree on pickup.' },
         { title: 'Pickup & return flow', description: 'Confirm handoff (QR if enabled) and confirm condition on return.' }
       ]
     },

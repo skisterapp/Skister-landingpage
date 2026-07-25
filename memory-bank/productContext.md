@@ -1,18 +1,18 @@
 # Product context
 
-Skister is a family-friendly platform for sharing ski equipment within trusted networks.
+Skister is the easiest way to share ski gear with people you trust. Skiing and winter sports are always primary; camping, hiking and other outdoor equipment are additional supported categories — never equal priorities. Sharing happens within trusted networks, friends and communities — never framed as a generic marketplace.
 
 ## What this repo covers
 
 - Marketing / landing pages (static HTML)
 - Blog pages and blog tooling
 - Release automation scripts
-- Supabase Edge Functions used by Skister services
 - Built web app artifacts for the client (served from `dist/`)
+- Help / onboarding copy shared with the product positioning
 
 ## UX goals (high-level)
 
-- Simple, trustworthy presentation for families
-- Clear contact paths (support, privacy, feedback)
+- Ski-first brand signal everywhere (heroes, category lists, featured content)
+- Secondary outdoor capability stated clearly without diluting skiing
+- Trusted networks, friends and communities — not open marketplace language
 - Fast load times and mobile-friendly layout for public pages
-

@@ -1,5 +1,68 @@
 # Active context
 
+## Ski-first brand repositioning (Jul 2026)
+
+Skister remains a **ski-sharing application first**. Brand positioning:
+
+- Primary: “Skister is the easiest way to share ski gear with people you trust.”
+- Secondary: “You can also share camping, hiking and other outdoor equipment.”
+
+Rules applied across app + website:
+
+- Skiing always first in category/activity lists; ski gear is featured content
+- Hero banners and winter-sports framing stay primary
+- Camping / hiking / climbing / other outdoor gear are additional supported categories (not equal priorities)
+- Never describe Skister as a generic marketplace
+- Sharing framed within trusted networks, friends and communities
+- User-facing **Ski Network** restored (not Outdoor Network); API keys / resort APIs unchanged
+
+Updated in **Skister-main**: onboarding, Help, `help.html`, landing `index.html` + `data/landing-content.json`, blog banner.
+
+Updated in **Skisterapp**: `LanguageContext` (EN/DE/FR/IT), legal docs, Explore/Home/Inventory placeholders, empty-state and FAQ/About copy.
+
+## Trip Planner in Tools (Jul 2026)
+
+Implemented in **Skisterapp** (`/Users/sharanestone/Semprog/Skister/Skisterapp`):
+
+- `/tools` is the Trip Planner (travel-planner UI, not a settings page)
+- Inputs: Destination, Dates, Activities, People, Skill level, Trip type
+- Generates: packing checklist, suggested borrowed gear (from network via `getAvailableGear` / `getAllGear`), weather placeholder, budget / food / water / fuel estimates
+- CTAs: Invite friends (sendInvitation sheet), Borrow recommended gear → Explore with activity + dates deep link
+- Shared activity→gear mapping: `src/app/lib/explore-activities.ts` (used by Explore + Trip Planner)
+- Plan logic: `src/app/lib/trip-planner.ts`
+
+## Explore consumer redesign (Jul 2026)
+
+Implemented in **Skisterapp** (`/Users/sharanestone/Semprog/Skister/Skisterapp`):
+
+- `/explore` is a standalone consumer screen (no longer wraps `Inventory mode="explore"`)
+- Top filters: Search, Activity chips, Location (Ski Network / resort picker), Dates
+- Primary CTA: **Browse Gear** — runs existing APIs (`getAllGear` / `getAvailableGear` / optional `getResortGear` intersect)
+- Activities map to backend categories + keyword filters client-side (no backend category schema change)
+- Result cards: photo, distance/location label, availability badge, owner, category, Borrow CTA
+- Home deep links (`?q=`, `?startDate=&endDate=`) still auto-browse
+- My Gear still uses `Inventory mode="my-gear"`; legacy Inventory `mode="explore"` unused by the route
+
+## App navigation redesign (Jul 2026)
+
+Implemented in **Skisterapp** (`/Users/sharanestone/Semprog/Skister/Skisterapp`):
+
+- Bottom nav order: **Home → Explore → My Gear → Tools → Profile**
+- Reminders removed from bottom nav; still at `/reminders`, linked from Home + Profile
+- Explore (`/explore`) is the consumer borrow discovery screen (see above)
+- My Gear (`/my-gear`) shows only the current user's gear
+- Tools (`/tools`) hosts the Trip Planner
+- Legacy `/inventory` route kept for deep links
+
+## Home action-first dashboard (Jul 2026)
+
+Home (`src/app/screens/Home.tsx`) redesigned as a guided dashboard:
+
+- Welcome + “What would you like to do today?”
+- Four primary actions: Borrow (`/explore`), Share (`/my-gear?add=1`), Return (`/reminders`), Scan QR (`/scan-qr`)
+- Sections below (auto-hidden when empty): Upcoming Pickups, Upcoming Returns, Friend Requests, Recent Activity
+- Existing flows preserved: date/name find-gear (collapsible), reminders/invite shortcuts, upcoming-event widget, handoff QR card, incoming borrow approvals, pending borrowings
+
 ## Skister contact emails (canonical)
 
 Use these across the website and app (lowercase local parts; domain `skister.app`):
@@ -43,12 +106,25 @@ When any landing-related files change (e.g. `index.html`, `landing-admin.html`, 
 - Web + mobile use full-viewport `scroll-snap-type: y mandatory`; hero fills `100svh` so the next section never peeks on load.
 - Mascot/onboarding artwork URLs and order unchanged; no business-logic/CMS/i18n/routing changes.
 
+## App UI polish (Jul 2026)
+
+Implemented in **Skisterapp** (dark theme retained; no business-logic changes):
+
+- Design tokens: bright green reserved for primary CTAs; dark forest greens for surfaces/soft accents; muted gray-green body text (no neon secondary text)
+- Spacing: tighter in-card padding (~25%); roomier section gaps via `.skister-page` / `--space-section`
+- Radius scale: controls `0.75rem`, cards `1rem`; shared buttons/inputs use `rounded-xl` + min 44px touch targets
+- Typography: stronger heading weight/tracking hierarchy
+- Shared `EmptyState` + `LoadingSkeleton`; route fallback uses page skeleton; Explore/Network empty states updated
+- Motion: snappier enters, softer card hover, improved dark shimmer skeletons
+- Screens touched: Layout, Home, Explore, Tools, Inventory, Profile, Reminders, Network, Login, home-updates
+
 ## Next steps
 
+- Re-save / Publish Landing CMS so live API matches ski-first hero/FAQ (or rely on synced `data/landing-content.json`)
+- Visual sign-off on Skisterapp UI polish (dark mode Home / Explore / Tools)
 - Review/merge `fix/production-polish` after visual sign-off.
-- Keep mobile app repo in sync if it duplicates these addresses.
+- Keep mobile app repo in sync if it duplicates contact addresses.
 - If CMS save does not create a GitHub Actions run, rotate/recheck `GITHUB_LANDING_DISPATCH_TOKEN` (needs `actions:write` on the landing repo).
-- Re-save Landing CMS features subtitle (or Publish) so live API matches the new “Everything you need” copy.
 
 ## Skisterapp release automation memory
 
