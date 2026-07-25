@@ -165,6 +165,17 @@ Reinforced invite-only / private-circle messaging (business logic unchanged) acr
 
 Avoid: “browse marketplace / nearby strangers / grow community for more gear / similar to social media” framing.
 
+### Marketing ↔ app alignment (Jul 26, 2026)
+
+Landing now mirrors the mobile app surface:
+
+- New **Tools** section (`#tools`): DIN, ski length, boot size, trip planner, packing, snow conditions, gear maintenance, beyond-winter adventure
+- New **Pricing / Premium** section (`#pricing`): Free €0, Premium €4.99/mo (annual €39.99), Founder Lifetime €89.99 — sharing never paywalled
+- FAQ cost + Ski Network answers aligned with app; FR/ES/IT onboarding brought to invite-first
+- SEO: refined meta description/keywords; added Organization + SoftwareApplication + FAQPage JSON-LD (existing seo-inject.js kept)
+- Help / Privacy overview / blog index / footer+nav links updated for Tools & Pricing
+- CMS snapshot `data/landing-content.json` includes new nav/pricing/tools/FAQ keys for DE/EN
+
 ## Trip Planner in Tools (Jul 2026)
 
 Implemented in **Skisterapp** (`/Users/sharanestone/Semprog/Skister/Skisterapp`):
@@ -266,8 +277,8 @@ Implemented in **Skisterapp** (dark theme retained; no business-logic changes):
 
 ## Next steps
 
-- Re-save / Publish Landing CMS so live API matches ski-first hero/FAQ (or rely on synced `data/landing-content.json`)
-- Commit + push Skister-main landing ski-first copy; keep Skisterapp i18n/tools changes in sync
+- Re-save / Publish Landing CMS so live API picks up Tools/Pricing/FAQ keys from `data/landing-content.json`
+- Visual sign-off on new Tools + Pricing snap sections (desktop + mobile)
 - Visual sign-off on Skisterapp UI polish (dark mode Home / Explore / Tools / Profile)
 - Review/merge `fix/production-polish` after visual sign-off.
 - Keep mobile app repo in sync if it duplicates contact addresses.

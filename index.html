@@ -13,13 +13,13 @@
         document.head.appendChild(s);
     })();
     </script>
-    <meta name="description" content="Skister is the easiest way to share ski gear with people you trust. Also supports camping, hiking and other outdoor equipment within friends, family and communities.">
-    <meta name="keywords" content="ski equipment sharing, ski gear, family app, community sharing, free ski rental">
+    <meta name="description" content="Skister is the easiest way to share ski equipment with trusted people. Private communities, invite friends, and modern tools for skiers — plus camping, hiking and adventure support beyond winter.">
+    <meta name="keywords" content="ski equipment sharing, share ski gear, trusted network, private communities, invite friends, ski clubs, camping hiking outdoor gear, ski tools, DIN calculator, packing checklist">
     <meta name="author" content="Skister">
     
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Skister — Share ski gear with people you trust">
-    <meta property="og:description" content="The easiest way to share ski gear with people you trust — camping and hiking supported too.">
+    <meta property="og:description" content="Share ski equipment with trusted people in private communities. Invite friends. Modern tools for skiers — adventure support beyond winter.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://skister.app/">
     <meta property="og:image" id="meta-og-image" content="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png">
@@ -40,6 +40,98 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Structured data (SoftwareApplication + FAQ + Organization) -->
+    <script type="application/ld+json" id="skister-ld-org">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Skister",
+      "url": "https://skister.app/",
+      "logo": "https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png",
+      "email": "contact@skister.app",
+      "sameAs": []
+    }
+    </script>
+    <script type="application/ld+json" id="skister-ld-app">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Skister",
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "iOS, Android",
+      "url": "https://skister.app/",
+      "description": "Skister is the easiest way to share ski equipment with trusted people. Also supports camping, hiking and other outdoor equipment within private communities.",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Free",
+          "price": "0",
+          "priceCurrency": "EUR",
+          "description": "Unlimited ski and outdoor equipment sharing within your private trusted network."
+        },
+        {
+          "@type": "Offer",
+          "name": "Premium Monthly",
+          "price": "4.99",
+          "priceCurrency": "EUR"
+        },
+        {
+          "@type": "Offer",
+          "name": "Premium Annual",
+          "price": "39.99",
+          "priceCurrency": "EUR"
+        }
+      ],
+      "featureList": [
+        "Share ski gear with people you trust",
+        "Private communities and invite-only networks",
+        "Camping, hiking and other outdoor equipment",
+        "Modern tools for skiers: DIN, ski length, boot size, packing, snow conditions, trip planner"
+      ]
+    }
+    </script>
+    <script type="application/ld+json" id="skister-ld-faq">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does Skister work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Skister is the easiest way to share ski gear with people you trust — friends, family, ski clubs and local groups. Add your ski equipment, see what your private network has shared, and coordinate pickups locally. You can also share camping, hiking and other outdoor equipment."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Skister cost anything?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Core sharing is free: unlimited inventory, network invites, calendar, reservation requests, and basic borrowing. Premium adds automatic reminders, handover checklist, maintenance logging, seasonal reminders, full history, usage analytics, and network shortage detection."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who can see my gear?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only members of your private network can see your listed items. Skister is invite-only to maintain trust and safety."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a Ski Network?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A Ski Network is your private circle around where you ski — friends, family, clubs and local groups. A ski resort is a real-world place; your Ski Network in Skister is the private layer in the app. Within it you can also share camping, hiking and other outdoor equipment."
+          }
+        }
+      ]
+    }
+    </script>
+
     
     <style>
         * {
@@ -826,6 +918,215 @@
                 max-width: 24rem;
                 margin: 0 auto;
             }
+        }
+
+
+        /* Tools */
+        .tools-section {
+            position: relative;
+            z-index: 2;
+            padding: var(--section-gap) 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            background:
+                linear-gradient(180deg, rgba(34, 139, 34, 0.035) 0%, transparent 45%),
+                var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .tools-inner { width: 100%; }
+        .tools-subtitle {
+            text-align: center;
+            color: var(--text-gray);
+            max-width: 40rem;
+            margin: 0 auto var(--subtitle-content-gap);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: var(--card-gap);
+        }
+        .tool-card {
+            background: rgba(255, 255, 255, 0.025);
+            border: var(--border-soft);
+            border-radius: var(--radius-sm);
+            padding: var(--card-pad);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+        }
+        .tool-card:hover {
+            border-color: rgba(46, 232, 154, 0.35);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card-hover);
+        }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--primary-green-light);
+            margin-bottom: 0.65rem;
+            padding: 0.25rem 0.55rem;
+            border-radius: 999px;
+            border: 1px solid rgba(46, 232, 154, 0.25);
+            background: rgba(34, 139, 34, 0.1);
+        }
+        .tool-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 0 0 0.4rem;
+            color: var(--text-white);
+            letter-spacing: -0.015em;
+        }
+        .tool-card p {
+            color: var(--text-gray);
+            font-size: 0.92rem;
+            line-height: 1.55;
+            margin: 0;
+        }
+        .tool-cat {
+            margin-top: 0.75rem;
+            font-size: 0.78rem;
+            color: rgba(176, 176, 176, 0.9);
+            font-weight: 600;
+        }
+        @media (max-width: 960px) {
+            .tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (max-width: 600px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+                max-width: 24rem;
+                margin: 0 auto;
+            }
+        }
+
+        /* Pricing / Premium */
+        .pricing-section {
+            position: relative;
+            z-index: 2;
+            padding: var(--section-gap) 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            background:
+                linear-gradient(180deg, transparent 0%, rgba(34, 139, 34, 0.05) 50%, transparent 100%),
+                var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .pricing-inner { width: 100%; }
+        .pricing-subtitle {
+            text-align: center;
+            color: var(--text-gray);
+            max-width: 40rem;
+            margin: 0 auto var(--subtitle-content-gap);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: var(--card-gap);
+            align-items: stretch;
+        }
+        .pricing-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.025);
+            border: var(--border-soft);
+            border-radius: var(--radius-sm);
+            padding: calc(var(--card-pad) + 0.25rem);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+        .pricing-card--featured {
+            border-color: rgba(46, 232, 154, 0.4);
+            background: rgba(34, 139, 34, 0.08);
+            box-shadow: 0 8px 28px rgba(34, 139, 34, 0.18);
+        }
+        .pricing-card-badge {
+            position: absolute;
+            top: -0.7rem;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #0a0a0a;
+            background: var(--primary-green-light);
+            padding: 0.3rem 0.7rem;
+            border-radius: 999px;
+        }
+        .pricing-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0.35rem 0 0.35rem;
+            color: var(--text-white);
+        }
+        .pricing-price {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--text-white);
+            margin: 0.25rem 0;
+        }
+        .pricing-price span {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-gray);
+        }
+        .pricing-desc {
+            color: var(--text-gray);
+            font-size: 0.92rem;
+            line-height: 1.5;
+            margin: 0 0 1rem;
+        }
+        .pricing-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            gap: 0.55rem;
+            text-align: left;
+            flex: 1;
+        }
+        .pricing-list li {
+            display: flex;
+            gap: 0.55rem;
+            align-items: flex-start;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+        .pricing-list i {
+            color: var(--primary-green-light);
+            margin-top: 0.15rem;
+            flex-shrink: 0;
+        }
+        .pricing-note {
+            margin-top: 1.5rem;
+            text-align: center;
+            color: var(--text-gray);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            max-width: 42rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (max-width: 960px) {
+            .pricing-grid { grid-template-columns: 1fr; max-width: 26rem; margin: 0 auto; }
         }
 
         /* Benefits */
@@ -1955,6 +2256,8 @@
 
             .onboarding-showcase,
             .features,
+            .tools-section,
+            .pricing-section,
             .benefits,
             .home-blog-strip,
             .download-section,
@@ -2269,6 +2572,8 @@
             <div class="nav-links">
                 <a onclick="scrollToSection('how-it-works')" data-i18n="nav.howItWorks">So funktioniert's</a>
                 <a onclick="scrollToSection('features')" data-i18n="nav.features">Features</a>
+                <a onclick="scrollToSection('tools')" data-i18n="nav.tools">Tools</a>
+                <a onclick="scrollToSection('pricing')" data-i18n="nav.pricing">Preise</a>
                 <a onclick="scrollToSection('download')" data-i18n="nav.download">Download</a>
                 <a onclick="scrollToSection('faq')" data-i18n="nav.faq">FAQ</a>
                 <a href="/blog/" data-i18n="nav.blog">Blog</a>
@@ -2484,8 +2789,8 @@
                 </article>
                 <article class="feature-card">
                     <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-calendar-days"></i></div>
-                    <h3 data-i18n="features.free.title">100% Kostenlos</h3>
-                    <p data-i18n="features.free.description">Keine Zahlungen, keine Gebühren. Nur lokale Abholung und gemeinschaftliches Teilen.</p>
+                    <h3 data-i18n="features.free.title">Teilen bleibt kostenlos</h3>
+                    <p data-i18n="features.free.description">Unbegrenztes Teilen in deinem Netzwerk. Premium ist optional für Automatisierung und Einblicke.</p>
                 </article>
                 <article class="feature-card">
                     <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-bell"></i></div>
@@ -2513,6 +2818,112 @@
                     <p data-i18n="features.resorts.description">Verankere deinen privaten Kreis an einem Skigebiet, Verein oder einer lokalen Gruppe — teile Ausrüstung mit Menschen, die du einlädst.</p>
                 </article>
             </div>
+        </div>
+    </section>
+
+
+    <!-- Tools Section -->
+    <section class="tools-section snap-section" id="tools" aria-labelledby="tools-heading">
+        <div class="content-container tools-inner">
+            <h2 class="section-title" id="tools-heading" data-i18n="tools.title">Moderne Tools für Skifahrer</h2>
+            <p class="tools-subtitle" data-i18n="tools.subtitle">Winter-Utilities, Planung und Outdoor-Hilfe — in der App, genau wenn du sie brauchst. Auch für Abenteuer über den Winter hinaus.</p>
+            <div class="tools-grid">
+                <article class="tool-card">
+                    <span class="tool-badge" data-i18n="tools.badgeReady">Bereit</span>
+                    <h3 data-i18n="tools.din.title">Ski-DIN-Rechner</h3>
+                    <p data-i18n="tools.din.description">Empfohlene DIN-Werte aus Größe, Gewicht, Sohlenlänge und Level.</p>
+                    <span class="tool-cat" data-i18n="tools.cat.winter">Winter-Tools</span>
+                </article>
+                <article class="tool-card">
+                    <span class="tool-badge" data-i18n="tools.badgeReady">Bereit</span>
+                    <h3 data-i18n="tools.skiLength.title">Skilängen-Finder</h3>
+                    <p data-i18n="tools.skiLength.description">Skilänge nach Größe, Können und Fahrstil empfehlen.</p>
+                    <span class="tool-cat" data-i18n="tools.cat.winter">Winter-Tools</span>
+                </article>
+                <article class="tool-card">
+                    <span class="tool-badge" data-i18n="tools.badgeReady">Bereit</span>
+                    <h3 data-i18n="tools.bootSize.title">Schuhgrößen-Umrechner</h3>
+                    <p data-i18n="tools.bootSize.description">Mondopoint, EU, UK und US Skischuhgrößen umrechnen.</p>
+                    <span class="tool-cat" data-i18n="tools.cat.winter">Winter-Tools</span>
+                </article>
+                <article class="tool-card">
+                    <span class="tool-badge" data-i18n="tools.badgeReady">Bereit</span>
+                    <h3 data-i18n="tools.tripPlanner.title">Trip Planner</h3>
+                    <p data-i18n="tools.tripPlanner.description">Plane Touren, Packlisten und Ausrüstung aus deinem Netzwerk.</p>
+                    <span class="tool-cat" data-i18n="tools.cat.planning">Planung</span>
+                </article>
+                <article class="tool-card">
+                    <span class="tool-badge" data-i18n="tools.badgeReady">Bereit</span>
+                    <h3 data-i18n="tools.packing.title">Packliste</h3>
+                    <p data-i18n="tools.packing.description">Packlisten für Ski, Snowboard, Camping und Wandern — offline.</p>
+                    <span class="tool-cat" data-i18n="tools.cat.planning">Planung</span>
+                </article>
+                <article class="tool-card">
+                    <span class="tool-badge" data-i18n="tools.badgeReady">Bereit</span>
+                    <h3 data-i18n="tools.snow.title">Schneelage</h3>
+                    <p data-i18n="tools.snow.description">Schneehöhe, Neuschnee, Lifte und Vorhersage für deine Resorts.</p>
+                    <span class="tool-cat" data-i18n="tools.cat.outdoor">Outdoor-Tools</span>
+                </article>
+                <article class="tool-card">
+                    <span class="tool-badge" data-i18n="tools.badgeReady">Bereit</span>
+                    <h3 data-i18n="tools.maintenance.title">Gear-Pflege</h3>
+                    <p data-i18n="tools.maintenance.description">Wartungserinnerungen für Ski, Jacken und Outdoor-Ausrüstung.</p>
+                    <span class="tool-cat" data-i18n="tools.cat.outdoor">Outdoor-Tools</span>
+                </article>
+                <article class="tool-card">
+                    <span class="tool-badge" data-i18n="tools.badgeReady">Bereit</span>
+                    <h3 data-i18n="tools.adventure.title">Mehr als Winter</h3>
+                    <p data-i18n="tools.adventure.description">Camping, Wandern und weitere Outdoor-Ausrüstung — im selben privaten Netzwerk.</p>
+                    <span class="tool-cat" data-i18n="tools.cat.outdoor">Outdoor-Tools</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing / Premium -->
+    <section class="pricing-section snap-section" id="pricing" aria-labelledby="pricing-heading">
+        <div class="content-container pricing-inner">
+            <h2 class="section-title" id="pricing-heading" data-i18n="pricing.title">Preise</h2>
+            <p class="pricing-subtitle" data-i18n="pricing.subtitle">Teilen ist kostenlos und ohne Limits. Premium ergänzt Automatisierung, Organisation und Einblicke.</p>
+            <div class="pricing-grid">
+                <article class="pricing-card">
+                    <h3 data-i18n="pricing.free.title">Free</h3>
+                    <p class="pricing-price" data-i18n="pricing.free.price">€0</p>
+                    <p class="pricing-desc" data-i18n="pricing.free.desc">Voll nutzbares Teilen in deinem privaten Netzwerk — ohne Limits.</p>
+                    <ul class="pricing-list">
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.free.f1">Unbegrenzte Ausrüstung</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.free.f2">Freunde & Familie einladen</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.free.f3">Reservierungen & Kalender</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.free.f4">QR-Übergabe & Fotos</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.free.f5">Ski-Netzwerk & Tools</span></li>
+                    </ul>
+                </article>
+                <article class="pricing-card pricing-card--featured">
+                    <span class="pricing-card-badge" data-i18n="pricing.premium.badge">Premium</span>
+                    <h3 data-i18n="pricing.premium.title">Premium</h3>
+                    <p class="pricing-price"><span data-i18n="pricing.premium.price">€4.99</span> <span data-i18n="pricing.premium.period">/ Monat</span></p>
+                    <p class="pricing-desc" data-i18n="pricing.premium.desc">Automatisierung, Pflege, Einblicke und smartes Netzwerk.</p>
+                    <ul class="pricing-list">
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.premium.f1">Automatische Abhol- & Rückgabe-Erinnerungen</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.premium.f2">Wartungslog & saisonale Pflege</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.premium.f3">Nutzungsanalysen & Verleihstatistik</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.premium.f4">Netzwerk-Lücken & Größen-Hinweise</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.premium.f5">Jährlich €39.99 — spare gegenüber Monatlich</span></li>
+                    </ul>
+                </article>
+                <article class="pricing-card">
+                    <h3 data-i18n="pricing.founder.title">Founder Lifetime</h3>
+                    <p class="pricing-price" data-i18n="pricing.founder.price">€89.99</p>
+                    <p class="pricing-desc" data-i18n="pricing.founder.desc">Einmalzahlung. Premium für immer — limitiertes Launch-Angebot.</p>
+                    <ul class="pricing-list">
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.founder.f1">Alle Premium-Vorteile für immer</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.founder.f2">Exklusives Founder-Abzeichen</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.founder.f3">Early-Access-Vorteile</span></li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.founder.f4">Teilen bleibt für alle kostenlos</span></li>
+                    </ul>
+                </article>
+            </div>
+            <p class="pricing-note" data-i18n="pricing.note">Premium stellt Teilen nie hinter eine Paywall. Der Wert von Skister entsteht durch dein vertrauenswürdiges Netzwerk — Premium macht Organisation und Einblicke einfacher.</p>
         </div>
     </section>
 
@@ -2639,7 +3050,7 @@
             </div>
             <div class="faq-answer">
                 <div class="faq-answer-content" data-i18n="faq.a1">
-                    Skister ist eine kostenlose, familienfreundliche Plattform zum Teilen von Ski-Ausrüstung innerhalb deines vertrauenswürdigen Netzwerks. Liste deine Ausrüstung auf, durchsuche was andere geteilt haben und koordiniere lokale Abholungen.
+                    Skister ist der einfachste Weg, Skiausrüstung mit Menschen zu teilen, denen du vertraust — Freunde, Familie, Skivereine und lokale Gruppen. Liste deine Ski-Ausrüstung auf, sieh was dein privates Netzwerk geteilt hat und koordiniere lokale Abholungen. Camping, Wandern und andere Outdoor-Ausrüstung werden auch unterstützt.
                 </div>
             </div>
         </div>
@@ -2651,7 +3062,7 @@
             </div>
             <div class="faq-answer">
                 <div class="faq-answer-content" data-i18n="faq.a2">
-                    Nein! Skister ist völlig kostenlos. Es gibt keine Zahlungen, Gebühren oder Kosten. Alle Austausche werden kostenlos innerhalb deines privaten Netzwerks durchgeführt.
+                    Kern-Sharing ist kostenlos: unbegrenztes Inventar, Einladungen, Kalender, Reservierungen und Ausleihen. Premium ergänzt automatische Erinnerungen, Übergabe-Checkliste, Wartungslog, saisonale Erinnerungen, Historie, Nutzungsanalysen und Netzwerk-Engpässe.
                 </div>
             </div>
         </div>
@@ -2675,7 +3086,7 @@
             </div>
             <div class="faq-answer">
                 <div class="faq-answer-content" data-i18n="faq.a4">
-                    Nein. Skister ist nur eine Koordinations-App, ähnlich wie soziale Medien, um dir zu helfen, mit deinem vertrauenswürdigen Netzwerk zu kommunizieren. Wir übernehmen keine Verantwortung, Haftung oder Versicherung für geliehene, beschädigte oder verlorene Ausrüstung.
+                    Nein. Skister ist nur eine Koordinations-App, die dir hilft, Ausleihen mit Menschen zu organisieren, denen du vertraust. Wir übernehmen keine Verantwortung, Haftung oder Versicherung für geliehene, beschädigte oder verlorene Ausrüstung.
                 </div>
             </div>
         </div>
@@ -2698,7 +3109,7 @@
                 <i class="fa-solid fa-chevron-down faq-arrow" aria-hidden="true"></i>
             </div>
             <div class="faq-answer">
-                <div class="faq-answer-content" data-i18n="faq.a6">Ein Ski-Netzwerk ist Skisters Weg, Skifahrern zu helfen, sich rund um die Orte und Communities zu verbinden, in denen sie ski fahren. Es kann Skigebiete, Skiclubs, lokale Communities, Events, Skifahrer in der Nähe und zukünftige Community-Funktionen umfassen.</div>
+                <div class="faq-answer-content" data-i18n="faq.a6">Ein Ski-Netzwerk ist dein privater Kreis rund ums Skifahren — Freunde, Familie, Vereine und lokale Gruppen. Ein Skigebiet ist ein realer Ort; dein Ski-Netzwerk in Skister ist die private Ebene in der App. Darin kannst du auch Camping-, Wander- und andere Outdoor-Ausrüstung teilen.</div>
             </div>
         </div>
             </div>
@@ -2740,6 +3151,8 @@
                 <div class="footer-links">
                     <a onclick="scrollToSection('features')" data-i18n="footer.features">Alles was du brauchst</a>
                     <a onclick="scrollToSection('how-it-works')" data-i18n="footer.howItWorks">So funktioniert's</a>
+                    <a onclick="scrollToSection('tools')" data-i18n="footer.tools">Tools</a>
+                    <a onclick="scrollToSection('pricing')" data-i18n="footer.pricing">Preise</a>
                     <a onclick="scrollToSection('faq')" data-i18n="footer.faq">FAQ</a>
                     <a onclick="scrollToSection('download')" data-i18n="footer.download">Download</a>
                     <a href="/blog/" data-i18n="nav.blog">Blog</a>
@@ -2877,10 +3290,10 @@
                 'features.share.description': 'Liste deine Ski-Ausrüstung auf und mache sie deinem vertrauenswürdigen Netzwerk verfügbar.',
                 'features.family.title': 'Privat statt Marktplatz',
                 'features.family.description': 'Nur auf Einladung. Teile Skiausrüstung nur mit Personen, denen du vertraust — Familie, Freunde und Vereine.',
-                'features.free.title': '100% Kostenlos',
-                'features.free.description': 'Keine Zahlungen, keine Gebühren. Nur lokale Abholung und privates Teilen.',
+                'features.free.title': 'Teilen bleibt kostenlos',
+                'features.free.description': 'Unbegrenztes Teilen in deinem Netzwerk. Premium ist optional für Automatisierung und Einblicke.',
                 'features.reminders.title': 'Intelligente Erinnerungen',
-                'features.reminders.description': 'Erhalte Erinnerungen für Abhol- und Rückgabetermine. Verpasse nie einen wichtigen Termin.',
+                'features.reminders.description': 'Abhol- und Rückgabeerinnerungen helfen deinem privaten Kreis — Premium automatisiert noch mehr.',
                 'features.private.title': 'Sicher & Privat',
                 'features.private.description': 'Deine Daten bleiben privat. Nur Mitglieder deines Netzwerks können deine Ausrüstung sehen.',
                 'features.local.title': 'Nur lokal',
@@ -2904,17 +3317,17 @@
                 'download.comingSoonAlert': 'Demnächst! Wir melden uns, sobald die App verfügbar ist.',
                 'faq.title': 'Häufig gestellte Fragen',
                 'faq.q1': 'Wie funktioniert Skister?',
-                'faq.a1': 'Skister ist der einfachste Weg, Skiausrüstung mit Menschen zu teilen, denen du vertraust — Freunde, Familie und Communities. Liste deine Skiausrüstung auf, durchsuche was andere geteilt haben und koordiniere lokale Abholungen. Du kannst auch Camping-, Wander- und andere Outdoor-Ausrüstung teilen.',
+                'faq.a1': 'Skister ist der einfachste Weg, Skiausrüstung mit Menschen zu teilen, denen du vertraust — Freunde, Familie, Skivereine und lokale Gruppen. Liste deine Ski-Ausrüstung auf, sieh was dein privates Netzwerk geteilt hat und koordiniere lokale Abholungen. Du kannst auch Camping-, Wander- und andere Outdoor-Ausrüstung teilen.',
                 'faq.q2': 'Kostet die Nutzung von Skister etwas?',
-                'faq.a2': 'Nein! Skister ist völlig kostenlos. Es gibt keine Zahlungen, Gebühren oder Kosten. Alle Austausche werden kostenlos innerhalb deines privaten Netzwerks durchgeführt.',
+                'faq.a2': 'Kern-Sharing ist kostenlos: unbegrenztes Inventar, Netzwerkeinladungen, Kalender, Reservierungsanfragen und Ausleihen. Premium ergänzt automatische Erinnerungen, Übergabe-Checkliste, Wartungslog, saisonale Erinnerungen, vollständige Historie, Nutzungsanalysen und Netzwerk-Engpässe.',
                 'faq.q3': 'Wer kann meine Ausrüstung sehen?',
                 'faq.a3': 'Nur Mitglieder deines privaten Netzwerks können deine aufgelisteten Artikel sehen. Skister ist nur auf Einladung, um Vertrauen und Sicherheit zu gewährleisten.',
                 'faq.q4': 'Ist Skister für beschädigte Ausrüstung verantwortlich?',
-                'faq.a4': 'Nein. Skister ist nur eine Koordinations-App, ähnlich wie soziale Medien, um dir zu helfen, mit deinem vertrauenswürdigen Netzwerk zu kommunizieren. Wir übernehmen keine Verantwortung, Haftung oder Versicherung für geliehene, beschädigte oder verlorene Ausrüstung.',
+                'faq.a4': 'Nein. Skister ist nur eine Koordinations-App, die dir hilft, Ausleihen mit Menschen zu organisieren, denen du vertraust. Wir übernehmen keine Verantwortung, Haftung oder Versicherung für geliehene, beschädigte oder verlorene Ausrüstung.',
                 'faq.q5': 'Kann ich Artikel an Ausleiher versenden?',
-                'faq.a5': 'Nein, Skister ist nur für lokale Austausche konzipiert. Das hält die Dinge einfach und stellt sicher, dass Artikel innerhalb deiner vertrauenswürdigen Gemeinschaft bleiben.',
+                'faq.a5': 'Nein, Skister ist nur für lokale Austausche konzipiert. Das hält die Dinge einfach und stellt sicher, dass Ausrüstung in deinem privaten Netzwerk bleibt.',
                 'faq.q6': 'Was ist ein Ski-Netzwerk?',
-                'faq.a6': 'Ein Ski-Netzwerk ist Skisters Weg, Skifahrern zu helfen, sich rund um die Orte und Communities zu verbinden, in denen sie ski fahren. Es kann Skigebiete, Skiclubs, lokale Communities, Events, Skifahrer in der Nähe und zukünftige Community-Funktionen umfassen. Ein Skigebiet ist ein realer Ort; dein Ski-Netzwerk in Skister ist die Community-Funktion in der App.',
+                'faq.a6': 'Ein Ski-Netzwerk ist dein privater Kreis rund ums Skifahren — Freunde, Familie, Vereine und lokale Gruppen. Ein Skigebiet ist ein realer Ort; dein Ski-Netzwerk in Skister ist die private Ebene in der App. Darin kannst du auch Camping-, Wander- und andere Outdoor-Ausrüstung teilen.',
                 'disclaimer.title': 'Wichtiger Hinweis',
                 'disclaimer.text': 'Skister stellt ausschließlich die Plattform zur Organisation privater Ausleihen bereit. Leihvereinbarungen kommen direkt zwischen den beteiligten Personen zustande. Für geliehene, beschädigte oder verlorene Ausrüstung übernimmt Skister keine Haftung. Skister ist eine unabhängige Community-Plattform. Wir sind nicht verbunden mit, von oder offiziell assoziiert mit Skigebieten, Skiclubs, Eventveranstaltern oder anderen Organisationen in der App.',
                 'benefits.title': 'Warum Menschen Skister lieben',
@@ -2944,6 +3357,60 @@
                 'footer.contact': 'Kontakt',
                 'footer.rights': 'Alle Rechte vorbehalten.',
                 'footer.madewith': 'Made with ❤️ from the alps',
+                'pricing.note': 'Premium stellt Teilen nie hinter eine Paywall. Der Wert von Skister entsteht durch dein vertrauenswürdiges Netzwerk — Premium macht Organisation und Einblicke einfacher.',
+                'pricing.founder.f4': 'Teilen bleibt für alle kostenlos',
+                'pricing.founder.f3': 'Early-Access-Vorteile',
+                'pricing.founder.f2': 'Exklusives Founder-Abzeichen',
+                'pricing.founder.f1': 'Alle Premium-Vorteile für immer',
+                'pricing.founder.desc': 'Einmalzahlung. Premium für immer — limitiertes Launch-Angebot.',
+                'pricing.founder.price': '€89.99',
+                'pricing.founder.title': 'Founder Lifetime',
+                'pricing.premium.f5': 'Jährlich €39.99 — spare gegenüber Monatlich',
+                'pricing.premium.f4': 'Netzwerk-Lücken & Größen-Hinweise',
+                'pricing.premium.f3': 'Nutzungsanalysen & Verleihstatistik',
+                'pricing.premium.f2': 'Wartungslog & saisonale Pflege',
+                'pricing.premium.f1': 'Automatische Abhol- & Rückgabe-Erinnerungen',
+                'pricing.premium.desc': 'Automatisierung, Pflege, Einblicke und smartes Netzwerk.',
+                'pricing.premium.period': '/ Monat',
+                'pricing.premium.price': '€4.99',
+                'pricing.premium.title': 'Premium',
+                'pricing.premium.badge': 'Premium',
+                'pricing.free.f5': 'Ski-Netzwerk & Tools',
+                'pricing.free.f4': 'QR-Übergabe & Fotos',
+                'pricing.free.f3': 'Reservierungen & Kalender',
+                'pricing.free.f2': 'Freunde & Familie einladen',
+                'pricing.free.f1': 'Unbegrenzte Ausrüstung',
+                'pricing.free.desc': 'Voll nutzbares Teilen in deinem privaten Netzwerk — ohne Limits.',
+                'pricing.free.price': '€0',
+                'pricing.free.title': 'Free',
+                'pricing.subtitle': 'Teilen ist kostenlos und ohne Limits. Premium ergänzt Automatisierung, Organisation und Einblicke.',
+                'pricing.title': 'Preise',
+                'tools.adventure.description': 'Camping, Wandern und weitere Outdoor-Ausrüstung — im selben privaten Netzwerk.',
+                'tools.adventure.title': 'Mehr als Winter',
+                'tools.maintenance.description': 'Wartungserinnerungen für Ski, Jacken und Outdoor-Ausrüstung.',
+                'tools.maintenance.title': 'Gear-Pflege',
+                'tools.snow.description': 'Schneehöhe, Neuschnee, Lifte und Vorhersage für deine Resorts.',
+                'tools.snow.title': 'Schneelage',
+                'tools.packing.description': 'Packlisten für Ski, Snowboard, Camping und Wandern — offline.',
+                'tools.packing.title': 'Packliste',
+                'tools.tripPlanner.description': 'Plane Touren, Packlisten und Ausrüstung aus deinem Netzwerk.',
+                'tools.tripPlanner.title': 'Trip Planner',
+                'tools.bootSize.description': 'Mondopoint, EU, UK und US Skischuhgrößen umrechnen.',
+                'tools.bootSize.title': 'Schuhgrößen-Umrechner',
+                'tools.skiLength.description': 'Skilänge nach Größe, Können und Fahrstil empfehlen.',
+                'tools.skiLength.title': 'Skilängen-Finder',
+                'tools.din.description': 'Empfohlene DIN-Werte aus Größe, Gewicht, Sohlenlänge und Level.',
+                'tools.din.title': 'Ski-DIN-Rechner',
+                'tools.cat.planning': 'Planung',
+                'tools.cat.outdoor': 'Outdoor-Tools',
+                'tools.cat.winter': 'Winter-Tools',
+                'tools.badgeReady': 'Bereit',
+                'tools.subtitle': 'Winter-Utilities, Planung und Outdoor-Hilfe — in der App, genau wenn du sie brauchst. Auch für Abenteuer über den Winter hinaus.',
+                'tools.title': 'Moderne Tools für Skifahrer',
+                'footer.pricing': 'Preise',
+                'footer.tools': 'Tools',
+                'nav.pricing': 'Preise',
+                'nav.tools': 'Tools',
                 'modal.privacy.title': 'Datenschutzrichtlinie',
                 'modal.privacy.fullPage': 'Vollständige Datenschutzrichtlinie',
                 'modal.privacy.intro': 'Letzte Aktualisierung: Februar 2025',
@@ -3033,10 +3500,10 @@
                 'features.share.description': 'List your ski equipment and make it available to your trusted network. Camping, hiking and other outdoor gear are supported too.',
                 'features.family.title': 'Private instead of marketplace',
                 'features.family.description': 'Invitation only. Share ski gear only with people you trust — family, friends and clubs.',
-                'features.free.title': '100% Free',
-                'features.free.description': 'No payments, no fees. Just local pickup and private sharing.',
+                'features.free.title': 'Sharing stays free',
+                'features.free.description': 'Unlimited sharing in your network. Premium is optional for automation and insights.',
                 'features.reminders.title': 'Smart Reminders',
-                'features.reminders.description': 'Get reminders for pickup and return dates. Never miss an important deadline.',
+                'features.reminders.description': 'Pickup and return reminders help your private circle — Premium automates even more.',
                 'features.private.title': 'Secure & Private',
                 'features.private.description': 'Your data stays private. Only members of your network can see your equipment.',
                 'features.local.title': 'Local Only',
@@ -3060,17 +3527,17 @@
                 'download.comingSoonAlert': 'Coming soon! We will notify you when the app is ready.',
                 'faq.title': 'Frequently Asked Questions',
                 'faq.q1': 'How does Skister work?',
-                'faq.a1': 'Skister is the easiest way to share ski gear with people you trust — friends, family, ski clubs and local groups. Add your ski equipment, see what your private network has shared, and coordinate local pickups. You can also share camping, hiking and other outdoor equipment.',
+                'faq.a1': 'Skister is the easiest way to share ski gear with people you trust — friends, family, ski clubs and local groups. Add your ski equipment, see what your private network has shared, and coordinate pickups locally. You can also share camping, hiking and other outdoor equipment.',
                 'faq.q2': 'Does Skister cost anything?',
-                'faq.a2': 'No! Skister is completely free. There are no payments, fees, or costs. All exchanges are done for free within your private network.',
+                'faq.a2': 'Core sharing is free: unlimited inventory, network invites, calendar, reservation requests, and basic borrowing. Premium adds automatic reminders, handover checklist, maintenance logging, seasonal reminders, full history, usage analytics, and network shortage detection.',
                 'faq.q3': 'Who can see my equipment?',
                 'faq.a3': 'Only members of your private network can see your listed items. Skister is invitation-only to ensure trust and safety.',
                 'faq.q4': 'Is Skister responsible for damaged equipment?',
-                'faq.a4': 'No. Skister is only a coordination app that helps you organize loans with people you trust. We assume no responsibility, liability, or insurance for borrowed, damaged, or lost equipment.',
+                'faq.a4': 'No. Skister is only a coordination app that helps you organize loans with people you trust. We do not assume any responsibility, liability, or insurance for borrowed, damaged, or lost gear.',
                 'faq.q5': 'Can I ship items to borrowers?',
-                'faq.a5': 'No, Skister is designed for local exchanges only. This keeps things simple and ensures items stay within your trusted community.',
+                'faq.a5': 'No, Skister is designed for local exchanges only. That keeps things simple and keeps gear inside your private network.',
                 'faq.q6': 'What is a Ski Network?',
-                'faq.a6': 'A Ski Network is your private circle around where you ski — friends, family, ski clubs and local groups. A ski resort is a real-world place; your Ski Network in Skister is the private sharing layer in the app. Within it you can also share camping, hiking and other outdoor equipment.',
+                'faq.a6': 'A Ski Network is your private circle around where you ski — friends, family, clubs and local groups. A ski resort is a real-world place; your Ski Network in Skister is the private layer in the app. Within it you can also share camping, hiking and other outdoor equipment.',
                 'disclaimer.title': 'Important Notice',
                 'disclaimer.text': 'Skister merely provides the platform for organizing private loans between people you trust. Loan agreements are made directly between the parties involved. Skister assumes no liability for borrowed, damaged, or lost equipment. Skister is an independent platform for private sharing. We are not affiliated with, endorsed by, or officially associated with any ski resort, ski club, event organizer, or other organization displayed within the app.',
                 'benefits.title': 'Why people love Skister',
@@ -3100,6 +3567,60 @@
                 'footer.contact': 'Contact',
                 'footer.rights': 'All rights reserved.',
                 'footer.madewith': 'Made with ❤️ from the alps',
+                'pricing.note': 'Premium never puts sharing behind a paywall. Skister’s value comes from your trusted network — Premium makes organization and insights easier.',
+                'pricing.founder.f4': 'Sharing stays free for everyone',
+                'pricing.founder.f3': 'Early-access benefits',
+                'pricing.founder.f2': 'Exclusive Founder badge',
+                'pricing.founder.f1': 'All Premium benefits forever',
+                'pricing.founder.desc': 'One payment. Own Premium forever — limited launch offer.',
+                'pricing.founder.price': '€89.99',
+                'pricing.founder.title': 'Founder Lifetime',
+                'pricing.premium.f5': 'Annual €39.99 — save vs monthly',
+                'pricing.premium.f4': 'Network gap & size alerts',
+                'pricing.premium.f3': 'Usage analytics & lending stats',
+                'pricing.premium.f2': 'Maintenance log & seasonal care',
+                'pricing.premium.f1': 'Automatic pickup & return reminders',
+                'pricing.premium.desc': 'Automation, care, insights, and a smart network.',
+                'pricing.premium.period': '/ month',
+                'pricing.premium.price': '€4.99',
+                'pricing.premium.title': 'Premium',
+                'pricing.premium.badge': 'Premium',
+                'pricing.free.f5': 'Ski Network & tools',
+                'pricing.free.f4': 'QR handoff & photos',
+                'pricing.free.f3': 'Reservations & calendar',
+                'pricing.free.f2': 'Invite friends & family',
+                'pricing.free.f1': 'Unlimited equipment',
+                'pricing.free.desc': 'Fully functional sharing in your private network — no limits.',
+                'pricing.free.price': '€0',
+                'pricing.free.title': 'Free',
+                'pricing.subtitle': 'Sharing is free with no limits. Premium adds automation, organization, and insights.',
+                'pricing.title': 'Pricing',
+                'tools.adventure.description': 'Camping, hiking and more outdoor gear — in the same private network.',
+                'tools.adventure.title': 'Beyond winter',
+                'tools.maintenance.description': 'Care reminders for skis, jackets and outdoor equipment.',
+                'tools.maintenance.title': 'Gear Maintenance',
+                'tools.snow.description': 'Snow depth, fresh snow, lifts and forecast for your resorts.',
+                'tools.snow.title': 'Snow Conditions',
+                'tools.packing.description': 'Packing lists for ski, snowboard, camping and hiking — offline.',
+                'tools.packing.title': 'Packing Checklist',
+                'tools.tripPlanner.description': 'Plan trips, packing lists and gear from your network.',
+                'tools.tripPlanner.title': 'Trip Planner',
+                'tools.bootSize.description': 'Convert Mondopoint, EU, UK and US ski boot sizes.',
+                'tools.bootSize.title': 'Boot Size Converter',
+                'tools.skiLength.description': 'Recommend ski length by height, ability and riding style.',
+                'tools.skiLength.title': 'Ski Length Finder',
+                'tools.din.description': 'Recommended DIN values from height, weight, sole length and ability.',
+                'tools.din.title': 'Ski DIN Calculator',
+                'tools.cat.planning': 'Planning',
+                'tools.cat.outdoor': 'Outdoor Tools',
+                'tools.cat.winter': 'Winter Tools',
+                'tools.badgeReady': 'Ready',
+                'tools.subtitle': 'Winter utilities, planning and outdoor help — in the app when you need them. Adventure support beyond winter too.',
+                'tools.title': 'Modern tools for skiers',
+                'footer.pricing': 'Pricing',
+                'footer.tools': 'Tools',
+                'nav.pricing': 'Pricing',
+                'nav.tools': 'Tools',
                 'modal.privacy.title': 'Privacy Policy',
                 'modal.privacy.fullPage': 'Full privacy policy',
                 'modal.privacy.intro': 'Last updated: February 2025',
@@ -3148,40 +3669,40 @@
                 'messages.serverError': 'Échec de la connexion au serveur. Veuillez réessayer plus tard.',
                 'onboarding.title': 'Comment fonctionne Skister',
                 'onboarding.subtitle': 'Partagez du matériel de ski avec amis, famille, clubs de ski et groupes locaux de confiance — camping et randonnée aussi.',
-                'onboarding.step1.title': 'Partagez votre équipement',
-                'onboarding.step1.description': 'Listez votre équipement de ski et rendez-le disponible à votre réseau de confiance. Des skis pour enfants aux coffres de toit, partagez ce que vous avez.',
-                'onboarding.step1.feature1': 'Téléchargez des photos de vos articles',
-                'onboarding.step1.feature2': 'Définir les dates de disponibilité',
-                'onboarding.step1.feature3': 'Suivez qui a emprunté quoi',
-                'onboarding.step2.title': 'Emprunter à des amis',
-                'onboarding.step2.description': 'Parcourez l\'équipement des familles que vous connaissez. Tous les échanges sont gratuits dans votre réseau privé.',
-                'onboarding.step2.feature1': 'Aucun paiement ni frais',
-                'onboarding.step2.feature2': 'Retrait local uniquement',
-                'onboarding.step2.feature3': 'Communauté familiale',
-                'onboarding.step3.title': 'Coordonnez facilement',
-                'onboarding.step3.description': 'Demandez des articles, coordonnez les heures de retrait et recevez des rappels. Gardez tout le monde organisé.',
-                'onboarding.step3.feature1': 'Flux de demande simple',
-                'onboarding.step3.feature2': 'Rappels de retrait',
-                'onboarding.step3.feature3': 'Suivi des retours',
-                'onboarding.step4.title': 'Sécurisé & Privé',
-                'onboarding.step4.description': 'Invitation uniquement. Partagez uniquement avec des personnes que vous faites confiance - famille, amis et voisins.',
-                'onboarding.step4.feature1': 'Réseau fermé',
-                'onboarding.step4.feature2': 'Pas d\'étrangers',
-                'onboarding.step4.feature3': 'Vos données restent privées',
-                'onboarding.step5.title': 'Partagez gratuitement',
-                'onboarding.step5.description': 'Skister est 100% gratuit. Pas de frais, pas de paiements - juste un esprit de communauté.',
-                'onboarding.step5.feature1': 'Ne payez jamais d\'argent',
-                'onboarding.step5.feature2': 'Pas de coûts cachés',
-                'onboarding.step5.feature3': 'Basé sur la communauté',
-                'onboarding.step6.title': 'Invitez des amis',
-                'onboarding.step6.description': 'Commencez à construire votre réseau de confiance. Plus de personnes rejoignent, plus d\'équipement à partager !',
-                'onboarding.step6.feature1': 'Invitations simples',
-                'onboarding.step6.feature2': 'Faites grandir votre communauté',
-                'onboarding.step6.feature3': 'Plus de choix, plus de plaisir',
-                'onboarding.step7.title': 'Découvrez votre Ski Network',
-                'onboarding.step7.description': 'Choisissez votre Ski Network dans l\'app — autour de stations, clubs, communautés et événements. Consultez remontées, pistes et infos saison. Le <a href="/blog/" class="onboarding-inline-link">blog Skister</a> propose aussi des guides de stations.',
+                'onboarding.step1.title': 'Invitez des personnes de confiance',
+                'onboarding.step1.description': 'Commencez avec amis, famille, clubs de ski ou groupes locaux que vous connaissez déjà — Skister est sur invitation uniquement, pas une place de marché ouverte.',
+                'onboarding.step1.feature1': 'Invitations simples',
+                'onboarding.step1.feature2': 'Cercle privé',
+                'onboarding.step1.feature3': 'Amis, famille et clubs',
+                'onboarding.step2.title': 'Ajoutez votre équipement',
+                'onboarding.step2.description': 'Listez votre matériel de ski et rendez-le disponible aux personnes que vous invitez. Des skis enfants aux coffres de toit — camping et randonnée aussi.',
+                'onboarding.step2.feature1': 'Ajoutez des photos',
+                'onboarding.step2.feature2': 'Indiquez les tailles',
+                'onboarding.step2.feature3': 'Définissez la disponibilité',
+                'onboarding.step3.title': 'Trouvez du matériel dans votre réseau',
+                'onboarding.step3.description': 'Voyez l’équipement des familles et amis que vous connaissez. Tous les échanges sont gratuits dans votre réseau privé.',
+                'onboarding.step3.feature1': 'Emprunt gratuit',
+                'onboarding.step3.feature2': 'Réseau privé uniquement',
+                'onboarding.step3.feature3': 'Filtrer par catégorie et période',
+                'onboarding.step4.title': 'Demander une réservation',
+                'onboarding.step4.description': 'Choisissez la période souhaitée et envoyez votre demande directement au propriétaire dans votre réseau.',
+                'onboarding.step4.feature1': 'Simple',
+                'onboarding.step4.feature2': 'Peu d’informations',
+                'onboarding.step4.feature3': 'Demande en quelques secondes',
+                'onboarding.step5.title': 'Confirmer & coordonner',
+                'onboarding.step5.description': 'Le propriétaire confirme la demande et vous organisez la remise — pas d’étrangers, seulement des personnes de confiance.',
+                'onboarding.step5.feature1': 'Accepter ou refuser',
+                'onboarding.step5.feature2': 'Coordonner la remise',
+                'onboarding.step5.feature3': 'Tout au même endroit',
+                'onboarding.step6.title': 'Récupérer & rendre',
+                'onboarding.step6.description': 'Les rappels aident votre cercle à ne manquer aucune récupération ou retour.',
+                'onboarding.step6.feature1': 'Rappels',
+                'onboarding.step6.feature2': 'Retours sous contrôle',
+                'onboarding.step6.feature3': 'Moins d’organisation',
+                'onboarding.step7.title': 'Votre Ski Network',
+                'onboarding.step7.description': 'Choisissez votre Ski Network dans l’app — votre cercle privé autour des stations, clubs et groupes locaux. Consultez remontées, pistes et infos saison. Le <a href="/blog/" class="onboarding-inline-link">blog Skister</a> propose aussi des guides.',
                 'onboarding.step7.feature1': 'Choisir votre Ski Network',
-                'onboarding.step7.feature2': 'Communauté, événements & skieurs proches',
+                'onboarding.step7.feature2': 'Clubs, événements & groupes locaux',
                 'onboarding.step7.feature3': 'Infos station & guides blog',
                 'features.title': 'Tout ce qu\'il vous faut',
                 'features.subtitle': 'Tout ce qu\'il faut pour organiser le partage privé d\'équipement de ski — sans tableurs, groupes de discussion ni places de marché.',
@@ -3189,8 +3710,8 @@
                 'features.share.description': 'Listez votre équipement de ski et rendez-le disponible à votre réseau de confiance.',
                 'features.family.title': 'Privé plutôt qu\'une place de marché',
                 'features.family.description': 'Sur invitation uniquement. Partagez du matériel de ski uniquement avec des personnes de confiance — famille, amis et clubs.',
-                'features.free.title': '100% Gratuit',
-                'features.free.description': 'Pas de paiements, pas de frais. Juste du retrait local et du partage communautaire.',
+                'features.free.title': 'Le partage reste gratuit',
+                'features.free.description': 'Partage illimité dans votre réseau. Premium est optionnel pour l’automatisation et les analyses.',
                 'features.reminders.title': 'Rappels Intelligents',
                 'features.reminders.description': 'Recevez des rappels pour les dates de retrait et de retour. Ne manquez jamais une échéance importante.',
                 'features.private.title': 'Sécurisé et Privé',
@@ -3198,7 +3719,7 @@
                 'features.local.title': 'Local Seulement',
                 'features.local.description': 'Coordonnez les retraits locaux. Pas d\'expédition, pas de complications.',
                 'features.resorts.title': 'Votre Ski Network',
-                'features.resorts.description': 'Connectez-vous avec skieurs, clubs et communautés — pas seulement une station. Découvrez matériel, événements et personnes autour de vos lieux de ski.',
+                'features.resorts.description': 'Ancrez votre cercle privé à une station, un club ou un groupe local — partagez avec les personnes que vous invitez.',
                 'platform.title': 'Bientôt Disponible sur',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -3216,17 +3737,17 @@
                 'download.comingSoonAlert': 'Bientôt disponible ! Nous vous préviendrons quand l’app sera prête.',
                 'faq.title': 'Questions Fréquemment Posées',
                 'faq.q1': 'Comment fonctionne Skister?',
-                'faq.a1': 'Skister est le moyen le plus simple de partager du matériel de ski avec des personnes de confiance — amis, famille et communautés. Listez votre matériel de ski, parcourez ce que d\'autres ont partagé et coordonnez les retraits locaux. Vous pouvez aussi partager du matériel de camping, de randonnée et d\'autres équipements outdoor.',
+                'faq.a1': 'Skister est le moyen le plus simple de partager du matériel de ski avec des personnes de confiance — amis, famille, clubs de ski et groupes locaux. Listez votre matériel, voyez ce que votre réseau privé a partagé et coordonnez les retraits locaux. Vous pouvez aussi partager camping, randonnée et autre matériel outdoor.',
                 'faq.q2': 'Skister coûte-t-il quelque chose?',
-                'faq.a2': 'Non! Skister est entièrement gratuit. Il n\'y a pas de paiements, de frais ou de coûts. Tous les échanges se font gratuitement au sein de votre réseau privé.',
+                'faq.a2': 'Le partage de base est gratuit : inventaire illimité, invitations, calendrier, demandes de réservation et emprunts. Premium ajoute rappels automatiques, checklist de remise, journal d’entretien, rappels saisonniers, historique, analyses d’usage et détection de manques dans le réseau.',
                 'faq.q3': 'Qui peut voir mon équipement?',
                 'faq.a3': 'Seuls les membres de votre réseau privé peuvent voir vos articles listés. Skister fonctionne sur invitation uniquement pour garantir confiance et sécurité.',
                 'faq.q4': 'Skister est-il responsable de l\'équipement endommagé?',
-                'faq.a4': 'Non. Skister est uniquement une application de coordination, similaire aux médias sociaux, pour vous aider à communiquer avec votre réseau de confiance. Nous n\'assumons aucune responsabilité, obligation ou assurance pour l\'équipement emprunté, endommagé ou perdu.',
+                'faq.a4': 'Non. Skister est uniquement une application de coordination pour organiser des prêts avec des personnes de confiance. Nous n’assumons aucune responsabilité, obligation ou assurance pour le matériel emprunté, endommagé ou perdu.',
                 'faq.q5': 'Puis-je expédier des articles aux emprunteurs?',
-                'faq.a5': 'Non, Skister est conçu pour les échanges locaux uniquement. Cela garde les choses simples et garantit que les articles restent dans votre communauté de confiance.',
+                'faq.a5': 'Non, Skister est conçu pour les échanges locaux uniquement. Cela reste simple et garde le matériel dans votre réseau privé.',
                 'faq.q6': 'Qu\'est-ce qu\'un Ski Network ?',
-                'faq.a6': 'Un Ski Network est la façon dont Skister aide les skieurs à se connecter autour des lieux et communautés où ils skient. Il peut inclure stations, clubs, communautés locales, événements, skieurs à proximité et futures fonctionnalités communautaires. Une station est un lieu réel ; votre Ski Network dans Skister est la fonction communauté dans l\'app.',
+                'faq.a6': 'Un Ski Network est votre cercle privé autour de vos lieux de ski — amis, famille, clubs et groupes locaux. Une station est un lieu réel ; votre Ski Network dans Skister est la couche privée dans l’app. Vous pouvez aussi y partager camping, randonnée et autre matériel outdoor.',
                 'disclaimer.title': 'Avis Important',
                 'disclaimer.text': 'Skister fournit uniquement la plateforme pour l\'organisation de locations entre particuliers. Les contrats de location sont conclus directement entre les parties concernées. Skister décline toute responsabilité en cas de perte, de dommage ou de détérioration du matériel loué. Skister est une plateforme communautaire indépendante. Nous ne sommes affiliés à, approuvés par ou officiellement associés à aucune station, club de ski, organisateur d\'événements ou autre organisation affichée dans l\'app.',
                 'benefits.title': 'Pourquoi on aime Skister',
@@ -3237,10 +3758,10 @@
                 'benefits.waste.kicker': 'Durabilité',
                 'benefits.waste.title': 'Réduire le gaspillage',
                 'benefits.waste.description': 'Moins de skis inutilisés à la cave. Plus de vies pour un bon équipement.',
-                'benefits.community.kicker': 'Communauté',
-                'benefits.community.title': 'Renforcer votre communauté',
+                'benefits.community.kicker': 'Ensemble',
+                'benefits.community.title': 'Renforcer votre cercle',
                 'benefits.community.description': 'Partager crée de la confiance — en famille, entre amis et en club.',
-                'footer.tagline': 'Partagez du matériel de ski dans votre réseau privé — gratuit, local et sûr. Camping et randonnée aussi.',
+                'footer.tagline': 'Partagez du matériel de ski avec des personnes de confiance — gratuit, local et privé. Camping et randonnée aussi.',
                 'footer.howItWorks': 'Comment ça marche',
                 'footer.help': 'Aide',
                 'footer.admin': 'Admin',
@@ -3256,6 +3777,60 @@
                 'footer.contact': 'Contact',
                 'footer.rights': 'Tous droits réservés.',
                 'footer.madewith': 'Fait avec ❤️ depuis les Alpes',
+                'pricing.note': 'Premium ne met jamais le partage derrière un paywall. La valeur de Skister vient de votre réseau de confiance — Premium simplifie l’organisation et les analyses.',
+                'pricing.founder.f4': 'Le partage reste gratuit pour tous',
+                'pricing.founder.f3': 'Avantages d’accès anticipé',
+                'pricing.founder.f2': 'Badge Founder exclusif',
+                'pricing.founder.f1': 'Tous les avantages Premium pour toujours',
+                'pricing.founder.desc': 'Un paiement. Premium pour toujours — offre de lancement limitée.',
+                'pricing.founder.price': '€89.99',
+                'pricing.founder.title': 'Founder Lifetime',
+                'pricing.premium.f5': 'Annuel €39.99 — économisez vs mensuel',
+                'pricing.premium.f4': 'Alertes de manques & tailles',
+                'pricing.premium.f3': 'Analyses d’usage & stats de prêt',
+                'pricing.premium.f2': 'Journal d’entretien & soins saisonniers',
+                'pricing.premium.f1': 'Rappels automatiques retrait & retour',
+                'pricing.premium.desc': 'Automatisation, entretien, analyses et réseau intelligent.',
+                'pricing.premium.period': '/ mois',
+                'pricing.premium.price': '€4.99',
+                'pricing.premium.title': 'Premium',
+                'pricing.premium.badge': 'Premium',
+                'pricing.free.f5': 'Ski Network & outils',
+                'pricing.free.f4': 'Remise QR & photos',
+                'pricing.free.f3': 'Réservations & calendrier',
+                'pricing.free.f2': 'Inviter amis & famille',
+                'pricing.free.f1': 'Équipement illimité',
+                'pricing.free.desc': 'Partage entièrement fonctionnel dans votre réseau privé — sans limites.',
+                'pricing.free.price': '€0',
+                'pricing.free.title': 'Free',
+                'pricing.subtitle': 'Le partage est gratuit sans limites. Premium ajoute automatisation, organisation et analyses.',
+                'pricing.title': 'Tarifs',
+                'tools.adventure.description': 'Camping, randonnée et plus — dans le même réseau privé.',
+                'tools.adventure.title': 'Au-delà de l’hiver',
+                'tools.maintenance.description': 'Rappels d’entretien pour skis, vestes et matériel outdoor.',
+                'tools.maintenance.title': 'Entretien du matériel',
+                'tools.snow.description': 'Hauteur de neige, neige fraîche, remontées et prévisions.',
+                'tools.snow.title': 'Conditions de neige',
+                'tools.packing.description': 'Listes pour ski, snowboard, camping et randonnée — hors ligne.',
+                'tools.packing.title': 'Liste de packing',
+                'tools.tripPlanner.description': 'Planifiez voyages, listes et matériel de votre réseau.',
+                'tools.tripPlanner.title': 'Planificateur de trip',
+                'tools.bootSize.description': 'Convertir Mondopoint, EU, UK et US pour chaussures de ski.',
+                'tools.bootSize.title': 'Convertisseur de pointure',
+                'tools.skiLength.description': 'Recommander la longueur selon taille, niveau et style.',
+                'tools.skiLength.title': 'Trouver la longueur de ski',
+                'tools.din.description': 'Valeurs DIN recommandées selon taille, poids, longueur de semelle et niveau.',
+                'tools.din.title': 'Calculateur DIN ski',
+                'tools.cat.planning': 'Planification',
+                'tools.cat.outdoor': 'Outils outdoor',
+                'tools.cat.winter': 'Outils d’hiver',
+                'tools.badgeReady': 'Prêt',
+                'tools.subtitle': 'Utilitaires d’hiver, planification et aide outdoor — dans l’app quand vous en avez besoin. Aussi pour l’aventure hors saison.',
+                'tools.title': 'Des outils modernes pour skieurs',
+                'footer.pricing': 'Tarifs',
+                'footer.tools': 'Outils',
+                'nav.pricing': 'Tarifs',
+                'nav.tools': 'Outils',
                 'modal.privacy.title': 'Politique de Confidentialité',
                 'modal.privacy.fullPage': 'Politique de confidentialité complète',
                 'modal.privacy.intro': 'Dernière mise à jour: Février 2025',
@@ -3300,40 +3875,40 @@
                 'hero.waitlistInfo': '¡Únete a la lista de espera y sé el primero en saber cuándo lancemos!',
                 'onboarding.title': 'Cómo funciona Skister',
                 'onboarding.subtitle': 'Comparte equipo de esquí con amigos, familia, clubes de esquí y grupos locales de confianza — camping y senderismo también.',
-                'onboarding.step1.title': 'Comparte tu equipo',
-                'onboarding.step1.description': 'Lista tu equipo de esquí y ponlo a disposición de tu red de confianza. Desde esquís infantiles hasta portaequipajes, comparte lo que tienes.',
-                'onboarding.step1.feature1': 'Sube fotos de tus artículos',
-                'onboarding.step1.feature2': 'Establece fechas de disponibilidad',
-                'onboarding.step1.feature3': 'Rastrea quién pidió prestado qué',
-                'onboarding.step2.title': 'Pide prestado a amigos',
-                'onboarding.step2.description': 'Explora el equipo de familias que conoces. Todos los intercambios son gratuitos dentro de tu red privada.',
-                'onboarding.step2.feature1': 'Sin pagos ni tarifas',
-                'onboarding.step2.feature2': 'Solo recogida local',
-                'onboarding.step2.feature3': 'Comunidad familiar',
-                'onboarding.step3.title': 'Coordina fácilmente',
-                'onboarding.step3.description': 'Solicita artículos, coordina horarios de recogida y recibe recordatorios. Mantén a todos organizados.',
-                'onboarding.step3.feature1': 'Flujo de solicitud simple',
-                'onboarding.step3.feature2': 'Recordatorios de recogida',
-                'onboarding.step3.feature3': 'Seguimiento de devoluciones',
-                'onboarding.step4.title': 'Seguro y Privado',
-                'onboarding.step4.description': 'Solo por invitación. Comparte solo con personas de confianza: familia, amigos y vecinos.',
-                'onboarding.step4.feature1': 'Red cerrada',
-                'onboarding.step4.feature2': 'Sin desconocidos',
-                'onboarding.step4.feature3': 'Tus datos permanecen privados',
-                'onboarding.step5.title': 'Comparte gratis',
-                'onboarding.step5.description': 'Skister es 100% gratuito. Sin tarifas, sin pagos — solo espíritu comunitario.',
-                'onboarding.step5.feature1': 'Nunca pagues dinero',
-                'onboarding.step5.feature2': 'Sin costos ocultos',
-                'onboarding.step5.feature3': 'Basado en la comunidad',
-                'onboarding.step6.title': 'Invita amigos',
-                'onboarding.step6.description': 'Empieza a construir tu red de confianza. ¡Cuantas más personas se unan, más equipo para compartir!',
-                'onboarding.step6.feature1': 'Invitaciones simples',
-                'onboarding.step6.feature2': 'Haz crecer tu comunidad',
-                'onboarding.step6.feature3': 'Más opciones, más diversión',
-                'onboarding.step7.title': 'Descubre tu Ski Network',
-                'onboarding.step7.description': 'Elige tu Ski Network en la app — alrededor de estaciones, clubs, comunidades y eventos. Consulta remontes, pistas e info de temporada. En el <a href="/blog/" class="onboarding-inline-link">blog de Skister</a> hay guías de estaciones.',
-                'onboarding.step7.feature1': 'Elige tu Ski Network',
-                'onboarding.step7.feature2': 'Comunidad, eventos y esquiadores cercanos',
+                'onboarding.step1.title': 'Invita a personas de confianza',
+                'onboarding.step1.description': 'Empieza con amigos, familia, clubes de esquí o grupos locales que ya conoces — Skister es solo por invitación, no un marketplace abierto.',
+                'onboarding.step1.feature1': 'Invitaciones sencillas',
+                'onboarding.step1.feature2': 'Círculo privado',
+                'onboarding.step1.feature3': 'Amigos, familia y clubes',
+                'onboarding.step2.title': 'Añade tu equipo',
+                'onboarding.step2.description': 'Lista tu equipo de esquí y hazlo disponible para las personas que invites. Desde esquís infantiles hasta baúles — también camping y senderismo.',
+                'onboarding.step2.feature1': 'Añade fotos',
+                'onboarding.step2.feature2': 'Indica tallas',
+                'onboarding.step2.feature3': 'Define disponibilidad',
+                'onboarding.step3.title': 'Encuentra equipo en tu red',
+                'onboarding.step3.description': 'Ve el equipo de familias y amigos que conoces. Todos los intercambios son gratis dentro de tu red privada.',
+                'onboarding.step3.feature1': 'Préstamo gratuito',
+                'onboarding.step3.feature2': 'Solo red privada',
+                'onboarding.step3.feature3': 'Filtrar por categoría y fechas',
+                'onboarding.step4.title': 'Pedir una reserva',
+                'onboarding.step4.description': 'Elige el periodo y envía la solicitud directamente al propietario en tu red.',
+                'onboarding.step4.feature1': 'Sencillo',
+                'onboarding.step4.feature2': 'Pocos datos',
+                'onboarding.step4.feature3': 'Solicitud en segundos',
+                'onboarding.step5.title': 'Confirmar y coordinar',
+                'onboarding.step5.description': 'El propietario confirma y organizáis la entrega — sin desconocidos, solo personas de confianza.',
+                'onboarding.step5.feature1': 'Aceptar o rechazar',
+                'onboarding.step5.feature2': 'Coordinar la entrega',
+                'onboarding.step5.feature3': 'Todo en un sitio',
+                'onboarding.step6.title': 'Recoger y devolver',
+                'onboarding.step6.description': 'Los recordatorios ayudan a tu círculo a no olvidar recogidas ni devoluciones.',
+                'onboarding.step6.feature1': 'Recordatorios',
+                'onboarding.step6.feature2': 'Devoluciones a la vista',
+                'onboarding.step6.feature3': 'Menos organización',
+                'onboarding.step7.title': 'Tu Ski Network',
+                'onboarding.step7.description': 'Elige tu Ski Network en la app — tu círculo privado alrededor de estaciones, clubes y grupos locales. Consulta remontes, pistas e info de temporada. El <a href="/blog/" class="onboarding-inline-link">blog de Skister</a> también tiene guías.',
+                'onboarding.step7.feature1': 'Elegir tu Ski Network',
+                'onboarding.step7.feature2': 'Clubes, eventos y grupos locales',
                 'onboarding.step7.feature3': 'Info de estación y guías del blog',
                 'features.title': 'Todo lo que necesitas',
                 'features.subtitle': 'Todo lo necesario para organizar el préstamo privado de equipo de esquí sin hojas de cálculo, grupos de chat ni marketplaces.',
@@ -3341,8 +3916,8 @@
                 'features.share.description': 'Lista tu equipo de esquí y ponlo a disposición de tu red de confianza.',
                 'features.family.title': 'Privado, no un marketplace',
                 'features.family.description': 'Solo por invitación. Comparte equipo de esquí solo con personas de confianza: familia, amigos y clubes.',
-                'features.free.title': '100% Gratis',
-                'features.free.description': 'Sin pagos, sin tarifas. Solo recogida local y compartir comunitario.',
+                'features.free.title': 'Compartir sigue siendo gratis',
+                'features.free.description': 'Compartir ilimitado en tu red. Premium es opcional para automatización e insights.',
                 'features.reminders.title': 'Recordatorios Inteligentes',
                 'features.reminders.description': 'Recibe recordatorios para fechas de recogida y devolución. Nunca pierdas una fecha importante.',
                 'features.private.title': 'Seguro y Privado',
@@ -3350,7 +3925,7 @@
                 'features.local.title': 'Solo Local',
                 'features.local.description': 'Coordina recogidas locales. Sin envíos, sin complicaciones.',
                 'features.resorts.title': 'Tu Ski Network',
-                'features.resorts.description': 'Conéctate con esquiadores, clubs y comunidades — no solo con una estación. Descubre equipo, eventos y personas donde esquías.',
+                'features.resorts.description': 'Ancla tu círculo privado a una estación, club o grupo local — comparte con las personas que invites.',
                 'platform.title': 'Próximamente en',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -3368,17 +3943,17 @@
                 'download.comingSoonAlert': '¡Próximamente! Te avisaremos cuando la app esté lista.',
                 'faq.title': 'Preguntas Frecuentes',
                 'faq.q1': '¿Cómo funciona Skister?',
-                'faq.a1': 'Skister es la forma más fácil de compartir equipo de esquí con personas de confianza — amigos, familia y clubes. Lista tu equipo de esquí, explora lo que otros han compartido y coordina recogidas locales. También puedes compartir equipo de camping, senderismo y otro material outdoor.',
+                'faq.a1': 'Skister es la forma más fácil de compartir equipo de esquí con personas de confianza — amigos, familia, clubes y grupos locales. Lista tu equipo, ve lo que ha compartido tu red privada y coordina recogidas locales. También puedes compartir camping, senderismo y otro material outdoor.',
                 'faq.q2': '¿Skister cuesta algo?',
-                'faq.a2': '¡No! Skister es completamente gratis. No hay pagos, tarifas ni costos. Todos los intercambios se realizan gratis dentro de tu red privada.',
+                'faq.a2': 'El uso básico es gratis: inventario ilimitado, invitaciones, calendario, reservas y préstamos. Premium añade recordatorios automáticos, checklist de entrega, registro de mantenimiento, recordatorios de temporada, historial, analíticas de uso y detección de faltas en la red.',
                 'faq.q3': '¿Quién puede ver mi equipo?',
                 'faq.a3': 'Solo los miembros de tu red privada pueden ver tus artículos listados. Skister funciona solo por invitación para garantizar confianza y seguridad.',
                 'faq.q4': '¿Es Skister responsable del equipo dañado?',
-                'faq.a4': 'No. Skister es solo una aplicación de coordinación, similar a las redes sociales, para ayudarte a comunicarte con tu red de confianza. No asumimos responsabilidad, obligación o seguro por equipo prestado, dañado o perdido.',
+                'faq.a4': 'No. Skister es solo una app de coordinación para organizar préstamos con personas de confianza. No asumimos responsabilidad, obligación ni seguro por equipo prestado, dañado o perdido.',
                 'faq.q5': '¿Puedo enviar artículos a los prestatarios?',
-                'faq.a5': 'No, Skister está diseñado solo para intercambios locales. Esto mantiene las cosas simples y garantiza que los artículos permanezcan dentro de tu comunidad de confianza.',
+                'faq.a5': 'No, Skister está pensado solo para intercambios locales. Así se mantiene simple y el equipo permanece en tu red privada.',
                 'faq.q6': '¿Qué es un Ski Network?',
-                'faq.a6': 'Un Ski Network es la forma de Skister de ayudar a los esquiadores a conectarse en torno a los lugares y comunidades donde esquían. Puede incluir estaciones, clubs, comunidades locales, eventos, esquiadores cercanos y futuras funciones comunitarias. Una estación es un lugar real; tu Ski Network en Skister es la función de comunidad en la app.',
+                'faq.a6': 'Un Ski Network es tu círculo privado alrededor de donde esquías — amigos, familia, clubes y grupos locales. Una estación es un lugar real; tu Ski Network en Skister es la capa privada en la app. También puedes compartir camping, senderismo y otro material outdoor.',
                 'disclaimer.title': 'Aviso Importante',
                 'disclaimer.text': 'Skister simplemente proporciona la plataforma para organizar alquileres privados. Los contratos de alquiler se formalizan directamente entre las partes involucradas. Skister no se responsabiliza por el equipo alquilado, dañado o extraviado. Skister es una plataforma comunitaria independiente. No estamos afiliados, respaldados ni asociados oficialmente con estaciones, clubs, organizadores de eventos u otras organizaciones mostradas en la app.',
                 'benefits.title': 'Por qué la gente quiere Skister',
@@ -3390,9 +3965,9 @@
                 'benefits.waste.title': 'Reducir residuos',
                 'benefits.waste.description': 'Menos esquís sin usar en el sótano. Más vida útil para el buen equipo.',
                 'benefits.community.kicker': 'Comunidad',
-                'benefits.community.title': 'Fortalecer tu comunidad',
+                'benefits.community.title': 'Fortalece tu círculo',
                 'benefits.community.description': 'Compartir genera confianza — en la familia, el grupo de amigos y el club.',
-                'footer.tagline': 'Comparte equipo de esquí con personas de confianza — gratis, local y privado. Camping y senderismo también.',
+                'footer.tagline': 'Comparte equipo de esquí con personas de confianza — gratis, local y privado. También camping y senderismo.',
                 'footer.howItWorks': 'Cómo funciona',
                 'footer.help': 'Ayuda',
                 'footer.admin': 'Admin',
@@ -3408,6 +3983,60 @@
                 'footer.contact': 'Contacto',
                 'footer.rights': 'Todos los derechos reservados.',
                 'footer.madewith': 'Hecho con ❤️ desde los Alpes',
+                'pricing.note': 'Premium nunca pone el compartir detrás de un paywall. El valor de Skister nace de tu red de confianza — Premium facilita la organización y los insights.',
+                'pricing.founder.f4': 'Compartir sigue siendo gratis para todos',
+                'pricing.founder.f3': 'Ventajas de early access',
+                'pricing.founder.f2': 'Insignia Founder exclusiva',
+                'pricing.founder.f1': 'Todos los beneficios Premium para siempre',
+                'pricing.founder.desc': 'Un pago. Premium para siempre — oferta limitada de lanzamiento.',
+                'pricing.founder.price': '€89.99',
+                'pricing.founder.title': 'Founder Lifetime',
+                'pricing.premium.f5': 'Anual €39.99 — ahorra vs mensual',
+                'pricing.premium.f4': 'Alertas de huecos y tallas en la red',
+                'pricing.premium.f3': 'Analíticas de uso y estadísticas de préstamo',
+                'pricing.premium.f2': 'Registro de mantenimiento y cuidado estacional',
+                'pricing.premium.f1': 'Recordatorios automáticos de recogida y devolución',
+                'pricing.premium.desc': 'Automatización, cuidado, insights y red inteligente.',
+                'pricing.premium.period': '/ mes',
+                'pricing.premium.price': '€4.99',
+                'pricing.premium.title': 'Premium',
+                'pricing.premium.badge': 'Premium',
+                'pricing.free.f5': 'Ski Network y herramientas',
+                'pricing.free.f4': 'Entrega QR y fotos',
+                'pricing.free.f3': 'Reservas y calendario',
+                'pricing.free.f2': 'Invitar amigos y familia',
+                'pricing.free.f1': 'Equipo ilimitado',
+                'pricing.free.desc': 'Compartir plenamente funcional en tu red privada — sin límites.',
+                'pricing.free.price': '€0',
+                'pricing.free.title': 'Free',
+                'pricing.subtitle': 'Compartir es gratis sin límites. Premium añade automatización, organización e insights.',
+                'pricing.title': 'Precios',
+                'tools.adventure.description': 'Camping, senderismo y más — en la misma red privada.',
+                'tools.adventure.title': 'Más allá del invierno',
+                'tools.maintenance.description': 'Recordatorios de cuidado para esquís, chaquetas y material outdoor.',
+                'tools.maintenance.title': 'Mantenimiento del equipo',
+                'tools.snow.description': 'Altura de nieve, nieve reciente, remontes y previsión.',
+                'tools.snow.title': 'Condiciones de nieve',
+                'tools.packing.description': 'Listas para esquí, snowboard, camping y senderismo — offline.',
+                'tools.packing.title': 'Lista de packing',
+                'tools.tripPlanner.description': 'Planifica viajes, listas y equipo de tu red.',
+                'tools.tripPlanner.title': 'Planificador de viaje',
+                'tools.bootSize.description': 'Convierte Mondopoint, EU, UK y US para botas de esquí.',
+                'tools.bootSize.title': 'Conversor de talla de bota',
+                'tools.skiLength.description': 'Recomienda longitud según altura, nivel y estilo.',
+                'tools.skiLength.title': 'Buscador de longitud de esquí',
+                'tools.din.description': 'Valores DIN recomendados según altura, peso, longitud de suela y nivel.',
+                'tools.din.title': 'Calculadora DIN de esquí',
+                'tools.cat.planning': 'Planificación',
+                'tools.cat.outdoor': 'Herramientas outdoor',
+                'tools.cat.winter': 'Herramientas de invierno',
+                'tools.badgeReady': 'Listo',
+                'tools.subtitle': 'Utilidades de invierno, planificación y ayuda outdoor — en la app cuando las necesitas. También para aventuras más allá del invierno.',
+                'tools.title': 'Herramientas modernas para esquiadores',
+                'footer.pricing': 'Precios',
+                'footer.tools': 'Herramientas',
+                'nav.pricing': 'Precios',
+                'nav.tools': 'Herramientas',
                 'modal.privacy.title': 'Política de Privacidad',
                 'modal.privacy.fullPage': 'Política de privacidad completa',
                 'modal.privacy.intro': 'Última actualización: Febrero 2025',
@@ -3456,40 +4085,40 @@
                 'messages.serverError': 'Impossibile connettersi al server. Riprova più tardi.',
                 'onboarding.title': 'Come funziona Skister',
                 'onboarding.subtitle': 'Condividi attrezzatura da sci con amici, famiglia, club sciistici e gruppi locali di cui ti fidi — camping e trekking supportati.',
-                'onboarding.step1.title': 'Condividi la tua attrezzatura',
-                'onboarding.step1.description': 'Elenca la tua attrezzatura sciistica e rendila disponibile alla tua rete di fiducia. Dalla sci per bambini alle box da tetto, condividi ciò che hai.',
-                'onboarding.step1.feature1': 'Carica foto dei tuoi articoli',
-                'onboarding.step1.feature2': 'Imposta date di disponibilità',
-                'onboarding.step1.feature3': 'Traccia chi ha preso in prestito cosa',
-                'onboarding.step2.title': 'Prestito da amici',
-                'onboarding.step2.description': 'Sfoglia l\'attrezzatura delle famiglie che conosci. Tutti gli scambi sono gratuiti all\'interno della tua rete privata.',
-                'onboarding.step2.feature1': 'Nessun pagamento o tasse',
-                'onboarding.step2.feature2': 'Solo ritiro locale',
-                'onboarding.step2.feature3': 'Comunità familiare',
-                'onboarding.step3.title': 'Coordinamento facile',
-                'onboarding.step3.description': 'Richiedi articoli, coordina orari di ritiro e ricevi promemoria. Mantieni tutti organizzati.',
-                'onboarding.step3.feature1': 'Flusso di richiesta semplice',
-                'onboarding.step3.feature2': 'Promemoria di ritiro',
-                'onboarding.step3.feature3': 'Tracciamento dei restituiti',
-                'onboarding.step4.title': 'Sicuro & Privato',
-                'onboarding.step4.description': 'Solo su invito. Condividi solo con persone di cui ti fidi: famiglia, amici e vicini.',
-                'onboarding.step4.feature1': 'Rete chiusa',
-                'onboarding.step4.feature2': 'Nessun estraneo',
-                'onboarding.step4.feature3': 'I tuoi dati rimangono privati',
-                'onboarding.step5.title': 'Condividi gratuitamente',
-                'onboarding.step5.description': 'Skister è 100% gratuito. Nessun costo, nessun pagamento — solo spirito di comunità.',
-                'onboarding.step5.feature1': 'Non pagare mai denaro',
-                'onboarding.step5.feature2': 'Nessun costo nascosto',
-                'onboarding.step5.feature3': 'Basato sulla comunità',
-                'onboarding.step6.title': 'Invita amici',
-                'onboarding.step6.description': 'Inizia a costruire la tua rete di fiducia. Più persone si uniscono, più attrezzatura da condividere!',
-                'onboarding.step6.feature1': 'Inviti semplici',
-                'onboarding.step6.feature2': 'Fai crescere la tua comunità',
-                'onboarding.step6.feature3': 'Più scelte, più divertimento',
-                'onboarding.step7.title': 'Scopri il tuo Ski Network',
-                'onboarding.step7.description': 'Scegli il tuo Ski Network nell\'app — intorno a comprensori, club, community ed eventi. Consulta impianti, piste e info stagionali. Sul <a href="/blog/" class="onboarding-inline-link">blog Skister</a> trovi anche guide ai comprensori.',
+                'onboarding.step1.title': 'Invita persone di cui ti fidi',
+                'onboarding.step1.description': 'Inizia con amici, famiglia, club di sci o gruppi locali che già conosci — Skister è solo su invito, non un marketplace aperto.',
+                'onboarding.step1.feature1': 'Inviti semplici',
+                'onboarding.step1.feature2': 'Cerchia privata',
+                'onboarding.step1.feature3': 'Amici, famiglia e club',
+                'onboarding.step2.title': 'Aggiungi la tua attrezzatura',
+                'onboarding.step2.description': 'Elenca la tua attrezzatura da sci e rendila disponibile alle persone che inviti. Dagli sci per bambini ai box tetto — anche camping e trekking.',
+                'onboarding.step2.feature1': 'Aggiungi foto',
+                'onboarding.step2.feature2': 'Indica le taglie',
+                'onboarding.step2.feature3': 'Imposta la disponibilità',
+                'onboarding.step3.title': 'Trova attrezzatura nella rete',
+                'onboarding.step3.description': 'Vedi l’attrezzatura di famiglie e amici che conosci. Tutti gli scambi sono gratuiti nella tua rete privata.',
+                'onboarding.step3.feature1': 'Prestito gratuito',
+                'onboarding.step3.feature2': 'Solo rete privata',
+                'onboarding.step3.feature3': 'Filtra per categoria e periodo',
+                'onboarding.step4.title': 'Richiedi una prenotazione',
+                'onboarding.step4.description': 'Scegli il periodo e invia la richiesta direttamente al proprietario nella tua rete.',
+                'onboarding.step4.feature1': 'Semplice',
+                'onboarding.step4.feature2': 'Pochi dati',
+                'onboarding.step4.feature3': 'Richiesta in secondi',
+                'onboarding.step5.title': 'Conferma e coordina',
+                'onboarding.step5.description': 'Il proprietario conferma e organizzate la consegna — niente estranei, solo persone di cui ti fidi.',
+                'onboarding.step5.feature1': 'Accetta o rifiuta',
+                'onboarding.step5.feature2': 'Coordina la consegna',
+                'onboarding.step5.feature3': 'Tutto in un posto',
+                'onboarding.step6.title': 'Ritira e restituisci',
+                'onboarding.step6.description': 'I promemoria aiutano la tua cerchia a non dimenticare ritiri o restituzioni.',
+                'onboarding.step6.feature1': 'Promemoria',
+                'onboarding.step6.feature2': 'Restituzioni sotto controllo',
+                'onboarding.step6.feature3': 'Meno organizzazione',
+                'onboarding.step7.title': 'Il tuo Ski Network',
+                'onboarding.step7.description': 'Scegli il tuo Ski Network nell’app — la tua cerchia privata intorno a comprensori, club e gruppi locali. Vedi impianti, piste e info di stagione. Il <a href="/blog/" class="onboarding-inline-link">blog Skister</a> offre anche guide.',
                 'onboarding.step7.feature1': 'Scegli il tuo Ski Network',
-                'onboarding.step7.feature2': 'Community, eventi e sciatori vicini',
+                'onboarding.step7.feature2': 'Club, eventi e gruppi locali',
                 'onboarding.step7.feature3': 'Info comprensorio e guide blog',
                 'features.title': 'Tutto ciò che ti serve',
                 'features.subtitle': 'Tutto il necessario per organizzare la condivisione privata di attrezzatura da sci senza fogli di calcolo, chat o marketplace.',
@@ -3497,8 +4126,8 @@
                 'features.share.description': 'Elenca la tua attrezzatura da sci e rendila disponibile alla tua rete di fiducia.',
                 'features.family.title': 'Privato, non un marketplace',
                 'features.family.description': 'Solo su invito. Condividi attrezzatura da sci solo con persone di cui ti fidi: famiglia, amici e club.',
-                'features.free.title': '100% Gratuito',
-                'features.free.description': 'Nessun pagamento, nessuna tariffa. Solo ritiro locale e condivisione comunitaria.',
+                'features.free.title': 'Condividere resta gratis',
+                'features.free.description': 'Condivisione illimitata nella tua rete. Premium è opzionale per automazione e insight.',
                 'features.reminders.title': 'Promemoria Intelligenti',
                 'features.reminders.description': 'Ricevi promemoria per le date di ritiro e restituzione. Non perdere mai una scadenza importante.',
                 'features.private.title': 'Sicuro e Privato',
@@ -3506,7 +4135,7 @@
                 'features.local.title': 'Solo Locale',
                 'features.local.description': 'Coordina ritiri locali. Nessuna spedizione, nessuna complicazione.',
                 'features.resorts.title': 'Il tuo Ski Network',
-                'features.resorts.description': 'Connettiti con sciatori, club e community — non solo un comprensorio. Scopri attrezzatura, eventi e persone dove scii.',
+                'features.resorts.description': 'Ancora la tua cerchia privata a un comprensorio, club o gruppo locale — condividi con le persone che inviti.',
                 'platform.title': 'Prossimamente su',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -3524,17 +4153,17 @@
                 'download.comingSoonAlert': 'In arrivo! Ti avvisiamo quando l’app sarà pronta.',
                 'faq.title': 'Domande Frequenti',
                 'faq.q1': 'Come funziona Skister?',
-                'faq.a1': 'Skister è il modo più semplice per condividere attrezzatura da sci con le persone di cui ti fidi — amici, famiglie e community. Elenca la tua attrezzatura da sci, esplora cosa hanno condiviso gli altri e coordina ritiri locali. Puoi anche condividere attrezzatura da camping, trekking e altro outdoor.',
+                'faq.a1': 'Skister è il modo più semplice per condividere attrezzatura da sci con persone di cui ti fidi — amici, famiglia, club e gruppi locali. Elenca la tua attrezzatura, vedi cosa ha condiviso la tua rete privata e coordina i ritiri locali. Puoi anche condividere camping, trekking e altro materiale outdoor.',
                 'faq.q2': 'Skister costa qualcosa?',
-                'faq.a2': 'No! Skister è completamente gratuito. Non ci sono pagamenti, tariffe o costi. Tutti gli scambi sono gratuiti all\'interno della tua rete privata.',
+                'faq.a2': 'La condivisione di base è gratuita: inventario illimitato, inviti, calendario, richieste di prenotazione e prestiti. Premium aggiunge promemoria automatici, checklist di consegna, registro manutenzione, promemoria stagionali, cronologia, analitiche di utilizzo e rilevamento carenze nella rete.',
                 'faq.q3': 'Chi può vedere la mia attrezzatura?',
                 'faq.a3': 'Solo i membri della tua rete privata possono vedere i tuoi articoli elencati. Skister funziona solo su invito per garantire fiducia e sicurezza.',
                 'faq.q4': 'Skister è responsabile per l\'attrezzatura danneggiata?',
-                'faq.a4': 'No. Skister è solo un\'app di coordinamento, simile ai social media, per aiutarti a comunicare con la tua rete di fiducia. Non assumiamo responsabilità, obblighi o assicurazione per attrezzatura prestata, danneggiata o persa.',
+                'faq.a4': 'No. Skister è solo un’app di coordinamento per organizzare prestiti con persone di cui ti fidi. Non assumiamo responsabilità, obblighi o assicurazione per attrezzatura prestata, danneggiata o persa.',
                 'faq.q5': 'Posso spedire articoli ai mutuatari?',
-                'faq.a5': 'No, Skister è progettato solo per scambi locali. Questo mantiene le cose semplici e garantisce che gli articoli rimangano all\'interno della tua comunità di fiducia.',
+                'faq.a5': 'No, Skister è pensato solo per scambi locali. Così resta semplice e l’attrezzatura resta nella tua rete privata.',
                 'faq.q6': 'Cos\'è un Ski Network?',
-                'faq.a6': 'Un Ski Network è il modo in cui Skister aiuta gli sciatori a connettersi intorno ai luoghi e alle community dove sciano. Può includere comprensori, club, community locali, eventi, sciatori nelle vicinanze e future funzionalità community. Un comprensorio è un luogo reale; il tuo Ski Network in Skister è la funzione community nell\'app.',
+                'faq.a6': 'Uno Ski Network è la tua cerchia privata intorno a dove scia — amici, famiglia, club e gruppi locali. Un comprensorio è un luogo reale; il tuo Ski Network in Skister è il livello privato nell’app. Al suo interno puoi anche condividere camping, trekking e altro materiale outdoor.',
                 'disclaimer.title': 'Avviso Importante',
                 'disclaimer.text': 'Skister fornisce esclusivamente la piattaforma per l\'organizzazione di noleggi privati. I contratti di noleggio vengono stipulati direttamente tra le parti coinvolte. Skister non si assume alcuna responsabilità per attrezzature noleggiate, danneggiate o smarrite. Skister è una piattaforma community indipendente. Non siamo affiliati, approvati o ufficialmente associati a comprensori, club sciistici, organizzatori di eventi o altre organizzazioni mostrate nell\'app.',
                 'benefits.title': 'Perché piace Skister',
@@ -3546,9 +4175,9 @@
                 'benefits.waste.title': 'Ridurre gli sprechi',
                 'benefits.waste.description': 'Meno sci inutilizzati in cantina. Più cicli di vita per l\'attrezzatura buona.',
                 'benefits.community.kicker': 'Community',
-                'benefits.community.title': 'Rafforzare la community',
+                'benefits.community.title': 'Rafforza la tua cerchia',
                 'benefits.community.description': 'Condividere crea fiducia — in famiglia, tra amici e nel club.',
-                'footer.tagline': 'Condividi attrezzatura da sci nella tua rete privata — gratis, locale e sicura. Camping e trekking anche supportati.',
+                'footer.tagline': 'Condividi attrezzatura da sci con persone di cui ti fidi — gratis, locale e privato. Anche camping e trekking.',
                 'footer.howItWorks': 'Come funziona',
                 'footer.help': 'Aiuto',
                 'footer.admin': 'Admin',
@@ -3564,6 +4193,60 @@
                 'footer.contact': 'Contatto',
                 'footer.rights': 'Tutti i diritti riservati.',
                 'footer.madewith': 'Fatto con ❤️ dalle Alpi',
+                'pricing.note': 'Premium non mette mai la condivisione dietro un paywall. Il valore di Skister nasce dalla tua rete di fiducia — Premium rende più semplici organizzazione e insight.',
+                'pricing.founder.f4': 'Condividere resta gratis per tutti',
+                'pricing.founder.f3': 'Vantaggi early access',
+                'pricing.founder.f2': 'Badge Founder esclusivo',
+                'pricing.founder.f1': 'Tutti i vantaggi Premium per sempre',
+                'pricing.founder.desc': 'Un pagamento. Premium per sempre — offerta limitata di lancio.',
+                'pricing.founder.price': '€89.99',
+                'pricing.founder.title': 'Founder Lifetime',
+                'pricing.premium.f5': 'Annuale €39.99 — risparmia vs mensile',
+                'pricing.premium.f4': 'Avvisi su lacune e taglie nella rete',
+                'pricing.premium.f3': 'Analitiche di utilizzo e statistiche prestiti',
+                'pricing.premium.f2': 'Registro manutenzione e cura stagionale',
+                'pricing.premium.f1': 'Promemoria automatici ritiro e restituzione',
+                'pricing.premium.desc': 'Automazione, cura, insight e rete intelligente.',
+                'pricing.premium.period': '/ mese',
+                'pricing.premium.price': '€4.99',
+                'pricing.premium.title': 'Premium',
+                'pricing.premium.badge': 'Premium',
+                'pricing.free.f5': 'Ski Network e strumenti',
+                'pricing.free.f4': 'Consegna QR e foto',
+                'pricing.free.f3': 'Prenotazioni e calendario',
+                'pricing.free.f2': 'Invita amici e famiglia',
+                'pricing.free.f1': 'Attrezzatura illimitata',
+                'pricing.free.desc': 'Condivisione pienamente funzionale nella tua rete privata — senza limiti.',
+                'pricing.free.price': '€0',
+                'pricing.free.title': 'Free',
+                'pricing.subtitle': 'Condividere è gratis senza limiti. Premium aggiunge automazione, organizzazione e insight.',
+                'pricing.title': 'Prezzi',
+                'tools.adventure.description': 'Camping, trekking e altro — nella stessa rete privata.',
+                'tools.adventure.title': 'Oltre l’inverno',
+                'tools.maintenance.description': 'Promemoria di cura per sci, giacche e materiale outdoor.',
+                'tools.maintenance.title': 'Manutenzione attrezzatura',
+                'tools.snow.description': 'Altezza neve, neve fresca, impianti e previsioni.',
+                'tools.snow.title': 'Condizioni neve',
+                'tools.packing.description': 'Liste per sci, snowboard, camping e trekking — offline.',
+                'tools.packing.title': 'Lista di packing',
+                'tools.tripPlanner.description': 'Pianifica viaggi, liste e attrezzatura dalla tua rete.',
+                'tools.tripPlanner.title': 'Trip Planner',
+                'tools.bootSize.description': 'Converti Mondopoint, EU, UK e US per scarponi da sci.',
+                'tools.bootSize.title': 'Convertitore taglia scarponi',
+                'tools.skiLength.description': 'Consiglia la lunghezza in base ad altezza, livello e stile.',
+                'tools.skiLength.title': 'Trova lunghezza sci',
+                'tools.din.description': 'Valori DIN consigliati da altezza, peso, lunghezza suola e livello.',
+                'tools.din.title': 'Calcolatore DIN sci',
+                'tools.cat.planning': 'Pianificazione',
+                'tools.cat.outdoor': 'Strumenti outdoor',
+                'tools.cat.winter': 'Strumenti invernali',
+                'tools.badgeReady': 'Pronto',
+                'tools.subtitle': 'Utility invernali, pianificazione e aiuto outdoor — nell’app quando ti servono. Anche per avventure oltre l’inverno.',
+                'tools.title': 'Strumenti moderni per sciatori',
+                'footer.pricing': 'Prezzi',
+                'footer.tools': 'Strumenti',
+                'nav.pricing': 'Prezzi',
+                'nav.tools': 'Strumenti',
                 'modal.privacy.title': 'Informativa sulla Privacy',
                 'modal.privacy.fullPage': 'Informativa privacy completa',
                 'modal.privacy.intro': 'Ultimo aggiornamento: Febbraio 2025',

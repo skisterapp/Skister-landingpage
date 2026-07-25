@@ -135,8 +135,8 @@ export function Onboarding(props: { onDone?: () => void }): React.ReactNode {
 function getSlides(): Slide[] {
   return [
     {
-      title: 'Share ski gear with people you trust',
-      message: 'Skister is the easiest way to share ski gear with friends, family, ski clubs and local groups. You can also share camping, hiking and other outdoor equipment — always in your private network.',
+      title: 'Share ski equipment with trusted people',
+      message: 'Skister is the easiest way to share ski gear with friends, family, ski clubs and local groups. Invite people you trust into private communities. You can also share camping, hiking and other outdoor equipment — and use modern tools for skiers beyond winter.',
       imageSrc: SKISTER_LOGO_URL,
       imageAlt: 'Skister app logo'
     },

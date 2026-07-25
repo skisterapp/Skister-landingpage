@@ -15,7 +15,7 @@ export function Help(): React.ReactNode {
       <header className="mb-4">
         <h1 className="text-2xl font-semibold">Help Center</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Skister is the easiest way to share ski gear with people you trust — in private networks of friends, family and clubs.
+          Skister is the easiest way to share ski equipment with trusted people — private communities, invites, modern skier tools and optional Premium.
         </p>
       </header>
 
@@ -146,9 +146,31 @@ function getHelpSections(): HelpSection[] {
       ]
     },
     {
+      id: 'tools',
+      title: 'Tools',
+      items: [
+        {
+          title: 'What tools are available?',
+          description:
+            'Winter tools (DIN calculator, ski length finder, boot size converter), planning (trip planner, packing checklist), outdoor tools (snow conditions, gear maintenance) and more — adventure support beyond winter.',
+        },
+      ],
+    },
+    {
       id: 'subscription',
-      title: 'Subscription (if enabled)',
-      items: [{ title: 'What premium includes', description: 'Premium features are shown in-app when available.' }]
+      title: 'Pricing & Premium',
+      items: [
+        {
+          title: 'Is sharing free?',
+          description:
+            'Yes. Core sharing is free with no limits. Premium adds automation, maintenance logging, analytics and network insights — sharing is never behind a paywall.',
+        },
+        {
+          title: 'What Premium includes',
+          description:
+            'Automatic pickup/return reminders, handover checklist, maintenance log, seasonal care, usage analytics and network gap alerts. Plans are shown in-app and on the website Pricing section.',
+        },
+      ],
     }
   ]
 }
