@@ -136,25 +136,25 @@ function getSlides(): Slide[] {
   return [
     {
       title: 'Share ski gear with people you trust',
-      message: 'Skister is the easiest way to share ski gear with friends, family and communities you trust. You can also share camping, hiking and other outdoor equipment.',
+      message: 'Skister is the easiest way to share ski gear with friends, family, ski clubs and local groups. You can also share camping, hiking and other outdoor equipment — always in your private network.',
       imageSrc: SKISTER_LOGO_URL,
       imageAlt: 'Skister app logo'
     },
     {
-      title: 'List your gear → others can borrow it',
-      message: 'Add skis, boots and helmets first — plus camping, hiking or other outdoor gear when you need it — so your trusted network can request what they need.',
+      title: 'List your gear → friends can borrow it',
+      message: 'Add skis, boots and helmets first — plus camping, hiking or other outdoor gear when you need it — so people you invite can request what they need.',
       imageSrc: SKISTER_LOGO_URL,
       imageAlt: 'Inventory'
     },
     {
-      title: 'Track rentals & never lose gear',
-      message: 'Use QR handoffs and reminders so everyone knows what’s out and what’s due back.',
+      title: 'Track loans & never lose gear',
+      message: 'Use QR handoffs and reminders so everyone in your circle knows what’s out and what’s due back.',
       imageSrc: SKISTER_LOGO_URL,
       imageAlt: 'QR and reminders'
     },
     {
-      title: 'Stay safe with condition checks & trust ratings',
-      message: 'Confirm condition and leave ratings after returns to avoid disputes and build trust.',
+      title: 'Stay safe with condition checks & ratings',
+      message: 'Confirm condition and leave ratings after returns — helpful when sharing with friends and family.',
       imageSrc: SKISTER_LOGO_URL,
       imageAlt: 'Condition and ratings'
     }

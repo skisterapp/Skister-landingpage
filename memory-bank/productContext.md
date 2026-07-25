@@ -14,5 +14,5 @@ Skister is the easiest way to share ski gear with people you trust. Skiing and w
 
 - Ski-first brand signal everywhere (heroes, category lists, featured content)
 - Secondary outdoor capability stated clearly without diluting skiing
-- Trusted networks, friends and communities — not open marketplace language
+- Private trusted networks: friends, families, ski clubs and local groups — never open marketplace language
 - Fast load times and mobile-friendly layout for public pages

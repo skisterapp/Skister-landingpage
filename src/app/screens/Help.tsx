@@ -14,7 +14,9 @@ export function Help(): React.ReactNode {
     <main className="mx-auto w-full max-w-2xl px-4 py-6">
       <header className="mb-4">
         <h1 className="text-2xl font-semibold">Help Center</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Quick answers for common questions.</p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Skister is the easiest way to share ski gear with people you trust — in private networks of friends, family and clubs.
+        </p>
       </header>
 
       <section className="flex flex-col gap-3">
@@ -86,11 +88,11 @@ function getHelpSections(): HelpSection[] {
       items: [
         {
           title: 'What is a Ski Network?',
-          description: 'Skister\'s community feature for connecting around ski resorts, clubs, events, and nearby skiers you trust. A ski resort is a real-world place; your Ski Network in Skister is the community layer in the app — not the resort itself. Within it you can also share camping, hiking and other outdoor equipment.'
+          description: 'Your private circle around where you ski — friends, family, ski clubs and local groups. A ski resort is a real-world place; your Ski Network in Skister is the private sharing layer in the app — not the resort itself. Within it you can also share camping, hiking and other outdoor equipment.'
         },
         {
           title: 'Choosing your Ski Network',
-          description: 'Pick a network based on your preferred ski resort, club, or local community in Profile or onboarding.'
+          description: 'Pick a hub based on your preferred ski resort, ski club, or local group in Profile or onboarding.'
         }
       ]
     },
@@ -99,14 +101,14 @@ function getHelpSections(): HelpSection[] {
       title: 'Getting started',
       items: [
         { title: 'How to add gear', description: 'Open My Gear, tap Add, and include photos + condition. Start with skis, boots and helmets — camping, hiking and other outdoor gear are supported too.' },
-        { title: 'How to invite people', description: 'Use the invite flow to add friends, family and community members you trust.' }
+        { title: 'How to invite people', description: 'Use the invite flow to add friends, family, ski clubs or local groups you trust.' }
       ]
     },
     {
       id: 'borrowing-gear',
       title: 'Borrowing ski gear',
       items: [
-        { title: 'How requests work', description: 'Request an item from someone in your trusted network and agree on pickup.' },
+        { title: 'How requests work', description: 'Request an item from someone in your private network and agree on pickup — not from strangers or a public listing.' },
         { title: 'Pickup & return flow', description: 'Confirm handoff (QR if enabled) and confirm condition on return.' }
       ]
     },
