@@ -1,7 +1,7 @@
 {
   "translations": {
     "de": {
-      "faq.a1": "Skister ist der einfachste Weg, Skiausrüstung mit Menschen zu teilen, denen du vertraust — Freunde, Familie, Skivereine und lokale Gruppen. Liste deine Ski-Ausrüstung auf, sieh was dein privates Netzwerk geteilt hat und koordiniere lokale Abholungen. Du kannst auch Camping-, Wander- und andere Outdoor-Ausrüstung teilen.",
+      "faq.a1": "Skister ist der einfachste Weg, Skiausrüstung mit Menschen zu teilen, denen du vertraust — Freunde, Familie, Skivereine und lokale Gruppen. Beim Hinzufügen wählst du zuerst die Aktivität (Skifahren zuerst), dann die passende Kategorie. Du kannst auch Snowboard-, Camping-, Wander- und andere Outdoor-Ausrüstung teilen.",
       "faq.a2": "Kern-Sharing ist kostenlos: unbegrenztes Inventar, Netzwerkeinladungen, Kalender, Reservierungsanfragen und Ausleihen. Premium ergänzt automatische Erinnerungen, Übergabe-Checkliste, Wartungslog, saisonale Erinnerungen, vollständige Historie, Nutzungsanalysen und Netzwerk-Engpässe.",
       "faq.a3": "SKISTER wurde in erster Linie für Familien entwickelt. Gerade bei Kindern wechseln Ski, Schuhe oder Helme regelmäßig die Größe. Mit SKISTER behaltet ihr den Überblick und teilt vorhandene Ausrüstung einfach innerhalb eures privaten Netzwerks. Natürlich eignet sich die App genauso für Freundeskreise und Vereine.",
       "faq.a4": "WhatsApp eignet sich für Nachrichten – aber nicht für die Organisation von Ausrüstung. Mit SKISTER siehst du sofort, welche Artikel verfügbar sind, wer gerade etwas ausgeliehen hat und wann es zurückkommt. Kalender, Reservierungen und Erinnerungen sorgen dafür, dass alles übersichtlich bleibt und Missverständnisse vermieden werden.",
@@ -58,7 +58,7 @@
       "onboarding.step6.feature2": "Rückgabe im Blick",
       "onboarding.step6.feature3": "Weniger Organisation",
       "features.local.description": "Skister ist kostenlos. Ihr organisiert eure Ausrüstung gemeinsam – ohne Provisionen oder versteckte Kosten.",
-      "features.share.description": "Erfasse Ski, Schuhe, Helme und Zubehör einmalig – inklusive Fotos, Größen und Notizen. Camping-, Wander- und andere Outdoor-Ausrüstung kannst du ebenfalls listen.",
+      "features.share.description": "Wähle zuerst die Aktivität (Skifahren zuerst), dann die Ausrüstungskategorie — inklusive Fotos, Marke, Modell, Größen und Notizen. Camping, Wandern und anderes Outdoor sind ebenfalls unterstützt.",
       "features.family.description": "Nur Menschen, die du einlädst, können deine Ausrüstung sehen oder reservieren.",
       "features.private.description": "Jede Reservierung wird dokumentiert. Du siehst jederzeit, welche Ausrüstung verliehen ist und wann sie zurückkommt.",
       "onboarding.step1.description": "Starte mit Freunden, Familie, Skivereinen oder lokalen Gruppen, die du schon kennst — Skister ist nur auf Einladung, kein offener Marktplatz.",
@@ -97,7 +97,7 @@
       "pricing.note": "Premium stellt Teilen nie hinter eine Paywall. Der Wert von Skister entsteht durch dein vertrauenswürdiges Netzwerk — Premium macht Organisation und Einblicke einfacher."
     },
     "en": {
-      "faq.a1": "Skister is the easiest way to share ski gear with people you trust — friends, family, ski clubs and local groups. Add your ski equipment, see what your private network has shared, and coordinate pickups locally. You can also share camping, hiking and other outdoor equipment.",
+      "faq.a1": "Skister is the easiest way to share ski gear with people you trust — friends, family, ski clubs and local groups. When you add gear, choose an activity first (skiing is primary), then the matching equipment category. You can also share snowboarding, camping, hiking and other outdoor equipment.",
       "faq.a2": "Core sharing is free: unlimited inventory, network invites, calendar, reservation requests, and basic borrowing. Premium adds automatic reminders, handover checklist, maintenance logging, seasonal reminders, full history, usage analytics, and network shortage detection.",
       "faq.a3": "SKISTER was primarily developed for families. Especially with children, skis, boots, and helmets regularly change size. With SKISTER, you can keep track of everything and easily share existing equipment within your private network. Of course, the app is equally suitable for groups of friends and clubs.",
       "faq.a4": "WhatsApp is fine for messaging – but not for organizing equipment. With SKISTER, you can instantly see which items are available, who has borrowed something, and when it will be returned. Calendars, reservations, and reminders ensure everything stays organized and misunderstandings are avoided.",
@@ -157,7 +157,7 @@
       "onboarding.step6.feature2": "Returns in focus",
       "onboarding.step6.feature3": "Less organization",
       "features.local.description": "Skister is free. You organize your equipment together – without commissions or hidden costs.",
-      "features.share.description": "Add skis, boots, helmets and accessories once — with photos, sizes and notes. You can also list camping, hiking and other outdoor equipment.",
+      "features.share.description": "Choose an activity first (skiing is primary), then the equipment category — with photos, brand, model, sizes and notes. Camping, hiking and other outdoor gear are supported too.",
       "features.family.description": "Only people you invite can see or reserve your equipment — friends, family, clubs and local groups.",
       "features.private.description": "Every reservation is documented. You can see at any time which equipment is loaned out and when it will be returned.",
       "onboarding.step1.description": "Start with friends, family, ski clubs or local groups you already know — Skister is invite-only, not an open marketplace.",

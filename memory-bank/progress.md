@@ -9,9 +9,12 @@
 
 ## Current work
 
-- Add Gear wizard redesign in Skisterapp: 6-step photo-first flow with progress, draft auto-save, large buttons — no schema change
+- Multi-activity Add Gear (Jul 26): two-step Activity → Equipment wizard; custom categories; brand/model/purchase year/replacement value; schema migration + Edge deploy; Help/FAQ/i18n updated; Skisterapp typecheck + Vite build clean
+- Home screen visual polish (Jul 26): primary action cards with photo backgrounds + Quick Access row; translations/help/onboarding updated; Skisterapp typecheck + Vite build clean
+- Production readiness program (Jul 26): Critical runtime + security + marketing + i18n fixes shipped; Android/iOS/web builds verified; Edge + referral migration deployed
+- Add Gear wizard redesign in Skisterapp: photo-first flow now includes activity + equipment steps, draft auto-save, large buttons
 - Onboarding redesign in Skisterapp: 5-screen teach flow (intent → activities → invite → profile → home/login); selections saved for Explore/Home personalization
-- My Gear management redesign in Skisterapp (`/my-gear`): owner inventory with stats, borrower/reservation info, Edit/Share/Maintain/unavailable/Delete — Maintain opens Gear Maintenance with gear prefilled
+- My Gear management redesign in Skisterapp (`/my-gear`): owner inventory with stats, borrower/reservation info, Edit/Share/Maintain/unavailable/Delete — Maintain opens Gear Maintenance with gear prefilled; filters by activity
 - Ski-first brand repositioning (Skister-main + Skisterapp): ski sharing primary; camping/hiking/other outdoor secondary; Ski Network restored; trusted-network framing; onboarding/empty states/tools hub no longer lead with generic outdoor
 - Trusted-network copy pass (Jul 26): reinforced private communities / friends / families / ski clubs / local groups across landing, help, onboarding, empty states, invite, network, profile, FAQ, borrow/request wording — no marketplace implication; business logic unchanged
 - Marketing ↔ app alignment (Jul 26): landing Tools + Pricing/Premium sections, FAQ/Premium messaging, FR/ES/IT invite-first onboarding, JSON-LD structured data, help/privacy/blog/footer updates — ski-first trusted-network positioning intact

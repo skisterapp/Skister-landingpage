@@ -23,6 +23,12 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://skister.app/">
     <meta property="og:image" id="meta-og-image" content="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Skister — Share ski gear with people you trust">
+    <meta name="twitter:description" content="Share ski equipment with trusted people in private communities. Invite friends. Modern tools for skiers — adventure support beyond winter.">
+    <meta name="twitter:image" content="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png">
     
     <!-- Android/Mobile Meta Tags -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -387,6 +393,14 @@
             display: flex;
             gap: 2rem;
             align-items: center;
+            margin-left: auto;
+        }
+
+        .nav-trailing {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            flex-shrink: 0;
         }
         
         .nav-links a {
@@ -398,6 +412,118 @@
         
         .nav-links a:hover {
             color: var(--text-white);
+        }
+
+        .nav-menu-toggle {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            min-width: 44px;
+            min-height: 44px;
+            padding: 0;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 8px;
+            background: rgba(34, 139, 34, 0.15);
+            color: var(--text-white);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .nav-menu-toggle:hover {
+            background: rgba(34, 139, 34, 0.28);
+            border-color: rgba(46, 232, 154, 0.45);
+        }
+
+        .nav-menu-toggle:focus-visible {
+            outline: 2px solid var(--primary-green);
+            outline-offset: 2px;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Cookie consent */
+        .cookie-banner {
+            position: fixed;
+            left: max(1rem, env(safe-area-inset-left));
+            right: max(1rem, env(safe-area-inset-right));
+            bottom: max(1rem, env(safe-area-inset-bottom));
+            z-index: 1200;
+            max-width: 32rem;
+            margin-inline: auto;
+            padding: 1rem 1.15rem;
+            background: rgba(12, 18, 12, 0.96);
+            border: 1px solid rgba(34, 139, 34, 0.45);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        .cookie-banner[hidden] {
+            display: none !important;
+        }
+
+        .cookie-banner p {
+            margin: 0 0 0.85rem;
+        }
+
+        .cookie-banner a {
+            color: var(--primary-green-light);
+        }
+
+        .cookie-banner-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .cookie-banner-actions button {
+            flex: 1 1 auto;
+            min-height: 44px;
+            padding: 0.55rem 0.9rem;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .cookie-banner-actions .cookie-accept {
+            background: var(--primary-green);
+            color: var(--text-white);
+        }
+
+        .cookie-banner-actions .cookie-accept:hover {
+            background: var(--primary-green-dark);
+        }
+
+        .cookie-banner-actions .cookie-essential {
+            background: transparent;
+            border-color: rgba(255, 255, 255, 0.2);
+            color: var(--text-white);
+        }
+
+        .cookie-banner-actions .cookie-essential:hover {
+            border-color: var(--primary-green);
+            color: var(--primary-green-light);
+        }
+
+        .cookie-banner-actions button:focus-visible {
+            outline: 2px solid var(--primary-green);
+            outline-offset: 2px;
         }
 
         /* Auth UI removed from landing page */
@@ -2151,6 +2277,7 @@
             }
 
             .nav-bar {
+                position: relative;
                 padding-top: 0.55rem;
                 padding-bottom: 0.55rem;
                 gap: 0.5rem;
@@ -2162,15 +2289,43 @@
                 width: auto;
             }
 
+            .nav-menu-toggle {
+                display: inline-flex;
+            }
+
             .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                padding: 0.5rem var(--gutter) 1rem;
+                background: rgba(10, 10, 10, 0.98);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+                max-height: min(80vh, 32rem);
+                overflow-y: auto;
+                z-index: 1001;
+            }
+
+            .nav-links.is-open {
                 display: flex;
-                gap: 0.35rem;
-                align-items: center;
-                flex-shrink: 0;
             }
 
             .nav-links > a {
-                display: none;
+                display: block;
+                padding: 0.85rem 0.25rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                color: var(--text-white);
+                font-size: 1rem;
+                min-height: 44px;
+            }
+
+            .nav-links > a:last-of-type {
+                border-bottom: none;
             }
 
             .language-btn {
@@ -2569,34 +2724,48 @@
                     height="337"
                 >
             </a>
-            <div class="nav-links">
-                <a onclick="scrollToSection('how-it-works')" data-i18n="nav.howItWorks">So funktioniert's</a>
-                <a onclick="scrollToSection('features')" data-i18n="nav.features">Features</a>
-                <a onclick="scrollToSection('tools')" data-i18n="nav.tools">Tools</a>
-                <a onclick="scrollToSection('pricing')" data-i18n="nav.pricing">Preise</a>
-                <a onclick="scrollToSection('download')" data-i18n="nav.download">Download</a>
-                <a onclick="scrollToSection('faq')" data-i18n="nav.faq">FAQ</a>
+            <div class="nav-links" id="primary-nav-links">
+                <a href="#how-it-works" data-i18n="nav.howItWorks">So funktioniert's</a>
+                <a href="#features" data-i18n="nav.features">Features</a>
+                <a href="#tools" data-i18n="nav.tools">Tools</a>
+                <a href="#pricing" data-i18n="nav.pricing">Preise</a>
+                <a href="#download" data-i18n="nav.download">Download</a>
+                <a href="#faq" data-i18n="nav.faq">FAQ</a>
                 <a href="/blog/" data-i18n="nav.blog">Blog</a>
-                <a onclick="openModal('contact')" data-i18n="nav.contact">Contact</a>
+                <a href="#contact" data-i18n="nav.contact">Contact</a>
+            </div>
+            <div class="nav-trailing">
                 <div class="language-selector">
-                    <button class="language-btn" onclick="toggleLanguageDropdown()">
+                    <button type="button" class="language-btn" onclick="toggleLanguageDropdown()" aria-haspopup="listbox" aria-expanded="false" id="language-btn" aria-controls="language-dropdown">
                         <span id="current-language">🇩🇪 DE</span>
-                        <i class="fa-solid fa-chevron-down"></i>
+                        <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
                     </button>
-                    <div class="language-dropdown" id="language-dropdown">
-                        <div class="language-option" onclick="changeLanguage('de')">🇩🇪 Deutsch</div>
-                        <div class="language-option" onclick="changeLanguage('en')">🇬🇧 English</div>
-                        <div class="language-option" onclick="changeLanguage('fr')">🇫🇷 Français</div>
-                        <div class="language-option" onclick="changeLanguage('es')">🇪🇸 Español</div>
-                        <div class="language-option" onclick="changeLanguage('it')">🇮🇹 Italiano</div>
+                    <div class="language-dropdown" id="language-dropdown" role="listbox">
+                        <div class="language-option" onclick="changeLanguage('de')" role="option">🇩🇪 Deutsch</div>
+                        <div class="language-option" onclick="changeLanguage('en')" role="option">🇬🇧 English</div>
+                        <div class="language-option" onclick="changeLanguage('fr')" role="option">🇫🇷 Français</div>
+                        <div class="language-option" onclick="changeLanguage('es')" role="option">🇪🇸 Español</div>
+                        <div class="language-option" onclick="changeLanguage('it')" role="option">🇮🇹 Italiano</div>
                     </div>
                 </div>
+                <button
+                    type="button"
+                    class="nav-menu-toggle"
+                    id="nav-menu-toggle"
+                    aria-expanded="false"
+                    aria-controls="primary-nav-links"
+                    aria-label="Menü öffnen"
+                    data-i18n-aria-label="nav.menuOpen"
+                >
+                    <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                </button>
             </div>
         </div>
     </nav>
     
     <!-- Hero Section -->
-    <section class="hero snap-section" id="home" aria-labelledby="hero-heading">
+    <section class="hero snap-section" id="home" aria-labelledby="hero-heading" aria-describedby="hero-media-desc">
+        <p id="hero-media-desc" class="visually-hidden" data-i18n="hero.mediaDesc">Hintergrund: Skifahren im Vordergrund; Snowboard und Outdoor-Abenteuer ergänzend.</p>
         <div class="hero-bg" aria-hidden="true">
             <video
                 class="hero-bg-video is-active"
@@ -2606,7 +2775,7 @@
                 preload="metadata"
                 disablepictureinpicture
             >
-                <source src="assets/videos/hero-snowboard.mp4" type="video/mp4">
+                <source src="assets/videos/benefits-ski.mp4" type="video/mp4">
             </video>
             <video
                 class="hero-bg-video"
@@ -2861,7 +3030,7 @@
                 <article class="tool-card">
                     <span class="tool-badge" data-i18n="tools.badgeReady">Bereit</span>
                     <h3 data-i18n="tools.snow.title">Schneelage</h3>
-                    <p data-i18n="tools.snow.description">Schneehöhe, Neuschnee, Lifte und Vorhersage für deine Resorts.</p>
+                    <p data-i18n="tools.snow.description">Demo-Dashboard: Schneehöhe, Lifte und Vorhersage — Live-Daten folgen.</p>
                     <span class="tool-cat" data-i18n="tools.cat.outdoor">Outdoor-Tools</span>
                 </article>
                 <article class="tool-card">
@@ -2871,7 +3040,7 @@
                     <span class="tool-cat" data-i18n="tools.cat.outdoor">Outdoor-Tools</span>
                 </article>
                 <article class="tool-card">
-                    <span class="tool-badge" data-i18n="tools.badgeReady">Bereit</span>
+                    <span class="tool-badge" data-i18n="tools.badgeIncluded">Inklusive</span>
                     <h3 data-i18n="tools.adventure.title">Mehr als Winter</h3>
                     <p data-i18n="tools.adventure.description">Camping, Wandern und weitere Outdoor-Ausrüstung — im selben privaten Netzwerk.</p>
                     <span class="tool-cat" data-i18n="tools.cat.outdoor">Outdoor-Tools</span>
@@ -3149,29 +3318,28 @@
             <div class="footer-section">
                 <h3 data-i18n="footer.product">Produkt</h3>
                 <div class="footer-links">
-                    <a onclick="scrollToSection('features')" data-i18n="footer.features">Alles was du brauchst</a>
-                    <a onclick="scrollToSection('how-it-works')" data-i18n="footer.howItWorks">So funktioniert's</a>
-                    <a onclick="scrollToSection('tools')" data-i18n="footer.tools">Tools</a>
-                    <a onclick="scrollToSection('pricing')" data-i18n="footer.pricing">Preise</a>
-                    <a onclick="scrollToSection('faq')" data-i18n="footer.faq">FAQ</a>
-                    <a onclick="scrollToSection('download')" data-i18n="footer.download">Download</a>
+                    <a href="#features" data-i18n="footer.features">Alles was du brauchst</a>
+                    <a href="#how-it-works" data-i18n="footer.howItWorks">So funktioniert's</a>
+                    <a href="#tools" data-i18n="footer.tools">Tools</a>
+                    <a href="#pricing" data-i18n="footer.pricing">Preise</a>
+                    <a href="#faq" data-i18n="footer.faq">FAQ</a>
+                    <a href="#download" data-i18n="footer.download">Download</a>
                     <a href="/blog/" data-i18n="nav.blog">Blog</a>
-                    <a onclick="openModal('feedback')" data-i18n="footer.feedback">Feedback</a>
+                    <a href="#feedback" data-i18n="footer.feedback">Feedback</a>
                 </div>
             </div>
             <div class="footer-section">
                 <h3 data-i18n="footer.support">Support</h3>
                 <div class="footer-links">
-                    <a onclick="openModal('contact')" data-i18n="footer.contact">Kontakt</a>
+                    <a href="#contact" data-i18n="footer.contact">Kontakt</a>
                     <a href="mailto:support@skister.app">support@skister.app</a>
-                    <a href="help.html" data-i18n="footer.help">Hilfe</a>
-                    <a href="admin.html" data-i18n="footer.admin">Admin</a>
+                    <a href="/help.html" data-i18n="footer.help">Hilfe</a>
                 </div>
             </div>
             <div class="footer-section">
                 <h3 data-i18n="footer.legal">Rechtliches</h3>
                 <div class="footer-links">
-                    <a onclick="openModal('privacy')" data-i18n="footer.privacy">Datenschutz</a>
+                    <a href="/privacy.html" data-i18n="footer.privacy">Datenschutz</a>
                     <a href="/terms.html" data-i18n="footer.terms">Nutzungsbedingungen</a>
                     <a href="mailto:privacy@skister.app">privacy@skister.app</a>
                 </div>
@@ -3184,6 +3352,16 @@
         </div>
     </footer>
     
+    <!-- Cookie consent -->
+    <div id="cookie-banner" class="cookie-banner" role="dialog" aria-labelledby="cookie-banner-title" aria-describedby="cookie-banner-text" hidden>
+        <p id="cookie-banner-title" data-i18n="cookie.title"><strong>Cookies &amp; lokale Daten</strong></p>
+        <p id="cookie-banner-text" data-i18n="cookie.text">Wir speichern deine Sprachwahl in localStorage (notwendig). Optionale Analyse-Cookies setzen wir nur, wenn du zustimmst — derzeit sind keine Analyse-Skripte aktiv. Mehr in der <a href="/privacy.html">Datenschutzerklärung</a>.</p>
+        <div class="cookie-banner-actions">
+            <button type="button" class="cookie-accept" id="cookie-accept" data-i18n="cookie.accept">Alles akzeptieren</button>
+            <button type="button" class="cookie-essential" id="cookie-essential" data-i18n="cookie.essential">Nur notwendige</button>
+        </div>
+    </div>
+
     <!-- Modals -->
     <div id="modal-privacy" class="modal">
         <div class="modal-content">
@@ -3237,12 +3415,19 @@
                 'nav.download': 'Download',
                 'nav.contact': 'Kontakt',
                 'nav.signOut': 'Abmelden',
+                'nav.menuOpen': 'Menü öffnen',
+                'nav.menuClose': 'Menü schließen',
                 'hero.title': 'Skiausrüstung teilen war noch nie so einfach.',
                 'hero.tagline': '🏔️ Für Familien, Freunde und Vereine',
                 'hero.subtitle': 'Skister ist der einfachste Weg, Skiausrüstung mit Menschen zu teilen, denen du vertraust. Du kannst auch Camping-, Wander- und andere Outdoor-Ausrüstung teilen.',
+                'hero.mediaDesc': 'Hintergrund: Skifahren im Vordergrund; Outdoor-Abenteuer ergänzend.',
                 'hero.emailPlaceholder': 'Deine E-Mail-Adresse eingeben',
                 'hero.submitBtn': 'Benachrichtigung erhalten',
                 'hero.waitlistInfo': 'Trete der Warteliste bei und sei der Erste, der erfährt, wenn wir starten!',
+                'cookie.title': '<strong>Cookies &amp; lokale Daten</strong>',
+                'cookie.text': 'Wir speichern deine Sprachwahl in localStorage (notwendig). Optionale Analyse-Cookies setzen wir nur, wenn du zustimmst — derzeit sind keine Analyse-Skripte aktiv. Mehr in der <a href="/privacy.html">Datenschutzerklärung</a>.',
+                'cookie.accept': 'Alles akzeptieren',
+                'cookie.essential': 'Nur notwendige',
                 'messages.success': 'Vielen Dank für deine Anmeldung! Wir benachrichtigen dich, wenn Skister startet.',
                 'messages.duplicate': 'Diese E-Mail ist bereits auf unserer Warteliste!',
                 'messages.error': 'Fehler beim Hinzufügen der E-Mail. Bitte versuche es erneut.',
@@ -3287,7 +3472,7 @@
                 'features.title': 'Alles was du brauchst',
                 'features.subtitle': 'Alles, was du brauchst, um privates Teilen von Ski-Ausrüstung zu organisieren — ohne Tabellen, Chatgruppen oder Marktplätze.',
                 'features.share.title': 'Ausrüstung teilen',
-                'features.share.description': 'Liste deine Ski-Ausrüstung auf und mache sie deinem vertrauenswürdigen Netzwerk verfügbar.',
+                'features.share.description': 'Wähle zuerst die Aktivität (Skifahren zuerst), dann die Ausrüstungskategorie — inklusive Fotos, Marke, Modell, Größen und Notizen.',
                 'features.family.title': 'Privat statt Marktplatz',
                 'features.family.description': 'Nur auf Einladung. Teile Skiausrüstung nur mit Personen, denen du vertraust — Familie, Freunde und Vereine.',
                 'features.free.title': 'Teilen bleibt kostenlos',
@@ -3317,7 +3502,7 @@
                 'download.comingSoonAlert': 'Demnächst! Wir melden uns, sobald die App verfügbar ist.',
                 'faq.title': 'Häufig gestellte Fragen',
                 'faq.q1': 'Wie funktioniert Skister?',
-                'faq.a1': 'Skister ist der einfachste Weg, Skiausrüstung mit Menschen zu teilen, denen du vertraust — Freunde, Familie, Skivereine und lokale Gruppen. Liste deine Ski-Ausrüstung auf, sieh was dein privates Netzwerk geteilt hat und koordiniere lokale Abholungen. Du kannst auch Camping-, Wander- und andere Outdoor-Ausrüstung teilen.',
+                'faq.a1': 'Skister ist der einfachste Weg, Skiausrüstung mit Menschen zu teilen, denen du vertraust — Freunde, Familie, Skivereine und lokale Gruppen. Beim Hinzufügen wählst du zuerst die Aktivität (Skifahren zuerst), dann die passende Kategorie. Du kannst auch Snowboard-, Camping-, Wander- und andere Outdoor-Ausrüstung teilen.',
                 'faq.q2': 'Kostet die Nutzung von Skister etwas?',
                 'faq.a2': 'Kern-Sharing ist kostenlos: unbegrenztes Inventar, Netzwerkeinladungen, Kalender, Reservierungsanfragen und Ausleihen. Premium ergänzt automatische Erinnerungen, Übergabe-Checkliste, Wartungslog, saisonale Erinnerungen, vollständige Historie, Nutzungsanalysen und Netzwerk-Engpässe.',
                 'faq.q3': 'Wer kann meine Ausrüstung sehen?',
@@ -3389,7 +3574,7 @@
                 'tools.adventure.title': 'Mehr als Winter',
                 'tools.maintenance.description': 'Wartungserinnerungen für Ski, Jacken und Outdoor-Ausrüstung.',
                 'tools.maintenance.title': 'Gear-Pflege',
-                'tools.snow.description': 'Schneehöhe, Neuschnee, Lifte und Vorhersage für deine Resorts.',
+                'tools.snow.description': 'Demo-Dashboard: Schneehöhe, Lifte und Vorhersage — Live-Daten folgen.',
                 'tools.snow.title': 'Schneelage',
                 'tools.packing.description': 'Packlisten für Ski, Snowboard, Camping und Wandern — offline.',
                 'tools.packing.title': 'Packliste',
@@ -3405,6 +3590,7 @@
                 'tools.cat.outdoor': 'Outdoor-Tools',
                 'tools.cat.winter': 'Winter-Tools',
                 'tools.badgeReady': 'Bereit',
+                'tools.badgeIncluded': 'Inklusive',
                 'tools.subtitle': 'Winter-Utilities, Planung und Outdoor-Hilfe — in der App, genau wenn du sie brauchst. Auch für Abenteuer über den Winter hinaus.',
                 'tools.title': 'Moderne Tools für Skifahrer',
                 'footer.pricing': 'Preise',
@@ -3447,12 +3633,19 @@
                 'nav.download': 'Download',
                 'nav.contact': 'Contact',
                 'nav.signOut': 'Sign out',
+                'nav.menuOpen': 'Open menu',
+                'nav.menuClose': 'Close menu',
                 'hero.title': 'Sharing ski gear has never been easier.',
                 'hero.tagline': '🏔️ For families, friends and clubs',
                 'hero.subtitle': 'Skister is the easiest way to share ski gear with people you trust. You can also share camping, hiking and other outdoor equipment.',
+                'hero.mediaDesc': 'Background: skiing first; outdoor adventure scenes as secondary.',
                 'hero.emailPlaceholder': 'Enter your email address',
                 'hero.submitBtn': 'Get Notified',
                 'hero.waitlistInfo': 'Join the waitlist and be the first to know when we launch!',
+                'cookie.title': '<strong>Cookies &amp; local data</strong>',
+                'cookie.text': 'We store your language preference in localStorage (necessary). Optional analytics cookies are only set if you accept — no analytics scripts are active today. See our <a href="/privacy.html">Privacy Policy</a>.',
+                'cookie.accept': 'Accept all',
+                'cookie.essential': 'Essential only',
                 'messages.success': 'Thank you for joining our waitlist! We\'ll notify you when Skister launches.',
                 'messages.duplicate': 'This email is already on our waitlist!',
                 'messages.error': 'Failed to add email. Please try again.',
@@ -3497,7 +3690,7 @@
                 'features.title': 'Everything you need',
                 'features.subtitle': 'Everything required to organize private ski equipment sharing without spreadsheets, chat groups or marketplaces.',
                 'features.share.title': 'Share Equipment',
-                'features.share.description': 'List your ski equipment and make it available to your trusted network. Camping, hiking and other outdoor gear are supported too.',
+                'features.share.description': 'Choose an activity first (skiing is primary), then the equipment category — with photos, brand, model, sizes and notes. Camping, hiking and other outdoor gear are supported too.',
                 'features.family.title': 'Private instead of marketplace',
                 'features.family.description': 'Invitation only. Share ski gear only with people you trust — family, friends and clubs.',
                 'features.free.title': 'Sharing stays free',
@@ -3527,7 +3720,7 @@
                 'download.comingSoonAlert': 'Coming soon! We will notify you when the app is ready.',
                 'faq.title': 'Frequently Asked Questions',
                 'faq.q1': 'How does Skister work?',
-                'faq.a1': 'Skister is the easiest way to share ski gear with people you trust — friends, family, ski clubs and local groups. Add your ski equipment, see what your private network has shared, and coordinate pickups locally. You can also share camping, hiking and other outdoor equipment.',
+                'faq.a1': 'Skister is the easiest way to share ski gear with people you trust — friends, family, ski clubs and local groups. When you add gear, choose an activity first (skiing is primary), then the matching equipment category. You can also share snowboarding, camping, hiking and other outdoor equipment.',
                 'faq.q2': 'Does Skister cost anything?',
                 'faq.a2': 'Core sharing is free: unlimited inventory, network invites, calendar, reservation requests, and basic borrowing. Premium adds automatic reminders, handover checklist, maintenance logging, seasonal reminders, full history, usage analytics, and network shortage detection.',
                 'faq.q3': 'Who can see my equipment?',
@@ -3599,7 +3792,7 @@
                 'tools.adventure.title': 'Beyond winter',
                 'tools.maintenance.description': 'Care reminders for skis, jackets and outdoor equipment.',
                 'tools.maintenance.title': 'Gear Maintenance',
-                'tools.snow.description': 'Snow depth, fresh snow, lifts and forecast for your resorts.',
+                'tools.snow.description': 'Preview dashboard: snow depth, lifts and forecast — live feeds coming soon.',
                 'tools.snow.title': 'Snow Conditions',
                 'tools.packing.description': 'Packing lists for ski, snowboard, camping and hiking — offline.',
                 'tools.packing.title': 'Packing Checklist',
@@ -3615,6 +3808,7 @@
                 'tools.cat.outdoor': 'Outdoor Tools',
                 'tools.cat.winter': 'Winter Tools',
                 'tools.badgeReady': 'Ready',
+                'tools.badgeIncluded': 'Included',
                 'tools.subtitle': 'Winter utilities, planning and outdoor help — in the app when you need them. Adventure support beyond winter too.',
                 'tools.title': 'Modern tools for skiers',
                 'footer.pricing': 'Pricing',
@@ -3657,12 +3851,19 @@
                 'nav.download': 'Télécharger',
                 'nav.contact': 'Contact',
                 'nav.signOut': 'Se déconnecter',
+                'nav.menuOpen': 'Ouvrir le menu',
+                'nav.menuClose': 'Fermer le menu',
                 'hero.title': 'Partager du matériel de ski n\'a jamais été aussi simple.',
                 'hero.tagline': '🏔️ Pour les familles, les amis et les clubs',
                 'hero.subtitle': 'Skister est le moyen le plus simple de partager du matériel de ski avec des personnes de confiance. Vous pouvez aussi partager du matériel de camping, de randonnée et d\'autres équipements outdoor.',
+                'hero.mediaDesc': 'Arrière-plan : ski en premier ; aventures outdoor en complément.',
                 'hero.emailPlaceholder': 'Entrez votre adresse e-mail',
                 'hero.submitBtn': 'Être Notifié',
                 'hero.waitlistInfo': 'Rejoignez la liste d\'attente et soyez le premier informé de notre lancement!',
+                'cookie.title': '<strong>Cookies et données locales</strong>',
+                'cookie.text': 'Nous enregistrons votre langue dans localStorage (nécessaire). Les cookies d\'analyse optionnels ne sont définis que si vous acceptez — aucun script d\'analyse n\'est actif aujourd\'hui. Voir la <a href="/privacy.html">politique de confidentialité</a>.',
+                'cookie.accept': 'Tout accepter',
+                'cookie.essential': 'Essentiels uniquement',
                 'messages.success': 'Merci de rejoindre notre liste d\'attente! Nous vous informerons du lancement de Skister.',
                 'messages.duplicate': 'Cet e-mail est déjà sur notre liste d\'attente!',
                 'messages.error': 'Échec de l\'ajout de l\'e-mail. Veuillez réessayer.',
@@ -3809,7 +4010,7 @@
                 'tools.adventure.title': 'Au-delà de l’hiver',
                 'tools.maintenance.description': 'Rappels d’entretien pour skis, vestes et matériel outdoor.',
                 'tools.maintenance.title': 'Entretien du matériel',
-                'tools.snow.description': 'Hauteur de neige, neige fraîche, remontées et prévisions.',
+                'tools.snow.description': 'Aperçu : hauteur de neige, remontées et prévisions — données live bientôt.',
                 'tools.snow.title': 'Conditions de neige',
                 'tools.packing.description': 'Listes pour ski, snowboard, camping et randonnée — hors ligne.',
                 'tools.packing.title': 'Liste de packing',
@@ -3825,6 +4026,7 @@
                 'tools.cat.outdoor': 'Outils outdoor',
                 'tools.cat.winter': 'Outils d’hiver',
                 'tools.badgeReady': 'Prêt',
+                'tools.badgeIncluded': 'Inclus',
                 'tools.subtitle': 'Utilitaires d’hiver, planification et aide outdoor — dans l’app quand vous en avez besoin. Aussi pour l’aventure hors saison.',
                 'tools.title': 'Des outils modernes pour skieurs',
                 'footer.pricing': 'Tarifs',
@@ -3867,12 +4069,19 @@
                 'nav.download': 'Descargar',
                 'nav.contact': 'Contacto',
                 'nav.signOut': 'Cerrar sesión',
+                'nav.menuOpen': 'Abrir menú',
+                'nav.menuClose': 'Cerrar menú',
                 'hero.title': 'Compartir equipo de esquí nunca fue tan fácil.',
                 'hero.tagline': '🏔️ Para familias, amigos y clubes',
                 'hero.subtitle': 'Skister es la forma más fácil de compartir equipo de esquí con personas de confianza. También puedes compartir equipo de camping, senderismo y otro material outdoor.',
+                'hero.mediaDesc': 'Fondo: esquí primero; aventuras outdoor como complemento.',
                 'hero.emailPlaceholder': 'Ingresa tu dirección de correo',
                 'hero.submitBtn': 'Recibir Notificación',
                 'hero.waitlistInfo': '¡Únete a la lista de espera y sé el primero en saber cuándo lancemos!',
+                'cookie.title': '<strong>Cookies y datos locales</strong>',
+                'cookie.text': 'Guardamos tu idioma en localStorage (necesario). Las cookies de análisis opcionales solo se activan si aceptas — hoy no hay scripts de análisis activos. Ver la <a href="/privacy.html">política de privacidad</a>.',
+                'cookie.accept': 'Aceptar todo',
+                'cookie.essential': 'Solo esenciales',
                 'onboarding.title': 'Cómo funciona Skister',
                 'onboarding.subtitle': 'Comparte equipo de esquí con amigos, familia, clubes de esquí y grupos locales de confianza — camping y senderismo también.',
                 'onboarding.step1.title': 'Invita a personas de confianza',
@@ -4015,7 +4224,7 @@
                 'tools.adventure.title': 'Más allá del invierno',
                 'tools.maintenance.description': 'Recordatorios de cuidado para esquís, chaquetas y material outdoor.',
                 'tools.maintenance.title': 'Mantenimiento del equipo',
-                'tools.snow.description': 'Altura de nieve, nieve reciente, remontes y previsión.',
+                'tools.snow.description': 'Vista previa: altura de nieve, remontes y previsión — datos en vivo pronto.',
                 'tools.snow.title': 'Condiciones de nieve',
                 'tools.packing.description': 'Listas para esquí, snowboard, camping y senderismo — offline.',
                 'tools.packing.title': 'Lista de packing',
@@ -4031,6 +4240,7 @@
                 'tools.cat.outdoor': 'Herramientas outdoor',
                 'tools.cat.winter': 'Herramientas de invierno',
                 'tools.badgeReady': 'Listo',
+                'tools.badgeIncluded': 'Incluido',
                 'tools.subtitle': 'Utilidades de invierno, planificación y ayuda outdoor — en la app cuando las necesitas. También para aventuras más allá del invierno.',
                 'tools.title': 'Herramientas modernas para esquiadores',
                 'footer.pricing': 'Precios',
@@ -4073,12 +4283,19 @@
                 'nav.download': 'Download',
                 'nav.contact': 'Contatto',
                 'nav.signOut': 'Esci',
+                'nav.menuOpen': 'Apri menu',
+                'nav.menuClose': 'Chiudi menu',
                 'hero.title': 'Condividere attrezzatura da sci non è mai stato così facile.',
                 'hero.tagline': '🏔️ Per famiglie, amici e club',
                 'hero.subtitle': 'Skister è il modo più semplice per condividere attrezzatura da sci con le persone di cui ti fidi. Puoi anche condividere attrezzatura da camping, trekking e altro outdoor.',
+                'hero.mediaDesc': 'Sfondo: sci in primo piano; avventure outdoor come complemento.',
                 'hero.emailPlaceholder': 'Inserisci il tuo indirizzo email',
                 'hero.submitBtn': 'Ricevi Notifica',
                 'hero.waitlistInfo': 'Unisciti alla lista d\'attesa e sii il primo a sapere quando lanciamo!',
+                'cookie.title': '<strong>Cookie e dati locali</strong>',
+                'cookie.text': 'Memorizziamo la lingua in localStorage (necessario). I cookie di analisi opzionali sono impostati solo se accetti — oggi non ci sono script di analisi attivi. Vedi la <a href="/privacy.html">privacy policy</a>.',
+                'cookie.accept': 'Accetta tutto',
+                'cookie.essential': 'Solo essenziali',
                 'messages.success': 'Grazie per esserti iscritto alla nostra lista d\'attesa! Ti informeremo quando Skister sarà lanciato.',
                 'messages.duplicate': 'Questa email è già nella nostra lista d\'attesa!',
                 'messages.error': 'Impossibile aggiungere l\'email. Riprova.',
@@ -4225,7 +4442,7 @@
                 'tools.adventure.title': 'Oltre l’inverno',
                 'tools.maintenance.description': 'Promemoria di cura per sci, giacche e materiale outdoor.',
                 'tools.maintenance.title': 'Manutenzione attrezzatura',
-                'tools.snow.description': 'Altezza neve, neve fresca, impianti e previsioni.',
+                'tools.snow.description': 'Anteprima: altezza neve, impianti e previsioni — dati live in arrivo.',
                 'tools.snow.title': 'Condizioni neve',
                 'tools.packing.description': 'Liste per sci, snowboard, camping e trekking — offline.',
                 'tools.packing.title': 'Lista di packing',
@@ -4241,6 +4458,7 @@
                 'tools.cat.outdoor': 'Strumenti outdoor',
                 'tools.cat.winter': 'Strumenti invernali',
                 'tools.badgeReady': 'Pronto',
+                'tools.badgeIncluded': 'Incluso',
                 'tools.subtitle': 'Utility invernali, pianificazione e aiuto outdoor — nell’app quando ti servono. Anche per avventure oltre l’inverno.',
                 'tools.title': 'Strumenti moderni per sciatori',
                 'footer.pricing': 'Prezzi',
@@ -4333,6 +4551,8 @@
                 if (ogUrl) {
                     const meta = document.getElementById('meta-og-image');
                     if (meta) meta.setAttribute('content', ogUrl);
+                    const twitterImg = document.querySelector('meta[name="twitter:image"]');
+                    if (twitterImg) twitterImg.setAttribute('content', ogUrl);
                 }
                 const onboardingImageKeys = [
                     { imageKey: 'onboardingStep4', step: 3 },
@@ -4474,7 +4694,11 @@
             initOnboardingCarousel();
             loadHomeBlogStrip();
             loadLandingContentFromSite();
+            initMobileNav();
+            initCookieBanner();
+            document.addEventListener('click', handleNavHashLink);
             if (window.SkisterLegalRender) SkisterLegalRender.renderModals(currentLang);
+            applyDataI18n(currentLang);
         });
 
         function initHeroBackgroundVideos() {
@@ -4561,24 +4785,116 @@
         
         // Language Functions
         function applyDataI18n(lang) {
+            const dict = translations[lang] || translations.en || {};
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) {
-                    element.innerHTML = translations[lang][key];
+                if (dict[key]) {
+                    element.innerHTML = dict[key];
                 }
             });
             document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
                 const key = element.getAttribute('data-i18n-placeholder');
-                if (translations[lang] && translations[lang][key]) {
-                    element.placeholder = translations[lang][key];
+                if (dict[key]) {
+                    element.placeholder = dict[key];
                 }
             });
             document.querySelectorAll('[data-i18n-alt]').forEach(element => {
                 const key = element.getAttribute('data-i18n-alt');
-                if (translations[lang] && translations[lang][key]) {
-                    element.alt = translations[lang][key];
+                if (dict[key]) {
+                    element.alt = dict[key];
                 }
             });
+            document.querySelectorAll('[data-i18n-aria-label]').forEach(element => {
+                const key = element.getAttribute('data-i18n-aria-label');
+                if (dict[key]) {
+                    element.setAttribute('aria-label', dict[key]);
+                }
+            });
+            updateNavMenuToggleLabel();
+        }
+
+        function updateNavMenuToggleLabel() {
+            const toggle = document.getElementById('nav-menu-toggle');
+            if (!toggle) return;
+            const dict = translations[currentLang] || translations.en || {};
+            const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+            const key = isOpen ? 'nav.menuClose' : 'nav.menuOpen';
+            if (dict[key]) toggle.setAttribute('aria-label', dict[key]);
+        }
+
+        function setMobileNavOpen(isOpen) {
+            const links = document.getElementById('primary-nav-links');
+            const toggle = document.getElementById('nav-menu-toggle');
+            if (!links || !toggle) return;
+            links.classList.toggle('is-open', isOpen);
+            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            const icon = toggle.querySelector('i');
+            if (icon) {
+                icon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+            }
+            updateNavMenuToggleLabel();
+        }
+
+        function initMobileNav() {
+            const toggle = document.getElementById('nav-menu-toggle');
+            const links = document.getElementById('primary-nav-links');
+            if (!toggle || !links) return;
+            toggle.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const willOpen = toggle.getAttribute('aria-expanded') !== 'true';
+                setMobileNavOpen(willOpen);
+            });
+            document.addEventListener('click', function (event) {
+                if (!links.classList.contains('is-open')) return;
+                const nav = document.querySelector('nav');
+                if (nav && !nav.contains(event.target)) setMobileNavOpen(false);
+            });
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') setMobileNavOpen(false);
+            });
+            window.addEventListener('resize', function () {
+                if (window.matchMedia('(min-width: 769px)').matches) setMobileNavOpen(false);
+            });
+        }
+
+        function initCookieBanner() {
+            const banner = document.getElementById('cookie-banner');
+            const acceptBtn = document.getElementById('cookie-accept');
+            const essentialBtn = document.getElementById('cookie-essential');
+            if (!banner || !acceptBtn || !essentialBtn) return;
+            const STORAGE_KEY = 'skister-cookie-consent';
+            try {
+                if (localStorage.getItem(STORAGE_KEY)) return;
+            } catch (e) {}
+            banner.hidden = false;
+            function persist(value) {
+                try { localStorage.setItem(STORAGE_KEY, value); } catch (err) {}
+                banner.hidden = true;
+            }
+            acceptBtn.addEventListener('click', function () { persist('all'); });
+            essentialBtn.addEventListener('click', function () { persist('essential'); });
+        }
+
+        function handleNavHashLink(event) {
+            const anchor = event.target.closest('a[href^="#"]');
+            if (!anchor) return;
+            const href = anchor.getAttribute('href');
+            if (!href || href === '#') return;
+            const id = href.slice(1);
+            if (id === 'contact' || id === 'feedback') {
+                event.preventDefault();
+                openModal(id);
+                setMobileNavOpen(false);
+                return;
+            }
+            const target = document.getElementById(id);
+            if (!target) return;
+            event.preventDefault();
+            scrollToSection(id);
+            setMobileNavOpen(false);
+            if (history.replaceState) {
+                history.replaceState(null, '', href);
+            }
         }
 
         let onboardingStep = 0;
@@ -4723,16 +5039,22 @@
         
         function toggleLanguageDropdown() {
             const dropdown = document.getElementById('language-dropdown');
-            dropdown.classList.toggle('active');
+            const btn = document.getElementById('language-btn');
+            if (!dropdown) return;
+            const willOpen = !dropdown.classList.contains('active');
+            dropdown.classList.toggle('active', willOpen);
+            if (btn) btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
         }
         
         // Close dropdown when clicking outside
         document.addEventListener('click', function(event) {
             const selector = document.querySelector('.language-selector');
             const dropdown = document.getElementById('language-dropdown');
+            const btn = document.getElementById('language-btn');
             
-            if (selector && !selector.contains(event.target)) {
+            if (selector && dropdown && !selector.contains(event.target)) {
                 dropdown.classList.remove('active');
+                if (btn) btn.setAttribute('aria-expanded', 'false');
             }
         });
         

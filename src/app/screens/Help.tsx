@@ -100,24 +100,25 @@ function getHelpSections(): HelpSection[] {
       id: 'getting-started',
       title: 'Getting started',
       items: [
-        { title: 'How to add gear', description: 'Open My Gear, tap Add, and include photos + condition. Start with skis, boots and helmets — camping, hiking and other outdoor gear are supported too.' },
-        { title: 'How to invite people', description: 'Use the invite flow to add friends, family, ski clubs or local groups you trust.' }
+        { title: 'How to add gear', description: 'Open My Gear, tap Add, choose an activity (skiing first), then the matching equipment category — skis, boots, helmets, camping, hiking and more. Include photos, brand/model, condition and optional purchase year or replacement value.' },
+        { title: 'How to invite people', description: 'Use Invite Friends from Home Quick Access or Network to add friends, family, ski clubs or local groups you trust.' },
+        { title: 'Home screen', description: 'Four primary cards — Borrow Gear, Share My Gear, Return Equipment and Scan QR — plus Quick Access for Find Ski Gear, My Reservations, My Gear and Invite Friends.' },
       ]
     },
     {
       id: 'borrowing-gear',
       title: 'Borrowing ski gear',
       items: [
-        { title: 'How requests work', description: 'Request an item from someone in your private network and agree on pickup — not from strangers or a public listing.' },
-        { title: 'Pickup & return flow', description: 'Confirm handoff (QR if enabled) and confirm condition on return.' }
+        { title: 'How requests work', description: 'From Home, tap Borrow Gear (or Find Ski Gear) to request an item from someone in your private network and agree on pickup — not from strangers or a public listing.' },
+        { title: 'Pickup & return flow', description: 'Confirm handoff (QR if enabled) and confirm condition on return. Use Return Equipment or My Reservations on Home for reminders.' },
       ]
     },
     {
       id: 'qr-handoff',
       title: 'QR handoff',
       items: [
-        { title: 'Scan process', description: 'Scan the owner’s code to confirm who received the gear.' },
-        { title: 'What if scan fails', description: 'Do a manual confirmation and take a condition photo.' }
+        { title: 'Scan process', description: 'From Home, tap Scan QR — or open Scan on a rental — to confirm who received the gear.' },
+        { title: 'What if scan fails', description: 'Do a manual confirmation and take a condition photo.' },
       ]
     },
     {

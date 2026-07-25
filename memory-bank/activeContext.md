@@ -4,6 +4,32 @@
 
 - Do not use or mention Spokenly MCP; ask clarifying questions in plain chat.
 
+## Multi-activity Add Gear (Jul 26, 2026)
+
+Implemented in **Skisterapp** (+ Help/FAQ in Skister-main):
+
+- Two-step category selection in Add Gear wizard: **Activity → Equipment**
+- Activities (skiing first): Skiing, Snowboarding, Camping, Hiking, Climbing, Cycling, Fishing, Photography, Watersports, BBQ, Other Outdoor
+- Equipment lists load dynamically per activity; custom category supported (slugified)
+- Stored fields: activity, category, brand, model, condition, purchase year, replacement value, availability, notes (+ existing size/images)
+- Migration `20260726120000_gear_activity_categories.sql` applied to project `ayomhapkzckbhgwxenwr` (backward compatible; legacy categories kept)
+- Edge Function + client API updated; Explore `matchesActivity` prefers `gear.activity`
+- My Gear filters by activity; i18n EN/DE/FR/IT; Help + landing FAQ updated
+- Taxonomy: `src/app/lib/gear-taxonomy.ts`; wizard: `add-gear-wizard.tsx`
+- `tsc --noEmit` + Vite build clean; Edge redeployed
+
+## Home screen visual polish (Jul 26, 2026)
+
+Implemented in **Skisterapp** (`src/app/screens/Home.tsx`):
+
+- Four primary action cards redesigned with full-bleed background photos (`public/assets/home/{borrow,share,return,scan}.jpg`), dark + soft green gradients, rounded-2xl, white readable text, hover scale + press animations (`prefers-reduced-motion` respected)
+- Header now leads with product subtitle: “The easiest way to share ski gear with people you trust”
+- **Quick Access** section under the cards: Find Ski Gear (opens date/name finder), My Reservations (`/reminders` + unread badge), My Gear (`/my-gear`), Invite Friends (`/network?invite=1`)
+- Network opens invite sheet when `?invite=1` is present
+- EN/DE/FR/IT translations updated; onboarding ready copy mentions Home actions; Help (Skister-main `Help.tsx` + `help.html`) documents Home + Quick Access; help page includes home action imagery
+- Duplicate Reminders/Invite shortcut row removed (covered by Quick Access)
+- `tsc --noEmit` + Vite production build clean
+
 ## Snow Conditions dashboard (Jul 2026)
 
 Implemented in **Skisterapp** (`/tools/snow-conditions`):
@@ -275,14 +301,37 @@ Implemented in **Skisterapp** (dark theme retained; no business-logic changes):
 - Screens touched: Layout, Home, Explore, MyGear, Tools, TripPlanner, Inventory, Profile, Reminders, Network, Login, home-updates, tool cards, community disclaimer
 - Visual sign-off still recommended on dark mode Home / Explore / Tools / Profile
 
-## Next steps
+## Production readiness program (Jul 26, 2026)
 
-- Re-save / Publish Landing CMS so live API picks up Tools/Pricing/FAQ keys from `data/landing-content.json`
-- Visual sign-off on new Tools + Pricing snap sections (desktop + mobile)
-- Visual sign-off on Skisterapp UI polish (dark mode Home / Explore / Tools / Profile)
-- Review/merge `fix/production-polish` after visual sign-off.
-- Keep mobile app repo in sync if it duplicates contact addresses.
-- If CMS save does not create a GitHub Actions run, rotate/recheck `GITHUB_LANDING_DISPATCH_TOKEN` (needs `actions:write` on the landing repo).
+Completed a 10-phase production audit across **Skisterapp** (app + Edge) and **Skister-main** (marketing).
+
+### Critical fixes shipped
+- Runtime crash fixes: missing imports (`ResortUserCardView`, `doesDateRangeOverlap`, `resolveAvatarUrl`)
+- Security: referral RPC `auth.uid()` binding migration applied; cron auth + QR handoff fail-closed; `QR_HANDOFF_SECRET` + `CRON_SECRET` set; legacy admin password removed
+- Marketing: mobile nav + cookie banner + Twitter cards + sitemap legal pages + ski-first hero video
+- i18n Critical gaps closed (oauth hint, refresh, FR/IT referral/premium, Home/Profile/Layout/LanguageSelection)
+- Subscription Upgrade CTA no longer no-ops (“coming soon”)
+- `/inventory` redirects to `/explore` (legacy route)
+
+### Build verification
+- `tsc --noEmit`: clean
+- Vitest: 89/89 pass
+- Vite production build: success (main chunk ~940KB — still large; warning remains)
+- Android `assembleRelease`: success
+- iOS Release (unsigned): success
+- Edge Function redeployed to `ayomhapkzckbhgwxenwr`
+
+### Remaining High (not ship-blocking correctness, but must track)
+- Signup still uses `email_confirm: true` (no outbound email server) — mitigated by referral RPC binding
+- Paid IAP not wired (CTA disabled honestly)
+- No native push; notification prefs local-only
+- CMS / hardcoded FAQ / JSON-LD still three sources of truth
+- Main JS bundle still large (locale split recommended)
+- Chat table RLS not fully verifiable in migrations
+- No ESLint pipeline yet (`typecheck` script added)
+
+### Ops note
+- Configure scheduled cron with `Authorization: Bearer $CRON_SECRET` (secret set in Supabase; value was written once to a local temp file for scheduler setup — rotate if exposed).
 
 ## Skisterapp release automation memory
 
