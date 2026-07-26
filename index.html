@@ -13,21 +13,23 @@
         document.head.appendChild(s);
     })();
     </script>
-    <meta name="description" content="Skister is the easiest way to share ski equipment with trusted people. Private communities, invite friends, and modern tools for skiers — plus camping, hiking and adventure support beyond winter.">
-    <meta name="keywords" content="ski equipment sharing, share ski gear, trusted network, private communities, invite friends, ski clubs, camping hiking outdoor gear, ski tools, DIN calculator, packing checklist">
+    <meta name="description" content="Skister is the easiest way to share ski gear with people you trust. Private networks, QR handoff, Maintenance Center, Adventure Profile, smart reminders, and ski tools — plus camping, hiking and other outdoor equipment.">
+    <meta name="keywords" content="ski equipment sharing, share ski gear, trusted network, private communities, QR handoff, maintenance center, adventure profile, community reputation, referral rewards, ski tools, DIN calculator, packing checklist">
     <meta name="author" content="Skister">
     
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Skister — Share ski gear with people you trust">
-    <meta property="og:description" content="Share ski equipment with trusted people in private communities. Invite friends. Modern tools for skiers — adventure support beyond winter.">
+    <meta property="og:description" content="Private ski gear sharing with trusted people. QR handoff, Maintenance Center, Adventure Profile, reminders, and modern ski tools — outdoor equipment supported too.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://skister.app/">
     <meta property="og:image" id="meta-og-image" content="https://skister.app/assets/skister-app-icon.png">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="de_DE">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Skister — Share ski gear with people you trust">
-    <meta name="twitter:description" content="Share ski equipment with trusted people in private communities. Invite friends. Modern tools for skiers — adventure support beyond winter.">
+    <meta name="twitter:description" content="Private ski gear sharing with trusted people. QR handoff, Maintenance Center, Adventure Profile, reminders, and modern ski tools.">
     <meta name="twitter:image" content="https://skister.app/assets/skister-app-icon.png">
     
     <!-- Android/Mobile Meta Tags -->
@@ -35,10 +37,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#228B22">
-    <meta name="application-version" content="1.0.4">
+    <meta name="application-version" content="1.0.9">
     
     <link rel="canonical" href="https://skister.app/">
     <title>Skister — Share ski gear with people you trust</title>
+    <link rel="preload" as="image" href="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png" fetchpriority="high">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" href="/assets/favicon.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -71,33 +74,23 @@
       "applicationCategory": "LifestyleApplication",
       "operatingSystem": "iOS, Android",
       "url": "https://skister.app/",
-      "description": "Skister is the easiest way to share ski equipment with trusted people. Also supports camping, hiking and other outdoor equipment within private communities.",
-      "offers": [
-        {
-          "@type": "Offer",
-          "name": "Free",
-          "price": "0",
-          "priceCurrency": "EUR",
-          "description": "Unlimited ski and outdoor equipment sharing within your private trusted network."
-        },
-        {
-          "@type": "Offer",
-          "name": "Premium Monthly",
-          "price": "4.99",
-          "priceCurrency": "EUR"
-        },
-        {
-          "@type": "Offer",
-          "name": "Premium Annual",
-          "price": "39.99",
-          "priceCurrency": "EUR"
-        }
-      ],
+      "description": "Skister is the easiest way to share ski gear with people you trust. Private networks, QR handoff, Maintenance Center, Adventure Profile, and ski tools — also supports camping, hiking and other outdoor equipment.",
+      "offers": {
+        "@type": "Offer",
+        "name": "Free",
+        "price": "0",
+        "priceCurrency": "EUR",
+        "description": "Unlimited ski and outdoor equipment sharing within your private trusted network."
+      },
       "featureList": [
-        "Share ski gear with people you trust",
-        "Private communities and invite-only networks",
+        "Private ski gear sharing with trusted people",
+        "Invite-only Trusted Network",
+        "QR handoff for pickup and return",
+        "Maintenance Center with health tracking, history, warranty and receipt storage",
+        "Adventure Profile, Community Reputation and referral rewards",
+        "Smart reminders and offline support",
         "Camping, hiking and other outdoor equipment",
-        "Modern tools for skiers: DIN, ski length, boot size, packing, snow conditions, trip planner"
+        "Ski tools: DIN, ski length, boot size, packing, trip planner, emergency info"
       ]
     }
     </script>
@@ -213,6 +206,7 @@
 
         @media (prefers-reduced-motion: reduce) {
             html {
+                scroll-behavior: auto;
                 scroll-snap-type: y proximity;
             }
             .hero-mascot-wrap {
@@ -383,6 +377,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 1.25rem 1.75rem;
             padding-top: 1.05rem;
             padding-bottom: 1.05rem;
             min-height: 0;
@@ -412,16 +407,20 @@
         
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.75rem;
             align-items: center;
             margin-left: auto;
+            margin-right: 0.35rem;
+            padding-right: 0.35rem;
         }
 
         .nav-trailing {
             display: flex;
             align-items: center;
-            gap: 0.65rem;
+            gap: 1rem;
             flex-shrink: 0;
+            margin-left: 1rem;
+            padding-left: 0.5rem;
         }
         
         .nav-links a {
@@ -558,12 +557,13 @@
             background: rgba(34, 139, 34, 0.2);
             border: 1px solid var(--primary-green);
             color: var(--text-white);
-            padding: 0.5rem 1rem;
+            padding: 0.55rem 1.1rem;
             border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.55rem;
+            min-height: 2.5rem;
             transition: all 0.3s;
         }
         
@@ -617,12 +617,16 @@
             background: rgba(34, 139, 34, 0.18);
         }
         
-        /* Full-viewport snap sections — one screen per scroll stop (web + mobile) */
+        /*
+         * One viewport per section. Use mandatory snap + full-height sections so
+         * the next block never peeks. Do NOT use scroll-snap-stop:always — that
+         * trapped scroll on FAQ and blocked the footer. Footer snaps with align:end.
+         */
         .snap-section {
             scroll-snap-align: start;
-            scroll-snap-stop: always;
             min-height: calc(100vh - var(--nav-offset));
             min-height: calc(100dvh - var(--nav-offset));
+            min-height: calc(100svh - var(--nav-offset));
             box-sizing: border-box;
         }
 
@@ -753,8 +757,11 @@
         .hero-mascot {
             width: 10.5rem;
             height: 10.5rem;
-            object-fit: contain;
+            object-fit: cover;
+            object-position: center;
             display: block;
+            border-radius: 50%;
+            background: transparent;
         }
         .hero-content {
             margin-bottom: 2rem;
@@ -1086,7 +1093,7 @@
             inset: 0;
             background:
                 linear-gradient(180deg, rgba(7, 9, 8, 0.82) 0%, rgba(7, 9, 8, 0.88) 55%, rgba(7, 9, 8, 0.94) 100%),
-                url('assets/images/tools/tools-hero.jpg') center / cover no-repeat;
+                url('assets/images/tools/tools-hero.webp'), url('assets/images/tools/tools-hero.jpg') center / cover no-repeat;
             opacity: 1;
             pointer-events: none;
             z-index: 0;
@@ -1132,6 +1139,11 @@
         .tool-card:hover .tool-card-image {
             transform: scale(1.05);
         }
+        .tool-card > picture {
+            position: absolute;
+            inset: 0;
+            display: block;
+        }
         .tool-card-image {
             position: absolute;
             inset: 0;
@@ -1175,15 +1187,6 @@
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             font-size: 0.95rem;
-        }
-        .tool-card-arrow {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-            transition: transform 0.2s ease, color 0.2s ease;
-        }
-        .tool-card:hover .tool-card-arrow {
-            color: #fff;
-            transform: translateX(2px);
         }
         .tool-card h3 {
             font-size: 1.05rem;
@@ -1239,7 +1242,7 @@
         }
         .home-actions-grid {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: var(--card-gap);
             max-width: 56rem;
             margin: 0 auto;
@@ -1259,6 +1262,11 @@
         .home-action-card:hover {
             transform: translateY(-3px);
             box-shadow: var(--shadow-card-hover);
+        }
+        .home-action-card picture {
+            position: absolute;
+            inset: 0;
+            display: block;
         }
         .home-action-card img {
             position: absolute;
@@ -2318,6 +2326,7 @@
             margin-top: 0;
             position: relative;
             z-index: 2;
+            scroll-snap-align: end;
         }
         
         .footer-top {
@@ -2556,7 +2565,6 @@
 
             .snap-section {
                 scroll-snap-align: start;
-                scroll-snap-stop: always;
                 min-height: calc(100vh - var(--nav-offset));
                 min-height: calc(100dvh - var(--nav-offset));
                 min-height: calc(100svh - var(--nav-offset));
@@ -3017,7 +3025,6 @@
                 <a href="#features" data-i18n="nav.features">Features</a>
                 <a href="#tools" data-i18n="nav.tools">Tools</a>
                 <a href="#roadmap" data-i18n="nav.roadmap">Roadmap</a>
-                <a href="#pricing" data-i18n="nav.pricing">Preise</a>
                 <a href="#download" data-i18n="nav.download">Download</a>
                 <a href="#faq" data-i18n="nav.faq">FAQ</a>
                 <a href="/blog/" data-i18n="nav.blog">Blog</a>
@@ -3081,7 +3088,16 @@
         <div class="content-container">
             <div class="hero-inner">
                 <div class="hero-mascot-wrap" aria-hidden="true">
-                    <img id="hero-mascot" src="assets/skister-app-icon.png" alt="" class="hero-mascot">
+                    <img
+                        id="hero-mascot"
+                        src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png"
+                        alt=""
+                        class="hero-mascot"
+                        width="512"
+                        height="512"
+                        decoding="async"
+                        fetchpriority="high"
+                    >
                 </div>
                 <div class="hero-content">
                     <h1 id="hero-heading" data-i18n="hero.title">Skiausrüstung teilen war noch nie so einfach.</h1>
@@ -3233,47 +3249,42 @@
         </div>
         <div class="content-container features-inner">
             <h2 class="section-title" id="features-heading" data-i18n="features.title">Alles was du brauchst</h2>
-            <p class="features-subtitle" data-i18n="features.subtitle">Alles, was du brauchst, um privates Teilen von Ski-Ausrüstung zu organisieren — ohne Tabellen, Chatgruppen oder Marktplätze.</p>
+            <p class="features-subtitle" data-i18n="features.subtitle">Privates Ski-Teilen mit Menschen, denen du vertraust — plus Wartung, Profil, QR-Übergabe und Tools. Ohne Marktplätze.</p>
             <div class="features-grid">
                 <article class="feature-card">
                     <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-person-skiing"></i></div>
-                    <h3 data-i18n="features.share.title">Ausrüstung teilen</h3>
-                    <p data-i18n="features.share.description">Liste deine Ski-Ausrüstung auf und mache sie deinem vertrauenswürdigen Netzwerk verfügbar.</p>
+                    <h3 data-i18n="features.share.title">Privates Gear-Sharing</h3>
+                    <p data-i18n="features.share.description">Ski zuerst: verwalte Ausrüstung in My Gear, dann Camping, Wandern und anderes Outdoor — mit Fotos, Größe und Verfügbarkeit.</p>
                 </article>
                 <article class="feature-card">
                     <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-users"></i></div>
-                    <h3 data-i18n="features.family.title">Familienfreundlich</h3>
-                    <p data-i18n="features.family.description">Nur auf Einladung. Teile nur mit Personen, denen du vertraust - Familie, Freunde und Nachbarn.</p>
+                    <h3 data-i18n="features.family.title">Trusted Network</h3>
+                    <p data-i18n="features.family.description">Nur auf Einladung. Teile nur mit Personen, denen du vertraust — Familie, Freunde, Vereine und lokale Gruppen.</p>
                 </article>
                 <article class="feature-card">
-                    <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-calendar-days"></i></div>
-                    <h3 data-i18n="features.free.title">Teilen bleibt kostenlos</h3>
-                    <p data-i18n="features.free.description">Unbegrenztes Teilen in deinem Netzwerk. Premium ist optional für Automatisierung und Einblicke.</p>
+                    <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-wifi"></i></div>
+                    <h3 data-i18n="features.free.title">Offline-fähig</h3>
+                    <p data-i18n="features.free.description">Kernfunktionen und Tools bleiben nutzbar, wenn die Verbindung schwächelt. Teilen im Netzwerk bleibt kostenlos.</p>
                 </article>
                 <article class="feature-card">
                     <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-bell"></i></div>
                     <h3 data-i18n="features.reminders.title">Intelligente Erinnerungen</h3>
-                    <p data-i18n="features.reminders.description">Erhalte Erinnerungen für Abhol- und Rückgabetermine. Verpasse nie einen wichtigen Termin.</p>
+                    <p data-i18n="features.reminders.description">Abhol-, Rückgabe- und Pflegeerinnerungen helfen deinem privaten Kreis — Premium automatisiert noch mehr.</p>
                 </article>
                 <article class="feature-card">
-                    <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-clipboard-list"></i></div>
-                    <h3 data-i18n="features.private.title">Sicher & Privat</h3>
-                    <p data-i18n="features.private.description">Deine Daten bleiben privat. Nur Mitglieder deines Netzwerks können deine Ausrüstung sehen.</p>
+                    <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-wrench"></i></div>
+                    <h3 data-i18n="features.private.title">Maintenance Center</h3>
+                    <p data-i18n="features.private.description">Gerätezustand, Wartungshistorie, smarte Pflege-Erinnerungen sowie Garantie- und Belegablage — pro Ausrüstungsstück.</p>
                 </article>
                 <article class="feature-card">
-                    <div class="feature-icon-wrap feature-icon-wrap--stacked" aria-hidden="true">
-                        <span class="fa-stack fa-lg">
-                            <i class="fa-solid fa-money-bill-1 fa-stack-1x"></i>
-                            <i class="fa-solid fa-ban fa-stack-2x" style="color: var(--primary-green-light); opacity: 0.95;"></i>
-                        </span>
-                    </div>
-                    <h3 data-i18n="features.local.title">Nur lokal</h3>
-                    <p data-i18n="features.local.description">Koordiniere lokale Abholungen. Kein Versand, keine Komplikationen.</p>
+                    <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-qrcode"></i></div>
+                    <h3 data-i18n="features.local.title">QR-Übergabe</h3>
+                    <p data-i18n="features.local.description">Übergabe und Rückgabe per QR bestätigen — lokal, klar und ohne Versandchaos.</p>
                 </article>
                 <article class="feature-card">
-                    <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-mountain"></i></div>
-                    <h3 data-i18n="features.resorts.title">Dein Ski-Netzwerk</h3>
-                    <p data-i18n="features.resorts.description">Verankere deinen privaten Kreis an einem Skigebiet, Verein oder einer lokalen Gruppe — teile Ausrüstung mit Menschen, die du einlädst.</p>
+                    <div class="feature-icon-wrap" aria-hidden="true"><i class="fa-solid fa-id-card"></i></div>
+                    <h3 data-i18n="features.resorts.title">Adventure Profile</h3>
+                    <p data-i18n="features.resorts.description">Dein Outdoor-Profil mit Community Reputation und Referral-Belohnungen — Vertrauen vor dem Teilen, kein Social Feed.</p>
                 </article>
             </div>
         </div>
@@ -3284,23 +3295,49 @@
     <section class="home-actions-section snap-section" id="home-actions" aria-labelledby="home-actions-heading">
         <div class="content-container home-actions-inner">
             <h2 class="section-title" id="home-actions-heading" data-i18n="homeActions.title">Dein Home in der App</h2>
-            <p class="home-actions-subtitle" data-i18n="homeActions.subtitle">Vier klare Aktionen — Ausrüstung leihen, teilen, zurückgeben oder per QR übergeben.</p>
+            <p class="home-actions-subtitle" data-i18n="homeActions.subtitle">Home-Aktionen, Explore und My Gear — inkl. QR-Übergabe und Wartung.</p>
             <div class="home-actions-grid">
                 <article class="home-action-card">
-                    <img src="assets/images/home/borrow.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+                    <picture>
+                        <source srcset="assets/images/home/borrow.webp" type="image/webp">
+                        <img src="assets/images/home/borrow.jpg" alt="Borrow gear on Home" width="400" height="300" loading="lazy" decoding="async">
+                    </picture>
                     <span data-i18n="homeActions.borrow">Ausrüstung leihen</span>
                 </article>
                 <article class="home-action-card">
-                    <img src="assets/images/home/share.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+                    <picture>
+                        <source srcset="assets/images/home/share.webp" type="image/webp">
+                        <img src="assets/images/home/share.jpg" alt="Share gear on Home" width="400" height="300" loading="lazy" decoding="async">
+                    </picture>
                     <span data-i18n="homeActions.share">Ausrüstung teilen</span>
                 </article>
                 <article class="home-action-card">
-                    <img src="assets/images/home/return.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+                    <picture>
+                        <source srcset="assets/images/home/return.webp" type="image/webp">
+                        <img src="assets/images/home/return.jpg" alt="Return equipment on Home" width="400" height="300" loading="lazy" decoding="async">
+                    </picture>
                     <span data-i18n="homeActions.return">Zurückgeben</span>
                 </article>
                 <article class="home-action-card">
-                    <img src="assets/images/home/scan.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+                    <picture>
+                        <source srcset="assets/images/home/scan.webp" type="image/webp">
+                        <img src="assets/images/home/scan.jpg" alt="Scan QR handoff on Home" width="400" height="300" loading="lazy" decoding="async">
+                    </picture>
                     <span data-i18n="homeActions.scan">QR scannen</span>
+                </article>
+                <article class="home-action-card">
+                    <picture>
+                        <source srcset="assets/images/home/explore-hero.webp" type="image/webp">
+                        <img src="assets/images/home/explore-hero.jpg" alt="Explore ski gear in your trusted network" width="400" height="300" loading="lazy" decoding="async">
+                    </picture>
+                    <span data-i18n="homeActions.explore">Explore</span>
+                </article>
+                <article class="home-action-card">
+                    <picture>
+                        <source srcset="assets/images/home/my-gear-hero.webp" type="image/webp">
+                        <img src="assets/images/home/my-gear-hero.jpg" alt="My Gear and Maintenance Center" width="400" height="300" loading="lazy" decoding="async">
+                    </picture>
+                    <span data-i18n="homeActions.myGear">My Gear</span>
                 </article>
             </div>
         </div>
@@ -3313,104 +3350,96 @@
             <p class="tools-subtitle" data-i18n="tools.subtitle">Winter, Planung, Ausrüstung und Sicherheit — in der App, genau wenn du sie brauchst.</p>
             <div class="tools-grid">
                 <article class="tool-card">
-                    <img class="tool-card-image" src="assets/images/tools/din.jpg" alt="" width="800" height="533" loading="lazy" decoding="async">
+                    <picture><source srcset="assets/images/tools/din.webp" type="image/webp"><img class="tool-card-image" src="assets/images/tools/din.jpg" alt="din" width="800" height="533" loading="lazy" decoding="async"></picture>
                     <div class="tool-card-overlay" aria-hidden="true"></div>
                     <div class="tool-card-body">
                         <div class="tool-card-top">
                             <span class="tool-card-icon" aria-hidden="true"><i class="fa-solid fa-calculator"></i></span>
-                            <i class="fa-solid fa-arrow-right tool-card-arrow" aria-hidden="true"></i>
-                        </div>
+</div>
                         <h3 data-i18n="tools.din.title">Ski-DIN-Rechner</h3>
                         <p data-i18n="tools.din.description">Empfohlene DIN-Werte aus Größe, Gewicht, Sohlenlänge und Level.</p>
                         <span class="tool-cat" data-i18n="tools.cat.winter">Winter-Tools</span>
                     </div>
                 </article>
                 <article class="tool-card">
-                    <img class="tool-card-image" src="assets/images/tools/ski-length.jpg" alt="" width="800" height="534" loading="lazy" decoding="async">
+                    <picture><source srcset="assets/images/tools/ski-length.webp" type="image/webp"><img class="tool-card-image" src="assets/images/tools/ski-length.jpg" alt="ski length" width="800" height="534" loading="lazy" decoding="async"></picture>
                     <div class="tool-card-overlay" aria-hidden="true"></div>
                     <div class="tool-card-body">
                         <div class="tool-card-top">
                             <span class="tool-card-icon" aria-hidden="true"><i class="fa-solid fa-ruler"></i></span>
-                            <i class="fa-solid fa-arrow-right tool-card-arrow" aria-hidden="true"></i>
-                        </div>
+</div>
                         <h3 data-i18n="tools.skiLength.title">Skilängen-Finder</h3>
                         <p data-i18n="tools.skiLength.description">Skilänge nach Größe, Können und Fahrstil empfehlen.</p>
                         <span class="tool-cat" data-i18n="tools.cat.winter">Winter-Tools</span>
                     </div>
                 </article>
                 <article class="tool-card">
-                    <img class="tool-card-image" src="assets/images/tools/boot-size.jpg" alt="" width="800" height="533" loading="lazy" decoding="async">
+                    <picture><source srcset="assets/images/tools/boot-size.webp" type="image/webp"><img class="tool-card-image" src="assets/images/tools/boot-size.jpg" alt="boot size" width="800" height="533" loading="lazy" decoding="async"></picture>
                     <div class="tool-card-overlay" aria-hidden="true"></div>
                     <div class="tool-card-body">
                         <div class="tool-card-top">
                             <span class="tool-card-icon" aria-hidden="true"><i class="fa-solid fa-arrows-left-right"></i></span>
-                            <i class="fa-solid fa-arrow-right tool-card-arrow" aria-hidden="true"></i>
-                        </div>
+</div>
                         <h3 data-i18n="tools.bootSize.title">Schuhgrößen-Umrechner</h3>
                         <p data-i18n="tools.bootSize.description">Mondopoint, EU, UK und US Skischuhgrößen umrechnen.</p>
                         <span class="tool-cat" data-i18n="tools.cat.winter">Winter-Tools</span>
                     </div>
                 </article>
                 <article class="tool-card">
-                    <img class="tool-card-image" src="assets/images/tools/snow.jpg" alt="" width="800" height="530" loading="lazy" decoding="async">
+                    <picture><source srcset="assets/images/tools/snow.webp" type="image/webp"><img class="tool-card-image" src="assets/images/tools/snow.jpg" alt="snow" width="800" height="530" loading="lazy" decoding="async"></picture>
                     <div class="tool-card-overlay" aria-hidden="true"></div>
                     <div class="tool-card-body">
                         <div class="tool-card-top">
                             <span class="tool-card-icon" aria-hidden="true"><i class="fa-solid fa-snowflake"></i></span>
-                            <i class="fa-solid fa-arrow-right tool-card-arrow" aria-hidden="true"></i>
-                        </div>
+</div>
                         <h3 data-i18n="tools.snow.title">Schneelage</h3>
                         <p data-i18n="tools.snow.description">Vorschau — Live-Resortbedingungen folgen in einer späteren Version.</p>
                         <span class="tool-cat" data-i18n="tools.cat.winter">Winter-Tools</span>
                     </div>
                 </article>
                 <article class="tool-card">
-                    <img class="tool-card-image" src="assets/images/tools/trip.jpg" alt="" width="800" height="533" loading="lazy" decoding="async">
+                    <picture><source srcset="assets/images/tools/trip.webp" type="image/webp"><img class="tool-card-image" src="assets/images/tools/trip.jpg" alt="trip" width="800" height="533" loading="lazy" decoding="async"></picture>
                     <div class="tool-card-overlay" aria-hidden="true"></div>
                     <div class="tool-card-body">
                         <div class="tool-card-top">
                             <span class="tool-card-icon" aria-hidden="true"><i class="fa-solid fa-mountain"></i></span>
-                            <i class="fa-solid fa-arrow-right tool-card-arrow" aria-hidden="true"></i>
-                        </div>
+</div>
                         <h3 data-i18n="tools.tripPlanner.title">Trip Planner</h3>
                         <p data-i18n="tools.tripPlanner.description">Plane Touren, Packlisten und Ausrüstung aus deinem Netzwerk.</p>
                         <span class="tool-cat" data-i18n="tools.cat.planning">Planung</span>
                     </div>
                 </article>
                 <article class="tool-card">
-                    <img class="tool-card-image" src="assets/images/tools/packing.jpg" alt="" width="800" height="533" loading="lazy" decoding="async">
+                    <picture><source srcset="assets/images/tools/packing.webp" type="image/webp"><img class="tool-card-image" src="assets/images/tools/packing.jpg" alt="packing" width="800" height="533" loading="lazy" decoding="async"></picture>
                     <div class="tool-card-overlay" aria-hidden="true"></div>
                     <div class="tool-card-body">
                         <div class="tool-card-top">
                             <span class="tool-card-icon" aria-hidden="true"><i class="fa-solid fa-clipboard-list"></i></span>
-                            <i class="fa-solid fa-arrow-right tool-card-arrow" aria-hidden="true"></i>
-                        </div>
+</div>
                         <h3 data-i18n="tools.packing.title">Packliste</h3>
                         <p data-i18n="tools.packing.description">Packlisten für Ski, Snowboard, Camping und Wandern — offline.</p>
                         <span class="tool-cat" data-i18n="tools.cat.planning">Planung</span>
                     </div>
                 </article>
                 <article class="tool-card">
-                    <img class="tool-card-image" src="assets/images/tools/maintenance.jpg" alt="" width="800" height="533" loading="lazy" decoding="async">
+                    <picture><source srcset="assets/images/tools/maintenance.webp" type="image/webp"><img class="tool-card-image" src="assets/images/tools/maintenance.jpg" alt="maintenance" width="800" height="533" loading="lazy" decoding="async"></picture>
                     <div class="tool-card-overlay" aria-hidden="true"></div>
                     <div class="tool-card-body">
                         <div class="tool-card-top">
                             <span class="tool-card-icon" aria-hidden="true"><i class="fa-solid fa-wrench"></i></span>
-                            <i class="fa-solid fa-arrow-right tool-card-arrow" aria-hidden="true"></i>
-                        </div>
+</div>
                         <h3 data-i18n="tools.maintenance.title">Gear-Pflege</h3>
                         <p data-i18n="tools.maintenance.description">Wartungserinnerungen für Ski, Jacken und Outdoor-Ausrüstung.</p>
                         <span class="tool-cat" data-i18n="tools.cat.equipment">Ausrüstung</span>
                     </div>
                 </article>
                 <article class="tool-card">
-                    <img class="tool-card-image" src="assets/images/tools/emergency.jpg" alt="" width="800" height="533" loading="lazy" decoding="async">
+                    <picture><source srcset="assets/images/tools/emergency.webp" type="image/webp"><img class="tool-card-image" src="assets/images/tools/emergency.jpg" alt="emergency" width="800" height="533" loading="lazy" decoding="async"></picture>
                     <div class="tool-card-overlay" aria-hidden="true"></div>
                     <div class="tool-card-body">
                         <div class="tool-card-top">
                             <span class="tool-card-icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
-                            <i class="fa-solid fa-arrow-right tool-card-arrow" aria-hidden="true"></i>
-                        </div>
+</div>
                         <h3 data-i18n="tools.emergency.title">Notfall-Informationen</h3>
                         <p data-i18n="tools.emergency.description">Verifizierte Berg-Notrufnummern, Erste Hilfe und Offline-Zugriff.</p>
                         <span class="tool-cat" data-i18n="tools.cat.safety">Sicherheit</span>
@@ -3428,7 +3457,7 @@
             <ul class="roadmap-list">
                 <li class="roadmap-item">
                     <div class="roadmap-item-media" aria-hidden="true">
-                        <img src="assets/images/tools/snow.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+                        <picture><source srcset="assets/images/tools/snow.webp" type="image/webp"><img src="assets/images/tools/snow.jpg" alt="Snow conditions preview" width="400" height="300" loading="lazy" decoding="async"></picture>
                     </div>
                     <div class="roadmap-item-body">
                         <span class="roadmap-badge roadmap-badge--preview" data-i18n="roadmap.snow.badge">Vorschau</span>
@@ -3438,7 +3467,7 @@
                 </li>
                 <li class="roadmap-item">
                     <div class="roadmap-item-media" aria-hidden="true">
-                        <img src="assets/images/tools/weather.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+                        <picture><source srcset="assets/images/tools/weather.webp" type="image/webp"><img src="assets/images/tools/weather.jpg" alt="Resort weather roadmap" width="400" height="300" loading="lazy" decoding="async"></picture>
                     </div>
                     <div class="roadmap-item-body">
                         <span class="roadmap-badge" data-i18n="roadmap.weather.badge">Geplant</span>
@@ -3448,7 +3477,7 @@
                 </li>
                 <li class="roadmap-item">
                     <div class="roadmap-item-media" aria-hidden="true">
-                        <img src="assets/images/tools/emergency.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+                        <picture><source srcset="assets/images/tools/emergency.webp" type="image/webp"><img src="assets/images/tools/emergency.jpg" alt="Emergency information" width="400" height="300" loading="lazy" decoding="async"></picture>
                     </div>
                     <div class="roadmap-item-body">
                         <span class="roadmap-badge roadmap-badge--live" data-i18n="roadmap.emergency.badge">Verfügbar</span>
@@ -3457,53 +3486,6 @@
                     </div>
                 </li>
             </ul>
-        </div>
-    </section>
-
-    <!-- Pricing / Premium -->
-    <section class="pricing-section snap-section" id="pricing" aria-labelledby="pricing-heading">
-        <div class="content-container pricing-inner">
-            <h2 class="section-title" id="pricing-heading" data-i18n="pricing.title">Preise</h2>
-            <p class="pricing-subtitle" data-i18n="pricing.subtitle">Teilen ist kostenlos und ohne Limits. Premium ergänzt Automatisierung, Organisation und Einblicke.</p>
-            <div class="pricing-grid">
-                <article class="pricing-card">
-                    <h3 data-i18n="pricing.free.title">Free</h3>
-                    <p class="pricing-price" data-i18n="pricing.free.price">€0</p>
-                    <p class="pricing-desc" data-i18n="pricing.free.desc">Voll nutzbares Teilen in deinem privaten Netzwerk — ohne Limits.</p>
-                    <ul class="pricing-list">
-                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.free.f1">Unbegrenzte Ausrüstung</span></li>
-                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.free.f2">Freunde & Familie einladen</span></li>
-                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.free.f3">Reservierungen & Kalender</span></li>
-                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.free.f4">QR-Übergabe & Fotos</span></li>
-                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.free.f5">Ski-Netzwerk & Tools</span></li>
-                    </ul>
-                </article>
-                <article class="pricing-card pricing-card--featured">
-                    <span class="pricing-card-badge" data-i18n="pricing.premium.badge">Premium</span>
-                    <h3 data-i18n="pricing.premium.title">Premium</h3>
-                    <p class="pricing-price"><span data-i18n="pricing.premium.price">€4.99</span> <span data-i18n="pricing.premium.period">/ Monat</span></p>
-                    <p class="pricing-desc" data-i18n="pricing.premium.desc">Automatisierung, Pflege, Einblicke und smartes Netzwerk.</p>
-                    <ul class="pricing-list">
-                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.premium.f1">Automatische Abhol- & Rückgabe-Erinnerungen</span></li>
-                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.premium.f2">Wartungslog & saisonale Pflege</span></li>
-                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.premium.f3">Nutzungsanalysen & Verleihstatistik</span></li>
-                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.premium.f4">Netzwerk-Lücken & Größen-Hinweise</span></li>
-                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.premium.f5">Jährlich €39.99 — spare gegenüber Monatlich</span></li>
-                    </ul>
-                </article>
-                <article class="pricing-card">
-                    <h3 data-i18n="pricing.founder.title">Founder Lifetime</h3>
-                    <p class="pricing-price" data-i18n="pricing.founder.price">€89.99</p>
-                    <p class="pricing-desc" data-i18n="pricing.founder.desc">Einmalzahlung. Premium für immer — limitiertes Launch-Angebot.</p>
-                    <ul class="pricing-list">
-                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.founder.f1">Alle Premium-Vorteile für immer</span></li>
-                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.founder.f2">Exklusives Founder-Abzeichen</span></li>
-                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.founder.f3">Early-Access-Vorteile</span></li>
-                        <li><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="pricing.founder.f4">Teilen bleibt für alle kostenlos</span></li>
-                    </ul>
-                </article>
-            </div>
-            <p class="pricing-note" data-i18n="pricing.note">Premium stellt Teilen nie hinter eine Paywall. Der Wert von Skister entsteht durch dein vertrauenswürdiges Netzwerk — Premium macht Organisation und Einblicke einfacher.</p>
         </div>
     </section>
 
@@ -3576,7 +3558,7 @@
         </div>
         <div class="content-container download-inner">
             <h2 class="section-title" id="download-heading" data-i18n="download.title">Get Skister</h2>
-            <p class="download-subtitle" data-i18n="download.subtitle">iOS and Android — launching soon. Pick your platform; store links will appear here.</p>
+            <p class="download-subtitle" data-i18n="download.subtitle">iOS and Android — store submission is next. Tap a badge to preview; live links appear after release.</p>
             <div class="store-badges" role="group" aria-label="App stores">
                 <div class="store-badge-item">
                     <button type="button" class="store-badge-flip" onclick="toggleStoreBadge(this)" aria-label="App Store — coming soon" data-store="ios">
@@ -3642,7 +3624,7 @@
             </div>
             <div class="faq-answer">
                 <div class="faq-answer-content" data-i18n="faq.a2">
-                    Kern-Sharing ist kostenlos: unbegrenztes Inventar, Einladungen, Kalender, Reservierungen und Ausleihen. Premium ergänzt automatische Erinnerungen, Übergabe-Checkliste, Wartungslog, saisonale Erinnerungen, Historie, Nutzungsanalysen und Netzwerk-Engpässe.
+                    Kern-Sharing ist kostenlos: unbegrenztes Inventar, Einladungen, Kalender, Reservierungen, QR-Übergabe und Ausleihen. Premium ergänzt automatische Erinnerungen, Übergabe-Checkliste, Maintenance Center (Zustand, Historie, Garantie/Belege), saisonale Erinnerungen, Nutzungsanalysen und Netzwerk-Engpässe.
                 </div>
             </div>
         </div>
@@ -3733,7 +3715,6 @@
                     <a href="#how-it-works" data-i18n="footer.howItWorks">So funktioniert's</a>
                     <a href="#tools" data-i18n="footer.tools">Tools</a>
                     <a href="#roadmap" data-i18n="footer.roadmap">Roadmap</a>
-                    <a href="#pricing" data-i18n="footer.pricing">Preise</a>
                     <a href="#faq" data-i18n="footer.faq">FAQ</a>
                     <a href="#download" data-i18n="footer.download">Download</a>
                     <a href="/blog/" data-i18n="nav.blog">Blog</a>
@@ -3882,21 +3863,21 @@
                 'onboarding.step7.feature2': 'Vereine, Events & lokale Gruppen',
                 'onboarding.step7.feature3': 'Skigebiet-Infos & Blog-Guides',
                 'features.title': 'Alles was du brauchst',
-                'features.subtitle': 'Alles, was du brauchst, um privates Teilen von Ski-Ausrüstung zu organisieren — ohne Tabellen, Chatgruppen oder Marktplätze.',
-                'features.share.title': 'Ausrüstung teilen',
-                'features.share.description': 'Wähle zuerst die Aktivität (Skifahren zuerst), dann die Ausrüstungskategorie — inklusive Fotos, Marke, Modell, Größen und Notizen.',
-                'features.family.title': 'Privat statt Marktplatz',
-                'features.family.description': 'Nur auf Einladung. Teile Skiausrüstung nur mit Personen, denen du vertraust — Familie, Freunde und Vereine.',
-                'features.free.title': 'Teilen bleibt kostenlos',
-                'features.free.description': 'Unbegrenztes Teilen in deinem Netzwerk. Premium ist optional für Automatisierung und Einblicke.',
+                'features.subtitle': 'Privates Ski-Teilen mit Menschen, denen du vertraust — plus Wartung, Profil, QR-Übergabe und Tools. Ohne Marktplätze.',
+                'features.share.title': 'Privates Gear-Sharing',
+                'features.share.description': 'Ski zuerst: verwalte Ausrüstung in My Gear, dann Camping, Wandern und anderes Outdoor — mit Fotos, Größe und Verfügbarkeit.',
+                'features.family.title': 'Trusted Network',
+                'features.family.description': 'Nur auf Einladung. Teile nur mit Personen, denen du vertraust — Familie, Freunde, Vereine und lokale Gruppen.',
+                'features.free.title': 'Offline-fähig',
+                'features.free.description': 'Kernfunktionen und Tools bleiben nutzbar, wenn die Verbindung schwächelt. Teilen im Netzwerk bleibt kostenlos.',
                 'features.reminders.title': 'Intelligente Erinnerungen',
-                'features.reminders.description': 'Abhol- und Rückgabeerinnerungen helfen deinem privaten Kreis — Premium automatisiert noch mehr.',
-                'features.private.title': 'Sicher & Privat',
-                'features.private.description': 'Deine Daten bleiben privat. Nur Mitglieder deines Netzwerks können deine Ausrüstung sehen.',
-                'features.local.title': 'Nur lokal',
-                'features.local.description': 'Koordiniere lokale Abholungen. Kein Versand, keine Komplikationen.',
-                'features.resorts.title': 'Dein Ski-Netzwerk',
-                'features.resorts.description': 'Verankere deinen privaten Kreis an einem Skigebiet, Verein oder einer lokalen Gruppe — teile Ausrüstung mit Menschen, die du einlädst.',
+                'features.reminders.description': 'Abhol-, Rückgabe- und Pflegeerinnerungen helfen deinem privaten Kreis — Premium automatisiert noch mehr.',
+                'features.private.title': 'Maintenance Center',
+                'features.private.description': 'Gerätezustand, Wartungshistorie, smarte Pflege-Erinnerungen sowie Garantie- und Belegablage — pro Ausrüstungsstück.',
+                'features.local.title': 'QR-Übergabe',
+                'features.local.description': 'Übergabe und Rückgabe per QR bestätigen — lokal, klar und ohne Versandchaos.',
+                'features.resorts.title': 'Adventure Profile',
+                'features.resorts.description': 'Dein Outdoor-Profil mit Community Reputation und Referral-Belohnungen — Vertrauen vor dem Teilen, kein Social Feed.',
                 'platform.title': 'Bald verfügbar auf',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -3904,7 +3885,7 @@
                 'home.blog.subtitle': 'Tipps zur Ausrüstung, Updates und Geschichten vom Skister-Team.',
                 'home.blog.viewAll': 'Alle Beiträge lesen',
                 'download.title': 'Skister holen',
-                'download.subtitle': 'iOS und Android — bald startklar. Wähle deine Plattform; die Store-Links folgen in Kürze.',
+                'download.subtitle': 'iOS und Android — Store-Freigabe steht bevor. Tippe auf ein Badge für die Vorschau; Live-Links folgen nach der Veröffentlichung.',
                 'download.apple.line1': 'Laden im',
                 'download.apple.line2': 'App Store',
                 'download.android.line1': 'Jetzt bei',
@@ -3916,7 +3897,7 @@
                 'faq.q1': 'Wie funktioniert Skister?',
                 'faq.a1': 'Skister ist der einfachste Weg, Skiausrüstung mit Menschen zu teilen, denen du vertraust — Freunde, Familie, Skivereine und lokale Gruppen. Beim Hinzufügen wählst du zuerst die Aktivität (Skifahren zuerst), dann die passende Kategorie. Du kannst auch Snowboard-, Camping-, Wander- und andere Outdoor-Ausrüstung teilen.',
                 'faq.q2': 'Kostet die Nutzung von Skister etwas?',
-                'faq.a2': 'Kern-Sharing ist kostenlos: unbegrenztes Inventar, Netzwerkeinladungen, Kalender, Reservierungsanfragen und Ausleihen. Premium ergänzt automatische Erinnerungen, Übergabe-Checkliste, Wartungslog, saisonale Erinnerungen, vollständige Historie, Nutzungsanalysen und Netzwerk-Engpässe.',
+                'faq.a2': 'Kern-Sharing ist kostenlos: unbegrenztes Inventar, Netzwerkeinladungen, Kalender, Reservierungen, QR-Übergabe und Ausleihen. Premium ergänzt automatische Erinnerungen, Übergabe-Checkliste, Maintenance Center (Zustand, Historie, Garantie/Belege), saisonale Erinnerungen, Nutzungsanalysen und Netzwerk-Engpässe.',
                 'faq.q3': 'Wer kann meine Ausrüstung sehen?',
                 'faq.a3': 'Nur Mitglieder deines privaten Netzwerks können deine aufgelisteten Artikel sehen. Skister ist nur auf Einladung, um Vertrauen und Sicherheit zu gewährleisten.',
                 'faq.q4': 'Ist Skister für beschädigte Ausrüstung verantwortlich?',
@@ -3965,7 +3946,7 @@
                 'pricing.premium.f5': 'Jährlich €39.99 — spare gegenüber Monatlich',
                 'pricing.premium.f4': 'Netzwerk-Lücken & Größen-Hinweise',
                 'pricing.premium.f3': 'Nutzungsanalysen & Verleihstatistik',
-                'pricing.premium.f2': 'Wartungslog & saisonale Pflege',
+                'pricing.premium.f2': 'Maintenance Center: Zustand, Historie, Garantie & Belege',
                 'pricing.premium.f1': 'Automatische Abhol- & Rückgabe-Erinnerungen',
                 'pricing.premium.desc': 'Automatisierung, Pflege, Einblicke und smartes Netzwerk.',
                 'pricing.premium.period': '/ Monat',
@@ -4008,11 +3989,13 @@
                 'tools.subtitle': 'Winter, Planung, Ausrüstung und Sicherheit — in der App, genau wenn du sie brauchst.',
                 'tools.title': 'Moderne Tools für Skifahrer',
                 'homeActions.title': 'Dein Home in der App',
-                'homeActions.subtitle': 'Vier klare Aktionen — Ausrüstung leihen, teilen, zurückgeben oder per QR übergeben.',
+                'homeActions.subtitle': 'Home-Aktionen, Explore und My Gear — inkl. QR-Übergabe und Wartung.',
                 'homeActions.borrow': 'Ausrüstung leihen',
                 'homeActions.share': 'Ausrüstung teilen',
                 'homeActions.return': 'Zurückgeben',
                 'homeActions.scan': 'QR scannen',
+                'homeActions.myGear': 'My Gear',
+                'homeActions.explore': 'Explore',
                 'roadmap.title': 'Roadmap',
                 'roadmap.subtitle': 'Was als Nächstes kommt — klar gekennzeichnet, ohne vorgetäuschte Live-Daten.',
                 'roadmap.snow.badge': 'Vorschau',
@@ -4121,21 +4104,21 @@
                 'onboarding.step7.feature2': 'Clubs, events & local groups',
                 'onboarding.step7.feature3': 'Resort info & blog guides',
                 'features.title': 'Everything you need',
-                'features.subtitle': 'Everything required to organize private ski equipment sharing without spreadsheets, chat groups or marketplaces.',
-                'features.share.title': 'Share Equipment',
-                'features.share.description': 'Choose an activity first (skiing is primary), then the equipment category — with photos, brand, model, sizes and notes. Camping, hiking and other outdoor gear are supported too.',
-                'features.family.title': 'Private instead of marketplace',
-                'features.family.description': 'Invitation only. Share ski gear only with people you trust — family, friends and clubs.',
-                'features.free.title': 'Sharing stays free',
-                'features.free.description': 'Unlimited sharing in your network. Premium is optional for automation and insights.',
-                'features.reminders.title': 'Smart Reminders',
-                'features.reminders.description': 'Pickup and return reminders help your private circle — Premium automates even more.',
-                'features.private.title': 'Secure & Private',
-                'features.private.description': 'Your data stays private. Only members of your network can see your equipment.',
-                'features.local.title': 'Local Only',
-                'features.local.description': 'Coordinate local pickups. No shipping, no complications.',
-                'features.resorts.title': 'Your Ski Network',
-                'features.resorts.description': 'Anchor your private circle around a resort, ski club or local group — share gear with people you invite.',
+                'features.subtitle': 'Private ski sharing with people you trust — plus maintenance, profile, QR handoff and tools. No marketplaces.',
+                'features.share.title': 'Private gear sharing',
+                'features.share.description': 'Ski-first: manage equipment in My Gear, then camping, hiking and other outdoor gear — with photos, sizes and availability.',
+                'features.family.title': 'Trusted Network',
+                'features.family.description': 'Invitation only. Share only with people you trust — family, friends, clubs and local groups.',
+                'features.free.title': 'Works offline',
+                'features.free.description': 'Core flows and tools stay usable when connectivity dips. Sharing in your network stays free.',
+                'features.reminders.title': 'Smart reminders',
+                'features.reminders.description': 'Pickup, return and care reminders help your private circle — Premium automates even more.',
+                'features.private.title': 'Maintenance Center',
+                'features.private.description': 'Equipment health, maintenance history, smart care reminders, plus warranty and receipt storage — per gear item.',
+                'features.local.title': 'QR handoff',
+                'features.local.description': 'Confirm pickup and return with QR — local, clear, no shipping chaos.',
+                'features.resorts.title': 'Adventure Profile',
+                'features.resorts.description': 'Your outdoor identity with Community Reputation and referral rewards — confidence before sharing, not a social feed.',
                 'platform.title': 'Coming Soon to',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -4143,7 +4126,7 @@
                 'home.blog.subtitle': 'Gear tips, product updates, and stories from the Skister team.',
                 'home.blog.viewAll': 'Browse all posts',
                 'download.title': 'Get Skister',
-                'download.subtitle': 'iOS and Android — launching soon. Choose your platform; store links will appear here.',
+                'download.subtitle': 'iOS and Android — store submission is next. Tap a badge to preview; live links appear after release.',
                 'download.apple.line1': 'Download on the',
                 'download.apple.line2': 'App Store',
                 'download.android.line1': 'Get it on',
@@ -4155,7 +4138,7 @@
                 'faq.q1': 'How does Skister work?',
                 'faq.a1': 'Skister is the easiest way to share ski gear with people you trust — friends, family, ski clubs and local groups. When you add gear, choose an activity first (skiing is primary), then the matching equipment category. You can also share snowboarding, camping, hiking and other outdoor equipment.',
                 'faq.q2': 'Does Skister cost anything?',
-                'faq.a2': 'Core sharing is free: unlimited inventory, network invites, calendar, reservation requests, and basic borrowing. Premium adds automatic reminders, handover checklist, maintenance logging, seasonal reminders, full history, usage analytics, and network shortage detection.',
+                'faq.a2': 'Core sharing is free: unlimited inventory, network invites, calendar, reservations, QR handoff and borrowing. Premium adds automatic reminders, handover checklist, Maintenance Center (health, history, warranty/receipts), seasonal reminders, usage analytics and network shortage detection.',
                 'faq.q3': 'Who can see my equipment?',
                 'faq.a3': 'Only members of your private network can see your listed items. Skister is invitation-only to ensure trust and safety.',
                 'faq.q4': 'Is Skister responsible for damaged equipment?',
@@ -4204,7 +4187,7 @@
                 'pricing.premium.f5': 'Annual €39.99 — save vs monthly',
                 'pricing.premium.f4': 'Network gap & size alerts',
                 'pricing.premium.f3': 'Usage analytics & lending stats',
-                'pricing.premium.f2': 'Maintenance log & seasonal care',
+                'pricing.premium.f2': 'Maintenance Center: health, history, warranty & receipts',
                 'pricing.premium.f1': 'Automatic pickup & return reminders',
                 'pricing.premium.desc': 'Automation, care, insights, and a smart network.',
                 'pricing.premium.period': '/ month',
@@ -4247,11 +4230,13 @@
                 'tools.subtitle': 'Winter, planning, equipment and safety — in the app when you need them.',
                 'tools.title': 'Modern tools for skiers',
                 'homeActions.title': 'Your Home in the app',
-                'homeActions.subtitle': 'Four clear actions — borrow, share, return, or hand off with QR.',
+                'homeActions.subtitle': 'Home actions, Explore and My Gear — including QR handoff and maintenance.',
                 'homeActions.borrow': 'Borrow gear',
                 'homeActions.share': 'Share my gear',
                 'homeActions.return': 'Return equipment',
                 'homeActions.scan': 'Scan QR',
+                'homeActions.myGear': 'My Gear',
+                'homeActions.explore': 'Explore',
                 'roadmap.title': 'Roadmap',
                 'roadmap.subtitle': 'What is next — clearly labeled, without pretending live data exists.',
                 'roadmap.snow.badge': 'Preview',
@@ -4360,21 +4345,21 @@
                 'onboarding.step7.feature2': 'Clubs, événements & groupes locaux',
                 'onboarding.step7.feature3': 'Infos station & guides blog',
                 'features.title': 'Tout ce qu\'il vous faut',
-                'features.subtitle': 'Tout ce qu\'il faut pour organiser le partage privé d\'équipement de ski — sans tableurs, groupes de discussion ni places de marché.',
-                'features.share.title': 'Partager l\'Équipement',
-                'features.share.description': 'Listez votre équipement de ski et rendez-le disponible à votre réseau de confiance.',
-                'features.family.title': 'Privé plutôt qu\'une place de marché',
-                'features.family.description': 'Sur invitation uniquement. Partagez du matériel de ski uniquement avec des personnes de confiance — famille, amis et clubs.',
-                'features.free.title': 'Le partage reste gratuit',
-                'features.free.description': 'Partage illimité dans votre réseau. Premium est optionnel pour l’automatisation et les analyses.',
-                'features.reminders.title': 'Rappels Intelligents',
-                'features.reminders.description': 'Recevez des rappels pour les dates de retrait et de retour. Ne manquez jamais une échéance importante.',
-                'features.private.title': 'Sécurisé et Privé',
-                'features.private.description': 'Vos données restent privées. Seuls les membres de votre réseau peuvent voir votre équipement.',
-                'features.local.title': 'Local Seulement',
-                'features.local.description': 'Coordonnez les retraits locaux. Pas d\'expédition, pas de complications.',
-                'features.resorts.title': 'Votre Ski Network',
-                'features.resorts.description': 'Ancrez votre cercle privé à une station, un club ou un groupe local — partagez avec les personnes que vous invitez.',
+                'features.subtitle': 'Partage privé de ski avec des personnes de confiance — plus entretien, profil, remise QR et outils. Pas de marketplace.',
+                'features.share.title': 'Partage privé d\'équipement',
+                'features.share.description': 'Ski d\'abord : gérez le matériel dans My Gear, puis camping, randonnée et autre outdoor — photos, tailles et disponibilité.',
+                'features.family.title': 'Trusted Network',
+                'features.family.description': 'Sur invitation uniquement. Partagez seulement avec des personnes de confiance — famille, amis, clubs et groupes locaux.',
+                'features.free.title': 'Fonctionne hors ligne',
+                'features.free.description': 'Les flux essentiels et outils restent utilisables si la connexion baisse. Le partage dans votre réseau reste gratuit.',
+                'features.reminders.title': 'Rappels intelligents',
+                'features.reminders.description': 'Rappels de retrait, retour et entretien pour votre cercle privé — Premium automatise davantage.',
+                'features.private.title': 'Maintenance Center',
+                'features.private.description': 'État du matériel, historique d\'entretien, rappels de soin, plus garanties et reçus — par article.',
+                'features.local.title': 'Remise QR',
+                'features.local.description': 'Confirmez retrait et retour par QR — local, clair, sans envoi postal.',
+                'features.resorts.title': 'Adventure Profile',
+                'features.resorts.description': 'Votre identité outdoor avec Community Reputation et récompenses de parrainage — confiance avant le partage, pas un fil social.',
                 'platform.title': 'Bientôt Disponible sur',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -4382,7 +4367,7 @@
                 'home.blog.subtitle': 'Conseils matériel, actus et coulisses de l’équipe Skister.',
                 'home.blog.viewAll': 'Tous les articles',
                 'download.title': 'Obtenir Skister',
-                'download.subtitle': 'iOS et Android — lancement imminent. Choisissez votre plateforme ; les liens des stores arrivent.',
+                'download.subtitle': 'iOS et Android — soumission aux stores à venir. Touchez un badge pour l\'aperçu ; les liens live suivront la publication.',
                 'download.apple.line1': 'Télécharger dans l’',
                 'download.apple.line2': 'App Store',
                 'download.android.line1': 'Disponible sur',
@@ -4394,7 +4379,7 @@
                 'faq.q1': 'Comment fonctionne Skister?',
                 'faq.a1': 'Skister est le moyen le plus simple de partager du matériel de ski avec des personnes de confiance — amis, famille, clubs de ski et groupes locaux. Listez votre matériel, voyez ce que votre réseau privé a partagé et coordonnez les retraits locaux. Vous pouvez aussi partager camping, randonnée et autre matériel outdoor.',
                 'faq.q2': 'Skister coûte-t-il quelque chose?',
-                'faq.a2': 'Le partage de base est gratuit : inventaire illimité, invitations, calendrier, demandes de réservation et emprunts. Premium ajoute rappels automatiques, checklist de remise, journal d’entretien, rappels saisonniers, historique, analyses d’usage et détection de manques dans le réseau.',
+                'faq.a2': 'Le partage de base est gratuit : inventaire illimité, invitations, calendrier, réservations, remise QR et emprunts. Premium ajoute rappels automatiques, checklist de remise, Maintenance Center (état, historique, garanties/reçus), rappels saisonniers, analyses d\'usage et détection de manques.',
                 'faq.q3': 'Qui peut voir mon équipement?',
                 'faq.a3': 'Seuls les membres de votre réseau privé peuvent voir vos articles listés. Skister fonctionne sur invitation uniquement pour garantir confiance et sécurité.',
                 'faq.q4': 'Skister est-il responsable de l\'équipement endommagé?',
@@ -4443,7 +4428,7 @@
                 'pricing.premium.f5': 'Annuel €39.99 — économisez vs mensuel',
                 'pricing.premium.f4': 'Alertes de manques & tailles',
                 'pricing.premium.f3': 'Analyses d’usage & stats de prêt',
-                'pricing.premium.f2': 'Journal d’entretien & soins saisonniers',
+                'pricing.premium.f2': 'Maintenance Center : état, historique, garanties & reçus',
                 'pricing.premium.f1': 'Rappels automatiques retrait & retour',
                 'pricing.premium.desc': 'Automatisation, entretien, analyses et réseau intelligent.',
                 'pricing.premium.period': '/ mois',
@@ -4486,11 +4471,13 @@
                 'tools.subtitle': 'Hiver, planification, équipement et sécurité — dans l’app quand vous en avez besoin.',
                 'tools.title': 'Des outils modernes pour skieurs',
                 'homeActions.title': 'Votre accueil dans l’app',
-                'homeActions.subtitle': 'Quatre actions claires — emprunter, partager, rendre ou transmettre par QR.',
+                'homeActions.subtitle': 'Actions Home, Explore et My Gear — avec remise QR et entretien.',
                 'homeActions.borrow': 'Emprunter du matériel',
                 'homeActions.share': 'Partager mon matériel',
                 'homeActions.return': 'Rendre le matériel',
                 'homeActions.scan': 'Scanner le QR',
+                'homeActions.myGear': 'My Gear',
+                'homeActions.explore': 'Explore',
                 'roadmap.title': 'Feuille de route',
                 'roadmap.subtitle': 'Ce qui arrive ensuite — clairement indiqué, sans données live fictives.',
                 'roadmap.snow.badge': 'Aperçu',
@@ -4595,21 +4582,21 @@
                 'onboarding.step7.feature2': 'Clubes, eventos y grupos locales',
                 'onboarding.step7.feature3': 'Info de estación y guías del blog',
                 'features.title': 'Todo lo que necesitas',
-                'features.subtitle': 'Todo lo necesario para organizar el préstamo privado de equipo de esquí sin hojas de cálculo, grupos de chat ni marketplaces.',
-                'features.share.title': 'Compartir Equipo',
-                'features.share.description': 'Lista tu equipo de esquí y ponlo a disposición de tu red de confianza.',
-                'features.family.title': 'Privado, no un marketplace',
-                'features.family.description': 'Solo por invitación. Comparte equipo de esquí solo con personas de confianza: familia, amigos y clubes.',
-                'features.free.title': 'Compartir sigue siendo gratis',
-                'features.free.description': 'Compartir ilimitado en tu red. Premium es opcional para automatización e insights.',
-                'features.reminders.title': 'Recordatorios Inteligentes',
-                'features.reminders.description': 'Recibe recordatorios para fechas de recogida y devolución. Nunca pierdas una fecha importante.',
-                'features.private.title': 'Seguro y Privado',
-                'features.private.description': 'Tus datos permanecen privados. Solo los miembros de tu red pueden ver tu equipo.',
-                'features.local.title': 'Solo Local',
-                'features.local.description': 'Coordina recogidas locales. Sin envíos, sin complicaciones.',
-                'features.resorts.title': 'Tu Ski Network',
-                'features.resorts.description': 'Ancla tu círculo privado a una estación, club o grupo local — comparte con las personas que invites.',
+                'features.subtitle': 'Préstamo privado de esquí con personas de confianza — más mantenimiento, perfil, entrega QR y herramientas. Sin marketplace.',
+                'features.share.title': 'Compartir equipo en privado',
+                'features.share.description': 'Esquí primero: gestiona el equipo en My Gear; también camping, senderismo y otro outdoor — con fotos, tallas y disponibilidad.',
+                'features.family.title': 'Trusted Network',
+                'features.family.description': 'Solo por invitación. Comparte solo con personas de confianza: familia, amigos, clubes y grupos locales.',
+                'features.free.title': 'Funciona sin conexión',
+                'features.free.description': 'Flujos esenciales y herramientas siguen disponibles con mala conexión. Compartir en tu red sigue siendo gratis.',
+                'features.reminders.title': 'Recordatorios inteligentes',
+                'features.reminders.description': 'Recordatorios de recogida, devolución y cuidado para tu círculo privado — Premium automatiza más.',
+                'features.private.title': 'Maintenance Center',
+                'features.private.description': 'Estado del equipo, historial de mantenimiento, recordatorios de cuidado, más garantía y recibos — por artículo.',
+                'features.local.title': 'Entrega QR',
+                'features.local.description': 'Confirma recogida y devolución con QR — local, claro, sin envíos.',
+                'features.resorts.title': 'Adventure Profile',
+                'features.resorts.description': 'Tu identidad outdoor con Community Reputation y recompensas por referidos — confianza antes de compartir, no un feed social.',
                 'platform.title': 'Próximamente en',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -4617,7 +4604,7 @@
                 'home.blog.subtitle': 'Consejos, novedades e historias del equipo Skister.',
                 'home.blog.viewAll': 'Ver todas las entradas',
                 'download.title': 'Consigue Skister',
-                'download.subtitle': 'iOS y Android — muy pronto. Elige tu plataforma; los enlaces a las tiendas llegarán aquí.',
+                'download.subtitle': 'iOS y Android — envío a las tiendas próximo. Toca un badge para la vista previa; los enlaces en vivo llegarán tras el lanzamiento.',
                 'download.apple.line1': 'Descargar en la',
                 'download.apple.line2': 'App Store',
                 'download.android.line1': 'Disponible en',
@@ -4629,7 +4616,7 @@
                 'faq.q1': '¿Cómo funciona Skister?',
                 'faq.a1': 'Skister es la forma más fácil de compartir equipo de esquí con personas de confianza — amigos, familia, clubes y grupos locales. Lista tu equipo, ve lo que ha compartido tu red privada y coordina recogidas locales. También puedes compartir camping, senderismo y otro material outdoor.',
                 'faq.q2': '¿Skister cuesta algo?',
-                'faq.a2': 'El uso básico es gratis: inventario ilimitado, invitaciones, calendario, reservas y préstamos. Premium añade recordatorios automáticos, checklist de entrega, registro de mantenimiento, recordatorios de temporada, historial, analíticas de uso y detección de faltas en la red.',
+                'faq.a2': 'El uso básico es gratis: inventario ilimitado, invitaciones, calendario, reservas, entrega QR y préstamos. Premium añade recordatorios automáticos, checklist de entrega, Maintenance Center (estado, historial, garantía/recibos), recordatorios de temporada, analíticas y detección de faltas.',
                 'faq.q3': '¿Quién puede ver mi equipo?',
                 'faq.a3': 'Solo los miembros de tu red privada pueden ver tus artículos listados. Skister funciona solo por invitación para garantizar confianza y seguridad.',
                 'faq.q4': '¿Es Skister responsable del equipo dañado?',
@@ -4678,7 +4665,7 @@
                 'pricing.premium.f5': 'Anual €39.99 — ahorra vs mensual',
                 'pricing.premium.f4': 'Alertas de huecos y tallas en la red',
                 'pricing.premium.f3': 'Analíticas de uso y estadísticas de préstamo',
-                'pricing.premium.f2': 'Registro de mantenimiento y cuidado estacional',
+                'pricing.premium.f2': 'Maintenance Center: estado, historial, garantía y recibos',
                 'pricing.premium.f1': 'Recordatorios automáticos de recogida y devolución',
                 'pricing.premium.desc': 'Automatización, cuidado, insights y red inteligente.',
                 'pricing.premium.period': '/ mes',
@@ -4721,11 +4708,13 @@
                 'tools.subtitle': 'Invierno, planificación, equipamiento y seguridad — en la app cuando las necesitas.',
                 'tools.title': 'Herramientas modernas para esquiadores',
                 'homeActions.title': 'Tu inicio en la app',
-                'homeActions.subtitle': 'Cuatro acciones claras — pedir prestado, compartir, devolver o entregar con QR.',
+                'homeActions.subtitle': 'Acciones de Home, Explore y My Gear — con entrega QR y mantenimiento.',
                 'homeActions.borrow': 'Pedir prestado',
                 'homeActions.share': 'Compartir equipo',
                 'homeActions.return': 'Devolver equipo',
                 'homeActions.scan': 'Escanear QR',
+                'homeActions.myGear': 'My Gear',
+                'homeActions.explore': 'Explore',
                 'roadmap.title': 'Hoja de ruta',
                 'roadmap.subtitle': 'Lo que viene — claramente marcado, sin datos en vivo fingidos.',
                 'roadmap.snow.badge': 'Vista previa',
@@ -4834,21 +4823,21 @@
                 'onboarding.step7.feature2': 'Club, eventi e gruppi locali',
                 'onboarding.step7.feature3': 'Info comprensorio e guide blog',
                 'features.title': 'Tutto ciò che ti serve',
-                'features.subtitle': 'Tutto il necessario per organizzare la condivisione privata di attrezzatura da sci senza fogli di calcolo, chat o marketplace.',
-                'features.share.title': 'Condividi Attrezzatura',
-                'features.share.description': 'Elenca la tua attrezzatura da sci e rendila disponibile alla tua rete di fiducia.',
-                'features.family.title': 'Privato, non un marketplace',
-                'features.family.description': 'Solo su invito. Condividi attrezzatura da sci solo con persone di cui ti fidi: famiglia, amici e club.',
-                'features.free.title': 'Condividere resta gratis',
-                'features.free.description': 'Condivisione illimitata nella tua rete. Premium è opzionale per automazione e insight.',
-                'features.reminders.title': 'Promemoria Intelligenti',
-                'features.reminders.description': 'Ricevi promemoria per le date di ritiro e restituzione. Non perdere mai una scadenza importante.',
-                'features.private.title': 'Sicuro e Privato',
-                'features.private.description': 'I tuoi dati rimangono privati. Solo i membri della tua rete possono vedere la tua attrezzatura.',
-                'features.local.title': 'Solo Locale',
-                'features.local.description': 'Coordina ritiri locali. Nessuna spedizione, nessuna complicazione.',
-                'features.resorts.title': 'Il tuo Ski Network',
-                'features.resorts.description': 'Ancora la tua cerchia privata a un comprensorio, club o gruppo locale — condividi con le persone che inviti.',
+                'features.subtitle': 'Condivisione privata dello sci con persone di cui ti fidi — più manutenzione, profilo, passaggio QR e strumenti. Niente marketplace.',
+                'features.share.title': 'Condivisione privata',
+                'features.share.description': 'Sci prima: gestisci l\'attrezzatura in My Gear, poi camping, trekking e altro outdoor — con foto, taglie e disponibilità.',
+                'features.family.title': 'Trusted Network',
+                'features.family.description': 'Solo su invito. Condividi solo con persone di cui ti fidi — famiglia, amici, club e gruppi locali.',
+                'features.free.title': 'Funziona offline',
+                'features.free.description': 'Flussi essenziali e strumenti restano utilizzabili con connessione debole. Condividere nella rete resta gratis.',
+                'features.reminders.title': 'Promemoria intelligenti',
+                'features.reminders.description': 'Promemoria di ritiro, restituzione e cura per la tua cerchia — Premium automatizza di più.',
+                'features.private.title': 'Maintenance Center',
+                'features.private.description': 'Stato attrezzatura, storico manutenzione, promemoria di cura, più garanzia e ricevute — per ogni articolo.',
+                'features.local.title': 'Passaggio QR',
+                'features.local.description': 'Conferma ritiro e restituzione con QR — locale, chiaro, senza spedizioni.',
+                'features.resorts.title': 'Adventure Profile',
+                'features.resorts.description': 'La tua identità outdoor con Community Reputation e ricompense referral — fiducia prima di condividere, non un feed social.',
                 'platform.title': 'Prossimamente su',
                 'platform.ios': 'App Store',
                 'platform.android': 'Google Play',
@@ -4856,7 +4845,7 @@
                 'home.blog.subtitle': 'Consigli, aggiornamenti e storie dal team Skister.',
                 'home.blog.viewAll': 'Vedi tutti gli articoli',
                 'download.title': 'Scarica Skister',
-                'download.subtitle': 'iOS e Android — in arrivo. Scegli la tua piattaforma; i link agli store arriveranno qui.',
+                'download.subtitle': 'iOS e Android — invio agli store in arrivo. Tocca un badge per l\'anteprima; i link live arriveranno dopo il rilascio.',
                 'download.apple.line1': 'Scarica su',
                 'download.apple.line2': 'App Store',
                 'download.android.line1': 'Disponibile su',
@@ -4868,7 +4857,7 @@
                 'faq.q1': 'Come funziona Skister?',
                 'faq.a1': 'Skister è il modo più semplice per condividere attrezzatura da sci con persone di cui ti fidi — amici, famiglia, club e gruppi locali. Elenca la tua attrezzatura, vedi cosa ha condiviso la tua rete privata e coordina i ritiri locali. Puoi anche condividere camping, trekking e altro materiale outdoor.',
                 'faq.q2': 'Skister costa qualcosa?',
-                'faq.a2': 'La condivisione di base è gratuita: inventario illimitato, inviti, calendario, richieste di prenotazione e prestiti. Premium aggiunge promemoria automatici, checklist di consegna, registro manutenzione, promemoria stagionali, cronologia, analitiche di utilizzo e rilevamento carenze nella rete.',
+                'faq.a2': 'La condivisione base è gratis: inventario illimitato, inviti, calendario, prenotazioni, passaggio QR e prestiti. Premium aggiunge promemoria automatici, checklist di consegna, Maintenance Center (stato, storico, garanzia/ricevute), promemoria stagionali, analitiche e rilevamento carenze.',
                 'faq.q3': 'Chi può vedere la mia attrezzatura?',
                 'faq.a3': 'Solo i membri della tua rete privata possono vedere i tuoi articoli elencati. Skister funziona solo su invito per garantire fiducia e sicurezza.',
                 'faq.q4': 'Skister è responsabile per l\'attrezzatura danneggiata?',
@@ -4917,7 +4906,7 @@
                 'pricing.premium.f5': 'Annuale €39.99 — risparmia vs mensile',
                 'pricing.premium.f4': 'Avvisi su lacune e taglie nella rete',
                 'pricing.premium.f3': 'Analitiche di utilizzo e statistiche prestiti',
-                'pricing.premium.f2': 'Registro manutenzione e cura stagionale',
+                'pricing.premium.f2': 'Maintenance Center: stato, storico, garanzia e ricevute',
                 'pricing.premium.f1': 'Promemoria automatici ritiro e restituzione',
                 'pricing.premium.desc': 'Automazione, cura, insight e rete intelligente.',
                 'pricing.premium.period': '/ mese',
@@ -4960,11 +4949,13 @@
                 'tools.subtitle': 'Inverno, pianificazione, attrezzatura e sicurezza — nell’app quando ti servono.',
                 'tools.title': 'Strumenti moderni per sciatori',
                 'homeActions.title': 'La tua Home nell’app',
-                'homeActions.subtitle': 'Quattro azioni chiare — prendere in prestito, condividere, restituire o passare con QR.',
+                'homeActions.subtitle': 'Azioni Home, Explore e My Gear — con passaggio QR e manutenzione.',
                 'homeActions.borrow': 'Prendi in prestito',
                 'homeActions.share': 'Condividi attrezzatura',
                 'homeActions.return': 'Restituisci',
                 'homeActions.scan': 'Scansiona QR',
+                'homeActions.myGear': 'My Gear',
+                'homeActions.explore': 'Explore',
                 'roadmap.title': 'Roadmap',
                 'roadmap.subtitle': 'Cosa arriva dopo — chiaramente etichettato, senza dati live finti.',
                 'roadmap.snow.badge': 'Anteprima',
@@ -5024,7 +5015,7 @@
             } catch (e) {}
             return 'de';
         })();
-        const DEFAULT_HERO_IMAGE = 'assets/skister-app-icon.png';
+        const DEFAULT_HERO_IMAGE = 'https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png';
         
         // Load landing content from API and merge with defaults
         function deepMerge(target, source) {
@@ -5047,6 +5038,16 @@
             });
             return out;
         }
+
+        function setHeroMascotSrc(url) {
+            const el = document.getElementById('hero-mascot');
+            if (!el || !url) return;
+            const next = String(url).trim();
+            if (!next) return;
+            // Avoid reassigning the same URL — that causes a visible flash/reload.
+            if (el.getAttribute('src') === next || el.currentSrc === next) return;
+            el.src = next;
+        }
         
         function applyLandingContent(content) {
             if (!content) return;
@@ -5059,11 +5060,8 @@
                 });
             }
             if (content.images) {
-                const mascotUrl = content.images.heroMascot || content.images.heroMascotUrl;
-                if (mascotUrl) {
-                    const el = document.getElementById('hero-mascot');
-                    if (el) el.src = mascotUrl;
-                }
+                const mascotUrl = content.images.heroMascot || content.images.heroMascotUrl || DEFAULT_HERO_IMAGE;
+                setHeroMascotSrc(mascotUrl);
                 const ogUrl = content.images.ogImage;
                 if (ogUrl) {
                     const meta = document.getElementById('meta-og-image');
@@ -5198,10 +5196,40 @@
                     })
                     .catch(function () {});
             }
-            // Prefer live CMS (Supabase). Only use the git snapshot if the API fails,
-            // otherwise a stale landing-content.json overwrites newer saves for hours.
+            function isShippedProductKey(key) {
+                return key.indexOf('features.') === 0
+                    || key.indexOf('homeActions.') === 0
+                    || key === 'pricing.premium.f2'
+                    || key === 'faq.a2'
+                    || key === 'download.subtitle';
+            }
+            /** Keep git-shipped product feature copy ahead of stale CMS overrides. */
+            function applyShippedProductCopy() {
+                return fetch('data/landing-content.json', { cache: 'no-store' })
+                    .then(function (res) { return res.ok ? res.json() : null; })
+                    .then(function (snapshot) {
+                        if (!snapshot || !snapshot.translations) return;
+                        const filtered = {};
+                        ['de', 'en', 'fr', 'es', 'it'].forEach(function (lang) {
+                            const src = snapshot.translations[lang];
+                            if (!src) return;
+                            const out = {};
+                            Object.keys(src).forEach(function (key) {
+                                if (isShippedProductKey(key)) out[key] = src[key];
+                            });
+                            if (Object.keys(out).length) filtered[lang] = out;
+                        });
+                        if (Object.keys(filtered).length) {
+                            applyLandingContent({ translations: filtered });
+                        }
+                    })
+                    .catch(function () {});
+            }
+            // Prefer live CMS (Supabase). Only use the full git snapshot if the API fails.
+            // Always re-apply shipped product feature keys from git so store copy stays accurate.
             return applyApiContent().then(function (applied) {
                 if (!applied) return applyLocalSnapshot();
+                return applyShippedProductCopy();
             });
         }
         
@@ -5613,6 +5641,19 @@
             element.classList.toggle('active', willOpen);
             element.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
         }
+
+        // FAQ keyboard / ARIA init
+        document.querySelectorAll('.faq-item').forEach(function (item) {
+            item.setAttribute('role', 'button');
+            item.setAttribute('tabindex', '0');
+            item.setAttribute('aria-expanded', item.classList.contains('active') ? 'true' : 'false');
+            item.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleFAQ(item);
+                }
+            });
+        }); // faq-item-a11y-init
         
         // Modal Functions
         function openModal(type) {
@@ -5622,7 +5663,7 @@
         
         function closeModal(type) {
             document.getElementById(`modal-${type}`).classList.remove('active');
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = '';
         }
         
         // Close modal when clicking outside
