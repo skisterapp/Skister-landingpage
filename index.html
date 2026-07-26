@@ -22,13 +22,13 @@
     <meta property="og:description" content="Share ski equipment with trusted people in private communities. Invite friends. Modern tools for skiers — adventure support beyond winter.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://skister.app/">
-    <meta property="og:image" id="meta-og-image" content="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png">
+    <meta property="og:image" id="meta-og-image" content="https://skister.app/assets/skister-app-icon.png">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Skister — Share ski gear with people you trust">
     <meta name="twitter:description" content="Share ski equipment with trusted people in private communities. Invite friends. Modern tools for skiers — adventure support beyond winter.">
-    <meta name="twitter:image" content="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png">
+    <meta name="twitter:image" content="https://skister.app/assets/skister-app-icon.png">
     
     <!-- Android/Mobile Meta Tags -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -39,12 +39,16 @@
     
     <link rel="canonical" href="https://skister.app/">
     <title>Skister — Share ski gear with people you trust</title>
-    <link rel="icon" type="image/png" href="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png">
-    <link rel="apple-touch-icon" href="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="preconnect" href="https://ayomhapkzckbhgwxenwr.supabase.co" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Structured data (SoftwareApplication + FAQ + Organization) -->
@@ -54,7 +58,7 @@
       "@type": "Organization",
       "name": "Skister",
       "url": "https://skister.app/",
-      "logo": "https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png",
+      "logo": "https://skister.app/assets/skister-app-icon.png",
       "email": "contact@skister.app",
       "sameAs": []
     }
@@ -150,24 +154,30 @@
             --primary-green: #228B22;
             --primary-green-dark: #1a6b1a;
             --primary-green-light: #2da82d;
-            --bg-dark: #0a0a0a;
-            --text-white: #ffffff;
-            --text-gray: #b0b0b0;
+            --cta-green: #2ded6a;
+            --cta-green-mid: #22c55e;
+            --bg-dark: #070908;
+            --bg-elevated: #0d1210;
+            --text-white: #f4faf6;
+            --text-gray: #9aaba0;
             --nav-offset: 4.75rem;
             --content-max: 1240px;
             --gutter: 48px;
-            --section-gap: 72px;
-            --title-subtitle-gap: 16px;
-            --subtitle-content-gap: 32px;
-            --card-gap: 24px;
-            --card-pad: 1.35rem;
-            --radius-sm: 0.75rem;
-            --radius-md: 10px;
-            --radius-lg: 14px;
+            --section-gap: 56px;
+            --title-subtitle-gap: 12px;
+            --subtitle-content-gap: 28px;
+            --card-gap: 20px;
+            --card-pad: 1.25rem;
+            --radius-sm: 0.85rem;
+            --radius-md: 12px;
+            --radius-lg: 16px;
             --border-soft: 1px solid rgba(255, 255, 255, 0.08);
-            --shadow-soft: 0 6px 20px rgba(0, 0, 0, 0.22);
-            --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.16);
-            --shadow-card-hover: 0 8px 22px rgba(0, 0, 0, 0.28);
+            --shadow-soft: 0 8px 28px rgba(0, 0, 0, 0.35);
+            --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.28);
+            --shadow-card-hover: 0 12px 32px rgba(0, 0, 0, 0.42);
+            --premium-gradient: linear-gradient(135deg, #1aa34a 0%, #22c55e 55%, #2ded6a 100%);
+            --font-display: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+            --font-body: 'Source Sans 3', ui-sans-serif, system-ui, sans-serif;
         }
 
         /* Shared content width — every major section aligns to this */
@@ -184,14 +194,14 @@
         @media (max-width: 1024px) {
             :root {
                 --gutter: 32px;
-                --section-gap: 56px;
+                --section-gap: 48px;
             }
         }
 
         @media (max-width: 768px) {
             :root {
                 --gutter: 20px;
-                --section-gap: 48px;
+                --section-gap: 40px;
             }
         }
 
@@ -297,12 +307,23 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            font-family: var(--font-body);
             background: var(--bg-dark);
             color: var(--text-white);
             overflow-x: hidden;
             line-height: 1.65;
             font-size: 1rem;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3, h4,
+        .section-title,
+        .logo,
+        .hero-content h1,
+        .submit-btn,
+        .pricing-price {
+            font-family: var(--font-display);
         }
         
         /* Snow Animation — subtle background drift */
@@ -822,20 +843,20 @@
             padding: 0.8rem 1.2rem;
             border-radius: 0.65rem;
             border: none;
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
-            color: var(--text-white);
+            background: var(--premium-gradient);
+            color: #061008;
             font-size: 0.92rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
             white-space: nowrap;
-            box-shadow: 0 4px 16px rgba(34, 139, 34, 0.28);
+            box-shadow: 0 4px 18px rgba(45, 237, 106, 0.22);
         }
         
         .submit-btn:hover {
             filter: brightness(1.06);
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(34, 139, 34, 0.36);
+            box-shadow: 0 8px 24px rgba(45, 237, 106, 0.28);
         }
         
         .submit-btn:active {
@@ -1053,14 +1074,28 @@
             z-index: 2;
             padding: var(--section-gap) 0;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
-            background:
-                linear-gradient(180deg, rgba(34, 139, 34, 0.035) 0%, transparent 45%),
-                var(--bg-dark);
+            background: var(--bg-dark);
             display: flex;
             flex-direction: column;
             justify-content: center;
+            overflow: hidden;
         }
-        .tools-inner { width: 100%; }
+        .tools-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(7, 9, 8, 0.82) 0%, rgba(7, 9, 8, 0.88) 55%, rgba(7, 9, 8, 0.94) 100%),
+                url('assets/images/tools/tools-hero.jpg') center / cover no-repeat;
+            opacity: 1;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .tools-inner {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
         .tools-subtitle {
             text-align: center;
             color: var(--text-gray);
@@ -1071,68 +1106,319 @@
         }
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: var(--card-gap);
+            max-width: 52rem;
+            margin: 0 auto;
         }
         .tool-card {
-            background: rgba(255, 255, 255, 0.025);
-            border: var(--border-soft);
-            border-radius: var(--radius-sm);
-            padding: var(--card-pad);
+            position: relative;
+            overflow: hidden;
+            min-height: 12.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
             box-shadow: var(--shadow-card);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
-            transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+            justify-content: flex-end;
+            text-align: left;
+            transition: transform 0.28s ease, border-color 0.22s ease, box-shadow 0.22s ease;
         }
         .tool-card:hover {
-            border-color: rgba(46, 232, 154, 0.35);
-            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.22);
+            transform: translateY(-3px);
             box-shadow: var(--shadow-card-hover);
         }
-        .tool-badge {
+        .tool-card:hover .tool-card-image {
+            transform: scale(1.05);
+        }
+        .tool-card-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .tool-card-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.55) 55%, rgba(0, 0, 0, 0.3) 100%),
+                linear-gradient(135deg, rgba(34, 139, 34, 0.22), transparent 55%);
+            pointer-events: none;
+        }
+        .tool-card-body {
+            position: relative;
+            z-index: 1;
+            padding: 1.1rem 1.15rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+        .tool-card-top {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-bottom: 0.2rem;
+        }
+        .tool-card-icon {
             display: inline-flex;
             align-items: center;
-            gap: 0.35rem;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            color: var(--primary-green-light);
-            margin-bottom: 0.65rem;
-            padding: 0.25rem 0.55rem;
-            border-radius: 999px;
-            border: 1px solid rgba(46, 232, 154, 0.25);
-            background: rgba(34, 139, 34, 0.1);
+            justify-content: center;
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 0.75rem;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.95rem;
+        }
+        .tool-card-arrow {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+        .tool-card:hover .tool-card-arrow {
+            color: #fff;
+            transform: translateX(2px);
         }
         .tool-card h3 {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 700;
-            margin: 0 0 0.4rem;
+            margin: 0;
             color: var(--text-white);
             letter-spacing: -0.015em;
+            line-height: 1.3;
         }
         .tool-card p {
-            color: var(--text-gray);
-            font-size: 0.92rem;
-            line-height: 1.55;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.88rem;
+            line-height: 1.5;
             margin: 0;
         }
         .tool-cat {
-            margin-top: 0.75rem;
-            font-size: 0.78rem;
-            color: rgba(176, 176, 176, 0.9);
+            margin-top: 0.35rem;
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.65);
             font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
         }
-        @media (max-width: 960px) {
-            .tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        }
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
             .tools-grid {
                 grid-template-columns: 1fr;
                 max-width: 24rem;
                 margin: 0 auto;
+            }
+        }
+
+        /* Home actions — product screenshots strip */
+        .home-actions-section {
+            position: relative;
+            z-index: 2;
+            padding: var(--section-gap) 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            background:
+                radial-gradient(ellipse 60% 40% at 50% 0%, rgba(34, 139, 34, 0.08) 0%, transparent 60%),
+                var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .home-actions-inner { width: 100%; }
+        .home-actions-subtitle {
+            text-align: center;
+            color: var(--text-gray);
+            max-width: 38rem;
+            margin: 0 auto var(--subtitle-content-gap);
+            font-size: 1.05rem;
+            line-height: 1.65;
+        }
+        .home-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: var(--card-gap);
+            max-width: 56rem;
+            margin: 0 auto;
+        }
+        .home-action-card {
+            position: relative;
+            overflow: hidden;
+            min-height: 11rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .home-action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-card-hover);
+        }
+        .home-action-card img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.45s ease;
+        }
+        .home-action-card:hover img {
+            transform: scale(1.05);
+        }
+        .home-action-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.45) 55%, rgba(0, 0, 0, 0.2) 100%),
+                linear-gradient(135deg, rgba(26, 163, 74, 0.25), transparent 55%);
+            pointer-events: none;
+        }
+        .home-action-card span {
+            position: relative;
+            z-index: 1;
+            padding: 1rem 1.05rem;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.015em;
+            color: #fff;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+        }
+        @media (max-width: 900px) {
+            .home-actions-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        /* Roadmap */
+        .roadmap-section {
+            position: relative;
+            z-index: 2;
+            padding: var(--section-gap) 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            background:
+                linear-gradient(180deg, rgba(34, 139, 34, 0.04) 0%, transparent 40%),
+                var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .roadmap-inner { width: 100%; max-width: 48rem; margin: 0 auto; }
+        .roadmap-subtitle {
+            text-align: center;
+            color: var(--text-gray);
+            max-width: 36rem;
+            margin: 0 auto var(--subtitle-content-gap);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+        .roadmap-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.95rem;
+        }
+        .roadmap-item {
+            display: grid;
+            grid-template-columns: 5.5rem 1fr;
+            gap: 0;
+            align-items: stretch;
+            padding: 0;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+        }
+        .roadmap-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card-hover);
+            border-color: rgba(255, 255, 255, 0.14);
+        }
+        .roadmap-item-media {
+            position: relative;
+            min-height: 5.5rem;
+            overflow: hidden;
+        }
+        .roadmap-item-media img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .roadmap-item-media::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent 40%, rgba(7, 9, 8, 0.55) 100%);
+        }
+        .roadmap-item-body {
+            padding: 0.95rem 1.1rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            justify-content: center;
+        }
+        .roadmap-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            align-self: flex-start;
+            min-height: 1.55rem;
+            padding: 0.2rem 0.55rem;
+            border-radius: 999px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: rgba(255, 255, 255, 0.75);
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .roadmap-badge--preview {
+            border-color: rgba(34, 139, 34, 0.45);
+            color: #9fd4ad;
+            background: rgba(34, 139, 34, 0.14);
+        }
+        .roadmap-badge--live {
+            border-color: rgba(34, 139, 34, 0.4);
+            color: #c8e6d0;
+            background: rgba(34, 139, 34, 0.18);
+        }
+        .roadmap-item h3 {
+            margin: 0;
+            font-size: 1.02rem;
+            font-weight: 700;
+            color: var(--text-white);
+            letter-spacing: -0.01em;
+        }
+        .roadmap-item p {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.55;
+            color: var(--text-gray);
+        }
+        @media (max-width: 560px) {
+            .roadmap-item {
+                grid-template-columns: 1fr;
+            }
+            .roadmap-item-media {
+                min-height: 7rem;
+            }
+            .roadmap-item-media::after {
+                background: linear-gradient(180deg, transparent 30%, rgba(7, 9, 8, 0.7) 100%);
             }
         }
 
@@ -2411,7 +2697,9 @@
 
             .onboarding-showcase,
             .features,
+            .home-actions-section,
             .tools-section,
+            .roadmap-section,
             .pricing-section,
             .benefits,
             .home-blog-strip,
@@ -2728,6 +3016,7 @@
                 <a href="#how-it-works" data-i18n="nav.howItWorks">So funktioniert's</a>
                 <a href="#features" data-i18n="nav.features">Features</a>
                 <a href="#tools" data-i18n="nav.tools">Tools</a>
+                <a href="#roadmap" data-i18n="nav.roadmap">Roadmap</a>
                 <a href="#pricing" data-i18n="nav.pricing">Preise</a>
                 <a href="#download" data-i18n="nav.download">Download</a>
                 <a href="#faq" data-i18n="nav.faq">FAQ</a>
@@ -2792,7 +3081,7 @@
         <div class="content-container">
             <div class="hero-inner">
                 <div class="hero-mascot-wrap" aria-hidden="true">
-                    <img id="hero-mascot" src="https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png" alt="" class="hero-mascot">
+                    <img id="hero-mascot" src="assets/skister-app-icon.png" alt="" class="hero-mascot">
                 </div>
                 <div class="hero-content">
                     <h1 id="hero-heading" data-i18n="hero.title">Skiausrüstung teilen war noch nie so einfach.</h1>
@@ -2991,61 +3280,183 @@
     </section>
 
 
+    <!-- Home actions — app screenshots -->
+    <section class="home-actions-section snap-section" id="home-actions" aria-labelledby="home-actions-heading">
+        <div class="content-container home-actions-inner">
+            <h2 class="section-title" id="home-actions-heading" data-i18n="homeActions.title">Dein Home in der App</h2>
+            <p class="home-actions-subtitle" data-i18n="homeActions.subtitle">Vier klare Aktionen — Ausrüstung leihen, teilen, zurückgeben oder per QR übergeben.</p>
+            <div class="home-actions-grid">
+                <article class="home-action-card">
+                    <img src="assets/images/home/borrow.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+                    <span data-i18n="homeActions.borrow">Ausrüstung leihen</span>
+                </article>
+                <article class="home-action-card">
+                    <img src="assets/images/home/share.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+                    <span data-i18n="homeActions.share">Ausrüstung teilen</span>
+                </article>
+                <article class="home-action-card">
+                    <img src="assets/images/home/return.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+                    <span data-i18n="homeActions.return">Zurückgeben</span>
+                </article>
+                <article class="home-action-card">
+                    <img src="assets/images/home/scan.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+                    <span data-i18n="homeActions.scan">QR scannen</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
     <!-- Tools Section -->
     <section class="tools-section snap-section" id="tools" aria-labelledby="tools-heading">
         <div class="content-container tools-inner">
             <h2 class="section-title" id="tools-heading" data-i18n="tools.title">Moderne Tools für Skifahrer</h2>
-            <p class="tools-subtitle" data-i18n="tools.subtitle">Winter-Utilities, Planung und Outdoor-Hilfe — in der App, genau wenn du sie brauchst. Auch für Abenteuer über den Winter hinaus.</p>
+            <p class="tools-subtitle" data-i18n="tools.subtitle">Winter, Planung, Ausrüstung und Sicherheit — in der App, genau wenn du sie brauchst.</p>
             <div class="tools-grid">
                 <article class="tool-card">
-                    <span class="tool-badge" data-i18n="tools.badgeReady">Bereit</span>
-                    <h3 data-i18n="tools.din.title">Ski-DIN-Rechner</h3>
-                    <p data-i18n="tools.din.description">Empfohlene DIN-Werte aus Größe, Gewicht, Sohlenlänge und Level.</p>
-                    <span class="tool-cat" data-i18n="tools.cat.winter">Winter-Tools</span>
+                    <img class="tool-card-image" src="assets/images/tools/din.jpg" alt="" width="800" height="533" loading="lazy" decoding="async">
+                    <div class="tool-card-overlay" aria-hidden="true"></div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-top">
+                            <span class="tool-card-icon" aria-hidden="true"><i class="fa-solid fa-calculator"></i></span>
+                            <i class="fa-solid fa-arrow-right tool-card-arrow" aria-hidden="true"></i>
+                        </div>
+                        <h3 data-i18n="tools.din.title">Ski-DIN-Rechner</h3>
+                        <p data-i18n="tools.din.description">Empfohlene DIN-Werte aus Größe, Gewicht, Sohlenlänge und Level.</p>
+                        <span class="tool-cat" data-i18n="tools.cat.winter">Winter-Tools</span>
+                    </div>
                 </article>
                 <article class="tool-card">
-                    <span class="tool-badge" data-i18n="tools.badgeReady">Bereit</span>
-                    <h3 data-i18n="tools.skiLength.title">Skilängen-Finder</h3>
-                    <p data-i18n="tools.skiLength.description">Skilänge nach Größe, Können und Fahrstil empfehlen.</p>
-                    <span class="tool-cat" data-i18n="tools.cat.winter">Winter-Tools</span>
+                    <img class="tool-card-image" src="assets/images/tools/ski-length.jpg" alt="" width="800" height="534" loading="lazy" decoding="async">
+                    <div class="tool-card-overlay" aria-hidden="true"></div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-top">
+                            <span class="tool-card-icon" aria-hidden="true"><i class="fa-solid fa-ruler"></i></span>
+                            <i class="fa-solid fa-arrow-right tool-card-arrow" aria-hidden="true"></i>
+                        </div>
+                        <h3 data-i18n="tools.skiLength.title">Skilängen-Finder</h3>
+                        <p data-i18n="tools.skiLength.description">Skilänge nach Größe, Können und Fahrstil empfehlen.</p>
+                        <span class="tool-cat" data-i18n="tools.cat.winter">Winter-Tools</span>
+                    </div>
                 </article>
                 <article class="tool-card">
-                    <span class="tool-badge" data-i18n="tools.badgeReady">Bereit</span>
-                    <h3 data-i18n="tools.bootSize.title">Schuhgrößen-Umrechner</h3>
-                    <p data-i18n="tools.bootSize.description">Mondopoint, EU, UK und US Skischuhgrößen umrechnen.</p>
-                    <span class="tool-cat" data-i18n="tools.cat.winter">Winter-Tools</span>
+                    <img class="tool-card-image" src="assets/images/tools/boot-size.jpg" alt="" width="800" height="533" loading="lazy" decoding="async">
+                    <div class="tool-card-overlay" aria-hidden="true"></div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-top">
+                            <span class="tool-card-icon" aria-hidden="true"><i class="fa-solid fa-arrows-left-right"></i></span>
+                            <i class="fa-solid fa-arrow-right tool-card-arrow" aria-hidden="true"></i>
+                        </div>
+                        <h3 data-i18n="tools.bootSize.title">Schuhgrößen-Umrechner</h3>
+                        <p data-i18n="tools.bootSize.description">Mondopoint, EU, UK und US Skischuhgrößen umrechnen.</p>
+                        <span class="tool-cat" data-i18n="tools.cat.winter">Winter-Tools</span>
+                    </div>
                 </article>
                 <article class="tool-card">
-                    <span class="tool-badge" data-i18n="tools.badgeReady">Bereit</span>
-                    <h3 data-i18n="tools.tripPlanner.title">Trip Planner</h3>
-                    <p data-i18n="tools.tripPlanner.description">Plane Touren, Packlisten und Ausrüstung aus deinem Netzwerk.</p>
-                    <span class="tool-cat" data-i18n="tools.cat.planning">Planung</span>
+                    <img class="tool-card-image" src="assets/images/tools/snow.jpg" alt="" width="800" height="530" loading="lazy" decoding="async">
+                    <div class="tool-card-overlay" aria-hidden="true"></div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-top">
+                            <span class="tool-card-icon" aria-hidden="true"><i class="fa-solid fa-snowflake"></i></span>
+                            <i class="fa-solid fa-arrow-right tool-card-arrow" aria-hidden="true"></i>
+                        </div>
+                        <h3 data-i18n="tools.snow.title">Schneelage</h3>
+                        <p data-i18n="tools.snow.description">Vorschau — Live-Resortbedingungen folgen in einer späteren Version.</p>
+                        <span class="tool-cat" data-i18n="tools.cat.winter">Winter-Tools</span>
+                    </div>
                 </article>
                 <article class="tool-card">
-                    <span class="tool-badge" data-i18n="tools.badgeReady">Bereit</span>
-                    <h3 data-i18n="tools.packing.title">Packliste</h3>
-                    <p data-i18n="tools.packing.description">Packlisten für Ski, Snowboard, Camping und Wandern — offline.</p>
-                    <span class="tool-cat" data-i18n="tools.cat.planning">Planung</span>
+                    <img class="tool-card-image" src="assets/images/tools/trip.jpg" alt="" width="800" height="533" loading="lazy" decoding="async">
+                    <div class="tool-card-overlay" aria-hidden="true"></div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-top">
+                            <span class="tool-card-icon" aria-hidden="true"><i class="fa-solid fa-mountain"></i></span>
+                            <i class="fa-solid fa-arrow-right tool-card-arrow" aria-hidden="true"></i>
+                        </div>
+                        <h3 data-i18n="tools.tripPlanner.title">Trip Planner</h3>
+                        <p data-i18n="tools.tripPlanner.description">Plane Touren, Packlisten und Ausrüstung aus deinem Netzwerk.</p>
+                        <span class="tool-cat" data-i18n="tools.cat.planning">Planung</span>
+                    </div>
                 </article>
                 <article class="tool-card">
-                    <span class="tool-badge" data-i18n="tools.badgeReady">Bereit</span>
-                    <h3 data-i18n="tools.snow.title">Schneelage</h3>
-                    <p data-i18n="tools.snow.description">Demo-Dashboard: Schneehöhe, Lifte und Vorhersage — Live-Daten folgen.</p>
-                    <span class="tool-cat" data-i18n="tools.cat.outdoor">Outdoor-Tools</span>
+                    <img class="tool-card-image" src="assets/images/tools/packing.jpg" alt="" width="800" height="533" loading="lazy" decoding="async">
+                    <div class="tool-card-overlay" aria-hidden="true"></div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-top">
+                            <span class="tool-card-icon" aria-hidden="true"><i class="fa-solid fa-clipboard-list"></i></span>
+                            <i class="fa-solid fa-arrow-right tool-card-arrow" aria-hidden="true"></i>
+                        </div>
+                        <h3 data-i18n="tools.packing.title">Packliste</h3>
+                        <p data-i18n="tools.packing.description">Packlisten für Ski, Snowboard, Camping und Wandern — offline.</p>
+                        <span class="tool-cat" data-i18n="tools.cat.planning">Planung</span>
+                    </div>
                 </article>
                 <article class="tool-card">
-                    <span class="tool-badge" data-i18n="tools.badgeReady">Bereit</span>
-                    <h3 data-i18n="tools.maintenance.title">Gear-Pflege</h3>
-                    <p data-i18n="tools.maintenance.description">Wartungserinnerungen für Ski, Jacken und Outdoor-Ausrüstung.</p>
-                    <span class="tool-cat" data-i18n="tools.cat.outdoor">Outdoor-Tools</span>
+                    <img class="tool-card-image" src="assets/images/tools/maintenance.jpg" alt="" width="800" height="533" loading="lazy" decoding="async">
+                    <div class="tool-card-overlay" aria-hidden="true"></div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-top">
+                            <span class="tool-card-icon" aria-hidden="true"><i class="fa-solid fa-wrench"></i></span>
+                            <i class="fa-solid fa-arrow-right tool-card-arrow" aria-hidden="true"></i>
+                        </div>
+                        <h3 data-i18n="tools.maintenance.title">Gear-Pflege</h3>
+                        <p data-i18n="tools.maintenance.description">Wartungserinnerungen für Ski, Jacken und Outdoor-Ausrüstung.</p>
+                        <span class="tool-cat" data-i18n="tools.cat.equipment">Ausrüstung</span>
+                    </div>
                 </article>
                 <article class="tool-card">
-                    <span class="tool-badge" data-i18n="tools.badgeIncluded">Inklusive</span>
-                    <h3 data-i18n="tools.adventure.title">Mehr als Winter</h3>
-                    <p data-i18n="tools.adventure.description">Camping, Wandern und weitere Outdoor-Ausrüstung — im selben privaten Netzwerk.</p>
-                    <span class="tool-cat" data-i18n="tools.cat.outdoor">Outdoor-Tools</span>
+                    <img class="tool-card-image" src="assets/images/tools/emergency.jpg" alt="" width="800" height="533" loading="lazy" decoding="async">
+                    <div class="tool-card-overlay" aria-hidden="true"></div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-top">
+                            <span class="tool-card-icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
+                            <i class="fa-solid fa-arrow-right tool-card-arrow" aria-hidden="true"></i>
+                        </div>
+                        <h3 data-i18n="tools.emergency.title">Notfall-Informationen</h3>
+                        <p data-i18n="tools.emergency.description">Verifizierte Berg-Notrufnummern, Erste Hilfe und Offline-Zugriff.</p>
+                        <span class="tool-cat" data-i18n="tools.cat.safety">Sicherheit</span>
+                    </div>
                 </article>
             </div>
+        </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section class="roadmap-section snap-section" id="roadmap" aria-labelledby="roadmap-heading">
+        <div class="content-container roadmap-inner">
+            <h2 class="section-title" id="roadmap-heading" data-i18n="roadmap.title">Roadmap</h2>
+            <p class="roadmap-subtitle" data-i18n="roadmap.subtitle">Was als Nächstes kommt — klar gekennzeichnet, ohne vorgetäuschte Live-Daten.</p>
+            <ul class="roadmap-list">
+                <li class="roadmap-item">
+                    <div class="roadmap-item-media" aria-hidden="true">
+                        <img src="assets/images/tools/snow.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+                    </div>
+                    <div class="roadmap-item-body">
+                        <span class="roadmap-badge roadmap-badge--preview" data-i18n="roadmap.snow.badge">Vorschau</span>
+                        <h3 data-i18n="roadmap.snow.title">Live-Schneelage</h3>
+                        <p data-i18n="roadmap.snow.description">Integration vertrauenswürdiger Bergdaten für Schneehöhe, Lifte und Vorhersage — derzeit unter Entwicklung.</p>
+                    </div>
+                </li>
+                <li class="roadmap-item">
+                    <div class="roadmap-item-media" aria-hidden="true">
+                        <img src="assets/images/tools/weather.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+                    </div>
+                    <div class="roadmap-item-body">
+                        <span class="roadmap-badge" data-i18n="roadmap.weather.badge">Geplant</span>
+                        <h3 data-i18n="roadmap.weather.title">Resort-Wetter</h3>
+                        <p data-i18n="roadmap.weather.description">Lokale Bergwetterübersichten in der App — folgt nach der Schneelage.</p>
+                    </div>
+                </li>
+                <li class="roadmap-item">
+                    <div class="roadmap-item-media" aria-hidden="true">
+                        <img src="assets/images/tools/emergency.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+                    </div>
+                    <div class="roadmap-item-body">
+                        <span class="roadmap-badge roadmap-badge--live" data-i18n="roadmap.emergency.badge">Verfügbar</span>
+                        <h3 data-i18n="roadmap.emergency.title">Notfall-Informationen</h3>
+                        <p data-i18n="roadmap.emergency.description">Verifizierte Berg-Notrufnummern, Erste Hilfe und Offline-Zugriff in der App.</p>
+                    </div>
+                </li>
+            </ul>
         </div>
     </section>
 
@@ -3321,6 +3732,7 @@
                     <a href="#features" data-i18n="footer.features">Alles was du brauchst</a>
                     <a href="#how-it-works" data-i18n="footer.howItWorks">So funktioniert's</a>
                     <a href="#tools" data-i18n="footer.tools">Tools</a>
+                    <a href="#roadmap" data-i18n="footer.roadmap">Roadmap</a>
                     <a href="#pricing" data-i18n="footer.pricing">Preise</a>
                     <a href="#faq" data-i18n="footer.faq">FAQ</a>
                     <a href="#download" data-i18n="footer.download">Download</a>
@@ -3570,11 +3982,12 @@
                 'pricing.free.title': 'Free',
                 'pricing.subtitle': 'Teilen ist kostenlos und ohne Limits. Premium ergänzt Automatisierung, Organisation und Einblicke.',
                 'pricing.title': 'Preise',
-                'tools.adventure.description': 'Camping, Wandern und weitere Outdoor-Ausrüstung — im selben privaten Netzwerk.',
-                'tools.adventure.title': 'Mehr als Winter',
+                'tools.emergency.description': 'Verifizierte Berg-Notrufnummern, Erste Hilfe und Offline-Zugriff.',
+                'tools.emergency.title': 'Notfall-Informationen',
+                'tools.cat.safety': 'Sicherheit',
                 'tools.maintenance.description': 'Wartungserinnerungen für Ski, Jacken und Outdoor-Ausrüstung.',
                 'tools.maintenance.title': 'Gear-Pflege',
-                'tools.snow.description': 'Demo-Dashboard: Schneehöhe, Lifte und Vorhersage — Live-Daten folgen.',
+                'tools.snow.description': 'Vorschau — Live-Resortbedingungen folgen in einer späteren Version.',
                 'tools.snow.title': 'Schneelage',
                 'tools.packing.description': 'Packlisten für Ski, Snowboard, Camping und Wandern — offline.',
                 'tools.packing.title': 'Packliste',
@@ -3587,16 +4000,36 @@
                 'tools.din.description': 'Empfohlene DIN-Werte aus Größe, Gewicht, Sohlenlänge und Level.',
                 'tools.din.title': 'Ski-DIN-Rechner',
                 'tools.cat.planning': 'Planung',
-                'tools.cat.outdoor': 'Outdoor-Tools',
+                'tools.cat.equipment': 'Ausrüstung',
+                'tools.cat.outdoor': 'Ausrüstung',
                 'tools.cat.winter': 'Winter-Tools',
                 'tools.badgeReady': 'Bereit',
                 'tools.badgeIncluded': 'Inklusive',
-                'tools.subtitle': 'Winter-Utilities, Planung und Outdoor-Hilfe — in der App, genau wenn du sie brauchst. Auch für Abenteuer über den Winter hinaus.',
+                'tools.subtitle': 'Winter, Planung, Ausrüstung und Sicherheit — in der App, genau wenn du sie brauchst.',
                 'tools.title': 'Moderne Tools für Skifahrer',
+                'homeActions.title': 'Dein Home in der App',
+                'homeActions.subtitle': 'Vier klare Aktionen — Ausrüstung leihen, teilen, zurückgeben oder per QR übergeben.',
+                'homeActions.borrow': 'Ausrüstung leihen',
+                'homeActions.share': 'Ausrüstung teilen',
+                'homeActions.return': 'Zurückgeben',
+                'homeActions.scan': 'QR scannen',
+                'roadmap.title': 'Roadmap',
+                'roadmap.subtitle': 'Was als Nächstes kommt — klar gekennzeichnet, ohne vorgetäuschte Live-Daten.',
+                'roadmap.snow.badge': 'Vorschau',
+                'roadmap.snow.title': 'Live-Schneelage',
+                'roadmap.snow.description': 'Integration vertrauenswürdiger Bergdaten für Schneehöhe, Lifte und Vorhersage — derzeit unter Entwicklung.',
+                'roadmap.weather.badge': 'Geplant',
+                'roadmap.weather.title': 'Resort-Wetter',
+                'roadmap.weather.description': 'Lokale Bergwetterübersichten in der App — folgt nach der Schneelage.',
+                'roadmap.emergency.badge': 'Verfügbar',
+                'roadmap.emergency.title': 'Notfall-Informationen',
+                'roadmap.emergency.description': 'Verifizierte Berg-Notrufnummern, Erste Hilfe und Offline-Zugriff in der App.',
                 'footer.pricing': 'Preise',
                 'footer.tools': 'Tools',
+                'footer.roadmap': 'Roadmap',
                 'nav.pricing': 'Preise',
                 'nav.tools': 'Tools',
+                'nav.roadmap': 'Roadmap',
                 'modal.privacy.title': 'Datenschutzrichtlinie',
                 'modal.privacy.fullPage': 'Vollständige Datenschutzrichtlinie',
                 'modal.privacy.intro': 'Letzte Aktualisierung: Februar 2025',
@@ -3788,11 +4221,12 @@
                 'pricing.free.title': 'Free',
                 'pricing.subtitle': 'Sharing is free with no limits. Premium adds automation, organization, and insights.',
                 'pricing.title': 'Pricing',
-                'tools.adventure.description': 'Camping, hiking and more outdoor gear — in the same private network.',
-                'tools.adventure.title': 'Beyond winter',
+                'tools.emergency.description': 'Verified mountain emergency numbers, first aid and offline access.',
+                'tools.emergency.title': 'Emergency Information',
+                'tools.cat.safety': 'Safety',
                 'tools.maintenance.description': 'Care reminders for skis, jackets and outdoor equipment.',
                 'tools.maintenance.title': 'Gear Maintenance',
-                'tools.snow.description': 'Preview dashboard: snow depth, lifts and forecast — live feeds coming soon.',
+                'tools.snow.description': 'Preview — live resort conditions coming in a future release.',
                 'tools.snow.title': 'Snow Conditions',
                 'tools.packing.description': 'Packing lists for ski, snowboard, camping and hiking — offline.',
                 'tools.packing.title': 'Packing Checklist',
@@ -3805,16 +4239,36 @@
                 'tools.din.description': 'Recommended DIN values from height, weight, sole length and ability.',
                 'tools.din.title': 'Ski DIN Calculator',
                 'tools.cat.planning': 'Planning',
-                'tools.cat.outdoor': 'Outdoor Tools',
+                'tools.cat.equipment': 'Equipment',
+                'tools.cat.outdoor': 'Equipment',
                 'tools.cat.winter': 'Winter Tools',
                 'tools.badgeReady': 'Ready',
                 'tools.badgeIncluded': 'Included',
-                'tools.subtitle': 'Winter utilities, planning and outdoor help — in the app when you need them. Adventure support beyond winter too.',
+                'tools.subtitle': 'Winter, planning, equipment and safety — in the app when you need them.',
                 'tools.title': 'Modern tools for skiers',
+                'homeActions.title': 'Your Home in the app',
+                'homeActions.subtitle': 'Four clear actions — borrow, share, return, or hand off with QR.',
+                'homeActions.borrow': 'Borrow gear',
+                'homeActions.share': 'Share my gear',
+                'homeActions.return': 'Return equipment',
+                'homeActions.scan': 'Scan QR',
+                'roadmap.title': 'Roadmap',
+                'roadmap.subtitle': 'What is next — clearly labeled, without pretending live data exists.',
+                'roadmap.snow.badge': 'Preview',
+                'roadmap.snow.title': 'Live Snow Conditions',
+                'roadmap.snow.description': 'Integrating trusted mountain data for snow depth, lifts and forecast — currently under development.',
+                'roadmap.weather.badge': 'Planned',
+                'roadmap.weather.title': 'Resort Weather',
+                'roadmap.weather.description': 'Local mountain weather overviews in the app — after Snow Conditions.',
+                'roadmap.emergency.badge': 'Live',
+                'roadmap.emergency.title': 'Emergency Information',
+                'roadmap.emergency.description': 'Verified mountain emergency numbers, first aid and offline access in the app.',
                 'footer.pricing': 'Pricing',
                 'footer.tools': 'Tools',
+                'footer.roadmap': 'Roadmap',
                 'nav.pricing': 'Pricing',
                 'nav.tools': 'Tools',
+                'nav.roadmap': 'Roadmap',
                 'modal.privacy.title': 'Privacy Policy',
                 'modal.privacy.fullPage': 'Full privacy policy',
                 'modal.privacy.intro': 'Last updated: February 2025',
@@ -4006,11 +4460,12 @@
                 'pricing.free.title': 'Free',
                 'pricing.subtitle': 'Le partage est gratuit sans limites. Premium ajoute automatisation, organisation et analyses.',
                 'pricing.title': 'Tarifs',
-                'tools.adventure.description': 'Camping, randonnée et plus — dans le même réseau privé.',
-                'tools.adventure.title': 'Au-delà de l’hiver',
+                'tools.emergency.description': 'Numéros montagne vérifiés, premiers secours et accès hors ligne.',
+                'tools.emergency.title': 'Informations d’urgence',
+                'tools.cat.safety': 'Sécurité',
                 'tools.maintenance.description': 'Rappels d’entretien pour skis, vestes et matériel outdoor.',
                 'tools.maintenance.title': 'Entretien du matériel',
-                'tools.snow.description': 'Aperçu : hauteur de neige, remontées et prévisions — données live bientôt.',
+                'tools.snow.description': 'Aperçu — conditions live des stations dans une future version.',
                 'tools.snow.title': 'Conditions de neige',
                 'tools.packing.description': 'Listes pour ski, snowboard, camping et randonnée — hors ligne.',
                 'tools.packing.title': 'Liste de packing',
@@ -4023,16 +4478,36 @@
                 'tools.din.description': 'Valeurs DIN recommandées selon taille, poids, longueur de semelle et niveau.',
                 'tools.din.title': 'Calculateur DIN ski',
                 'tools.cat.planning': 'Planification',
-                'tools.cat.outdoor': 'Outils outdoor',
+                'tools.cat.equipment': 'Équipement',
+                'tools.cat.outdoor': 'Équipement',
                 'tools.cat.winter': 'Outils d’hiver',
                 'tools.badgeReady': 'Prêt',
                 'tools.badgeIncluded': 'Inclus',
-                'tools.subtitle': 'Utilitaires d’hiver, planification et aide outdoor — dans l’app quand vous en avez besoin. Aussi pour l’aventure hors saison.',
+                'tools.subtitle': 'Hiver, planification, équipement et sécurité — dans l’app quand vous en avez besoin.',
                 'tools.title': 'Des outils modernes pour skieurs',
+                'homeActions.title': 'Votre accueil dans l’app',
+                'homeActions.subtitle': 'Quatre actions claires — emprunter, partager, rendre ou transmettre par QR.',
+                'homeActions.borrow': 'Emprunter du matériel',
+                'homeActions.share': 'Partager mon matériel',
+                'homeActions.return': 'Rendre le matériel',
+                'homeActions.scan': 'Scanner le QR',
+                'roadmap.title': 'Feuille de route',
+                'roadmap.subtitle': 'Ce qui arrive ensuite — clairement indiqué, sans données live fictives.',
+                'roadmap.snow.badge': 'Aperçu',
+                'roadmap.snow.title': 'Conditions de neige live',
+                'roadmap.snow.description': 'Intégration de données de montagne de confiance pour hauteur, remontées et prévisions — en développement.',
+                'roadmap.weather.badge': 'Prévu',
+                'roadmap.weather.title': 'Météo station',
+                'roadmap.weather.description': 'Aperçus météo montagne dans l’app — après les conditions de neige.',
+                'roadmap.emergency.badge': 'Disponible',
+                'roadmap.emergency.title': 'Informations d’urgence',
+                'roadmap.emergency.description': 'Numéros montagne vérifiés, premiers secours et accès hors ligne dans l’app.',
                 'footer.pricing': 'Tarifs',
                 'footer.tools': 'Outils',
+                'footer.roadmap': 'Feuille de route',
                 'nav.pricing': 'Tarifs',
                 'nav.tools': 'Outils',
+                'nav.roadmap': 'Feuille de route',
                 'modal.privacy.title': 'Politique de Confidentialité',
                 'modal.privacy.fullPage': 'Politique de confidentialité complète',
                 'modal.privacy.intro': 'Dernière mise à jour: Février 2025',
@@ -4220,11 +4695,12 @@
                 'pricing.free.title': 'Free',
                 'pricing.subtitle': 'Compartir es gratis sin límites. Premium añade automatización, organización e insights.',
                 'pricing.title': 'Precios',
-                'tools.adventure.description': 'Camping, senderismo y más — en la misma red privada.',
-                'tools.adventure.title': 'Más allá del invierno',
+                'tools.emergency.description': 'Números de emergencia de montaña verificados, primeros auxilios y acceso offline.',
+                'tools.emergency.title': 'Información de emergencia',
+                'tools.cat.safety': 'Seguridad',
                 'tools.maintenance.description': 'Recordatorios de cuidado para esquís, chaquetas y material outdoor.',
                 'tools.maintenance.title': 'Mantenimiento del equipo',
-                'tools.snow.description': 'Vista previa: altura de nieve, remontes y previsión — datos en vivo pronto.',
+                'tools.snow.description': 'Vista previa — condiciones en vivo de estaciones en una versión futura.',
                 'tools.snow.title': 'Condiciones de nieve',
                 'tools.packing.description': 'Listas para esquí, snowboard, camping y senderismo — offline.',
                 'tools.packing.title': 'Lista de packing',
@@ -4237,16 +4713,36 @@
                 'tools.din.description': 'Valores DIN recomendados según altura, peso, longitud de suela y nivel.',
                 'tools.din.title': 'Calculadora DIN de esquí',
                 'tools.cat.planning': 'Planificación',
-                'tools.cat.outdoor': 'Herramientas outdoor',
+                'tools.cat.equipment': 'Equipamiento',
+                'tools.cat.outdoor': 'Equipamiento',
                 'tools.cat.winter': 'Herramientas de invierno',
                 'tools.badgeReady': 'Listo',
                 'tools.badgeIncluded': 'Incluido',
-                'tools.subtitle': 'Utilidades de invierno, planificación y ayuda outdoor — en la app cuando las necesitas. También para aventuras más allá del invierno.',
+                'tools.subtitle': 'Invierno, planificación, equipamiento y seguridad — en la app cuando las necesitas.',
                 'tools.title': 'Herramientas modernas para esquiadores',
+                'homeActions.title': 'Tu inicio en la app',
+                'homeActions.subtitle': 'Cuatro acciones claras — pedir prestado, compartir, devolver o entregar con QR.',
+                'homeActions.borrow': 'Pedir prestado',
+                'homeActions.share': 'Compartir equipo',
+                'homeActions.return': 'Devolver equipo',
+                'homeActions.scan': 'Escanear QR',
+                'roadmap.title': 'Hoja de ruta',
+                'roadmap.subtitle': 'Lo que viene — claramente marcado, sin datos en vivo fingidos.',
+                'roadmap.snow.badge': 'Vista previa',
+                'roadmap.snow.title': 'Condiciones de nieve en vivo',
+                'roadmap.snow.description': 'Integración de datos de montaña de confianza para altura, remontes y previsión — en desarrollo.',
+                'roadmap.weather.badge': 'Planificado',
+                'roadmap.weather.title': 'Tiempo en estación',
+                'roadmap.weather.description': 'Resúmenes meteorológicos de montaña en la app — después de condiciones de nieve.',
+                'roadmap.emergency.badge': 'Disponible',
+                'roadmap.emergency.title': 'Información de emergencia',
+                'roadmap.emergency.description': 'Números de emergencia de montaña verificados, primeros auxilios y acceso offline en la app.',
                 'footer.pricing': 'Precios',
                 'footer.tools': 'Herramientas',
+                'footer.roadmap': 'Hoja de ruta',
                 'nav.pricing': 'Precios',
                 'nav.tools': 'Herramientas',
+                'nav.roadmap': 'Hoja de ruta',
                 'modal.privacy.title': 'Política de Privacidad',
                 'modal.privacy.fullPage': 'Política de privacidad completa',
                 'modal.privacy.intro': 'Última actualización: Febrero 2025',
@@ -4438,11 +4934,12 @@
                 'pricing.free.title': 'Free',
                 'pricing.subtitle': 'Condividere è gratis senza limiti. Premium aggiunge automazione, organizzazione e insight.',
                 'pricing.title': 'Prezzi',
-                'tools.adventure.description': 'Camping, trekking e altro — nella stessa rete privata.',
-                'tools.adventure.title': 'Oltre l’inverno',
+                'tools.emergency.description': 'Numeri montagna verificati, primo soccorso e accesso offline.',
+                'tools.emergency.title': 'Informazioni di emergenza',
+                'tools.cat.safety': 'Sicurezza',
                 'tools.maintenance.description': 'Promemoria di cura per sci, giacche e materiale outdoor.',
                 'tools.maintenance.title': 'Manutenzione attrezzatura',
-                'tools.snow.description': 'Anteprima: altezza neve, impianti e previsioni — dati live in arrivo.',
+                'tools.snow.description': 'Anteprima — condizioni live dei resort in una versione futura.',
                 'tools.snow.title': 'Condizioni neve',
                 'tools.packing.description': 'Liste per sci, snowboard, camping e trekking — offline.',
                 'tools.packing.title': 'Lista di packing',
@@ -4455,16 +4952,36 @@
                 'tools.din.description': 'Valori DIN consigliati da altezza, peso, lunghezza suola e livello.',
                 'tools.din.title': 'Calcolatore DIN sci',
                 'tools.cat.planning': 'Pianificazione',
-                'tools.cat.outdoor': 'Strumenti outdoor',
+                'tools.cat.equipment': 'Attrezzatura',
+                'tools.cat.outdoor': 'Attrezzatura',
                 'tools.cat.winter': 'Strumenti invernali',
                 'tools.badgeReady': 'Pronto',
                 'tools.badgeIncluded': 'Incluso',
-                'tools.subtitle': 'Utility invernali, pianificazione e aiuto outdoor — nell’app quando ti servono. Anche per avventure oltre l’inverno.',
+                'tools.subtitle': 'Inverno, pianificazione, attrezzatura e sicurezza — nell’app quando ti servono.',
                 'tools.title': 'Strumenti moderni per sciatori',
+                'homeActions.title': 'La tua Home nell’app',
+                'homeActions.subtitle': 'Quattro azioni chiare — prendere in prestito, condividere, restituire o passare con QR.',
+                'homeActions.borrow': 'Prendi in prestito',
+                'homeActions.share': 'Condividi attrezzatura',
+                'homeActions.return': 'Restituisci',
+                'homeActions.scan': 'Scansiona QR',
+                'roadmap.title': 'Roadmap',
+                'roadmap.subtitle': 'Cosa arriva dopo — chiaramente etichettato, senza dati live finti.',
+                'roadmap.snow.badge': 'Anteprima',
+                'roadmap.snow.title': 'Condizioni neve live',
+                'roadmap.snow.description': 'Integrazione di dati di montagna affidabili per altezza, impianti e previsioni — in sviluppo.',
+                'roadmap.weather.badge': 'Pianificato',
+                'roadmap.weather.title': 'Meteo resort',
+                'roadmap.weather.description': 'Panoramiche meteo di montagna nell’app — dopo le condizioni neve.',
+                'roadmap.emergency.badge': 'Disponibile',
+                'roadmap.emergency.title': 'Informazioni di emergenza',
+                'roadmap.emergency.description': 'Numeri montagna verificati, primo soccorso e accesso offline nell’app.',
                 'footer.pricing': 'Prezzi',
                 'footer.tools': 'Strumenti',
+                'footer.roadmap': 'Roadmap',
                 'nav.pricing': 'Prezzi',
                 'nav.tools': 'Strumenti',
+                'nav.roadmap': 'Roadmap',
                 'modal.privacy.title': 'Informativa sulla Privacy',
                 'modal.privacy.fullPage': 'Informativa privacy completa',
                 'modal.privacy.intro': 'Ultimo aggiornamento: Febbraio 2025',
@@ -4507,7 +5024,7 @@
             } catch (e) {}
             return 'de';
         })();
-        const DEFAULT_HERO_IMAGE = 'https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png';
+        const DEFAULT_HERO_IMAGE = 'assets/skister-app-icon.png';
         
         // Load landing content from API and merge with defaults
         function deepMerge(target, source) {

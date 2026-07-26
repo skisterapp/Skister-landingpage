@@ -4,6 +4,297 @@
 
 - Do not use or mention Spokenly MCP; ask clarifying questions in plain chat.
 
+## Onboarding / branding regression fix (Jul 26, 2026)
+
+Fixed production regressions in **Skisterapp** (no auth/Supabase redesign):
+
+### Icons
+- Canonical brand package: `IconKitchen-Skister` (goat mascot) vendored identically in:
+  - `Skisterapp/resources/IconKitchen-Skister`
+  - `Skister-main/branding/IconKitchen-Skister`
+- Applied to Android launcher/adaptive, iOS AppIcon, Capacitor resources, website favicon/PWA/og image
+- Removed leftover non-Skister / alternate IconKitchen exports from active icon paths
+
+### First-run / onboarding
+- New `lib/first-run.ts`: persist `skister_onboarding_complete` + `skister_language_selected`
+- Authenticated / returning users skip onboarding; logout does not reset flags
+- Final onboarding page: Create Account / Google / Apple (iOS) / Email / Sign In
+- Explicit reset only via Settings → Data → Reset Onboarding (or debug flag)
+
+### Verify
+- `tsc --noEmit` clean · Vitest **155**/155
+
+
+Break-tested Equipment Maintenance Center; fixed all Critical/High (no redesign).
+
+### Fixed
+- Soft-delete tombstones + cache LWW · private docs + signed URLs · attachment ownership/MIME
+- Cascade delete · LWW `updated_at` · offline create + stable clientId · health conditions
+- Timeline delete · legacy import as labeled custom
+
+### Verify
+- Migration `20260726180000` · Edge redeployed · `tsc` clean · Vitest **149**/149
+
+## v1.0 stabilization (Jul 26, 2026)
+
+Final low-risk RC polish on **Skisterapp** → **Production Ready (v1.0)**.
+
+### Fixed this pass
+- Reminders ConditionConfirmDialog + Users + Shortages fully localized EN/DE/FR/IT
+- Date prefs on Home + Explore + borrow notification cards
+- Handoff: in-app scan uses `location.state`; cold `?token=` stripped after load
+- `logDevError` — Auth/API/adventure logs DEV-only / message-only
+- A11y: min 44px touch + aria-labels on key icon backs / gallery
+- Automated i18n coverage test for required localized keys
+
+### Verify
+- `tsc` clean · Vitest **135**/135 · Vite · Android Release · iOS Release (unsigned)
+- Score **97/100** · Canvas `skister-v1-stabilization.canvas.tsx` · **v1.0 ready**
+
+### Residual
+- Medium: QR handoff deep-link still carries token (required); some tool history dates not pref-wired
+- Low: no eslint project config; chunk size warn; device visual matrix
+
+## Equipment Maintenance Center (Jul 26, 2026)
+
+Expanded My Gear **Maintain** into a full per-gear Maintenance Center in **Skisterapp**:
+
+### Shipped
+- Gear cards: Health · Last Service · Next Service · Record count + **View Maintenance**
+- Route `/my-gear/:gearId/maintenance` — overview, analytics, filtered timeline, FAB add form
+- Category templates (skis/snowboard/boots/helmet/camping/hiking/climbing/bike + custom)
+- Health engine + reminders + attachments + offline sync
+- Migration `20260726170000_equipment_maintenance_center.sql` applied; Edge redeployed
+- i18n EN/DE/FR/IT (`lib/maintenance-i18n.ts`); docs `docs/EQUIPMENT_MAINTENANCE.md`
+
+### Preserved
+- `/tools/gear-maintenance` tool · Premium `gear_maintenance_log` · My Gear Edit/Share/Unavailable/Delete
+
+### Verify
+- `tsc --noEmit` clean · Vitest **133**/133 · Edge deploy OK
+
+## RC1 polish (Jul 26, 2026)
+
+Final Medium/Low production polish on **Skisterapp** ahead of Release Candidate 1.
+
+### Fixed this pass
+- DE/FR/IT translations for About, ScanHandoff checklist, privacy honesty, reminders/analytics/scan/QR, request usage hint
+- `format-prefs` applied on History, Reminders, Referral, RequestFlow, ShowHandoffQr
+- Remaining fragile UI `navigate(-1)` → `navigateBack` with fallbacks
+- Dual Home Ski editors verified (Profile + AdventureDetail both `updateProfile({ homeSkiResortId })`) — both kept
+- PII-safe API/Auth error logging (no response-body dumps)
+- DE privacy descriptions aligned with honest EN
+
+### Verify
+- `tsc --noEmit` clean · Vitest **125**/125 · Vite build · Android `assembleRelease` · iOS Release (unsigned compile)
+- Score **95/100** · Canvas `skister-rc1-polish.canvas.tsx` · **RC1 ready**
+
+### Residual Medium/Low
+- Handoff tokens in custom-scheme URLs (accepted)
+- Distance units not everywhere Explore shows place labels
+- No temperature/time prefs (not invented)
+- Non-PII console noise; device visual QA not exhaustive
+
+## Final production audit (Jul 26, 2026)
+
+Lead QA store-readiness pass on **Skisterapp**. No Critical/High open after fixes.
+
+### Fixed this pass
+- Email edit honesty (read-only)
+- Privacy/notification honesty + in-app notification preference filtering
+- OAuth PKCE-only (no token-in-URL)
+- Android `allowBackup=false` + data extraction rules + narrowed FileProvider
+- Blog HTML sanitizer
+- Resort Weather “Coming soon” badge
+- Reminders / Analytics / Rate / Scan / Show QR i18n for primary strings
+- `.env` gitignore
+
+### Verify
+- `tsc --noEmit` clean · Vitest **122**/122
+- Score **91/100** · Canvas `skister-final-production-audit.canvas.tsx`
+
+### Residual Medium/Low
+- ScanHandoff condition checklist English; About body EN; new keys inherit EN in DE/FR/IT; date/units lightly applied; handoff tokens in custom scheme
+
+## Production UX audit + nav polish (Jul 26, 2026)
+
+Full Profile / Settings / navigation QA pass in **Skisterapp** (preserve features; reorganize only):
+
+### Fixed
+- Capacitor hardware `backButton` in `Layout`
+- Tab switches `replace: true` (no polluted history)
+- `navigateBack()` via history `idx` + fallback (`lib/navigate-back.ts`)
+- Profile tab highlight for `/profile/*`, `/settings/*`, account tools
+- Canonical About (`AboutSkister`) for Profile + Settings; Settings About no longer re-lists Quick Access/Legal
+- Legal: real licenses dialog; contact + website (removed fake Social = Website)
+- Referral: ProfileSubpageHeader; `/referrals` → `/profile/referral`
+- Reminders: Back header + Rate on returned rentals
+- Account → Edit Profile uses `replace: true`
+- Terminology: Adventure Timeline; Referral Centre page title
+
+### Preserved
+Adventure, Reputation, Achievements, Timeline, Preferences, Referral, Settings, Logout (Profile + Account), About, Premium, Network, History, Reminders, Analytics, Resources
+
+### Verify
+- `tsc --noEmit` clean · Vitest **115**/115
+- Canvas: `canvases/skister-production-ux-audit.canvas.tsx`
+
+### Open (backlog)
+- Dual home-ski editors (Profile dialog + Adventure) — both still work
+- Remaining hardcoded EN strings on Reminders/Analytics
+
+## Profile dashboard + Settings hub UX (Jul 26, 2026)
+
+Production UX polish in **Skisterapp** only (no backend / schema / trust / referral / auth / Edge Function changes):
+
+### Profile hub (`/profile`)
+- Dashboard cards: Adventure Profile, Community Reputation, Achievements, Adventure Timeline, Adventure Preferences, Referral Centre
+- **Quick Access** 2-col grid above About: Premium, Network, History, Reminders, Analytics, Settings → full `/settings` hub
+- Resources card · About Skister · Important disclaimer · Logout
+- Achievements: “N Badge(s) Earned · M Available”; latest earned badge only on hub
+- Reputation stages: New Member → Trusted Member → Reliable Lender → Community Favorite; numeric score only after completed exchanges
+- Timeline: `resolveTimelineEventDisplay` never shows raw keys (fixes `adventure.achievement.early_supporter`)
+
+### Settings hub (`/settings` + nested pages)
+- Account · Privacy · Notifications · Appearance · Language · Data · Legal · About
+- Privacy is a full page (grouped toggles + descriptions), not a small dialog
+- Prefs persist via `skister_prefs` (`lib/skister-prefs.ts`); appearance a11y classes on `<html>`
+- `/profile/about` and `/settings/about` share canonical `AboutSkister` (Settings uses `fallbackPath="/settings"`)
+
+### Verify
+- `tsc --noEmit` clean · Vitest **115**/115
+
+## Production UX polish pass (Jul 26, 2026)
+
+Final presentation-only polish in **Skisterapp** (no business logic / auth / referral / routing / schema changes in this pass):
+
+### Shipped
+1. **Home** — Borrow + Share primary; Invite + Scan secondary; Return Equipment only with active/approved rentals or pending returns; dismissible “New to Skister?” tip → `/profile/resources`
+2. **Apple Sign-In** — disabled, reduced opacity, Coming Soon subtitle + tooltip; not pressable
+3. **Splash** — Continue → after ~1s; auto-continue at 2.4s (same ceiling as before); focus cancels auto; `aria-live` for Continue
+4. **Profile** — dashboard cards + Settings hub (see above; Quick Access removed from hub)
+5. **Trust** — stages until completed exchanges; then numeric score (no faked scores)
+6. **Empty states** — coaching copy for timeline, endorsements, achievements, borrow history
+7. **Skeletons** — Home, Profile, Network, Timeline, Reputation, History, Analytics, profile subpages
+
+### Verify
+- `tsc --noEmit` clean · Vitest 110/110
+
+### First-time UX audit (Jul 26, 2026)
+
+20-persona simulation on Skisterapp; SAFE copy/UX only — no business-logic changes.
+
+### Critical — fixed (re-sim: 0 Critical open)
+- Onboarding CTA → “Continue to sign in” (was “Go to Home” → Login)
+- Logout no longer clears `skister_onboarding_complete`
+- Name hint clarifies pre-fill at signup
+- Home empty getting-started (invite + share gear) + loadError/retry
+- Explore no-results invite CTA + friendly loadError
+- Network vs Referral invite labels disambiguated
+- About Ski Network section; Premium tile label; FR/IT referral hub strings
+
+### Still open (High/Medium/Low — backlog)
+- Apple Sign-in “coming soon” honesty; Home Return/Scan prominence when idle; Splash skip; deeper FR/IT adventure pack
+
+### Canvas
+`canvases/skister-first-user-ux-audit.canvas.tsx`
+
+## My Adventure Profile (Jul 26, 2026)
+
+Flagship Profile in **Skisterapp** (`/profile`) — condensed hub + nested detail pages:
+
+### Hub layout (~1 screen + short scroll)
+Hero (settings gear) → Adventure / Reputation / Achievements / Activity / Preferences / Referral cards
+
+### Nested routes
+`/profile/adventure` · `/profile/reputation` · `/profile/achievements` · `/profile/timeline` · `/profile/preferences` · `/profile/referral` · `/profile/resources` · `/settings/*` (About via `/settings/about`)
+
+### Trust / endorsements / achievements
+- Hub shows compact Trust Score + top endorsement only; full breakdown on Reputation page
+- Achievements hub: latest 3 unlocked + counts; full grid on Achievements page
+- About copy canonical in `skister-about-copy.ts` (synced Help/FAQ/legal/landing)
+
+### Backend (unchanged)
+- Migration `20260726160000_adventure_profile.sql`; Edge `/adventure/*`; Trust Score auto-only
+
+### Verify
+- `tsc --noEmit` + Vitest + Vite production build clean
+
+## Complete visual polish (Jul 26, 2026)
+
+Production visual polish across **Skister-main** (marketing) + **Skisterapp** (app):
+
+### Design system
+- Typography: Outfit (display) + Source Sans 3 (body) in app `fonts.css` and landing/help
+- Shadow tokens: `--shadow-card`, `--shadow-elevated`, `--shadow-cta`, `--shadow-photo` + `.skister-photo-hero*` utilities
+- Bright green reserved for primary CTAs; nav/sidebar uses muted forest soft fill
+- Empty states gain soft forest radial wash
+
+### App screens
+- Explore / My Gear: photo heroes (`/assets/home/explore-hero.jpg`, `my-gear-hero.jpg`)
+- Profile: **My Adventure Profile** flagship redesign (hero + adventure sections + Trust Score); resort banner or tools-hero photo
+- Tool details: shared `ToolPhotoHero` with catalog photography (DIN, ski length, boot size, packing, maintenance, emergency, trip)
+- Desktop sidebar active state: `primary-soft` (not neon CTA fill); bottom nav stays muted
+
+### Marketing site
+- Tighter section rhythm; premium CTA gradient on waitlist submit
+- `#home-actions` photo strip (borrow/share/return/scan)
+- `#tools` full-bleed `tools-hero.jpg` backdrop; taller photo tiles
+- `#roadmap` photo cards (snow / weather / emergency); muted status badges (no neon body accents)
+- Help: labeled screenshot figures + denser card spacing; refreshed packing/maintenance photography
+
+### Verify
+- Skisterapp `tsc --noEmit` + Vite production build clean
+
+## Emergency Information (Jul 26, 2026)
+
+Live Safety tool in **Skisterapp** (`/tools/emergency-information`):
+
+- Table `public.emergency_contacts` + RLS public SELECT of active rows; seed DE/AT/CH/FR/IT (national + ski regions)
+- Migration `20260726150000_emergency_contacts.sql` applied; Edge `GET /emergency/countries` + `GET /emergency/contacts`
+- Offline-first: bundled seed + `localStorage` cache (`skister_emergency_contacts_v1`); search by country/region/aliases
+- UI: dialable numbers, official rescue websites, first-aid guidance (i18n EN/DE/FR/IT)
+- Docs: `Skisterapp/docs/EMERGENCY_INFORMATION.md`; Help + Safety + landing `#tools` / `#roadmap` updated
+- Catalog status `live`; removed from `FEATURE_INTEREST_SLUGS`
+- `tsc --noEmit` + Vitest emergency module + Vite production build clean; Edge redeployed
+
+## Snow Conditions Preview Experience (Jul 26, 2026)
+
+Redesigned in **Skisterapp** (`/tools/snow-conditions`) + marketing site:
+
+- Removed all placeholder/fake resorts, weather, snowfall, temperatures, and interactive controls
+- Preview Experience: large photo hero, **Preview** label, headline + under-development subtitle, CSS mockups (labels only, skeleton bars — no numbers), **Notify me when available**
+- Interest stored in Supabase `public.feature_interest` (RLS: own rows only); Edge `GET/POST /feature-interest`; client `services/feature-interest-api.ts`
+- Domain types + provider contract kept under `lib/snow-conditions/` for future live mountain data; placeholder provider/data deleted
+- Website: new `#roadmap` section (Live Snow Conditions / Resort Weather / Emergency); snow tool card copy updated; Help updated
+- `tsc --noEmit` + Vitest snow module + Vite production build clean; Edge redeployed; migration `20260726140000_feature_interest.sql` applied
+
+## Tool calculations private history + sync (Jul 26, 2026)
+
+Implemented in **Skisterapp** (canonical Supabase project `ayomhapkzckbhgwxenwr`):
+
+- Table `public.tool_calculations` + RLS (`auth.uid() = user_id` only); soft-delete for sync
+- Migration `20260726130000_tool_calculations.sql` applied; Edge Function endpoints under `/tools/calculations` (list, upsert, delete, duplicate, sync)
+- Offline-first cache keyed by userId + toolSlug; LWW merge; legacy localStorage imported once
+- Wired tools: Trip Planner, Packing Checklist, DIN, Ski Length, Boot Size, Gear Maintenance
+- Features: recent, favorites, rename, duplicate, delete, usage count, last used, cross-device sync
+- Docs: `Skisterapp/docs/TOOLS_CALCULATIONS.md` + Edge Functions README
+- `tsc --noEmit` + Vite production build clean; Edge redeployed
+
+## Tools hub premium redesign (Jul 26, 2026)
+
+Implemented in **Skisterapp** (`/tools`):
+
+- Premium dashboard layout: photo hero banner → sectioned tiles (max 2 per row)
+- Sections: **Winter Tools → Planning → Equipment → Safety** (Outdoor renamed to Equipment)
+- Visual tiles match Home action cards: background image, dark overlay, icon, title, short description, arrow
+- Removed Ready / Coming Soon / placeholder badges from hub cards
+- Catalog: `lib/tools-catalog.ts` (+ `image` per tool); tiles: `components/tools/tool-card.tsx`
+- Assets: `public/assets/tools/*.jpg` (hero + per-tool)
+- Snow Conditions + Resort Weather moved under Winter; Gear Maintenance under Equipment
+- **Skister-main**: landing `#tools` section restyled as premium photo tiles (2-col), Help + landing-content category copy updated; screenshots under `assets/images/tools/`
+- `tsc --noEmit` + Vite production build clean
+
 ## Multi-activity Add Gear (Jul 26, 2026)
 
 Implemented in **Skisterapp** (+ Help/FAQ in Skister-main):
@@ -32,15 +323,7 @@ Implemented in **Skisterapp** (`src/app/screens/Home.tsx`):
 
 ## Snow Conditions dashboard (Jul 2026)
 
-Implemented in **Skisterapp** (`/tools/snow-conditions`):
-
-- Live outdoor tool (catalog status `live`) — was a placeholder
-- Sections: snow depth, fresh snowfall, temperature, wind, open lifts, open runs, resort webcam placeholder, weather forecast, favourite resorts
-- Architecture: provider interface (`SnowConditionsProvider`) + domain types; UI only consumes `ResortSnowConditions` / `SnowConditionsDashboard`
-- Current source: `PlaceholderSnowConditionsProvider` (demo resorts: Zugspitze, Kitzbühel, Zermatt, Chamonix) — swap via `getSnowConditionsProvider()` for live APIs later without UI redesign
-- Favourites + active resort persisted in `localStorage` (`skister_snow_conditions_favourites`, `skister_snow_conditions_active_resort`)
-- Logic: `src/app/lib/snow-conditions/`; UI: `screens/tools/SnowConditions.tsx`; tests in `snow-conditions.test.ts`
-- i18n EN/DE/FR/IT under `snow.*` (+ updated `tools.snow.desc`)
+Replaced (Jul 26) by **Preview Experience** — no demo resorts or fabricated weather. See “Snow Conditions Preview Experience” above. Provider types remain for a future live integration.
 
 ## Gear Maintenance Tracker (Jul 2026)
 
@@ -112,11 +395,10 @@ Implemented in **Skisterapp** (`/tools/din-calculator`):
 Implemented in **Skisterapp**:
 
 - `/tools` is a categorized outdoor-utilities hub (Trip Planner is one card, not the whole page)
-- Sections: **Winter Tools → Outdoor Tools → Planning → Safety**
+- Sections: **Winter Tools → Planning → Equipment → Safety** (premium visual tiles as of Jul 26 redesign)
 - Catalog-driven UI: add tools in `src/app/lib/tools-catalog.ts` — they appear automatically
-- Cards with icons, short descriptions, Ready/Coming soon badges, and navigation; search + section chips; i18n EN/DE/FR/IT
 - Nested routes: `/tools/:toolSlug` → live tool or polished placeholder (tool-specific highlights)
-- Live tools: Trip Planner (`/tools/trip-planner`), Ski DIN Calculator (`/tools/din-calculator`), Ski Length Finder (`/tools/ski-length-finder`), Boot Size Converter (`/tools/boot-size-converter`), Packing Checklist (`/tools/packing-checklist`), Gear Maintenance (`/tools/gear-maintenance`), Snow Conditions (`/tools/snow-conditions`); remaining tools are placeholders
+- Live tools: Trip Planner (`/tools/trip-planner`), Ski DIN Calculator (`/tools/din-calculator`), Ski Length Finder (`/tools/ski-length-finder`), Boot Size Converter (`/tools/boot-size-converter`), Packing Checklist (`/tools/packing-checklist`), Gear Maintenance (`/tools/gear-maintenance`), Emergency Information (`/tools/emergency-information`); Snow Conditions (`/tools/snow-conditions`) is a Preview Experience (no live data); remaining tools are placeholders
 - Tools: Ski DIN Calculator, Ski Length Finder, Boot Size Converter, Gear Maintenance, Snow Conditions, Resort Weather, Trip Planner, Packing Checklist, Emergency Information
 - Legacy slug aliases: `weather` → `resort-weather`, `ski-length-calculator` → `ski-length-finder`, `gear-maintenance-tracker` → `gear-maintenance`
 - Removed from hub: Community empty category, Camping Checklist, Adventure Budget, Equipment Value Calculator

@@ -9,27 +9,38 @@
   <link rel="canonical" href="https://skister.app/help.html">
   <title>Skister — Help</title>
   <link rel="icon" type="image/png" href="assets/favicon.png">
-  <link rel="apple-touch-icon" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --primary-green: #228B22;
       --primary-green-light: #2da82d;
-      --bg-dark: #0a0a0a;
-      --text-white: #ffffff;
-      --text-gray: #b0b0b0;
+      --cta-green: #2ded6a;
+      --bg-dark: #070908;
+      --text-white: #f4faf6;
+      --text-gray: #9aaba0;
       --nav-offset: 5.5rem;
+      --radius-lg: 16px;
+      --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.28);
+      --font-display: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+      --font-body: 'Source Sans 3', ui-sans-serif, system-ui, sans-serif;
+      --premium-gradient: linear-gradient(135deg, #1aa34a 0%, #22c55e 55%, #2ded6a 100%);
     }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+      font-family: var(--font-body);
       background: var(--bg-dark);
       color: var(--text-white);
       overflow-x: hidden;
-      line-height: 1.6;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
+    h1, h2, h3, .logo { font-family: var(--font-display); }
     nav {
       position: fixed;
       top: 0;
@@ -80,13 +91,41 @@
     .page-card {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
+      border-radius: var(--radius-lg);
       padding: 1.5rem;
       display: grid;
       gap: 0.75rem;
+      margin-bottom: 1.15rem;
+      box-shadow: var(--shadow-card);
     }
-    .page-card h2 { color: var(--primary-green); }
-    .page-card p, .page-card li { color: var(--text-gray); line-height: 1.8; }
+    .page-card h2 { color: #9fd4ad; }
+    .page-card p, .page-card li { color: var(--text-gray); line-height: 1.75; }
+    .help-shot {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      aspect-ratio: 4 / 3;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow-card);
+    }
+    .help-shot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .help-shot figcaption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 0.65rem 0.75rem;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+    }
     .steps {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -181,7 +220,7 @@
 
     <section class="page-card" aria-labelledby="what-is-skister">
       <h2 id="what-is-skister">What is Skister?</h2>
-      <p>Skister is the easiest way to share ski equipment with trusted people. You list gear, invite friends and family, and track handoffs and returns with helpful reminders. You can also share camping, hiking and other outdoor equipment — always inside your private network. Modern tools for skiers (DIN, ski length, packing, snow conditions and more) support adventures beyond winter too.</p>
+      <p>Skister is a trusted ski sharing network built for friends, families and outdoor communities. While skiing remains our primary focus, members can also securely share other outdoor equipment such as hiking, camping and photography gear within their trusted network. Skister is not a marketplace. We never facilitate payments and encourage sharing only between people who know and trust each other. You list gear, invite friends and family, and track handoffs and returns with helpful reminders. Modern tools for skiers (DIN, ski length, packing, snow conditions and more) support adventures beyond winter too.</p>
     </section>
 
     <section class="page-card" aria-labelledby="ski-network">
@@ -219,17 +258,55 @@
         <li><strong style="color: var(--text-white);">Scan QR</strong> — identify gear or confirm a handoff</li>
       </ul>
       <p style="margin-top: 0.75rem;"><strong style="color: var(--text-white);">Quick Access</strong> shortcuts: Find Ski Gear, My Reservations, My Gear and Invite Friends.</p>
-      <div class="steps" style="margin-top: 1rem;" aria-hidden="true">
-        <img src="assets/images/home/borrow.jpg" alt="" width="400" height="300" loading="lazy" decoding="async" style="width:100%;height:auto;border-radius:14px;object-fit:cover;aspect-ratio:4/3;">
-        <img src="assets/images/home/share.jpg" alt="" width="400" height="300" loading="lazy" decoding="async" style="width:100%;height:auto;border-radius:14px;object-fit:cover;aspect-ratio:4/3;">
-        <img src="assets/images/home/return.jpg" alt="" width="400" height="300" loading="lazy" decoding="async" style="width:100%;height:auto;border-radius:14px;object-fit:cover;aspect-ratio:4/3;">
-        <img src="assets/images/home/scan.jpg" alt="" width="400" height="300" loading="lazy" decoding="async" style="width:100%;height:auto;border-radius:14px;object-fit:cover;aspect-ratio:4/3;">
+      <div class="steps" style="margin-top: 1rem;">
+        <figure class="help-shot">
+          <img src="assets/images/home/borrow.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+          <figcaption>Borrow Gear</figcaption>
+        </figure>
+        <figure class="help-shot">
+          <img src="assets/images/home/share.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+          <figcaption>Share My Gear</figcaption>
+        </figure>
+        <figure class="help-shot">
+          <img src="assets/images/home/return.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+          <figcaption>Return Equipment</figcaption>
+        </figure>
+        <figure class="help-shot">
+          <img src="assets/images/home/scan.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+          <figcaption>Scan QR</figcaption>
+        </figure>
       </div>
     </section>
 
     <section class="page-card" aria-labelledby="tools-premium">
       <h2 id="tools-premium">Tools & Premium</h2>
-      <p><strong style="color: var(--text-white);">Tools:</strong> Winter utilities (DIN calculator, ski length finder, boot size converter), planning (trip planner, packing checklist), outdoor tools (snow conditions, gear maintenance), and more — available in the app Tools hub.</p>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.85rem;margin:1rem 0 1.25rem;">
+        <figure class="help-shot">
+          <img src="assets/images/tools/din.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+          <figcaption>DIN Calculator</figcaption>
+        </figure>
+        <figure class="help-shot">
+          <img src="assets/images/tools/trip.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+          <figcaption>Trip Planner</figcaption>
+        </figure>
+        <figure class="help-shot">
+          <img src="assets/images/tools/maintenance.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+          <figcaption>Gear Maintenance</figcaption>
+        </figure>
+        <figure class="help-shot">
+          <img src="assets/images/tools/emergency.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+          <figcaption>Emergency Info</figcaption>
+        </figure>
+        <figure class="help-shot">
+          <img src="assets/images/tools/packing.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+          <figcaption>Packing Checklist</figcaption>
+        </figure>
+        <figure class="help-shot">
+          <img src="assets/images/tools/snow.jpg" alt="" width="400" height="300" loading="lazy" decoding="async">
+          <figcaption>Snow Conditions</figcaption>
+        </figure>
+      </div>
+      <p><strong style="color: var(--text-white);">Tools:</strong> Winter utilities (DIN calculator, ski length finder, boot size converter) plus a Snow Conditions preview (live mountain data under development), planning (trip planner, packing checklist), equipment (gear maintenance), and <strong style="color: var(--text-white);">Emergency Information</strong> (verified mountain rescue numbers for Germany, Austria, Switzerland, France and Italy, with first-aid tips and offline cache) — available in the app Tools hub under Safety.</p>
       <p><strong style="color: var(--text-white);">Free:</strong> Unlimited equipment, invites, calendar, reservations, QR handoff, photos, Ski Network and tools.</p>
       <p><strong style="color: var(--text-white);">Premium:</strong> Optional automation and insights — automatic reminders, maintenance logging, usage analytics and network gap alerts. Sharing is never behind a paywall. See <a href="/#pricing" style="color: var(--primary-green); text-decoration: none;">Pricing</a> on the homepage.</p>
     </section>
@@ -239,9 +316,12 @@
       <ul style="padding-left: 1.2rem; display: grid; gap: 0.5rem;">
         <li><strong style="color: var(--text-white);">Condition checks:</strong> take photos before/after.</li>
         <li><strong style="color: var(--text-white);">Clear expectations:</strong> agree on pickup/return time and any special care instructions.</li>
-        <li><strong style="color: var(--text-white);">Ratings:</strong> leave honest feedback to build trust.</li>
+        <li><strong style="color: var(--text-white);">My Adventure Profile:</strong> a trusted outdoor identity with Home Ski Network, interests, statistics, achievements and timeline — designed for confidence before sharing gear, not social media.</li>
+        <li><strong style="color: var(--text-white);">Trust Score:</strong> calculated automatically from successful rentals, returns, verification and community activity. Tap Community Trust on your profile for the breakdown — it cannot be edited manually.</li>
+        <li><strong style="color: var(--text-white);">Community Endorsements:</strong> after a completed borrow/lend together, members can leave one predefined endorsement. Only anonymous counts are shown.</li>
+        <li><strong style="color: var(--text-white);">Mountain emergencies:</strong> open <strong style="color: var(--text-white);">Tools → Emergency Information</strong> for verified contacts (emergency, mountain rescue, police, medical, avalanche where applicable), official rescue websites, and short first-aid guidance. Data works offline after the first load. This does not replace calling local emergency services.</li>
       </ul>
-      <p style="margin-top: 0.5rem;">Skister helps you track and communicate—no one can “guarantee safety”, but good habits reduce problems.</p>
+      <p style="margin-top: 0.5rem;">Skister helps you track and communicate—no one can “guarantee safety”, but good habits reduce problems. In a real mountain emergency, always dial the local emergency number.</p>
     </section>
 
     <section class="page-card" aria-labelledby="faq">
@@ -250,6 +330,14 @@
         <details>
           <summary>What is a Ski Network?</summary>
           <p style="margin-top: 0.6rem;">A Ski Network is your private circle around where you ski — friends, family, ski clubs and local groups. A ski resort is a real-world place; your Ski Network in Skister is the private sharing layer in the app. Within it you can also share camping, hiking and other outdoor equipment.</p>
+        </details>
+        <details>
+          <summary>What is My Adventure Profile?</summary>
+          <p style="margin-top: 0.6rem;">Your Profile is a premium outdoor identity — who you are, what you enjoy, your Home Ski Network, community statistics, Trust Score, endorsements, achievements and adventure timeline. Skiing stays primary; camping, hiking and other outdoor interests appear as supporting activities.</p>
+        </details>
+        <details>
+          <summary>How is the Trust Score calculated?</summary>
+          <p style="margin-top: 0.6rem;">Automatically from successful lends and borrows, completed returns, account verification and community activity. You can view the checklist breakdown in the app. It cannot be edited manually.</p>
         </details>
         <details>
           <summary>Do you insure gear?</summary>
@@ -261,7 +349,7 @@
         </details>
         <details>
           <summary>Who can see my gear?</summary>
-          <p style="margin-top: 0.6rem;">Only your network (the people you invite or connect with). We don’t sell user data.</p>
+          <p style="margin-top: 0.6rem;">Only your network (the people you invite or connect with). We don’t sell user data. Timeline privacy can be set to Only Me, Trusted Network, or Public (future-ready).</p>
         </details>
         <details>
           <summary>How do I get support?</summary>
