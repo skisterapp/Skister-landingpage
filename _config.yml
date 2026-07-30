@@ -1,0 +1,3 @@
+# Ensure GitHub Pages / Jekyll publishes Digital Asset Links (if Jekyll runs).
+include:
+  - .well-known
