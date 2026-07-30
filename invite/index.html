@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <script src="/scripts/site-canonical.js"></script>
+  <meta name="robots" content="noindex,follow">
+  <meta name="theme-color" content="#228B22">
+  <link rel="canonical" href="https://skister.app/invite">
+  <title>Skister — Invitation</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <style>
+    :root {
+      --primary-green: #228B22;
+      --primary-green-light: #2da82d;
+      --bg-dark: #0a0a0a;
+      --text-white: #ffffff;
+      --text-gray: #b0b0b0;
+      --surface: #141414;
+      --border: rgba(255, 255, 255, 0.12);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100dvh;
+      font-family: Outfit, "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(34, 139, 34, 0.28), transparent 55%),
+        var(--bg-dark);
+      color: var(--text-white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: max(1.5rem, env(safe-area-inset-top)) 1.25rem max(1.5rem, env(safe-area-inset-bottom));
+      line-height: 1.5;
+    }
+    .card {
+      width: 100%;
+      max-width: 26rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.75rem 1.5rem;
+      text-align: center;
+    }
+    .logo {
+      height: 2.5rem;
+      width: auto;
+      margin: 0 auto 1.25rem;
+      display: block;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    p { color: var(--text-gray); font-size: 0.95rem; margin-bottom: 1rem; }
+    .code-box {
+      margin: 1rem 0 1.25rem;
+      padding: 0.85rem 1rem;
+      border-radius: 0.75rem;
+      border: 1px dashed rgba(34, 139, 34, 0.45);
+      background: rgba(34, 139, 34, 0.08);
+    }
+    .code-label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-gray);
+      margin-bottom: 0.35rem;
+    }
+    .code {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-white);
+      word-break: break-all;
+    }
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    a.btn, button.btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.75rem;
+      padding: 0.7rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: var(--primary-green);
+      color: #fff;
+    }
+    .btn-primary:hover, .btn-primary:focus-visible {
+      background: var(--primary-green-light);
+      outline: none;
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-white);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover, .btn-secondary:focus-visible {
+      border-color: rgba(255, 255, 255, 0.28);
+      outline: none;
+    }
+    .hint {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-gray);
+    }
+    .home-link {
+      margin-top: 1.25rem;
+      color: var(--primary-green-light);
+      font-size: 0.875rem;
+      text-decoration: none;
+    }
+    .home-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <main class="card" role="main">
+    <img class="logo" src="/assets/skister-app-icon.png" alt="Skister" onerror="this.style.display='none'">
+    <h1 id="title">You’re invited to Skister</h1>
+    <p id="subtitle">Open the Skister app to join your friend’s private ski gear network.</p>
+    <div class="code-box" id="codeBox" hidden>
+      <span class="code-label" id="codeLabel">Invitation code</span>
+      <span class="code" id="codeValue"></span>
+    </div>
+    <div class="actions">
+      <a class="btn btn-primary" id="openApp" href="skister://invite">Open in Skister app</a>
+      <button type="button" class="btn btn-secondary" id="copyCode" hidden>Copy invitation code</button>
+    </div>
+    <p class="hint" id="hint">If the app isn’t installed yet, copy the code and enter it when you sign up.</p>
+    <a class="home-link" href="/">Back to skister.app</a>
+  </main>
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var raw =
+        params.get('code') ||
+        params.get('invite') ||
+        params.get('inviteCode') ||
+        params.get('ref') ||
+        params.get('referral') ||
+        params.get('referralCode') ||
+        '';
+      var pathMatch = window.location.pathname.match(/\/invite\/([A-Za-z0-9-]+)/i);
+      if (!raw && pathMatch) raw = pathMatch[1];
+      var code = String(raw).trim().toUpperCase();
+
+      var openApp = document.getElementById('openApp');
+      var codeBox = document.getElementById('codeBox');
+      var codeValue = document.getElementById('codeValue');
+      var copyBtn = document.getElementById('copyCode');
+
+      if (code) {
+        try {
+          localStorage.setItem('skister_pending_referral_code', code);
+        } catch (_) {}
+        codeBox.hidden = false;
+        codeValue.textContent = code;
+        copyBtn.hidden = false;
+        openApp.href = 'skister://invite?code=' + encodeURIComponent(code);
+      }
+
+      copyBtn.addEventListener('click', function () {
+        if (!code) return;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(code).then(function () {
+            copyBtn.textContent = 'Copied';
+            setTimeout(function () { copyBtn.textContent = 'Copy invitation code'; }, 1800);
+          }).catch(function () {
+            window.prompt('Copy invitation code', code);
+          });
+        } else {
+          window.prompt('Copy invitation code', code);
+        }
+      });
+
+      // Attempt to open the native app once; stay on this page as fallback.
+      // Android Chrome prefers intent://; iOS/other use skister:// custom scheme.
+      if (code) {
+        var isAndroid = /Android/i.test(navigator.userAgent || '');
+        var deepLink = 'skister://invite?code=' + encodeURIComponent(code);
+        var intentLink =
+          'intent://invite?code=' + encodeURIComponent(code) +
+          '#Intent;scheme=skister;package=com.skister.app;S.browser_fallback_url=' +
+          encodeURIComponent(window.location.href) + ';end';
+        openApp.href = isAndroid ? intentLink : deepLink;
+        setTimeout(function () {
+          if (isAndroid) {
+            window.location.href = intentLink;
+            return;
+          }
+          var iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          iframe.src = deepLink;
+          document.body.appendChild(iframe);
+          setTimeout(function () {
+            if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+          }, 1500);
+        }, 400);
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["TEAMID.com.skister.app"],
+        "paths": ["/invite", "/invite/*"]
+      }
+    ]
+  }
+}
