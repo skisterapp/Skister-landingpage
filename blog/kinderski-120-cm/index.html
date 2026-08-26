@@ -23,6 +23,8 @@
   <link rel="canonical" href="https://skister.app/blog/kinderski-120-cm/">
   <link rel="icon" type="image/png" href="../../assets/favicon.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+  <link rel="preconnect" href="https://news.google.com" crossorigin>
+  <script async src="https://news.google.com/swg/js/v1/publisher.js"></script>
   <style>
     :root { --primary-green:#228B22; --primary-green-light:#2da82d; --bg-card:#1a1a1a; --text-gray:#b0b0b0; --border-color:rgba(255,255,255,0.1); }
     body { font-family: system-ui, sans-serif; background:#0a0a0a; color:#fff; line-height:1.6; max-width:760px; margin:0 auto; padding:2rem 1.25rem 4rem; }
@@ -80,6 +82,9 @@
     .comment-item .comment-author { font-weight:600; color:var(--primary-green); margin-bottom:0.35rem; }
     .comment-item .comment-date { font-size:0.8rem; color:var(--text-gray); margin-bottom:0.5rem; }
     .comment-item .comment-body { color:#e0e0e0; line-height:1.5; }
+    .preferred-sources-section { margin-bottom:1.5rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border-color); }
+    .preferred-sources-lead { color:var(--text-gray); font-size:0.95rem; margin:0 0 0.85rem; line-height:1.5; max-width:42ch; }
+    .preferred-sources-section [google-add-preferred-source-btn] { display:inline-block; max-width:100%; }
   </style>
 </head>
 <body data-blog-slug="kinderski-120-cm">
@@ -316,6 +321,10 @@ Wenn das Kind deutlich über 155 cm groß ist oder sportlich und dynamisch fähr
       </details>
     </div>
     <div class="blog-engagement" id="blog-engagement">
+      <section class="preferred-sources-section" aria-label="Add Skister as a preferred source in Google Search">
+        <p class="preferred-sources-lead">Get ski tips and guides from Skister in Google Search.</p>
+        <div google-add-preferred-source-btn data-theme="dark"></div>
+      </section>
       <div class="like-section">
         <span class="like-count" id="like-count">0 likes</span>
         <button type="button" class="btn-like" id="btn-like" aria-label="Like this post">
