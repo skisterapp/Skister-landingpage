@@ -45,7 +45,9 @@
     <link rel="apple-touch-icon" href="assets/favicon.png">
     <link rel="preconnect" href="https://ayomhapkzckbhgwxenwr.supabase.co" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://news.google.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="assets/preferred-sources.js" defer></script>
     
     <style>
         * {
@@ -492,6 +494,22 @@
             padding-top: 2rem;
             border-top: 1px solid var(--border-color);
         }
+        .preferred-sources-section {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .preferred-sources-lead {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            margin: 0 0 0.85rem;
+            line-height: 1.5;
+            max-width: 42ch;
+        }
+        .preferred-sources-section [google-add-preferred-source-btn] {
+            display: inline-block;
+            max-width: 100%;
+        }
         .like-section {
             display: flex;
             align-items: center;
@@ -882,6 +900,10 @@
                     </div>
                     
                     <div class="blog-engagement" id="blog-engagement">
+                        <section class="preferred-sources-section" aria-label="Add Skister as a preferred source in Google Search">
+                            <p class="preferred-sources-lead">Get ski tips and guides from Skister in Google Search.</p>
+                            <div google-add-preferred-source-btn data-theme="dark"></div>
+                        </section>
                         <div class="like-section">
                             <span class="like-count" id="like-count">0 likes</span>
                             <button type="button" class="btn-like" id="btn-like" aria-label="Like this post">
@@ -906,6 +928,9 @@
             resolveContentImages();
             afterPostRendered();
             loadRelatedPostsNav(post.slug);
+            if (window.SkisterPreferredSources && typeof window.SkisterPreferredSources.ensureLoaded === 'function') {
+                window.SkisterPreferredSources.ensureLoaded();
+            }
         }
 
         function resolveContentImages() {

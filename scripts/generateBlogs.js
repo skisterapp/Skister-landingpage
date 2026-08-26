@@ -20,6 +20,25 @@ const OUT = path.join(__dirname, '..')
 const BLOG_IMAGES_PUBLIC_BASE =
   `${SUPABASE_URL}/storage/v1/object/public/make-080ebf84-blog-images`
 
+/** Google Preferred Sources — https://developers.google.com/search/docs/appearance/preferred-sources */
+const PREFERRED_SOURCES_HEAD = [
+  '<link rel="preconnect" href="https://news.google.com" crossorigin>',
+  '<script async src="https://news.google.com/swg/js/v1/publisher.js"></script>',
+].join('\n  ')
+
+const PREFERRED_SOURCES_CSS = [
+  '.preferred-sources-section { margin-bottom:1.5rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border-color); }',
+  '.preferred-sources-lead { color:var(--text-gray); font-size:0.95rem; margin:0 0 0.85rem; line-height:1.5; max-width:42ch; }',
+  '.preferred-sources-section [google-add-preferred-source-btn] { display:inline-block; max-width:100%; }',
+].join('\n    ')
+
+const PREFERRED_SOURCES_ENGAGEMENT_HTML = [
+  '<section class="preferred-sources-section" aria-label="Add Skister as a preferred source in Google Search">',
+  '  <p class="preferred-sources-lead">Get ski tips and guides from Skister in Google Search.</p>',
+  '  <div google-add-preferred-source-btn data-theme="dark"></div>',
+  '</section>',
+].join('\n      ')
+
 function stripHtml(html) {
   return String(html || '')
     .replace(/<[^>]+>/g, ' ')
@@ -171,6 +190,7 @@ function buildArticlePage({
   <link rel="canonical" href="${escapeHtml(canonical)}">
   <link rel="icon" type="image/png" href="../../assets/favicon.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+  ${PREFERRED_SOURCES_HEAD}
   <style>
     :root { --primary-green:#228B22; --primary-green-light:#2da82d; --bg-card:#1a1a1a; --text-gray:#b0b0b0; --border-color:rgba(255,255,255,0.1); }
     body { font-family: system-ui, sans-serif; background:#0a0a0a; color:#fff; line-height:1.6; max-width:760px; margin:0 auto; padding:2rem 1.25rem 4rem; }
@@ -228,6 +248,7 @@ function buildArticlePage({
     .comment-item .comment-author { font-weight:600; color:var(--primary-green); margin-bottom:0.35rem; }
     .comment-item .comment-date { font-size:0.8rem; color:var(--text-gray); margin-bottom:0.5rem; }
     .comment-item .comment-body { color:#e0e0e0; line-height:1.5; }
+    ${PREFERRED_SOURCES_CSS}
   </style>
 </head>
 <body data-blog-slug="${escapeHtml(slug)}">
@@ -249,6 +270,7 @@ function buildArticlePage({
       </details>
     </div>
     <div class="blog-engagement" id="blog-engagement">
+      ${PREFERRED_SOURCES_ENGAGEMENT_HTML}
       <div class="like-section">
         <span class="like-count" id="like-count">0 likes</span>
         <button type="button" class="btn-like" id="btn-like" aria-label="Like this post">
