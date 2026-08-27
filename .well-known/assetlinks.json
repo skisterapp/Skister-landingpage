@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.skister.app",
+      "sha256_cert_fingerprints": [
+        "7DFBA759EE1D894F08CB7F9379FBF07EFB1E1478AA01B9E7C4728E8B6C9F443F",
+        "32E5CB172B9DD82420A3DB0FB3BB918B8AE6EB3E9B79057FCC5C99E99BC8FC0D"
+      ]
+    }
+  }
+]

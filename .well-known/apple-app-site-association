@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["YX8N422BWQ.com.skister.app"],
+        "paths": ["/invite", "/invite/*"]
+      }
+    ]
+  }
+}
