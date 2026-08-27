@@ -3,7 +3,7 @@
     "apps": [],
     "details": [
       {
-        "appIDs": ["TEAMID.com.skister.app"],
+        "appIDs": ["YX8N422BWQ.com.skister.app"],
         "paths": ["/invite", "/invite/*"]
       }
     ]
