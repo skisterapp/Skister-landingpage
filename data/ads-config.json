@@ -14,5 +14,5 @@
     "minWordsForEndAd": 800,
     "reserveMinHeightPx": 280
   },
-  "notes": "Publisher ID retrieved from authenticated AdSense account pub-5181147751039244 (skister.app@gmail.com). Ads remain disabled until real ad unit slot IDs are available. Sites/Ads UI was blocked by browser ad blocker during setup."
+  "notes": "Publisher ID from authenticated AdSense account pub-5181147751039244 (skister.app@gmail.com / Benjamin Fritz). Hosted AdMob account upgraded via adsense signup/create flow; skister.app submitted. Site status Requires review. Ownership verification meta tag deployed. Ads remain enabled=false until site approved and real ad unit slot IDs exist."
 }
