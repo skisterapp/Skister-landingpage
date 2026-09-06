@@ -1,7 +1,7 @@
 {
   "enabled": false,
   "provider": "adsense",
-  "publisherId": "",
+  "publisherId": "ca-pub-5181147751039244",
   "label": "Advertisement",
   "slots": {
     "inArticle": "",
@@ -14,5 +14,5 @@
     "minWordsForEndAd": 800,
     "reserveMinHeightPx": 280
   },
-  "notes": "Set enabled=true and a real ca-pub-XXXX publisherId plus ad unit slot IDs before going live. Never invent IDs."
+  "notes": "Publisher ID retrieved from authenticated AdSense account pub-5181147751039244 (skister.app@gmail.com). Ads remain disabled until real ad unit slot IDs are available. Sites/Ads UI was blocked by browser ad blocker during setup."
 }
