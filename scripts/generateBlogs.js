@@ -17,6 +17,7 @@ const {
   injectInContentAds,
   buildEndOfArticleAdHtml,
   adsClientScriptTag,
+  adsenseAccountMetaTag,
   adsCss,
   countWordsFromHtml,
 } = require('./blogAds')
@@ -339,12 +340,14 @@ function buildArticlePage({
       ? `<figure class="prose-featured"><img src="${escapeHtml(ogImage)}" alt="${escapeHtml(title)}" loading="eager" decoding="async" width="1200" height="630"></figure>`
       : ''
   const adsScript = adsClientScriptTag(ADS_CONFIG)
+  const adsenseMeta = adsenseAccountMetaTag(ADS_CONFIG)
   const adsStyles = isAdsLive(ADS_CONFIG) ? adsCss() : ''
   return `<!DOCTYPE html>
 <html lang="${escapeHtml(pageLang)}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  ${adsenseMeta}
   <script src="/scripts/site-canonical.js"></script>
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">
@@ -838,6 +841,7 @@ async function main() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  ${adsenseAccountMetaTag(ADS_CONFIG)}
   <script src="/scripts/site-canonical.js"></script>
   <title>${escapeHtml(blogIndexTitle)}</title>
   <meta name="description" content="${escapeHtml(blogIndexDescription)}">

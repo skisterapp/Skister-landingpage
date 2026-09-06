@@ -144,6 +144,11 @@ function buildEndOfArticleAdHtml(config) {
   })
 }
 
+function adsenseAccountMetaTag(config) {
+  if (!isValidPublisherId(config && config.publisherId)) return ''
+  return `<meta name="google-adsense-account" content="${escapeHtml(String(config.publisherId).trim())}">`
+}
+
 function adsClientScriptTag(config) {
   if (!isAdsLive(config)) return ''
   return '<script src="/assets/blog-ads.js" defer></script>'
@@ -166,6 +171,7 @@ module.exports = {
   injectInContentAds,
   buildEndOfArticleAdHtml,
   adsClientScriptTag,
+  adsenseAccountMetaTag,
   adsCss,
   countWordsFromHtml,
 }
