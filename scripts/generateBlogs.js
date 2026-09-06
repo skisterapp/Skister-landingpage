@@ -515,35 +515,46 @@ function stripBase64Images(html) {
 
 function injectContextualLinksIntoBodyHtml({ bodyHtml, relatedPosts, maxLinks = 4 }) {
   if (!bodyHtml || typeof bodyHtml !== 'string') return ''
+  const GENERIC = new Set([
+    'skischuhe',
+    'skigebiete',
+    'skiverleih',
+    'skifahren',
+    'kinderski',
+    'ausrüstung',
+    'ski',
+    'besten',
+    'nähe',
+    'welche',
+    'größe',
+  ])
   const candidates = (relatedPosts || [])
     .filter((p) => p && p.slug && p.title)
     .slice(0, 8)
     .map((p) => {
       const title = String(p.title || '').trim()
-      // Prefer shorter distinctive phrases from the title for natural in-body matches.
+      // Only multi-word / distinctive phrases — never single generic tokens.
+      // Single-word matches corrupt span-wrapped CMS HTML and can rewrite href text.
       const phrases = [title]
         .concat(
           title
-            .split(/[:–—|-]/)
+            .split(/[:–—|]/)
             .map((s) => s.trim())
-            .filter((s) => s.length >= 8 && s.length <= 48),
-        )
-        .concat(
-          title
-            .split(/\s+/)
-            .filter((w) => w.length >= 6)
-            .slice(0, 3),
+            .filter((s) => s.split(/\s+/).length >= 2 && s.length >= 12 && s.length <= 64),
         )
       const uniq = []
       const seen = new Set()
       for (const ph of phrases) {
         const key = ph.toLowerCase()
         if (seen.has(key)) continue
+        if (GENERIC.has(key)) continue
+        if (ph.split(/\s+/).length < 2 && ph.length < 16) continue
         seen.add(key)
         uniq.push(ph)
       }
       return { slug: p.slug, phrases: uniq }
     })
+    .filter((c) => c.phrases.length > 0)
   if (candidates.length === 0) return bodyHtml
 
   const parts = bodyHtml.split(/(<[^>]+>)/g)
@@ -558,21 +569,23 @@ function injectContextualLinksIntoBodyHtml({ bodyHtml, relatedPosts, maxLinks = 
       out.push(part)
       continue
     }
-    if (anchorDepth > 0 || injected >= maxLinks) {
+    if (anchorDepth > 0 || injected >= maxLinks || /</.test(part)) {
       out.push(part)
       continue
     }
     let seg = part
+    let changedThisSeg = false
     for (const p of candidates) {
-      if (injected >= maxLinks) break
+      if (injected >= maxLinks || changedThisSeg) break
       const href = blogRelPath(p.slug)
       for (const phrase of p.phrases) {
-        if (injected >= maxLinks) break
-        if (!phrase || phrase.length < 5) continue
+        if (injected >= maxLinks || changedThisSeg) break
+        if (!phrase || phrase.length < 12) continue
         const re = new RegExp(`(^|[^\\wÄÖÜäöüß])(${escapeRegExp(phrase)})(?![\\wÄÖÜäöüß])`, 'i')
         if (!re.test(seg)) continue
         seg = seg.replace(re, (_full, before, matched) => {
           injected++
+          changedThisSeg = true
           return `${before}<a href="${escapeHtml(href)}" class="contextual-link">${escapeHtml(matched)}</a>`
         })
         break
