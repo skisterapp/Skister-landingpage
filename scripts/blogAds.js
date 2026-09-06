@@ -47,21 +47,34 @@ function countWordsFromHtml(html) {
     .filter(Boolean).length
 }
 
-function buildAdSlotHtml({ slotId, publisherId, label, minHeight, position }) {
+function buildAdSlotHtml({ slotId, publisherId, label, minHeight, position, format }) {
   const safeLabel = escapeHtml(label || 'Advertisement')
   const safeSlot = escapeHtml(slotId)
   const safePub = escapeHtml(publisherId)
   const h = Math.max(90, Number(minHeight) || 280)
+  const isInArticle = String(format || '').toLowerCase() === 'in-article'
+  const insAttrs = isInArticle
+    ? [
+        `    <ins class="adsbygoogle"`,
+        `      style="display:block;text-align:center;min-height:${h}px"`,
+        `      data-ad-layout="in-article"`,
+        `      data-ad-format="fluid"`,
+        `      data-ad-client="${safePub}"`,
+        `      data-ad-slot="${safeSlot}"></ins>`,
+      ]
+    : [
+        `    <ins class="adsbygoogle"`,
+        `      style="display:block;min-height:${h}px"`,
+        `      data-ad-client="${safePub}"`,
+        `      data-ad-slot="${safeSlot}"`,
+        `      data-ad-format="auto"`,
+        `      data-full-width-responsive="true"></ins>`,
+      ]
   return [
     `<aside class="skister-ad skister-ad--${escapeHtml(position)}" data-ad-position="${escapeHtml(position)}" aria-label="${safeLabel}">`,
     `  <p class="skister-ad-label">${safeLabel}</p>`,
     `  <div class="skister-ad-frame" style="min-height:${h}px">`,
-    `    <ins class="adsbygoogle"`,
-    `      style="display:block;min-height:${h}px"`,
-    `      data-ad-client="${safePub}"`,
-    `      data-ad-slot="${safeSlot}"`,
-    `      data-ad-format="auto"`,
-    `      data-full-width-responsive="true"></ins>`,
+    ...insAttrs,
     `  </div>`,
     `</aside>`,
   ].join('\n')
@@ -83,6 +96,7 @@ function injectInContentAds({ bodyHtml, config }) {
   const slotId = String(config.slots.inArticle || '').trim()
   const publisherId = String(config.publisherId).trim()
   const label = config.label || 'Advertisement'
+  const format = String((config.formats && config.formats.inArticle) || 'in-article')
 
   if (words < minFirst) return html
 
@@ -98,6 +112,7 @@ function injectInContentAds({ bodyHtml, config }) {
       label,
       minHeight: reserve,
       position: 'mid-1',
+      format,
     })
     return [...paras.slice(0, at), ad, ...paras.slice(at)].join('')
   }
@@ -124,6 +139,7 @@ function injectInContentAds({ bodyHtml, config }) {
         label,
         minHeight: reserve,
         position: pos,
+        format,
       }),
     )
   }
@@ -141,6 +157,7 @@ function buildEndOfArticleAdHtml(config) {
     label: config.label || 'Advertisement',
     minHeight: Number(placement.reserveMinHeightPx) || 280,
     position: 'end',
+    format: String((config.formats && config.formats.endOfArticle) || 'display'),
   })
 }
 

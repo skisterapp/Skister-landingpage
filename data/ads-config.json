@@ -4,8 +4,12 @@
   "publisherId": "ca-pub-5181147751039244",
   "label": "Advertisement",
   "slots": {
-    "inArticle": "",
-    "endOfArticle": ""
+    "inArticle": "5558401208",
+    "endOfArticle": "3599181226"
+  },
+  "formats": {
+    "inArticle": "in-article",
+    "endOfArticle": "display"
   },
   "placement": {
     "minWordsForFirstAd": 500,
@@ -14,5 +18,5 @@
     "minWordsForEndAd": 800,
     "reserveMinHeightPx": 280
   },
-  "notes": "Publisher ID from authenticated AdSense account pub-5181147751039244 (skister.app@gmail.com / Benjamin Fritz). Hosted AdMob account upgraded via adsense signup/create flow; skister.app submitted. Site status Requires review. Ownership verification meta tag deployed. Ads remain enabled=false until site approved and real ad unit slot IDs exist."
+  "notes": "Account upgraded from hosted AdMob AdSense. Site skister.app verified + review requested (Getting ready / Requires review). Units created: in-article 5558401208, display 3599181226. Keep enabled=false until Google approves the site; then regenerate blogs and set enabled=true."
 }
