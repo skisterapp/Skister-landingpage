@@ -11,6 +11,15 @@
 
 const fs = require('fs')
 const path = require('path')
+const {
+  loadAdsConfig,
+  isAdsLive,
+  injectInContentAds,
+  buildEndOfArticleAdHtml,
+  adsClientScriptTag,
+  adsCss,
+  countWordsFromHtml,
+} = require('./blogAds')
 
 const SUPABASE_URL = process.env.SKISTER_SUPABASE_URL || 'https://ayomhapkzckbhgwxenwr.supabase.co'
 const ANON_KEY = process.env.SUPABASE_ANON_KEY || ''
@@ -19,6 +28,7 @@ const SITE_URL = (process.env.SKISTER_SITE_URL || 'https://skister.app').replace
 const OUT = path.join(__dirname, '..')
 const BLOG_IMAGES_PUBLIC_BASE =
   `${SUPABASE_URL}/storage/v1/object/public/make-080ebf84-blog-images`
+const ADS_CONFIG = loadAdsConfig(OUT)
 
 /** Google Preferred Sources — https://developers.google.com/search/docs/appearance/preferred-sources */
 const PREFERRED_SOURCES_HEAD = [
@@ -120,16 +130,173 @@ async function fetchSiteSeoSafe() {
   }
 }
 
-function articleJsonLd(p, imageUrl) {
-  const o = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: p.title || '',
-    datePublished: p.publishedTime || undefined,
-    author: { '@type': 'Organization', name: p.author || 'Skister' },
+function detectContentLang({ title, description, bodyHtml }) {
+  const sample = normalizeText(`${title || ''} ${description || ''} ${stripHtml(bodyHtml || '').slice(0, 1200)}`)
+  if (/[äöüß]|skigebiet|skiverleih|skifahren|ausrüstung|schweiz|österreich/.test(sample)) return 'de'
+  return 'en'
+}
+
+function topicKeyFromPost(p) {
+  const blob = normalizeText(`${p.slug || ''} ${p.title || ''} ${p.metaDescription || ''}`)
+  if (/(skiverleih|verleih|mieten|leihen|rental)/.test(blob)) return 'rentals'
+  if (/(kind|kinder|familie|eltern|kindergarten|kids|child)/.test(blob)) return 'kids'
+  if (/(anfänger|lernen|beginner|erste|basics)/.test(blob)) return 'beginners'
+  if (/(skischuh|bindung|helm|ausrüstung|equipment|z-wert|skiwachs)/.test(blob)) return 'gear'
+  if (/(kosten|preis|budget|sparen|cost)/.test(blob)) return 'costs'
+  if (/(skigebiet|resort|alpen|urlaub|reise|trip|rodel)/.test(blob)) return 'trips'
+  return 'general'
+}
+
+function pickRelatedPosts({ current, pool, limit = 5 }) {
+  const topic = topicKeyFromPost(current)
+  const scored = (pool || [])
+    .filter((p) => p && p.slug && p.slug !== current.slug)
+    .map((p) => {
+      let score = 0
+      if (topicKeyFromPost(p) === topic) score += 5
+      const a = normalizeText(current.title || '')
+      const b = normalizeText(p.title || '')
+      const tokens = a.split(' ').filter((t) => t.length > 4).slice(0, 8)
+      for (const t of tokens) {
+        if (b.includes(t)) score += 1
+      }
+      const age = Date.parse(p.publishedTime || '') || 0
+      return { p, score, age }
+    })
+    .sort((x, y) => y.score - x.score || y.age - x.age)
+  const out = []
+  const seen = new Set()
+  for (const row of scored) {
+    if (out.length >= limit) break
+    if (seen.has(row.p.slug)) continue
+    seen.add(row.p.slug)
+    out.push(row.p)
   }
-  if (imageUrl) o.image = imageUrl
-  return JSON.stringify(o)
+  return out
+}
+
+function buildStaticRelatedHtml(relatedPosts) {
+  const items = (relatedPosts || [])
+    .filter((p) => p && p.slug && p.title)
+    .slice(0, 5)
+  if (!items.length) return ''
+  const lis = items
+    .map((p) => {
+      const href = blogRelPath(p.slug)
+      return `<li><a href="${escapeHtml(href)}">${escapeHtml(p.title)}</a></li>`
+    })
+    .join('\n      ')
+  return [
+    '<aside class="related-posts-static" aria-label="Ähnliche Artikel">',
+    '  <h2>Ähnliche Artikel</h2>',
+    `  <ul>\n      ${lis}\n    </ul>`,
+    '</aside>',
+  ].join('\n    ')
+}
+
+function buildSoftProductCtaHtml({ topic }) {
+  if (topic === 'general') return ''
+  return [
+    '<aside class="product-soft-cta" aria-label="Skister">',
+    '  <p>Ski- und Outdoor-Ausrüstung im Freundes- oder Familienkreis teilen statt jedes Mal neu kaufen?',
+    '  <a href="/#download">Skister</a> hilft dir, Inventar und Übergaben in deinem privaten Netzwerk zu organisieren.</p>',
+    '</aside>',
+  ].join(' ')
+}
+
+function articleJsonLd({
+  title,
+  description,
+  canonical,
+  imageUrl,
+  author,
+  publishedTime,
+  modifiedTime,
+  lang,
+}) {
+  const publisher = {
+    '@type': 'Organization',
+    name: 'Skister',
+    url: 'https://skister.app/',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://skister.app/assets/skister-app-icon.png',
+    },
+  }
+  const article = {
+    '@type': 'BlogPosting',
+    headline: title || '',
+    description: description || undefined,
+    datePublished: publishedTime || undefined,
+    dateModified: modifiedTime || publishedTime || undefined,
+    inLanguage: lang || 'de',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': canonical,
+    },
+    author: { '@type': 'Organization', name: author || 'Skister' },
+    publisher,
+  }
+  if (imageUrl) article.image = [imageUrl]
+
+  const breadcrumb = {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://skister.app/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: 'https://skister.app/blog/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: title || 'Article',
+        item: canonical,
+      },
+    ],
+  }
+
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [article, breadcrumb],
+  })
+}
+
+function blogIndexJsonLd({ title, description, canonical, posts }) {
+  const itemListElement = (posts || []).slice(0, 40).map((p, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    url: blogCanonicalUrl({ base: 'https://skister.app', slug: p.slug }),
+    name: p.title || p.slug,
+  }))
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Blog',
+        name: title,
+        description,
+        url: canonical,
+        inLanguage: 'de',
+        publisher: {
+          '@type': 'Organization',
+          name: 'Skister',
+          url: 'https://skister.app/',
+        },
+      },
+      {
+        '@type': 'ItemList',
+        itemListElement,
+      },
+    ],
+  })
 }
 
 function addLazyAttributesToBodyHtml(html) {
@@ -155,18 +322,26 @@ function buildArticlePage({
   siteName,
   author,
   publishedTime,
+  modifiedTime,
   maxImagePreview,
   bodyHtml,
   slug,
+  lang,
+  relatedPostsHtml,
+  softCtaHtml,
+  endAdHtml,
 }) {
   const mi = maxImagePreview || 'large'
+  const pageLang = lang || 'de'
   const hasInlineImage = typeof bodyHtml === 'string' && /<img\b/i.test(bodyHtml)
   const featuredBlock =
     ogImage && !hasInlineImage
       ? `<figure class="prose-featured"><img src="${escapeHtml(ogImage)}" alt="${escapeHtml(title)}" loading="eager" decoding="async" width="1200" height="630"></figure>`
       : ''
+  const adsScript = adsClientScriptTag(ADS_CONFIG)
+  const adsStyles = isAdsLive(ADS_CONFIG) ? adsCss() : ''
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="${escapeHtml(pageLang)}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -180,6 +355,7 @@ function buildArticlePage({
   <meta name="twitter:description" content="${escapeHtml(description)}">
   ${ogImage ? `<meta name="twitter:image" content="${escapeHtml(ogImage)}">` : ''}
   <meta property="og:type" content="article">
+  <meta property="og:locale" content="${pageLang === 'de' ? 'de_DE' : 'en_US'}">
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:url" content="${escapeHtml(canonical)}">
@@ -187,9 +363,11 @@ function buildArticlePage({
   <meta property="og:site_name" content="${escapeHtml(siteName)}">
   <meta property="article:author" content="${escapeHtml(author)}">
   ${publishedTime ? `<meta property="article:published_time" content="${escapeHtml(publishedTime)}">` : ''}
+  ${modifiedTime ? `<meta property="article:modified_time" content="${escapeHtml(modifiedTime)}">` : ''}
   <link rel="canonical" href="${escapeHtml(canonical)}">
   <link rel="icon" type="image/png" href="../../assets/favicon.png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous"></noscript>
   ${PREFERRED_SOURCES_HEAD}
   <style>
     :root { --primary-green:#228B22; --primary-green-light:#2da82d; --bg-card:#1a1a1a; --text-gray:#b0b0b0; --border-color:rgba(255,255,255,0.1); }
@@ -228,6 +406,12 @@ function buildArticlePage({
     .related-post-card:hover { border-color:var(--primary-green); transform:translateY(-2px); }
     .related-post-thumb { width:100%; aspect-ratio:16/10; object-fit:cover; background:#111; }
     .related-post-heading { font-size:0.82rem; font-weight:600; line-height:1.35; padding:0.6rem 0.7rem; color:#fff; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+    .related-posts-static { margin-top:2rem; padding-top:1.25rem; border-top:1px solid var(--border-color); }
+    .related-posts-static h2 { font-size:1.2rem; margin:0 0 0.75rem; color:#fff; }
+    .related-posts-static ul { margin:0; padding-left:1.15rem; }
+    .related-posts-static li { margin:0.35rem 0; }
+    .product-soft-cta { margin-top:1.5rem; padding:1rem 1.1rem; border:1px solid rgba(34,139,34,0.35); border-radius:10px; background:rgba(34,139,34,0.08); }
+    .product-soft-cta p { margin:0; color:var(--text-gray); line-height:1.55; }
     .blog-engagement { margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border-color); }
     .like-section { display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem; flex-wrap:wrap; }
     .like-section .like-count { color:var(--text-gray); font-size:1rem; }
@@ -249,14 +433,18 @@ function buildArticlePage({
     .comment-item .comment-date { font-size:0.8rem; color:var(--text-gray); margin-bottom:0.5rem; }
     .comment-item .comment-body { color:#e0e0e0; line-height:1.5; }
     ${PREFERRED_SOURCES_CSS}
+    ${adsStyles}
   </style>
 </head>
 <body data-blog-slug="${escapeHtml(slug)}">
-  <nav class="nav"><a href="../../index.html">Home</a> · <a href="/blog/">Blog</a></nav>
-  <article class="prose">
-    <h1>${escapeHtml(title)}</h1>
+  <nav class="nav" aria-label="Breadcrumb"><a href="/">Home</a> · <a href="/blog/">Blog</a></nav>
+  <article class="prose" itemscope itemtype="https://schema.org/BlogPosting">
+    <h1 itemprop="headline">${escapeHtml(title)}</h1>
     ${featuredBlock}
     ${addLazyAttributesToBodyHtml(bodyHtml)}
+    ${endAdHtml || ''}
+    ${softCtaHtml || ''}
+    ${relatedPostsHtml || ''}
     <div class="post-more-section" id="post-more-section">
       <nav class="post-nav-row" id="post-nav-row" style="display:none" aria-label="Adjacent articles">
         <div id="post-nav-prev-slot"></div>
@@ -291,11 +479,18 @@ function buildArticlePage({
       </div>
     </div>
   </article>
-  <script type="application/ld+json">${articleJsonLd(
-    { title, author, publishedTime },
-    ogImage,
-  )}</script>
+  <script type="application/ld+json">${articleJsonLd({
+    title,
+    description,
+    canonical,
+    imageUrl: ogImage,
+    author,
+    publishedTime,
+    modifiedTime,
+    lang: pageLang,
+  })}</script>
   <script src="../../assets/blog-article-client.js" defer></script>
+  ${adsScript}
 </body>
 </html>`
 }
@@ -322,10 +517,35 @@ function injectContextualLinksIntoBodyHtml({ bodyHtml, relatedPosts, maxLinks = 
   if (!bodyHtml || typeof bodyHtml !== 'string') return ''
   const candidates = (relatedPosts || [])
     .filter((p) => p && p.slug && p.title)
-    .slice(0, maxLinks)
+    .slice(0, 8)
+    .map((p) => {
+      const title = String(p.title || '').trim()
+      // Prefer shorter distinctive phrases from the title for natural in-body matches.
+      const phrases = [title]
+        .concat(
+          title
+            .split(/[:–—|-]/)
+            .map((s) => s.trim())
+            .filter((s) => s.length >= 8 && s.length <= 48),
+        )
+        .concat(
+          title
+            .split(/\s+/)
+            .filter((w) => w.length >= 6)
+            .slice(0, 3),
+        )
+      const uniq = []
+      const seen = new Set()
+      for (const ph of phrases) {
+        const key = ph.toLowerCase()
+        if (seen.has(key)) continue
+        seen.add(key)
+        uniq.push(ph)
+      }
+      return { slug: p.slug, phrases: uniq }
+    })
   if (candidates.length === 0) return bodyHtml
 
-  // Split by tags and only operate on text segments outside <a> to avoid nested anchors.
   const parts = bodyHtml.split(/(<[^>]+>)/g)
   const out = []
   let anchorDepth = 0
@@ -345,16 +565,18 @@ function injectContextualLinksIntoBodyHtml({ bodyHtml, relatedPosts, maxLinks = 
     let seg = part
     for (const p of candidates) {
       if (injected >= maxLinks) break
-      const title = String(p.title || '').trim()
-      if (!title) continue
       const href = blogRelPath(p.slug)
-      // Replace first occurrence only (case-insensitive), respecting word boundaries loosely.
-      const re = new RegExp(`(^|[^\\w])(${escapeRegExp(title)})(?!\\w)`, 'i')
-      if (!re.test(seg)) continue
-      seg = seg.replace(re, (_full, before, matched) => {
-        injected++
-        return `${before}<a href="${escapeHtml(href)}" class="contextual-link">${escapeHtml(matched)}</a>`
-      })
+      for (const phrase of p.phrases) {
+        if (injected >= maxLinks) break
+        if (!phrase || phrase.length < 5) continue
+        const re = new RegExp(`(^|[^\\wÄÖÜäöüß])(${escapeRegExp(phrase)})(?![\\wÄÖÜäöüß])`, 'i')
+        if (!re.test(seg)) continue
+        seg = seg.replace(re, (_full, before, matched) => {
+          injected++
+          return `${before}<a href="${escapeHtml(href)}" class="contextual-link">${escapeHtml(matched)}</a>`
+        })
+        break
+      }
     }
     out.push(seg)
   }
@@ -418,6 +640,13 @@ async function main() {
     const ogImage = String(seo.ogImage || p.featuredImage || siteSeo.ogImage || '').trim()
     const author = seo.articleAuthor || p.author || siteSeo.articleAuthor || 'Skister'
     const publishedTime = seo.articlePublishedTime || p.publishedTime || ''
+    const modifiedTime =
+      seo.articleModifiedTime ||
+      p.updatedAt ||
+      p.modifiedTime ||
+      p.updated_at ||
+      publishedTime ||
+      ''
     const robots = seo.robots || p.robots || siteSeo.robots || 'index,follow'
     const maxImagePreview = seo.maxImagePreview || p.maxImagePreview || siteSeo.maxImagePreview || 'large'
     const siteName = p.ogSiteName || siteSeo.ogSiteName || 'Skister'
@@ -434,15 +663,29 @@ async function main() {
       removedBase64Count++
     }
 
-    // Inject contextual internal links (lightweight version of SeaDays behavior).
-    const related = byNewest
-      .filter((x) => x && x.slug && x.slug !== slug && x.showOnWebsite !== false && !x.archived)
-      .slice(0, 8)
+    const related = pickRelatedPosts({
+      current: { slug, title, metaDescription: description },
+      pool: byNewest,
+      limit: 6,
+    })
     processedBodyHtml = injectContextualLinksIntoBodyHtml({
       bodyHtml: processedBodyHtml,
       relatedPosts: related,
       maxLinks: 4,
     })
+    processedBodyHtml = injectInContentAds({
+      bodyHtml: processedBodyHtml,
+      config: ADS_CONFIG,
+    })
+
+    const pageLang = detectContentLang({ title, description, bodyHtml: processedBodyHtml })
+    const topic = topicKeyFromPost({ slug, title, metaDescription: description })
+    const relatedPostsHtml = buildStaticRelatedHtml(related)
+    const softCtaHtml = buildSoftProductCtaHtml({ topic })
+    const endAdHtml =
+      countWordsFromHtml(processedBodyHtml) >= (ADS_CONFIG.placement?.minWordsForEndAd || 800)
+        ? buildEndOfArticleAdHtml(ADS_CONFIG)
+        : ''
 
     const page = buildArticlePage({
       title,
@@ -453,14 +696,19 @@ async function main() {
       siteName,
       author,
       publishedTime,
+      modifiedTime,
       maxImagePreview,
       bodyHtml: processedBodyHtml,
       slug,
+      lang: pageLang,
+      relatedPostsHtml,
+      softCtaHtml,
+      endAdHtml,
     })
     fs.writeFileSync(path.join(slugDir, 'index.html'), page, 'utf8')
 
     const redirectTarget = `/blog/${encodeURIComponent(slug)}/`
-    const redirectHtml = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">` +
+    const redirectHtml = `<!DOCTYPE html><html lang="${escapeHtml(pageLang)}"><head><meta charset="UTF-8">` +
       `<meta name="robots" content="noindex,follow">` +
       `<link rel="canonical" href="${escapeHtml(canonical)}">` +
       `<meta http-equiv="refresh" content="0;url=${escapeHtml(redirectTarget)}">` +
@@ -520,7 +768,6 @@ async function main() {
     const author = String(p.author || 'Skister Team')
     const slug = p.slug
     const href = blogRelPath(slug)
-    const canonical = blogCanonicalUrl({ base, slug })
     const img = String(p.featuredImage || '').trim()
     const textBlob = escapeHtml(normalizeText(`${title} ${excerpt}`))
     return `
@@ -544,7 +791,6 @@ async function main() {
             <p class="article-card-cta">Read →</p>
           </div>
         </a>
-        <link rel="canonical" href="${escapeHtml(canonical)}">
       </article>
     `.trim()
   }
@@ -575,7 +821,7 @@ async function main() {
   const allCardsHtml = byNewest.map(buildCardHtml).join('\n')
 
   const blogIndex = `<!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -585,6 +831,7 @@ async function main() {
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="${escapeHtml(blogIndexCanonical)}">
   <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
   <meta property="og:title" content="${escapeHtml(blogIndexTitle)}">
   <meta property="og:description" content="${escapeHtml(blogIndexDescription)}">
   <meta property="og:url" content="${escapeHtml(blogIndexCanonical)}">
@@ -596,6 +843,12 @@ async function main() {
   ${blogIndexOgImage ? `<meta name="twitter:image" content="${escapeHtml(blogIndexOgImage)}">` : ''}
   <link rel="icon" type="image/png" href="../assets/favicon.png">
   <link rel="apple-touch-icon" href="../assets/favicon.png">
+  <script type="application/ld+json">${blogIndexJsonLd({
+    title: blogIndexTitle,
+    description: blogIndexDescription,
+    canonical: blogIndexCanonical,
+    posts: byNewest,
+  })}</script>
   <style>
     :root { --bg:#0a0a0a; --panel:rgba(255,255,255,0.03); --border:rgba(255,255,255,0.1); --text:#fff; --muted:#b0b0b0; --accent:#228B22; --accent-light:#2da82d; }
     * { box-sizing:border-box; }
@@ -828,6 +1081,12 @@ ${urlset}
 
   if (removedBase64Count) console.warn('Removed base64 images from posts:', removedBase64Count)
   console.log('Wrote blog/*, sitemap.xml, robots.txt — posts:', posts.length)
+  console.log(
+    'Ads live in generated HTML:',
+    isAdsLive(ADS_CONFIG)
+      ? `yes (${String(ADS_CONFIG.publisherId).slice(0, 10)}…)`
+      : 'no (data/ads-config.json disabled or missing publisher/slot IDs)',
+  )
 }
 
 main().catch((e) => {

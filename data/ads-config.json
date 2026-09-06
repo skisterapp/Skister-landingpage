@@ -1,0 +1,18 @@
+{
+  "enabled": false,
+  "provider": "adsense",
+  "publisherId": "",
+  "label": "Advertisement",
+  "slots": {
+    "inArticle": "",
+    "endOfArticle": ""
+  },
+  "placement": {
+    "minWordsForFirstAd": 500,
+    "minWordsForSecondAd": 1200,
+    "minWordsForThirdAd": 2200,
+    "minWordsForEndAd": 800,
+    "reserveMinHeightPx": 280
+  },
+  "notes": "Set enabled=true and a real ca-pub-XXXX publisherId plus ad unit slot IDs before going live. Never invent IDs."
+}
