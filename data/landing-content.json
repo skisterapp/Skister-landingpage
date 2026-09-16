@@ -6,6 +6,7 @@
       "faq.a3": "SKISTER wurde in erster Linie für Familien entwickelt. Gerade bei Kindern wechseln Ski, Schuhe oder Helme regelmäßig die Größe. Mit SKISTER behaltet ihr den Überblick und teilt vorhandene Ausrüstung einfach innerhalb eures privaten Netzwerks. Natürlich eignet sich die App genauso für Freundeskreise und Vereine.",
       "faq.a4": "WhatsApp eignet sich für Nachrichten – aber nicht für die Organisation von Ausrüstung. Mit SKISTER siehst du sofort, welche Artikel verfügbar sind, wer gerade etwas ausgeliehen hat und wann es zurückkommt. Kalender, Reservierungen und Erinnerungen sorgen dafür, dass alles übersichtlich bleibt und Missverständnisse vermieden werden.",
       "faq.a5": "SKISTER ist kein Ersatz für Skibasare oder Plattformen wie Kleinanzeigen oder Vinted – sondern eine sinnvolle Ergänzung. Wenn du oder dein Netzwerk eine bestimmte Ausrüstung noch nicht besitzt, kannst du sie dort natürlich gebraucht kaufen. SKISTER setzt genau danach an: Die App hilft dir dabei, vorhandene Ski- und Winterausrüstung innerhalb deiner Familie, deines Freundeskreises oder Vereins einfach zu organisieren und gemeinsam zu nutzen. So muss nicht jeder alles selbst besitzen – und vorhandene Ausrüstung wird deutlich häufiger genutzt.",
+      "faq.a6": "Dein Ski-Netzwerk ist dein privater Kreis aus Freunden, Familie und anderen Skifahrern. Über deinen Skiverein kannst du weitere Mitglieder entdecken, dich mit ihnen vernetzen und so dein Netzwerk vergrößern. Innerhalb dieses Kreises könnt ihr Ski, Schuhe sowie weitere Outdoor-Ausrüstung unkompliziert miteinander teilen.",
       "faq.q1": "Was ist SKISTER?",
       "faq.q2": "Kostet SKISTER etwas?",
       "faq.q3": "Für wen ist SKISTER geeignet?",
@@ -752,5 +753,5 @@
     "onboardingStep5": "https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/Mascot%20Confirm%20%26%20coordinate.png",
     "onboardingStep7": "https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/Mascot%20Ski%20Network.png"
   },
-  "syncedAt": "2026-09-16T10:20:24.234Z"
+  "syncedAt": "2026-09-16T10:22:49.942Z"
 }
