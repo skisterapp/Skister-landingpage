@@ -6,7 +6,7 @@ on:
     - cron: '0 6 * * *'
 
 concurrency:
-  group: generate-static-blog-${{ github.ref }}
+  group: landing-main-git-writes-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
