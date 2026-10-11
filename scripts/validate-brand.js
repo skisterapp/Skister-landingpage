@@ -13,6 +13,7 @@ const SKIP_DIRS = new Set(['.git', 'node_modules', 'branding', 'memory-bank'])
 const SKIP_FILES = new Set([
   'scripts/brand-tokens.js',
   'scripts/validate-brand.js',
+  'assets/landing-admin.js',
 ])
 const EXT = new Set(['.html', '.css', '.js', '.webmanifest', '.json', '.tsx'])
 

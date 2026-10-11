@@ -19,6 +19,7 @@
     "validate:seo": "node scripts/validateGeneratedSeo.js",
     "verify:redirects": "node scripts/verify-seo-redirects.mjs",
     "validate:brand": "node scripts/validate-brand.js",
-    "validate:aasa": "node scripts/validate-aasa.js"
+    "validate:aasa": "node scripts/validate-aasa.js",
+    "validate:cms": "node scripts/validate-cms-bindings.js"
   }
 }

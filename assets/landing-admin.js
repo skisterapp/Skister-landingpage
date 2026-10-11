@@ -35,6 +35,86 @@ const SECTIONS = [
 const SECTION_TABS = [{ id: 'images', title: 'Images' }].concat(SECTIONS).concat([{ id: 'links', title: 'Links' }]);
 
 const DEFAULT_HERO_IMAGE = '/assets/hero-mascot.png';
+const DEFAULT_OG_IMAGE = '/assets/skister-app-icon.png';
+const RETIRED_HERO_CDN_FRAGMENT = 'SkisterAppPro227.png';
+
+/** Keys for removed public sections — never persist from CMS saves. */
+function isLegacyCmsKey(key) {
+    return key === 'nav.roadmap' || key === 'footer.roadmap' || (typeof key === 'string' && key.indexOf('roadmap.') === 0);
+}
+
+function scrubLegacyTranslationKeys(translations) {
+    if (!translations || typeof translations !== 'object') return {};
+    const out = {};
+    Object.keys(translations).forEach(function (lang) {
+        const pack = translations[lang];
+        if (!pack || typeof pack !== 'object') return;
+        const cleaned = {};
+        Object.keys(pack).forEach(function (key) {
+            if (isLegacyCmsKey(key)) return;
+            cleaned[key] = pack[key];
+        });
+        if (Object.keys(cleaned).length) out[lang] = cleaned;
+    });
+    return out;
+}
+
+function sanitizeHeroMascotUrl(url) {
+    if (url == null || typeof url !== 'string') return DEFAULT_HERO_IMAGE;
+    const t = url.trim();
+    if (!t) return DEFAULT_HERO_IMAGE;
+    if (t.indexOf(RETIRED_HERO_CDN_FRAGMENT) !== -1 || t.indexOf('SkisterLogoWeb') !== -1) return DEFAULT_HERO_IMAGE;
+    if (t.indexOf('hero-mascot') !== -1 && t.indexOf('make-080ebf84-landing-images') !== -1) return DEFAULT_HERO_IMAGE;
+    if (t.indexOf('/assets/hero-mascot') !== -1) return DEFAULT_HERO_IMAGE;
+    return t;
+}
+
+function sanitizeOgImageUrl(url) {
+    if (url == null || typeof url !== 'string') return '';
+    const t = url.trim();
+    if (!t) return '';
+    if (t.indexOf('SkisterLogoWeb') !== -1 || t.indexOf(RETIRED_HERO_CDN_FRAGMENT) !== -1) return DEFAULT_OG_IMAGE;
+    return t;
+}
+
+function normalizeImagesFromApi(images) {
+    const src = images && typeof images === 'object' ? images : {};
+    const heroRaw = src.heroMascot || src.heroMascotUrl || '';
+    const out = {
+        heroMascot: sanitizeHeroMascotUrl(heroRaw),
+        ogImage: sanitizeOgImageUrl(src.ogImage || '')
+    };
+    if (!out.ogImage) delete out.ogImage;
+    return out;
+}
+
+function resolvePreviewImageUrl(url) {
+    if (!url || typeof url !== 'string') return '';
+    const t = url.trim();
+    if (!t) return '';
+    if (t.startsWith('data:') || t.startsWith('http://') || t.startsWith('https://')) return t;
+    if (t.startsWith('/')) return t;
+    return '/' + t.replace(/^\.?\//, '');
+}
+
+async function fetchKvLandingSnapshot() {
+    try {
+        const res = await fetch(API_BASE + '/landing-content', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + ANON_KEY }
+        });
+        const data = await res.json().catch(function () { return {}; });
+        if (!res.ok) return { translations: {}, images: {} };
+        const normalized = normalizeLoadedContent(data);
+        if (!normalized) return { translations: {}, images: {} };
+        return {
+            translations: scrubLegacyTranslationKeys(normalized.translations),
+            images: normalized.images || {}
+        };
+    } catch (_) {
+        return { translations: {}, images: {} };
+    }
+}
 
 const SECTION_ANCHORS = {
     nav: '',
@@ -53,7 +133,7 @@ const SECTION_ANCHORS = {
 };
 
 const ALL_KEYS = [
-    'nav.howItWorks', 'nav.features', 'nav.faq', 'nav.blog', 'nav.contact', 'nav.download',
+    'nav.howItWorks', 'nav.features', 'nav.tools', 'nav.faq', 'nav.blog', 'nav.contact', 'nav.download',
     'hero.title', 'hero.tagline', 'hero.subtitle', 'hero.emailPlaceholder', 'hero.submitBtn', 'hero.waitlistInfo',
     'messages.success', 'messages.duplicate', 'messages.error', 'messages.serverError',
     'onboarding.title', 'onboarding.subtitle',
@@ -78,8 +158,8 @@ const ALL_KEYS = [
     'download.badge', 'download.hint',
     'faq.title', 'faq.q1', 'faq.a1', 'faq.q2', 'faq.a2', 'faq.q3', 'faq.a3', 'faq.q4', 'faq.a4', 'faq.q5', 'faq.a5', 'faq.q6', 'faq.a6',
     'disclaimer.title', 'disclaimer.text',
-    'footer.product', 'footer.features', 'footer.howItWorks', 'footer.faq', 'footer.download', 'footer.feedback',
-    'footer.legal', 'footer.privacy', 'footer.terms', 'footer.support', 'footer.contact', 'footer.help', 'footer.admin',
+    'footer.product', 'footer.features', 'footer.howItWorks', 'footer.tools', 'footer.faq', 'footer.download', 'footer.feedback',
+    'footer.legal', 'footer.privacy', 'footer.terms', 'footer.support', 'footer.contact', 'footer.help',
     'footer.tagline', 'footer.rights', 'footer.madewith',
     'modal.privacy.title', 'modal.privacy.intro', 'modal.privacy.p1', 'modal.privacy.collection', 'modal.privacy.collectionText',
     'modal.privacy.usage', 'modal.privacy.usageText', 'modal.privacy.sharing', 'modal.privacy.sharingText', 'modal.privacy.contactEmail',
@@ -92,6 +172,7 @@ const ALL_KEYS = [
 const KEY_LABELS = {
     'nav.howItWorks': 'How it works link',
     'nav.features': 'Features link',
+    'nav.tools': 'Tools link',
     'nav.faq': 'FAQ link',
     'nav.blog': 'Blog link',
     'nav.contact': 'Contact link',
@@ -117,8 +198,20 @@ const KEY_LABELS = {
     'download.title': 'Download section title',
     'download.subtitle': 'Download section subtitle',
     'download.badge': 'Coming soon badge',
-    'download.hint': 'Tap hint text'
+    'download.hint': 'Tap hint text',
+    'footer.tools': 'Footer — Tools link',
+    'footer.features': 'Footer — Features link',
+    'footer.howItWorks': 'Footer — How it works link',
+    'footer.faq': 'Footer — FAQ link',
+    'footer.download': 'Footer — Download link'
 };
+
+function userFacingErrorMessage(data, fallback) {
+    if (!data || typeof data !== 'object') return fallback;
+    const err = data.error;
+    if (typeof err === 'string' && err.trim()) return err.trim();
+    return fallback;
+}
 
 let content = { translations: {}, images: {} };
 let savedSnapshot = '';
@@ -310,16 +403,20 @@ async function loadContent() {
         if (res.ok) {
             const loaded = normalizeLoadedContent(data);
             if (loaded) {
-                kvTranslations = loaded.translations && typeof loaded.translations === 'object' ? loaded.translations : {};
-                kvImages = loaded.images && typeof loaded.images === 'object' ? loaded.images : {};
+                kvTranslations = scrubLegacyTranslationKeys(
+                    loaded.translations && typeof loaded.translations === 'object' ? loaded.translations : {}
+                );
+                kvImages = normalizeImagesFromApi(loaded.images);
             }
         } else {
-            showMessage('Failed to load content: ' + (data.error || res.status), true);
+            showMessage(userFacingErrorMessage(data, 'Could not load content. Try again in a moment.'), true);
         }
         content = {
             translations: mergeDefaultsWithOverrides(siteDefaults, kvTranslations),
             images: Object.assign({ heroMascot: DEFAULT_HERO_IMAGE }, kvImages)
         };
+        content.images.heroMascot = sanitizeHeroMascotUrl(content.images.heroMascot);
+        if (content.images.ogImage) content.images.ogImage = sanitizeOgImageUrl(content.images.ogImage);
         applyContentToForm();
         savedSnapshot = snapshotContent();
         updateUnsavedIndicator();
@@ -332,7 +429,7 @@ async function loadContent() {
 function applyContentToForm() {
     const imgHero = document.getElementById('img-heroMascot');
     const imgOg = document.getElementById('img-ogImage');
-    if (imgHero) imgHero.value = content.images.heroMascot || content.images.heroMascotUrl || '';
+    if (imgHero) imgHero.value = sanitizeHeroMascotUrl(content.images.heroMascot || content.images.heroMascotUrl || '');
     if (imgOg) imgOg.value = content.images.ogImage || '';
     toggleImagePreviews();
     fillFieldValues();
@@ -341,8 +438,16 @@ function applyContentToForm() {
 function applyFormToContent() {
     const imgHero = document.getElementById('img-heroMascot');
     const imgOg = document.getElementById('img-ogImage');
-    if (imgHero) content.images.heroMascot = imgHero.value.trim() || undefined;
-    if (imgOg) content.images.ogImage = imgOg.value.trim() || undefined;
+    if (imgHero) {
+        const hero = sanitizeHeroMascotUrl(imgHero.value.trim() || DEFAULT_HERO_IMAGE);
+        content.images.heroMascot = hero;
+        delete content.images.heroMascotUrl;
+    }
+    if (imgOg) {
+        const og = imgOg.value.trim();
+        if (og) content.images.ogImage = sanitizeOgImageUrl(og);
+        else delete content.images.ogImage;
+    }
     if (!content.translations[currentLang]) content.translations[currentLang] = {};
     ALL_KEYS.forEach(function (key) {
         const el = document.getElementById(fieldId(key));
@@ -390,7 +495,7 @@ function updateSectionHint() {
         return;
     }
     if (currentSectionTab === 'images') {
-        el.textContent = 'Images shown on the landing page (hero mascot and social share preview).';
+        el.textContent = 'Hero and social images. Use site paths like /assets/hero-mascot.png when possible. The public site prefers shipped brand assets over retired CDN URLs.';
         return;
     }
     const sec = SECTIONS.find(function (s) { return s.id === currentSectionTab; });
@@ -540,8 +645,40 @@ function toggleImagePreviews() {
     const og = document.getElementById('img-ogImage').value.trim();
     const p1 = document.getElementById('preview-heroMascot');
     const p2 = document.getElementById('preview-ogImage');
-    if (mascot) { p1.src = mascot; p1.style.display = 'block'; } else { p1.style.display = 'none'; }
-    if (og) { p2.src = og; p2.style.display = 'block'; } else { p2.style.display = 'none'; }
+    if (mascot) {
+        p1.src = resolvePreviewImageUrl(sanitizeHeroMascotUrl(mascot));
+        p1.style.display = 'block';
+        p1.alt = 'Hero mascot preview';
+    } else {
+        p1.style.display = 'none';
+    }
+    if (og) {
+        p2.src = resolvePreviewImageUrl(og);
+        p2.style.display = 'block';
+        p2.alt = 'Social share image preview';
+    } else {
+        p2.style.display = 'none';
+    }
+}
+
+function resetHeroMascotDefault() {
+    const input = document.getElementById('img-heroMascot');
+    if (!input) return;
+    input.value = DEFAULT_HERO_IMAGE;
+    toggleImagePreviews();
+    schedulePreviewUpdate();
+    updateUnsavedIndicator();
+    showMessage('Hero reset to default. Click Save to publish.', false);
+}
+
+function resetOgImageDefault() {
+    const input = document.getElementById('img-ogImage');
+    if (!input) return;
+    input.value = DEFAULT_OG_IMAGE;
+    toggleImagePreviews();
+    schedulePreviewUpdate();
+    updateUnsavedIndicator();
+    showMessage('Social image reset to default. Click Save to publish.', false);
 }
 
 function attachImagePreviewListeners() {
@@ -575,10 +712,10 @@ function handleImageUpload(field, input) {
                 updateUnsavedIndicator();
                 showMessage('Image uploaded. Click Save to publish.', false);
             } else {
-                showMessage(data.error || 'Upload failed', true);
+                showMessage(userFacingErrorMessage(data, 'Upload failed. Try again or paste a URL.'), true);
             }
         } catch (e) {
-            showMessage('Upload failed', true);
+            showMessage('Upload failed. Check your connection and try again.', true);
         }
     };
     reader.readAsDataURL(file);
@@ -622,6 +759,7 @@ function getTranslationOverridesOnly(translations, defaults) {
             cleaned[key] = value;
         });
         Object.keys(pack).forEach(function (key) {
+            if (isLegacyCmsKey(key)) return;
             if (cleaned[key] !== undefined || ALL_KEYS.indexOf(key) === -1) {
                 const value = pack[key];
                 if (value != null && String(value).trim() !== '' && cleaned[key] === undefined) {
@@ -640,16 +778,30 @@ function countOverrideLangs(overrides) {
     }).length;
 }
 
+function buildImagesSavePayload(editedImages, storedImages) {
+    const merged = Object.assign({}, storedImages || {}, editedImages || {});
+    const out = {
+        heroMascot: sanitizeHeroMascotUrl(merged.heroMascot || merged.heroMascotUrl || DEFAULT_HERO_IMAGE)
+    };
+    const og = sanitizeOgImageUrl(merged.ogImage || '');
+    if (og) out.ogImage = og;
+    return out;
+}
+
 async function saveContent() {
     applyFormToContent();
     const password = sessionStorage.getItem('landingAdminPassword');
     const btn = document.getElementById('save-btn');
+    if (btn.disabled) return;
     btn.disabled = true;
     btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving…';
-    const overrides = getTranslationOverridesOnly(content.translations, siteDefaults);
+    const kv = await fetchKvLandingSnapshot();
+    const overrides = scrubLegacyTranslationKeys(
+        getTranslationOverridesOnly(content.translations, siteDefaults)
+    );
     const payload = {
         translations: overrides,
-        images: content.images
+        images: buildImagesSavePayload(content.images, kv.images)
     };
     try {
         const res = await fetch(API_BASE + '/landing-content', {
@@ -673,10 +825,10 @@ async function saveContent() {
                     }
                     reloadPreviewFrame();
                 } else {
-            showMessage(data.error || 'Save failed', true);
+            showMessage(userFacingErrorMessage(data, 'Save failed. Your edits are still in this tab — try again.'), true);
         }
     } catch (e) {
-        showMessage('Save failed', true);
+        showMessage('Save failed. Check your connection and try again.', true);
     }
     btn.disabled = false;
     btn.innerHTML = '<i class="fa-solid fa-save"></i> Save';
@@ -873,7 +1025,7 @@ async function runTranslate() {
             if (res.status === 503) {
                 showMessage('Translation not configured. Set GOOGLE_TRANSLATE_API_KEY in Supabase Edge secrets.', true);
             } else {
-                showMessage(data.error || 'Translation failed', true);
+                showMessage(userFacingErrorMessage(data, 'Translation failed.'), true);
             }
             return;
         }

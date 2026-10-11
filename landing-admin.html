@@ -108,23 +108,28 @@
                         <div id="tab-content-images" class="landing-section-tab-content">
                             <div class="landing-section-card">
                                 <h2><i class="fa-solid fa-image"></i> Images</h2>
+                                <p class="landing-field-helper">Paths under <code>/assets/</code> match the live site. Retired CDN URLs are replaced with current defaults when you save.</p>
                                 <div class="landing-field-row">
-                                    <label>Hero mascot image URL</label>
+                                    <label for="img-heroMascot">Hero mascot image</label>
+                                    <span class="field-key">Stored as heroMascot · default /assets/hero-mascot.png</span>
                                     <div class="landing-image-upload">
-                                        <input type="text" id="img-heroMascot" placeholder="https://...">
+                                        <input type="text" id="img-heroMascot" placeholder="/assets/hero-mascot.png" autocomplete="off" spellcheck="false">
                                         <button type="button" class="cms-btn cms-btn-secondary" onclick="document.getElementById('file-heroMascot').click()">Upload</button>
+                                        <button type="button" class="cms-btn cms-btn-secondary" onclick="resetHeroMascotDefault()">Use default</button>
                                         <input type="file" id="file-heroMascot" class="cms-file-input" accept="image/*" onchange="handleImageUpload('heroMascot', this)">
                                     </div>
-                                    <img id="preview-heroMascot" class="landing-image-preview" alt="" style="display:none">
+                                    <img id="preview-heroMascot" class="landing-image-preview" alt="Hero mascot preview" style="display:none">
                                 </div>
                                 <div class="landing-field-row">
-                                    <label>OG / social share image URL</label>
+                                    <label for="img-ogImage">Social share image (Open Graph)</label>
+                                    <span class="field-key">Stored as ogImage · default /assets/skister-app-icon.png</span>
                                     <div class="landing-image-upload">
-                                        <input type="text" id="img-ogImage" placeholder="https://...">
+                                        <input type="text" id="img-ogImage" placeholder="/assets/skister-app-icon.png" autocomplete="off" spellcheck="false">
                                         <button type="button" class="cms-btn cms-btn-secondary" onclick="document.getElementById('file-ogImage').click()">Upload</button>
+                                        <button type="button" class="cms-btn cms-btn-secondary" onclick="resetOgImageDefault()">Use default</button>
                                         <input type="file" id="file-ogImage" class="cms-file-input" accept="image/*" onchange="handleImageUpload('ogImage', this)">
                                     </div>
-                                    <img id="preview-ogImage" class="landing-image-preview" alt="" style="display:none">
+                                    <img id="preview-ogImage" class="landing-image-preview" alt="Social share image preview" style="display:none">
                                 </div>
                             </div>
                         </div>
