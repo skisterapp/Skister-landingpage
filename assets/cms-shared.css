@@ -552,6 +552,22 @@ input[type="file"].cms-file-input { display: none; }
 }
 
 @media (max-width: 768px) {
+    .cms-layout {
+        flex-direction: column;
+    }
+    .cms-main {
+        width: 100%;
+        min-width: 0;
+        overflow-x: auto;
+    }
+    .cms-login-wrap {
+        width: 100%;
+        align-self: stretch;
+    }
+    .cms-login-box {
+        max-width: 420px;
+        margin: 0 auto;
+    }
     .cms-sidebar {
         width: 100%;
         min-width: 0;
