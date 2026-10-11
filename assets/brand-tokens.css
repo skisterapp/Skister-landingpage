@@ -1,0 +1,9 @@
+/* SKISTER 2026 approved brand tokens — import in public/CMS pages as needed */
+:root {
+  --skister-emerald: #00AF64;
+  --skister-mint: #61C58E;
+  --skister-forest: #053D2B;
+  --skister-mist: #F4FAF7;
+  --primary-green: var(--skister-emerald);
+  --primary-green-light: var(--skister-mint);
+}

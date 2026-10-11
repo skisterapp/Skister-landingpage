@@ -173,7 +173,7 @@
           type: 'line',
           data: {
             labels: (charts.resortsOverTime || []).map((x) => x.month),
-            datasets: [{ label: 'Resorts', data: (charts.resortsOverTime || []).map((x) => x.count), borderColor: '#228B22', tension: 0.3 }],
+            datasets: [{ label: 'Resorts', data: (charts.resortsOverTime || []).map((x) => x.count), borderColor: '#00AF64', tension: 0.3 }],
           },
           options: { plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#b0b0b0' } }, y: { ticks: { color: '#b0b0b0' } } } },
         }))
@@ -190,7 +190,7 @@
           type: 'bar',
           data: {
             labels: homeTop.map((x) => x.official_name),
-            datasets: [{ data: homeTop.map((x) => x.home_selection_count), backgroundColor: '#228B22' }],
+            datasets: [{ data: homeTop.map((x) => x.home_selection_count), backgroundColor: '#00AF64' }],
           },
           options: { indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#b0b0b0' } }, y: { ticks: { color: '#b0b0b0', font: { size: 10 } } } } },
         }))
@@ -199,7 +199,7 @@
           type: 'bar',
           data: {
             labels: searchTop.map((x) => x.official_name),
-            datasets: [{ data: searchTop.map((x) => x.search_hit_count), backgroundColor: '#2da82d' }],
+            datasets: [{ data: searchTop.map((x) => x.search_hit_count), backgroundColor: '#61C58E' }],
           },
           options: { indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#b0b0b0' } }, y: { ticks: { color: '#b0b0b0', font: { size: 10 } } } } },
         }))

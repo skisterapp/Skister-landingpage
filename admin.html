@@ -13,9 +13,9 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --primary: #228B22;
+            --primary: #00AF64;
             --primary-dark: #1a6b1a;
-            --primary-light: #2da82d;
+            --primary-light: #61C58E;
             --bg: #0a0a0a;
             --bg-card: #1a1a1a;
             --bg-sidebar: #111;
@@ -102,7 +102,7 @@
             font-size: 0.95rem;
         }
         .nav-link:hover { background: rgba(255,255,255,0.05); color: var(--text); }
-        .nav-link.active { background: rgba(34,139,34,0.15); color: var(--primary); border-right: 3px solid var(--primary); }
+        .nav-link.active { background: rgba(0, 175, 100,0.15); color: var(--primary); border-right: 3px solid var(--primary); }
         .nav-link i { width: 1.25rem; text-align: center; }
         .sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border); }
         .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
@@ -148,7 +148,7 @@
             overflow: hidden;
             margin-bottom: 1.5rem;
         }
-        .card-header { padding: 1rem 1.25rem; background: rgba(34,139,34,0.08); border-bottom: 1px solid var(--border); font-weight: 600; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+        .card-header { padding: 1rem 1.25rem; background: rgba(0, 175, 100,0.08); border-bottom: 1px solid var(--border); font-weight: 600; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
         .card-body { padding: 1.25rem; }
 
         /* Stats */
@@ -162,7 +162,7 @@
         table { width: 100%; border-collapse: collapse; }
         th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
         th { color: var(--primary); font-weight: 600; background: rgba(255,255,255,0.02); }
-        tr:hover { background: rgba(34,139,34,0.04); }
+        tr:hover { background: rgba(0, 175, 100,0.04); }
         .search-box { max-width: 320px; }
         .search-box input { width: 100%; padding: 0.6rem 1rem; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text); font-size: 0.95rem; }
 
@@ -173,7 +173,7 @@
         /* Messages */
         .msg { padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem; display: none; }
         .msg.show { display: block; }
-        .msg.success { background: rgba(34,139,34,0.15); border: 1px solid var(--primary); color: var(--primary); }
+        .msg.success { background: rgba(0, 175, 100,0.15); border: 1px solid var(--primary); color: var(--primary); }
         .msg.error { background: rgba(255,59,48,0.15); border: 1px solid rgba(255,59,48,0.3); color: #ff6b6b; }
         .msg.warning { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.4); color: #f59e0b; }
 
@@ -247,7 +247,7 @@
     <!-- CMS -->
     <div class="cms" id="cms">
         <aside class="sidebar">
-            <div class="sidebar-brand"><i class="fa-solid fa-person-skiing"></i> Skister CMS</div>
+            <div class="sidebar-brand"><img src="assets/skister-mark.png" alt="" width="28" height="28" style="border-radius:6px;"> Skister CMS</div>
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <div class="nav-section-title">Overview</div>
