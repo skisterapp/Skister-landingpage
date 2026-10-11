@@ -34,7 +34,7 @@ const SECTIONS = [
 
 const SECTION_TABS = [{ id: 'images', title: 'Images' }].concat(SECTIONS).concat([{ id: 'links', title: 'Links' }]);
 
-const DEFAULT_HERO_IMAGE = 'https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png';
+const DEFAULT_HERO_IMAGE = '/assets/hero-mascot.png';
 
 const SECTION_ANCHORS = {
     nav: '',

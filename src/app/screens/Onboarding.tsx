@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 const ONBOARDING_DONE_KEY = 'onboarding_v1_done'
 const SKISTER_LOGO_URL =
-  'https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png'
+  '/assets/hero-mascot.png'
 
 export function Onboarding(props: { onDone?: () => void }): React.ReactNode {
   const slides = useMemo(() => getSlides(), [])

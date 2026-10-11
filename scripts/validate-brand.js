@@ -14,6 +14,8 @@ const EXT = new Set(['.html', '.css', '.js', '.webmanifest', '.json', '.tsx'])
 
 const RETIRED_SUPABASE_LOGO =
   'https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterLogoWeb.png'
+const RETIRED_HERO_CDN =
+  'https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/SkisterAppPro227.png'
 
 const retiredPatterns = [
   { re: /#228[Bb]22/g, label: '#228B22' },
@@ -21,6 +23,8 @@ const retiredPatterns = [
   { re: /rgba\(\s*34\s*,\s*139\s*,\s*34/g, label: 'rgba(34,139,34' },
   { re: /SkisterLogoWeb\.png/g, label: 'SkisterLogoWeb.png' },
   { re: new RegExp(RETIRED_SUPABASE_LOGO.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), label: 'retired Supabase wordmark URL' },
+  { re: new RegExp(RETIRED_HERO_CDN.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), label: 'retired CDN hero mascot URL' },
+  { re: /SkisterAppPro227\.png/g, label: 'SkisterAppPro227.png' },
 ]
 
 const requiredFiles = [
@@ -28,6 +32,7 @@ const requiredFiles = [
   'assets/favicon.png',
   'assets/skister-app-icon.png',
   'assets/skister-logo-white.png',
+  'assets/hero-mascot.png',
   'favicon.ico',
   'apple-touch-icon.png',
   'site.webmanifest',
