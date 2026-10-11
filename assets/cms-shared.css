@@ -76,10 +76,10 @@ body.cms-body {
 .cms-sidebar .sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--cms-border); }
 
 .cms-main {
-    flex: 1;
+    flex: 1 1 320px;
     display: flex;
     flex-direction: column;
-    min-width: 0;
+    min-width: min(100%, 320px);
     overflow: hidden;
 }
 
@@ -549,6 +549,19 @@ input[type="file"].cms-file-input { display: none; }
     .landing-preview-panel.collapsed { display: none; }
     .landing-toolbar-actions { width: 100%; justify-content: flex-start; }
     .landing-search { max-width: 100%; }
+}
+
+@media (max-width: 960px) {
+    .cms-layout {
+        flex-wrap: wrap;
+    }
+    .cms-sidebar {
+        flex: 1 1 100%;
+    }
+    .cms-main {
+        flex: 1 1 100%;
+        width: 100%;
+    }
 }
 
 @media (max-width: 768px) {
