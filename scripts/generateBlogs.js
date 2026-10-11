@@ -21,8 +21,10 @@ const {
   adsCss,
   countWordsFromHtml,
 } = require('./blogAds')
+const { faviconAssetVersion } = require('./brand-tokens')
 
 const SUPABASE_URL = process.env.SKISTER_SUPABASE_URL || 'https://ayomhapkzckbhgwxenwr.supabase.co'
+const FAVICON_V = faviconAssetVersion
 const ANON_KEY = process.env.SUPABASE_ANON_KEY || ''
 const EDGE = `${SUPABASE_URL}/functions/v1/make-server-080ebf84`
 const SITE_URL = (process.env.SKISTER_SITE_URL || 'https://skister.app').replace(/\/$/, '')
@@ -368,7 +370,7 @@ function buildArticlePage({
   ${publishedTime ? `<meta property="article:published_time" content="${escapeHtml(publishedTime)}">` : ''}
   ${modifiedTime ? `<meta property="article:modified_time" content="${escapeHtml(modifiedTime)}">` : ''}
   <link rel="canonical" href="${escapeHtml(canonical)}">
-  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <link rel="icon" type="image/png" href="../../assets/favicon.png?v=${FAVICON_V}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous"></noscript>
   ${PREFERRED_SOURCES_HEAD}
@@ -858,8 +860,8 @@ async function main() {
   <meta name="twitter:title" content="${escapeHtml(blogIndexTitle)}">
   <meta name="twitter:description" content="${escapeHtml(blogIndexDescription)}">
   ${blogIndexOgImage ? `<meta name="twitter:image" content="${escapeHtml(blogIndexOgImage)}">` : ''}
-  <link rel="icon" type="image/png" href="../assets/favicon.png">
-  <link rel="apple-touch-icon" href="../assets/favicon.png">
+  <link rel="icon" type="image/png" href="../assets/favicon.png?v=${FAVICON_V}">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png?v=${FAVICON_V}">
   <script type="application/ld+json">${blogIndexJsonLd({
     title: blogIndexTitle,
     description: blogIndexDescription,
