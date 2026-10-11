@@ -5218,6 +5218,19 @@
                     || key === 'faq.a2'
                     || key === 'download.subtitle';
             }
+            /** Git-shipped brand assets override stale CMS hero URLs (e.g. retired CDN). */
+            function applyShippedBrandingAssets() {
+                return fetch('data/landing-content.json', { cache: 'no-store' })
+                    .then(function (res) { return res.ok ? res.json() : null; })
+                    .then(function (snapshot) {
+                        if (!snapshot || !snapshot.images) return;
+                        const hero = snapshot.images.heroMascot || snapshot.images.heroMascotUrl;
+                        if (hero && String(hero).startsWith('/assets/')) {
+                            applyLandingContent({ images: { heroMascot: hero } });
+                        }
+                    })
+                    .catch(function () {});
+            }
             /** Keep git-shipped product feature copy ahead of stale CMS overrides. */
             function applyShippedProductCopy() {
                 return fetch('data/landing-content.json', { cache: 'no-store' })
@@ -5244,7 +5257,7 @@
             // Always re-apply shipped product feature keys from git so store copy stays accurate.
             return applyApiContent().then(function (applied) {
                 if (!applied) return applyLocalSnapshot();
-                return applyShippedProductCopy();
+                return applyShippedBrandingAssets().then(applyShippedProductCopy);
             });
         }
         
