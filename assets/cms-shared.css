@@ -553,24 +553,18 @@ input[type="file"].cms-file-input { display: none; }
 
 @media (max-width: 960px) {
     .cms-layout {
-        flex-wrap: wrap;
+        flex-direction: column;
     }
     .cms-sidebar {
-        flex: 1 1 100%;
-    }
-    .cms-main {
-        flex: 1 1 100%;
         width: 100%;
-    }
-}
-
-@media (max-width: 768px) {
-    .cms-layout {
-        flex-direction: column;
+        min-width: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--cms-border);
     }
     .cms-main {
         width: 100%;
         min-width: 0;
+        flex: 1 1 auto;
         overflow-x: auto;
     }
     .cms-login-wrap {
@@ -581,11 +575,11 @@ input[type="file"].cms-file-input { display: none; }
         max-width: 420px;
         margin: 0 auto;
     }
-    .cms-sidebar {
-        width: 100%;
-        min-width: 0;
-        border-right: none;
-        border-bottom: 1px solid var(--cms-border);
+}
+
+@media (max-width: 768px) {
+    .cms-main {
+        overflow-x: auto;
     }
     .cms-sidebar .sidebar-nav {
         display: flex;
