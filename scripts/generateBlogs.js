@@ -486,7 +486,7 @@ function buildArticlePage({
       </div>
     </div>
   </article>
-  <footer class="article-footer"><p>Developed by SEMPROG</p></footer>
+  <footer class="article-footer"><p>Developed and built by <a href="https://semprog.de" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px">SEMPROG</a></p></footer>
   <script type="application/ld+json">${articleJsonLd({
     title,
     description,
@@ -1003,7 +1003,7 @@ ${allCardsHtml}
         <a href="../index.html#download">Download</a>
         <a href="../index.html">Contact</a>
       </div>
-      <span class="blog-footer-credit">Developed by SEMPROG</span>
+      <span class="blog-footer-credit">Developed and built by <a href="https://semprog.de" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px">SEMPROG</a></span>
     </footer>
   </div>
 
