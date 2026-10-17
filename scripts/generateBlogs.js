@@ -433,6 +433,8 @@ function buildArticlePage({
     .comment-form .comment-error { color:#ff6b6b; font-size:0.9rem; margin:0; }
     .comment-form .comment-success-msg { color:var(--primary-green); font-size:0.95rem; display:none; margin:0; }
     .comments-list { display:flex; flex-direction:column; gap:1rem; }
+    .article-footer { margin-top:2.5rem; padding-top:1.25rem; border-top:1px solid var(--border-color); color:var(--text-gray); font-size:0.8rem; text-align:center; }
+    .article-footer p { margin:0; }
     .comment-item { padding:1rem; background:var(--bg-card); border:1px solid var(--border-color); border-radius:8px; }
     .comment-item .comment-author { font-weight:600; color:var(--primary-green); margin-bottom:0.35rem; }
     .comment-item .comment-date { font-size:0.8rem; color:var(--text-gray); margin-bottom:0.5rem; }
@@ -484,6 +486,7 @@ function buildArticlePage({
       </div>
     </div>
   </article>
+  <footer class="article-footer"><p>Developed by SEMPROG</p></footer>
   <script type="application/ld+json">${articleJsonLd({
     title,
     description,
@@ -1000,6 +1003,7 @@ ${allCardsHtml}
         <a href="../index.html#download">Download</a>
         <a href="../index.html">Contact</a>
       </div>
+      <span class="blog-footer-credit">Developed by SEMPROG</span>
     </footer>
   </div>
 
