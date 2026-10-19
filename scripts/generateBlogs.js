@@ -32,6 +32,7 @@ const {
   getImpressumFooterLinkHtml,
   getUnpublishedImpressumRobotsDisallow,
 } = require('./legal-public-urls')
+const { DEVELOPER_CREDIT_HTML } = require('./developer-credit')
 const {
   assertProposalBundleComplete,
   applyCmsProposalsToArticleHtml,
@@ -342,7 +343,7 @@ function buildArticleFooterHtml() {
     '<a href="../../terms.html">Nutzungsbedingungen</a>',
   ]
   if (impressum) parts.push(impressum)
-  return `<footer class="article-footer"><p class="article-legal-links">${parts.join(' · ')}</p><p>Developed by SEMPROG</p></footer>`
+  return `<footer class="article-footer"><p class="article-legal-links">${parts.join(' · ')}</p><p>${DEVELOPER_CREDIT_HTML}</p></footer>`
 }
 
 function buildArticlePage({
@@ -1049,7 +1050,7 @@ ${allCardsHtml}
         <a href="../terms.html">Terms</a>
         ${impressumFooterLink}
       </div>
-      <span class="blog-footer-credit">Developed by SEMPROG</span>
+      <span class="blog-footer-credit">${DEVELOPER_CREDIT_HTML}</span>
     </footer>
   </div>
 

@@ -1,0 +1,20 @@
+'use strict'
+
+const SEMPROG_DEVELOPER_URL = 'https://semprog.de/'
+
+const SEMPROG_LINK_HTML =
+  `<a href="${SEMPROG_DEVELOPER_URL}" target="_blank" rel="noopener noreferrer">SEMPROG</a>`
+
+const DEVELOPER_CREDIT_PLAIN = 'Developed by SEMPROG'
+
+const DEVELOPER_CREDIT_HTML = `Developed by ${SEMPROG_LINK_HTML}`
+
+const DEVELOPER_CREDIT_PARAGRAPH_HTML = `<p>${DEVELOPER_CREDIT_HTML}</p>`
+
+module.exports = {
+  SEMPROG_DEVELOPER_URL,
+  SEMPROG_LINK_HTML,
+  DEVELOPER_CREDIT_PLAIN,
+  DEVELOPER_CREDIT_HTML,
+  DEVELOPER_CREDIT_PARAGRAPH_HTML,
+}

@@ -4,20 +4,21 @@
 const fs = require('fs')
 const path = require('path')
 const { getImpressumFooterLinkHtml, loadLegalSiteConfig } = require('./legal-public-urls')
+const { DEVELOPER_CREDIT_HTML, DEVELOPER_CREDIT_PLAIN } = require('./developer-credit')
 
 const ROOT = path.join(__dirname, '..')
 const cfg = loadLegalSiteConfig()
 const impressumLink = getImpressumFooterLinkHtml('/')
 const impressumRelArticle = getImpressumFooterLinkHtml('../../')
 
-const ARTICLE_FOOTER_OLD = '<footer class="article-footer"><p>Developed by SEMPROG</p></footer>'
+const ARTICLE_FOOTER_OLD = `<footer class="article-footer"><p>${DEVELOPER_CREDIT_PLAIN}</p></footer>`
 const articleLegalParts = [
   '<a href="../../privacy.html">Datenschutz</a>',
   '<a href="../../terms.html">Nutzungsbedingungen</a>',
 ]
 if (cfg.impressumPublished && impressumRelArticle) articleLegalParts.push(impressumRelArticle)
 const ARTICLE_FOOTER_NEW =
-  `<footer class="article-footer"><p class="article-legal-links">${articleLegalParts.join(' · ')}</p><p>Developed by SEMPROG</p></footer>`
+  `<footer class="article-footer"><p class="article-legal-links">${articleLegalParts.join(' · ')}</p><p>${DEVELOPER_CREDIT_HTML}</p></footer>`
 
 let articleCount = 0
 const blogRoot = path.join(ROOT, 'blog')
