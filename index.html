@@ -635,6 +635,13 @@
         }
         
         .language-option {
+            display: block;
+            width: 100%;
+            text-align: left;
+            border: none;
+            background: transparent;
+            color: inherit;
+            font: inherit;
             padding: 0.65rem 0.9rem;
             cursor: pointer;
             transition: background 0.25s;
@@ -2949,12 +2956,12 @@
                         <span id="current-language">🇩🇪 DE</span>
                         <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
                     </button>
-                    <div class="language-dropdown" id="language-dropdown" role="listbox">
-                        <div class="language-option" onclick="changeLanguage('de')" role="option">🇩🇪 Deutsch</div>
-                        <div class="language-option" onclick="changeLanguage('en')" role="option">🇬🇧 English</div>
-                        <div class="language-option" onclick="changeLanguage('fr')" role="option">🇫🇷 Français</div>
-                        <div class="language-option" onclick="changeLanguage('es')" role="option">🇪🇸 Español</div>
-                        <div class="language-option" onclick="changeLanguage('it')" role="option">🇮🇹 Italiano</div>
+                    <div class="language-dropdown" id="language-dropdown" role="listbox" aria-label="Languages">
+                        <button type="button" class="language-option" onclick="changeLanguage('de')" role="option">🇩🇪 Deutsch</button>
+                        <button type="button" class="language-option" onclick="changeLanguage('en')" role="option">🇬🇧 English</button>
+                        <button type="button" class="language-option" onclick="changeLanguage('fr')" role="option">🇫🇷 Français</button>
+                        <button type="button" class="language-option" onclick="changeLanguage('es')" role="option">🇪🇸 Español</button>
+                        <button type="button" class="language-option" onclick="changeLanguage('it')" role="option">🇮🇹 Italiano</button>
                     </div>
                 </div>
                 <button
@@ -3701,6 +3708,7 @@
                 'messages.duplicate': 'Diese E-Mail ist bereits auf unserer Warteliste!',
                 'messages.error': 'Fehler beim Hinzufügen der E-Mail. Bitte versuche es erneut.',
                 'messages.serverError': 'Verbindung zum Server fehlgeschlagen. Bitte versuche es später erneut.',
+                'messages.sending': 'Wird gesendet…',
                 'onboarding.title': 'So funktioniert Skister',
                 'onboarding.subtitle': 'Teile Skiausrüstung mit Freunden, Familie, Skivereinen und lokalen Gruppen, denen du vertraust — Camping und Wandern werden auch unterstützt.',
                 'onboarding.step1.title': 'Menschen einladen, denen du vertraust',
@@ -3932,6 +3940,7 @@
                 'messages.duplicate': 'This email is already on our waitlist!',
                 'messages.error': 'Failed to add email. Please try again.',
                 'messages.serverError': 'Failed to connect to server. Please try again later.',
+                'messages.sending': 'Sending…',
                 'onboarding.title': 'How Skister works',
                 'onboarding.subtitle': 'Share ski gear with friends, family, ski clubs and local groups you trust — camping and hiking gear are supported too.',
                 'onboarding.step1.title': 'Invite people you trust',
@@ -4163,6 +4172,7 @@
                 'messages.duplicate': 'Cet e-mail est déjà sur notre liste d\'attente!',
                 'messages.error': 'Échec de l\'ajout de l\'e-mail. Veuillez réessayer.',
                 'messages.serverError': 'Échec de la connexion au serveur. Veuillez réessayer plus tard.',
+                'messages.sending': 'Envoi…',
                 'onboarding.title': 'Comment fonctionne Skister',
                 'onboarding.subtitle': 'Partagez du matériel de ski avec amis, famille, clubs de ski et groupes locaux de confiance — camping et randonnée aussi.',
                 'onboarding.step1.title': 'Invitez des personnes de confiance',
@@ -4390,6 +4400,11 @@
                 'cookie.text': 'Guardamos tu idioma en localStorage (necesario). Las cookies de análisis opcionales solo se activan si aceptas — hoy no hay scripts de análisis activos. Ver la <a href="/privacy.html">política de privacidad</a>.',
                 'cookie.accept': 'Aceptar todo',
                 'cookie.essential': 'Solo esenciales',
+                'messages.success': '¡Gracias por unirte a nuestra lista de espera! Te avisaremos cuando lancemos Skister.',
+                'messages.duplicate': 'Este correo ya está en nuestra lista de espera.',
+                'messages.error': 'No se pudo añadir el correo. Inténtalo de nuevo.',
+                'messages.serverError': 'No se pudo conectar con el servidor. Inténtalo más tarde.',
+                'messages.sending': 'Enviando…',
                 'onboarding.title': 'Cómo funciona Skister',
                 'onboarding.subtitle': 'Comparte equipo de esquí con amigos, familia, clubes de esquí y grupos locales de confianza — camping y senderismo también.',
                 'onboarding.step1.title': 'Invita a personas de confianza',
@@ -4621,6 +4636,7 @@
                 'messages.duplicate': 'Questa email è già nella nostra lista d\'attesa!',
                 'messages.error': 'Impossibile aggiungere l\'email. Riprova.',
                 'messages.serverError': 'Impossibile connettersi al server. Riprova più tardi.',
+                'messages.sending': 'Invio…',
                 'onboarding.title': 'Come funziona Skister',
                 'onboarding.subtitle': 'Condividi attrezzatura da sci con amici, famiglia, club sciistici e gruppi locali di cui ti fidi — camping e trekking supportati.',
                 'onboarding.step1.title': 'Invita persone di cui ti fidi',
@@ -5601,7 +5617,10 @@
             // Disable button and show loading state
             submitBtn.disabled = true;
             const originalText = submitBtn.textContent;
-            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+            const waitLang = document.documentElement.lang || currentLang || 'de'
+            const waitDict = translations[waitLang] || translations.de
+            const sendingLabel = waitDict['messages.sending'] || 'Sending…'
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> ' + sendingLabel
             
             // Submit to Supabase backend
             fetch('https://ayomhapkzckbhgwxenwr.supabase.co/functions/v1/make-server-080ebf84/waitlist', {

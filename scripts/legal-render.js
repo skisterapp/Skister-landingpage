@@ -6,6 +6,7 @@
   function resolveLocale(lang) {
     if (!lang) return 'en'
     const normalized = String(lang).toLowerCase().slice(0, 2)
+    if (normalized === 'es') return 'en'
     if (SUPPORTED.includes(normalized)) return normalized
     return 'en'
   }

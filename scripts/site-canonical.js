@@ -1,12 +1,20 @@
 /**
  * Canonical host enforcement (client-side).
  * - Redirects index.html paths to directory URLs (preserves query + hash).
+ * - Maps bare legal paths (/privacy) to .html (GitHub Pages).
  * - Ensures <link rel="canonical"> matches https://skister.app + normalized path.
  *
  * Load synchronously in <head> (no defer): <script src="/scripts/site-canonical.js"></script>
  */
 ;(function () {
   var SITE_ORIGIN = 'https://skister.app'
+
+  var SHORT_LEGAL_HTML = {
+    privacy: 'privacy.html',
+    terms: 'terms.html',
+    help: 'help.html',
+    impressum: 'impressum.html',
+  }
 
   function normalizedPathname(pathname) {
     var p = pathname || '/'
@@ -15,6 +23,8 @@
       p = p.slice(0, -'/index.html'.length) || '/'
     }
     if (/\.html$/i.test(p)) return p
+    var bare = p.replace(/\/$/, '').split('/').pop()
+    if (bare && SHORT_LEGAL_HTML[bare]) return '/' + SHORT_LEGAL_HTML[bare]
     if (p.length > 1 && p.charAt(p.length - 1) !== '/') p += '/'
     return p
   }
@@ -42,5 +52,12 @@
     location.replace(target)
     return
   }
-  ensureCanonicalLink()
+  function ensureWhenReady() {
+    ensureCanonicalLink()
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ensureWhenReady)
+  } else {
+    ensureWhenReady()
+  }
 })()

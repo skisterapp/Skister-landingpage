@@ -130,6 +130,17 @@
       text-decoration: none;
     }
     .home-link:hover { text-decoration: underline; }
+    .legal-links {
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      color: var(--text-gray);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.65rem;
+      justify-content: center;
+    }
+    .legal-links a { color: var(--text-gray); text-decoration: none; }
+    .legal-links a:hover, .legal-links a:focus-visible { color: var(--primary-green-light); outline: none; }
   </style>
 </head>
 <body>
@@ -147,6 +158,11 @@
     </div>
     <p class="hint" id="hint">If the app isn’t installed yet, copy the code and enter it when you sign up.</p>
     <a class="home-link" href="/">Back to skister.app</a>
+    <p class="legal-links">
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/impressum.html">Impressum</a>
+    </p>
   </main>
   <script>
     (function () {
