@@ -683,10 +683,10 @@
     }
   },
   "images": {
-    "heroMascot": "/assets/hero-mascot.png",
+    "heroMascot": "https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/make-080ebf84-landing-images/assets/hero-mascot.png",
     "onboardingStep4": "https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/Request%20a%20reservation.png",
     "onboardingStep5": "https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/Mascot%20Confirm%20%26%20coordinate.png",
     "onboardingStep7": "https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/SkisterApp/Mascot%20Ski%20Network.png"
   },
-  "syncedAt": "2026-10-19T02:01:08.918Z"
+  "syncedAt": "2026-10-19T17:50:10.459Z"
 }
