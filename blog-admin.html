@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <link rel="canonical" href="https://skister.app/blog-admin.html">
     <title>Blog Manager - Skister Admin</title>
     <link rel="icon" href="/favicon.ico?v=20261011" sizes="any">
@@ -739,7 +740,7 @@
                 </div>
             </div>
             <div id="comments-admin-content" style="padding: 1rem;">
-                <p style="color: var(--text-gray);">Click "Load comments" to review visitor comments. Uses the same admin password as admin.html (log in there first if needed).</p>
+                <p style="color: var(--text-gray);">Click "Load comments" to review visitor comments. Publish/Reject are unavailable (<code>PATCH /blog/comments/:id</code> not deployed). Use <strong>Delete</strong> or <strong>seo-admin</strong> (Supabase) for the Postgres moderation queue.</p>
             </div>
         </div>
     </div>
@@ -1279,7 +1280,7 @@
                                 var body = (c.content || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
                                 var status = c.moderationStatus || c.status || 'pending';
                                 var statusLabel = status === 'approved' ? 'Published' : status === 'rejected' ? 'Rejected' : 'Pending';
-                                html += '<div class="comment-admin-item" data-comment-id="' + (c.id || '') + '"><div class="comment-meta"><strong>' + author + '</strong> · ' + dateStr + ' · ' + statusLabel + '</div><div class="comment-text">' + body + '</div><div class="comment-actions"><button type="button" class="btn btn-primary btn-small" onclick="setCommentStatus(\'' + (c.id || '').replace(/'/g, "\\'") + '\', \'approved\')"><i class="fa-solid fa-check"></i> Publish</button><button type="button" class="btn btn-secondary btn-small" onclick="setCommentStatus(\'' + (c.id || '').replace(/'/g, "\\'") + '\', \'rejected\')"><i class="fa-solid fa-times"></i> Reject</button><button type="button" class="btn btn-danger btn-small" onclick="deleteComment(\'' + (c.id || '').replace(/'/g, "\\'") + '\')"><i class="fa-solid fa-trash"></i> Delete</button></div></div>';
+                                html += '<div class="comment-admin-item" data-comment-id="' + (c.id || '') + '"><div class="comment-meta"><strong>' + author + '</strong> · ' + dateStr + ' · ' + statusLabel + '</div><div class="comment-text">' + body + '</div><div class="comment-actions"><button type="button" class="btn btn-danger btn-small" onclick="deleteComment(\'' + (c.id || '').replace(/'/g, "\\'") + '\')"><i class="fa-solid fa-trash"></i> Delete</button></div></div>';
                             });
                             html += '</div>';
                         });
@@ -1290,22 +1291,6 @@
                 }
             } catch (err) {
                 container.innerHTML = '<p class="error-message">Failed to load comments: ' + err.message + '</p>';
-            }
-        }
-        
-        async function setCommentStatus(id, status) {
-            if (!id || (status !== 'approved' && status !== 'rejected')) return;
-            try {
-                var res = await fetch(BLOG_API_BASE + '/blog/comments/' + encodeURIComponent(id), {
-                    method: 'PATCH',
-                    headers: getAdminHeaders(),
-                    body: JSON.stringify({ status: status })
-                });
-                var data = await res.json();
-                if (data.success) loadAllComments();
-                else alert(data.error || 'Failed to update comment.');
-            } catch (err) {
-                alert('Failed to update: ' + err.message);
             }
         }
         

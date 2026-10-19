@@ -387,7 +387,29 @@ async function initEditor() {
 }
 
 async function checkAuth() {
-    if (sessionStorage.getItem('landingAdminAuth')) showEditor();
+    if (!sessionStorage.getItem('landingAdminAuth')) return;
+    const password = sessionStorage.getItem('landingAdminPassword') || '';
+    if (!password) {
+        sessionStorage.removeItem('landingAdminAuth');
+        return;
+    }
+    try {
+        const res = await fetch(API_BASE + '/landing-admin-verify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + ANON_KEY,
+                'X-Admin-Password': password
+            }
+        });
+        const data = await res.json().catch(function () { return {}; });
+        if (res.ok && data.ok) {
+            showEditor();
+            return;
+        }
+    } catch (_) { /* ignore */ }
+    sessionStorage.removeItem('landingAdminAuth');
+    sessionStorage.removeItem('landingAdminPassword');
 }
 
 async function loadContent() {

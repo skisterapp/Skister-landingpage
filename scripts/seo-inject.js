@@ -21,14 +21,23 @@
     }
   }
 
+  function hasBuiltInSiteMeta() {
+    var desc = document.querySelector('meta[name="description"]')
+    var title = (document.title || '').trim()
+    return !!(desc && desc.getAttribute('content') && desc.getAttribute('content').trim() && title)
+  }
+
   function run() {
+    if (hasBuiltInSiteMeta()) return
     fetch(API + '/site-seo', {
       headers: { Authorization: 'Bearer ' + SUPABASE_ANON_KEY },
     })
       .then(function (r) {
+        if (!r.ok) return null
         return r.json()
       })
       .then(function (data) {
+        if (!data) return
         var s = data && data.seo ? data.seo : data
         if (data.error || !(s && (s.metaTitle || s.metaDescription))) return
         setMetaIfEmpty('description', s.metaDescription, false)

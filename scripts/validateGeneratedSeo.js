@@ -61,7 +61,23 @@ function validate({ repoRootDir }) {
 
   const sitemap = readUtf8(sitemapPath)
   const sitemapUrls = Array.from(sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)).map((m) => String(m[1] || '').trim())
-  const sitemapHasStub = sitemapUrls.some((u) => /\.html($|\?)/i.test(u) || /\/blog\/[^/]+\.html$/i.test(u))
+  let allowedStaticHtmlPaths = ['/privacy.html', '/terms.html', '/help.html']
+  try {
+    const legalSite = JSON.parse(readUtf8(path.join(repoRootDir, 'scripts', 'legal-site.json')))
+    if (legalSite.impressumPublished) allowedStaticHtmlPaths.push('/impressum.html')
+    if (Array.isArray(legalSite.staticLegalSitemapPaths)) {
+      allowedStaticHtmlPaths = legalSite.staticLegalSitemapPaths.map((p) =>
+        String(p).startsWith('/') ? String(p) : `/${p}`,
+      )
+      if (legalSite.impressumPublished) allowedStaticHtmlPaths.push('/impressum.html')
+    }
+  } catch (_) {}
+  const sitemapHasStub = sitemapUrls.some((u) => {
+    if (/\/blog\/[^/]+\.html$/i.test(u)) return true
+    if (!/\.html($|\?)/i.test(u)) return false
+    const pathname = u.replace(/^https?:\/\/[^/]+/i, '')
+    return !allowedStaticHtmlPaths.includes(pathname)
+  })
   if (sitemapHasStub) errors.push('sitemap.xml contains a .html URL (blog stub). Only canonical URLs should be listed.')
 
   const blogFiles = listFilesRecursively(blogDir).filter((p) => p.endsWith('.html'))

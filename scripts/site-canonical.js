@@ -1,6 +1,6 @@
 /**
  * Canonical host enforcement (client-side).
- * - Redirects /index.html and */index.html to directory URLs (preserves query + hash).
+ * - Redirects index.html paths to directory URLs (preserves query + hash).
  * - Ensures <link rel="canonical"> matches https://skister.app + normalized path.
  *
  * Load synchronously in <head> (no defer): <script src="/scripts/site-canonical.js"></script>

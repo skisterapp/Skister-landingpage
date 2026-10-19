@@ -35,6 +35,7 @@ try {
   fs.writeFileSync(jsonPath, json.trim() + '\n', 'utf8')
   fs.writeFileSync(jsPath, `window.SkisterLegalContent = ${json.trim()};\n`, 'utf8')
   console.log('Synced legal content to scripts/legal-content.js')
+  require('child_process').execSync('node scripts/prerender-legal-pages.js', { cwd: root, stdio: 'inherit' })
 } catch (error) {
   console.error(error.stderr || error.message)
   process.exit(1)

@@ -57,9 +57,9 @@
         }
         
         :root {
-            --primary-green: #00AF64;
-            --primary-green-dark: #1a6b1a;
-            --primary-green-light: #61C58E;
+            --primary-green: #00af64;
+            --primary-green-dark: #008f54;
+            --primary-green-light: #61c58e;
             --bg-dark: #0a0a0a;
             --bg-card: #1a1a1a;
             --text-white: #ffffff;
@@ -576,14 +576,22 @@
             align-self: flex-start;
             padding: 0.6rem 1.25rem;
             background: var(--primary-green);
-            color: var(--text-white);
+            color: #f4faf7;
             border: none;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
         }
         .comment-form .btn-submit:hover {
-            background: var(--primary-green-light);
+            background: var(--primary-green-dark);
+        }
+        .comment-form .btn-submit:focus-visible {
+            outline: 2px solid var(--primary-green);
+            outline-offset: 2px;
+        }
+        .comment-form .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
         .comment-form .comment-error {
             color: #ff6b6b;

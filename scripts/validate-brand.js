@@ -9,7 +9,7 @@ const brand = require('./brand-tokens')
 const ROOT = path.join(__dirname, '..')
 const APPROVED_FAVICON_ICO_MD5 = '31b082d6d58d747dc89377a1f86eac45'
 const RETIRED_MASCOT_FAVICON_ICO_MD5 = '0fd20c920fa3d1c9bafee4bc45f39bd8'
-const SKIP_DIRS = new Set(['.git', 'node_modules', 'branding', 'memory-bank'])
+const SKIP_DIRS = new Set(['.git', 'node_modules', 'branding', 'memory-bank', 'build'])
 const SKIP_FILES = new Set([
   'scripts/brand-tokens.js',
   'scripts/validate-brand.js',

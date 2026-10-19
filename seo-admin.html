@@ -296,6 +296,7 @@
                 <div id="adminSeoPanels">
                 <div class="panel">
                     <h2>Site SEO</h2>
+                    <p id="siteSeoApiNotice" class="article-seo-strip-hint hidden" role="status"></p>
                     <label>Meta title</label>
                     <input type="text" id="seoMetaTitle">
                     <label>Meta description</label>
@@ -585,6 +586,46 @@
 
     var cmsRole = null;
     var canTeam = false;
+    var siteSeoApiAvailable = false;
+
+    var STATIC_SITE_SEO = {
+        metaTitle: 'Skister — Share ski gear with people you trust',
+        metaDescription: 'Skister is the easiest way to share ski gear with people you trust. Private networks, QR handoff, Maintenance Center, Adventure Profile, smart reminders, and ski tools — plus camping, hiking and other outdoor equipment.',
+        ogImage: 'https://skister.app/assets/skister-app-icon.png',
+        siteUrl: 'https://skister.app',
+        canonicalBase: 'https://skister.app',
+        articleAuthor: 'Skister',
+        ogSiteName: 'Skister',
+        robots: 'index,follow'
+    };
+
+    function applySiteSeoToForm(s) {
+        var src = s || {};
+        document.getElementById('seoMetaTitle').value = src.metaTitle || '';
+        document.getElementById('seoMetaDesc').value = src.metaDescription || '';
+        var ogEl = document.getElementById('seoOgImage');
+        if (ogEl) ogEl.value = src.ogImage || '';
+        document.getElementById('seoSiteUrl').value = src.siteUrl || '';
+        document.getElementById('seoCanonical').value = src.canonicalBase || '';
+        document.getElementById('seoArticleAuthor').value = src.articleAuthor || '';
+        document.getElementById('seoOgSite').value = src.ogSiteName || '';
+        document.getElementById('seoRobots').value = src.robots || 'index,follow';
+        var rt = document.getElementById('seoRobotsTxt');
+        var sx = document.getElementById('seoSitemapExtras');
+        if (rt) rt.value = src.robotsTxt || '';
+        if (sx) sx.value = src.sitemapExtraUrls || '';
+    }
+
+    function setSiteSeoApiState(available, message) {
+        siteSeoApiAvailable = available;
+        var btn = document.getElementById('btnSaveSeo');
+        if (btn) btn.disabled = !available;
+        var notice = document.getElementById('siteSeoApiNotice');
+        if (notice) {
+            notice.textContent = message || '';
+            notice.classList.toggle('hidden', !message);
+        }
+    }
 
     function afterLogin() {
         return api('/landing-cms/me').then(function (me) {
@@ -734,27 +775,22 @@
 
     function loadSeo() {
         if (cmsRole !== 'admin' && cmsRole !== 'moderator') return;
-        fetch(EDGE + '/site-seo', {
-            headers: {
-                Authorization: 'Bearer ' + SUPABASE_ANON_KEY,
-                apikey: SUPABASE_ANON_KEY
-            }
-        }).then(function (r) { return r.json(); }).then(function (d) {
-            var s = d.seo || {};
-            document.getElementById('seoMetaTitle').value = s.metaTitle || '';
-            document.getElementById('seoMetaDesc').value = s.metaDescription || '';
-            var ogEl = document.getElementById('seoOgImage');
-            if (ogEl) ogEl.value = s.ogImage || '';
-            document.getElementById('seoSiteUrl').value = s.siteUrl || '';
-            document.getElementById('seoCanonical').value = s.canonicalBase || '';
-            document.getElementById('seoArticleAuthor').value = s.articleAuthor || '';
-            document.getElementById('seoOgSite').value = s.ogSiteName || '';
-            document.getElementById('seoRobots').value = s.robots || 'index,follow';
-            var rt = document.getElementById('seoRobotsTxt');
-            var sx = document.getElementById('seoSitemapExtras');
-            if (rt) rt.value = s.robotsTxt || '';
-            if (sx) sx.value = s.sitemapExtraUrls || '';
-        }).catch(function () {});
+        if (cmsRole !== 'admin') {
+            setSiteSeoApiState(false, '');
+            applySiteSeoToForm(STATIC_SITE_SEO);
+        } else {
+            api('/site-seo').then(function (d) {
+                var s = (d && d.seo) ? d.seo : d;
+                applySiteSeoToForm(s);
+                setSiteSeoApiState(true, '');
+            }).catch(function () {
+                applySiteSeoToForm(STATIC_SITE_SEO);
+                setSiteSeoApiState(
+                    false,
+                    'Site SEO API is not available on the server. The public homepage uses static meta tags in index.html. Save is disabled until GET/PUT /site-seo is deployed on the edge function.'
+                );
+            });
+        }
         var artPanel = document.getElementById('articleSeoPanel');
         if (cmsRole !== 'admin') artPanel.style.display = 'none';
         else artPanel.style.display = 'block';
@@ -764,6 +800,7 @@
 
     document.getElementById('btnSaveSeo').onclick = function () {
         if (cmsRole !== 'admin') return toast('Admins only', true);
+        if (!siteSeoApiAvailable) return toast('Site SEO API is not deployed; edit index.html or deploy /site-seo first.', true);
         var rt = document.getElementById('seoRobotsTxt');
         var sx = document.getElementById('seoSitemapExtras');
         api('/site-seo', {

@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://news.google.com" crossorigin>
   <script async src="https://news.google.com/swg/js/v1/publisher.js"></script>
   <style>
-    :root { --primary-green:#00AF64; --primary-green-light:#61C58E; --bg-card:#1a1a1a; --text-gray:#b0b0b0; --border-color:rgba(255,255,255,0.1); }
+    :root { --primary-green:#00AF64; --primary-green-dark:#008f54; --primary-green-light:#61C58E; --bg-card:#1a1a1a; --text-gray:#b0b0b0; --border-color:rgba(255,255,255,0.1); }
     body { font-family: system-ui, sans-serif; background:#0a0a0a; color:#fff; line-height:1.6; max-width:760px; margin:0 auto; padding:2rem 1.25rem 4rem; }
     a { color:#00AF64; }
     .nav { margin-bottom:2rem; font-size:0.95rem; }
@@ -39,11 +39,43 @@
     .prose-featured img { width:100%; height:auto; border-radius:10px; border:1px solid rgba(255,255,255,0.12); }
     .prose > h1:first-of-type { color:#00AF64; font-size:1.75rem; }
     h1 { color:#00AF64; font-size:1.75rem; }
-    .prose .TyagGW_tableContainer { margin:1rem 0; overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:100%; }
-    .prose table { border-collapse:collapse; width:100%; max-width:100%; border:1px solid rgba(255,255,255,0.28); }
-    .prose th, .prose td { border:1px solid rgba(255,255,255,0.28); padding:0.5rem 0.75rem; text-align:left; vertical-align:top; }
-    .prose thead th { background:rgba(255,255,255,0.08); font-weight:600; }
-    .prose tbody tr:nth-child(even) { background:rgba(255,255,255,0.03); }
+    .prose { max-width: 100%; min-width: 0; }
+    body { overflow-x: clip; }
+    .prose .blog-table-scroll,
+    .prose .TyagGW_tableContainer {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      margin: 1rem 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+    }
+    .prose .blog-table-scroll:focus-visible {
+      outline: 2px solid #00AF64;
+      outline-offset: 2px;
+    }
+    .prose .TyagGW_tableWrapper,
+    .prose .TyagGW_tableContainer > div {
+      display: block;
+      max-width: none;
+      width: max-content;
+      min-width: 0;
+    }
+    .prose table {
+      border-collapse: collapse;
+      width: auto;
+      min-width: min(100%, 36rem);
+      border: 1px solid rgba(255,255,255,0.28);
+    }
+    .prose th, .prose td {
+      border: 1px solid rgba(255,255,255,0.28);
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .prose thead th { background: rgba(255,255,255,0.08); font-weight: 600; }
+    .prose tbody tr:nth-child(even) { background: rgba(255,255,255,0.03); }
     .post-more-section { margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border-color); }
     .post-nav-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; align-items:stretch; }
     .post-nav-row > div { min-width:0; }
@@ -83,8 +115,8 @@
     .comment-form input, .comment-form textarea { padding:0.75rem 1rem; background:rgba(255,255,255,0.05); border:1px solid var(--border-color); border-radius:8px; color:#fff; font-size:1rem; font-family:inherit; }
     .comment-form textarea { min-height:100px; resize:vertical; }
     .comment-form input:focus, .comment-form textarea:focus { outline:none; border-color:var(--primary-green); }
-    .comment-form .btn-submit { align-self:flex-start; padding:0.55rem 1.2rem; background:var(--primary-green); color:#fff; border:none; border-radius:8px; font-weight:600; cursor:pointer; }
-    .comment-form .btn-submit:hover { background:var(--primary-green-light); }
+    .comment-form .btn-submit { align-self:flex-start; padding:0.55rem 1.2rem; background:var(--primary-green); color:#f4faf7; border:none; border-radius:8px; font-weight:600; cursor:pointer; }
+    .comment-form .btn-submit:hover { background:var(--primary-green-dark); } .comment-form .btn-submit:focus-visible { outline:2px solid var(--primary-green); outline-offset:2px; } .comment-form .btn-submit:disabled { opacity:0.5; cursor:not-allowed; }
     .comment-form .comment-error { color:#ff6b6b; font-size:0.9rem; margin:0; }
     .comment-form .comment-success-msg { color:var(--primary-green); font-size:0.95rem; display:none; margin:0; }
     .comments-list { display:flex; flex-direction:column; gap:1rem; }
@@ -105,59 +137,73 @@
   <article class="prose" itemscope itemtype="https://schema.org/BlogPosting">
     <h1 itemprop="headline">Skischuhe 230 mm – welche Größe steckt dahinter?</h1>
     <figure class="prose-featured"><img src="https://images.surferseo.art/6727e9be-1b85-427b-8510-a7bd85e4b3bf.jpg" alt="Skischuhe 230 mm – welche Größe steckt dahinter?" loading="eager" decoding="async" width="1200" height="630"></figure>
-    <p data-start="611" data-end="912">Du hast Skischuhe mit einer Sohlenlänge von <strong data-start="655" data-end="665">230 mm</strong> gefunden und fragst dich, welche Größe das ist? Dieser Wert liegt im <strong data-start="735" data-end="759">oberen Juniorbereich</strong> und kurz vor dem Übergang zu kleineren Erwachsenengrößen. Die Zahl an der Ferse hilft dir bei der Einordnung – aber sie ist nicht direkt die Schuhgröße.</p>
-<p data-start="914" data-end="1034">Hier erfährst du, was 230 mm bedeutet, welchen Größenbereich du erwarten kannst und worauf du unbedingt achten solltest.</p><hr data-start="606" data-end="609"><h2 data-section-id="fdge8y" data-start="286" data-end="308">TL;DR (Kurzantwort)</h2><p data-start="310" data-end="604"><strong data-start="310" data-end="381">230 mm ist die Sohlenlänge (BSL), nicht die eigentliche Schuhgröße.</strong><br data-start="381" data-end="384">Sie deutet sehr wahrscheinlich auf einen&nbsp;<strong data-start="425" data-end="477">größeren Junior-Skischuh im Bereich MP 19,0–20,5</strong>&nbsp;hin (≈&nbsp;<strong data-start="485" data-end="497">EU 29–32</strong>). Prüfe zusätzlich den&nbsp;<strong data-start="521" data-end="554">Mondopoint-Wert am Innenschuh</strong>, da mehrere Größen dieselbe Schale nutzen können.</p><hr data-start="1036" data-end="1039"><h2 data-section-id="4y60zt" data-start="1041" data-end="1079">Was bedeutet 230 mm bei Skischuhen?</h2><p data-start="1081" data-end="1162">Die Angabe <strong data-start="1092" data-end="1102">230 mm</strong> ist die sogenannte <strong data-start="1122" data-end="1161">Sohlenlänge (Boot Sole Length, BSL)</strong>.</p><p data-start="1164" data-end="1235">Sie beschreibt die <strong data-start="1183" data-end="1213">Länge der Kunststoffschale</strong> und ist relevant für:</p><ul data-start="1237" data-end="1361">
-<li data-section-id="1lqnhoj" data-start="1237" data-end="1271">
+    <figure class="prose-featured"><img src="https://images.surferseo.art/6727e9be-1b85-427b-8510-a7bd85e4b3bf.jpg" alt="Skischuhe 230 mm – welche Größe steckt dahinter?" loading="eager" decoding="async" width="1200" height="630"></figure>
+    <figure class="prose-featured"><img src="https://images.surferseo.art/6727e9be-1b85-427b-8510-a7bd85e4b3bf.jpg" alt="Skischuhe 230 mm – welche Größe steckt dahinter?" loading="eager" decoding="async" width="1200" height="630"></figure>
+    <p>Du hast Skischuhe mit einer Sohlenlänge von <strong>230 mm</strong> gefunden und fragst dich, welche Größe das ist? Dieser Wert liegt im <strong>oberen Juniorbereich</strong> und kurz vor dem Übergang zu kleineren Erwachsenengrößen. Die Zahl an der Ferse hilft dir bei der Einordnung – aber sie ist nicht direkt die Schuhgröße.</p>
+<p>Hier erfährst du, was 230 mm bedeutet, welchen Größenbereich du erwarten kannst und worauf du unbedingt achten solltest.</p><hr>
+<h2 id="bsl-sicherheitshinweis">Sicherheit: Bindung, Passform und Gebrauchtcheck</h2>
+<p>Bitte trenne drei Dinge: <strong>Schuhgröße (Mondopoint)</strong>, <strong>Sohlenlänge (BSL)</strong> und <strong>Bindungseinstellung</strong>. Sie hängen zusammen, sind aber nicht austauschbar.</p>
+<ul>
+<li><strong>BSL allein</strong> belegt weder die Passform noch, ob Ski und Bindung zusammenpassen.</li>
+<li><strong>EU- oder MP-Hinweise</strong> in Ratgebern und Tabellen sind nur Orientierung – Hersteller und Modelle weichen ab.</li>
+<li><strong>Montage, Einstellung und Inspektion</strong> von Skibindungen (inkl. Prüfung des Auslöseverhaltens) gehören in qualifizierte Hände. DIN ISO 11088 beschreibt u. a. den Rahmen für Montage, Einstellung und Inspektion von Bindungen durch geeignetes Fachpersonal; dieser Artikel ersetzt keine Fachwerkstatt und belegt keine Zertifizierung.</li>
+</ul>
+<p>Der <a href="/blog/z-wert-kalkulator/">Z-Wert-Kalkulator</a> in der SKISTER-App kann zur ersten Orientierung beim Z-Wert dienen – er ersetzt weder die Einstellung noch die Funktionsprüfung im Skiservice.</p>
+<p>Bei <strong>Gebrauchtkäufen</strong>: Schale und Innenschuh auf Beschädigungen prüfen, Sohle auf Lesbarkeit der BSL-Kennzeichnung, und die Kombination aus Ski, Bindung und Schuh vor der Nutzung im Fachbetrieb prüfen lassen.</p>
+<hr><h2>TL;DR (Kurzantwort)</h2><p><strong>230 mm ist die Sohlenlänge (BSL), nicht die eigentliche Schuhgröße.</strong><br>Sie deutet sehr wahrscheinlich auf einen&nbsp;<strong>größeren Junior-Skischuh im Bereich MP 19,0–20,5</strong>&nbsp;hin (≈&nbsp;<strong>EU 29–32</strong>). Prüfe zusätzlich den&nbsp;<strong>Mondopoint-Wert am Innenschuh</strong>, da mehrere Größen dieselbe Schale nutzen können.</p><hr><h2>Was bedeutet 230 mm bei Skischuhen?</h2><p>Die Angabe <strong>230 mm</strong> ist die sogenannte <strong>Sohlenlänge (Boot Sole Length, BSL)</strong>.</p><p>Sie beschreibt die <strong>Länge der Kunststoffschale</strong> und ist relevant für:</p><ul>
+<li>
 die Einstellung der Skibindung
 </li>
-<li data-section-id="1mm7r20" data-start="1272" data-end="1307">
+<li>
 den Verstellbereich der Bindung
 </li>
-<li data-section-id="14kv0ze" data-start="1308" data-end="1361">
+<li>
 die Kompatibilität mit bestimmten Systembindungen
 </li>
-</ul><p data-start="1363" data-end="1419">Wichtig:<br data-start="1371" data-end="1374">
-<strong data-start="1374" data-end="1419">Die Sohlenlänge ist nicht die Schuhgröße.</strong></p><hr data-start="1421" data-end="1424"><h2 data-section-id="md710p" data-start="1426" data-end="1480">Kann man aus 230 mm direkt die Schuhgröße ableiten?</h2><p data-start="1482" data-end="1521">Kurz gesagt: <strong data-start="1495" data-end="1521">Nein, nicht eindeutig.</strong></p><p data-start="1523" data-end="1615">Gerade im Juniorbereich deckt eine Schale häufig mehrere Mondopoint-Größen ab. Das bedeutet:</p><p data-start="1617" data-end="1678">Eine Sohlenlänge von 230 mm kann mehreren Größen entsprechen.</p><p data-start="1680" data-end="1772">Die BSL hilft dir bei der <strong data-start="1706" data-end="1721">Eingrenzung</strong>, ersetzt aber nicht die tatsächliche Größenangabe.</p><hr data-start="1774" data-end="1777"><h2 data-section-id="crz6yi" data-start="1779" data-end="1801">Was ist Mondopoint?</h2><p data-start="1803" data-end="1874"><strong data-start="1803" data-end="1822">Mondopoint (MP)</strong> ist das standardisierte Größensystem für Skischuhe.</p><p data-start="1876" data-end="1923">Es basiert auf der <strong data-start="1895" data-end="1922">Fußlänge in Zentimetern</strong>.</p><p data-start="1925" data-end="1934">Beispiel:</p><ul data-start="1935" data-end="2026">
-<li data-section-id="1djxnvz" data-start="1935" data-end="1980">
+</ul><p>Wichtig:<br>
+<strong>Die Sohlenlänge ist nicht die Schuhgröße.</strong></p><hr><h2>Kann man aus 230 mm direkt die Schuhgröße ableiten?</h2><p>Kurz gesagt: <strong>Nein, nicht eindeutig.</strong></p><p>Gerade im Juniorbereich deckt eine Schale häufig mehrere Mondopoint-Größen ab. Das bedeutet:</p><p>Eine Sohlenlänge von 230 mm kann mehreren Größen entsprechen.</p><p>Die BSL hilft dir bei der <strong>Eingrenzung</strong>, ersetzt aber nicht die tatsächliche Größenangabe.</p><hr><h2>Was ist Mondopoint?</h2><p><strong>Mondopoint (MP)</strong> ist das standardisierte Größensystem für Skischuhe.</p><p>Es basiert auf der <strong>Fußlänge in Zentimetern</strong>.</p><p>Beispiel:</p><ul>
+<li>
 MP 19,0 → geeignet für ca. 19 cm Fußlänge
 </li>
-<li data-section-id="1upx2gf" data-start="1981" data-end="2026">
+<li>
 MP 20,0 → geeignet für ca. 20 cm Fußlänge
 </li>
-</ul><p data-start="2028" data-end="2065">Zur groben Orientierung im EU-System:</p><ul data-start="2067" data-end="2158">
-<li data-section-id="4bizsa" data-start="2067" data-end="2089">
+</ul><p>Zur groben Orientierung im EU-System:</p><ul>
+<li>
 MP 18,0 ≈ EU 28–29
 </li>
-<li data-section-id="7dcria" data-start="2090" data-end="2112">
+<li>
 MP 19,0 ≈ EU 29–30
 </li>
-<li data-section-id="1i4san7" data-start="2113" data-end="2135">
+<li>
 MP 20,0 ≈ EU 31–32
 </li>
-<li data-section-id="1ol46ow" data-start="2136" data-end="2158">
+<li>
 MP 21,0 ≈ EU 32–33
 </li>
-</ul><p data-start="2160" data-end="2262">Die EU-Umrechnung ist nur eine Annäherung. Junior-Skischuhe sind anders konstruiert als Straßenschuhe.</p><hr data-start="2264" data-end="2267"><h2 data-section-id="3i1b9" data-start="2269" data-end="2329">Welcher Mondopoint-Bereich ist bei 230 mm wahrscheinlich?</h2><p data-start="2331" data-end="2397">Eine Sohlenlänge von <strong data-start="2352" data-end="2362">230 mm</strong> liegt im <strong data-start="2372" data-end="2396">oberen Juniorbereich</strong>.</p><p data-start="2399" data-end="2424">Typischer Größenkorridor:</p><p data-start="2426" data-end="2464"><strong data-start="2426" data-end="2449">MP 19,0 bis MP 20,5</strong><br data-start="2449" data-end="2452">
-(≈ EU 29–32)</p><p data-start="2466" data-end="2488">Warum nur ein Bereich?</p><p data-start="2490" data-end="2613">Im Juniorsegment unterscheiden sich Schalenlängen je nach Hersteller. Zudem decken viele Modelle halbe Größen gemeinsam ab.</p><p data-start="2615" data-end="2712">Deshalb gilt:<br data-start="2628" data-end="2631">
-<strong data-start="2631" data-end="2712">230 mm gibt dir einen realistischen Größenkorridor – aber keine exakte Größe.</strong></p><hr data-start="2714" data-end="2717"><h2 data-section-id="e4rwf2" data-start="2719" data-end="2773">Warum solltest du zusätzlich den Innenschuh prüfen?</h2><p data-start="2775" data-end="2846">Entscheidend für die tatsächliche Größe ist der <strong data-start="2823" data-end="2845">Innenschuh (Liner)</strong>.</p><p data-start="2848" data-end="2938">Dort ist in der Regel der Mondopoint-Wert aufgedruckt – das ist die zuverlässigste Angabe.</p><p data-start="2940" data-end="3010">Falls kein Label vorhanden ist, kannst du einen einfachen Test machen:</p><h3 data-section-id="146rv51" data-start="3012" data-end="3070">Shell-Fit-Test (bei Kindern und Jugendlichen sinnvoll)</h3><ol data-start="3072" data-end="3223">
-<li data-section-id="7tfsu8" data-start="3072" data-end="3100">
+</ul><p>Die EU-Umrechnung ist nur eine Annäherung. Junior-Skischuhe sind anders konstruiert als Straßenschuhe.</p><hr><h2>Welcher Mondopoint-Bereich ist bei 230 mm wahrscheinlich?</h2><p>Eine Sohlenlänge von <strong>230 mm</strong> liegt im <strong>oberen Juniorbereich</strong>.</p><p>Typischer Größenkorridor:</p><p><strong>MP 19,0 bis MP 20,5</strong><br>
+(≈ EU 29–32)</p><p>Warum nur ein Bereich?</p><p>Im Juniorsegment unterscheiden sich Schalenlängen je nach Hersteller. Zudem decken viele Modelle halbe Größen gemeinsam ab.</p><p>Deshalb gilt:<br>
+<strong>230 mm gibt dir einen realistischen Größenkorridor – aber keine exakte Größe.</strong></p><hr><h2>Warum solltest du zusätzlich den Innenschuh prüfen?</h2><p>Entscheidend für die tatsächliche Größe ist der <strong>Innenschuh (Liner)</strong>.</p><p>Dort ist in der Regel der Mondopoint-Wert aufgedruckt – das ist die zuverlässigste Angabe.</p><p>Falls kein Label vorhanden ist, kannst du einen einfachen Test machen:</p><h3>Shell-Fit-Test (bei Kindern und Jugendlichen sinnvoll)</h3><ol>
+<li>
 Innenschuh herausnehmen
 </li>
-<li data-section-id="179do2i" data-start="3101" data-end="3150">
+<li>
 Mit dünner Socke in die leere Schale stellen
 </li>
-<li data-section-id="1vpnrn2" data-start="3151" data-end="3190">
+<li>
 Zehen vorne leicht anstoßen lassen
 </li>
-<li data-section-id="w4igd4" data-start="3191" data-end="3223">
+<li>
 Abstand an der Ferse prüfen
 </li>
-</ol><p data-start="3225" data-end="3336">Gerade im oberen Juniorbereich sollte nicht zu viel Spielraum eingeplant werden, da sonst die Kontrolle leidet.</p><hr data-start="3338" data-end="3341"><h2 data-section-id="mcdd6m" data-start="3343" data-end="3365">Häufiger Suchfehler</h2><p data-start="3367" data-end="3391">Manche suchen auch nach:</p><ul data-start="3392" data-end="3426">
-<li data-section-id="m2wg6l" data-start="3392" data-end="3426">
+</ol><p>Gerade im oberen Juniorbereich sollte nicht zu viel Spielraum eingeplant werden, da sonst die Kontrolle leidet.</p><hr><h2>Häufiger Suchfehler</h2><p>Manche suchen auch nach:</p><ul>
+<li>
 „23.0 mm Skischuhe welche Größe“
 </li>
-</ul><p data-start="3428" data-end="3514">Gemeint ist fast immer <strong data-start="3451" data-end="3461">230 mm</strong>.<br data-start="3462" data-end="3465">
-Die Sohlenlänge wird immer dreistellig angegeben.</p><hr data-start="3516" data-end="3519"><h2 data-section-id="x8o1ad" data-start="3521" data-end="3529">Fazit</h2><p data-start="3531" data-end="3585"><strong data-start="3531" data-end="3585">230 mm ist die Sohlenlänge – nicht die Schuhgröße.</strong></p><p data-start="3587" data-end="3691">Sie deutet sehr wahrscheinlich auf einen <strong data-start="3628" data-end="3686">Junior-Skischuh im Bereich MP 19,0–20,5 (EU ca. 29–32)</strong> hin.</p><p data-start="914" data-end="1034">
+</ul><p>Gemeint ist fast immer <strong>230 mm</strong>.<br>
+Die Sohlenlänge wird immer dreistellig angegeben.</p>
+<hr>
+<h2>Fazit</h2><p><strong>230 mm ist die Sohlenlänge – nicht die Schuhgröße.</strong></p><p>Sie deutet sehr wahrscheinlich auf einen <strong>Junior-Skischuh im Bereich MP 19,0–20,5 (EU ca. 29–32)</strong> hin.</p><p>
 
 
 
@@ -208,7 +254,9 @@ Die Sohlenlänge wird immer dreistellig angegeben.</p><hr data-start="3516" data
 
 
 
-</p><p data-start="3693" data-end="3829">Für eine sichere Einordnung solltest du zusätzlich den <strong data-start="3748" data-end="3788">Mondopoint-Wert am Innenschuh prüfen</strong> oder einen kurzen Shell-Fit durchführen.</p>
+</p><p>Für eine sichere Einordnung solltest du zusätzlich den <strong>Mondopoint-Wert am Innenschuh prüfen</strong> oder einen kurzen Shell-Fit durchführen.</p>
+    
+    
     
     <aside class="product-soft-cta" aria-label="Skister">   <p>Ski- und Outdoor-Ausrüstung im Freundes- oder Familienkreis teilen statt jedes Mal neu kaufen?   <a href="/#download">Skister</a> hilft dir, Inventar und Übergaben in deinem privaten Netzwerk zu organisieren.</p> </aside>
     <aside class="related-posts-static" aria-label="Ähnliche Artikel">
@@ -258,7 +306,7 @@ Die Sohlenlänge wird immer dreistellig angegeben.</p><hr data-start="3516" data
       </div>
     </div>
   </article>
-  <footer class="article-footer"><p>Developed by SEMPROG</p></footer>
+  <footer class="article-footer"><p class="article-legal-links"><a href="../../privacy.html">Datenschutz</a> · <a href="../../terms.html">Nutzungsbedingungen</a> · <a href="../../impressum.html">Impressum</a></p><p>Developed by SEMPROG</p></footer>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","headline":"Skischuhe 230 mm – welche Größe steckt dahinter?","description":"Hier erfährst du, was 230 mm bedeutet, welchen Größenbereich du erwarten kannst und worauf du unbedingt achten solltest.","datePublished":"2026-04-26T19:40:28.686Z","dateModified":"2026-04-26T19:40:28.686Z","inLanguage":"de","mainEntityOfPage":{"@type":"WebPage","@id":"https://skister.app/blog/skischuhe-230-mm-welche-groesse/"},"author":{"@type":"Organization","name":"Skister Team"},"publisher":{"@type":"Organization","name":"Skister","url":"https://skister.app/","logo":{"@type":"ImageObject","url":"https://skister.app/assets/skister-app-icon.png"}},"image":["https://images.surferseo.art/6727e9be-1b85-427b-8510-a7bd85e4b3bf.jpg"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://skister.app/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://skister.app/blog/"},{"@type":"ListItem","position":3,"name":"Skischuhe 230 mm – welche Größe steckt dahinter?","item":"https://skister.app/blog/skischuhe-230-mm-welche-groesse/"}]}]}</script>
   <script src="../../assets/blog-article-client.js" defer></script>
   

@@ -22,6 +22,21 @@ const {
   countWordsFromHtml,
 } = require('./blogAds')
 const { faviconAssetVersion } = require('./brand-tokens')
+const { BLOG_PROSE_TABLE_CSS, normalizeBlogTablesInHtml } = require('./blog-table-normalize')
+const { normalizeBlogBodyHeadingsInHtml } = require('./blog-heading-normalize')
+const { resolvePostSeoMeta } = require('./blog-meta-refine')
+const { applyBlogImageAltAttributes } = require('./blog-image-alt')
+const { defaultOgImageUrl } = require('./site-social-defaults')
+const {
+  getStaticLegalSitemapUrls,
+  getImpressumFooterLinkHtml,
+  getUnpublishedImpressumRobotsDisallow,
+} = require('./legal-public-urls')
+const {
+  assertProposalBundleComplete,
+  applyCmsProposalsToArticleHtml,
+  isManagedSlug,
+} = require('./cms-proposals/cms-proposal-engine')
 
 const SUPABASE_URL = process.env.SKISTER_SUPABASE_URL || 'https://ayomhapkzckbhgwxenwr.supabase.co'
 const FAVICON_V = faviconAssetVersion
@@ -293,6 +308,10 @@ function blogIndexJsonLd({ title, description, canonical, posts }) {
           name: 'Skister',
           url: 'https://skister.app/',
         },
+        image: {
+          '@type': 'ImageObject',
+          url: defaultOgImageUrl(),
+        },
       },
       {
         '@type': 'ItemList',
@@ -314,6 +333,16 @@ function addLazyAttributesToBodyHtml(html) {
     if (!hasDecoding) nextAttrs.push('decoding="async"')
     return `<img ${nextAttrs.filter(Boolean).join(' ').trim()}>`
   })
+}
+
+function buildArticleFooterHtml() {
+  const impressum = getImpressumFooterLinkHtml('../../')
+  const parts = [
+    '<a href="../../privacy.html">Datenschutz</a>',
+    '<a href="../../terms.html">Nutzungsbedingungen</a>',
+  ]
+  if (impressum) parts.push(impressum)
+  return `<footer class="article-footer"><p class="article-legal-links">${parts.join(' · ')}</p><p>Developed by SEMPROG</p></footer>`
 }
 
 function buildArticlePage({
@@ -375,7 +404,7 @@ function buildArticlePage({
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous"></noscript>
   ${PREFERRED_SOURCES_HEAD}
   <style>
-    :root { --primary-green:#00AF64; --primary-green-light:#61C58E; --bg-card:#1a1a1a; --text-gray:#b0b0b0; --border-color:rgba(255,255,255,0.1); }
+    :root { --primary-green:#00af64; --primary-green-dark:#008f54; --primary-green-light:#61c58e; --bg-card:#1a1a1a; --text-gray:#b0b0b0; --border-color:rgba(255,255,255,0.1); }
     body { font-family: system-ui, sans-serif; background:#0a0a0a; color:#fff; line-height:1.6; max-width:760px; margin:0 auto; padding:2rem 1.25rem 4rem; }
     a { color:#00AF64; }
     .nav { margin-bottom:2rem; font-size:0.95rem; }
@@ -384,11 +413,7 @@ function buildArticlePage({
     .prose-featured img { width:100%; height:auto; border-radius:10px; border:1px solid rgba(255,255,255,0.12); }
     .prose > h1:first-of-type { color:#00AF64; font-size:1.75rem; }
     h1 { color:#00AF64; font-size:1.75rem; }
-    .prose .TyagGW_tableContainer { margin:1rem 0; overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:100%; }
-    .prose table { border-collapse:collapse; width:100%; max-width:100%; border:1px solid rgba(255,255,255,0.28); }
-    .prose th, .prose td { border:1px solid rgba(255,255,255,0.28); padding:0.5rem 0.75rem; text-align:left; vertical-align:top; }
-    .prose thead th { background:rgba(255,255,255,0.08); font-weight:600; }
-    .prose tbody tr:nth-child(even) { background:rgba(255,255,255,0.03); }
+    ${BLOG_PROSE_TABLE_CSS.trim()}
     .post-more-section { margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border-color); }
     .post-nav-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; align-items:stretch; }
     .post-nav-row > div { min-width:0; }
@@ -428,8 +453,10 @@ function buildArticlePage({
     .comment-form input, .comment-form textarea { padding:0.75rem 1rem; background:rgba(255,255,255,0.05); border:1px solid var(--border-color); border-radius:8px; color:#fff; font-size:1rem; font-family:inherit; }
     .comment-form textarea { min-height:100px; resize:vertical; }
     .comment-form input:focus, .comment-form textarea:focus { outline:none; border-color:var(--primary-green); }
-    .comment-form .btn-submit { align-self:flex-start; padding:0.55rem 1.2rem; background:var(--primary-green); color:#fff; border:none; border-radius:8px; font-weight:600; cursor:pointer; }
-    .comment-form .btn-submit:hover { background:var(--primary-green-light); }
+    .comment-form .btn-submit { align-self:flex-start; padding:0.55rem 1.2rem; background:var(--primary-green); color:#f4faf7; border:none; border-radius:8px; font-weight:600; cursor:pointer; }
+    .comment-form .btn-submit:hover { background:var(--primary-green-dark); }
+    .comment-form .btn-submit:focus-visible { outline:2px solid var(--primary-green); outline-offset:2px; }
+    .comment-form .btn-submit:disabled { opacity:0.5; cursor:not-allowed; }
     .comment-form .comment-error { color:#ff6b6b; font-size:0.9rem; margin:0; }
     .comment-form .comment-success-msg { color:var(--primary-green); font-size:0.95rem; display:none; margin:0; }
     .comments-list { display:flex; flex-direction:column; gap:1rem; }
@@ -486,7 +513,7 @@ function buildArticlePage({
       </div>
     </div>
   </article>
-  <footer class="article-footer"><p>Developed by SEMPROG</p></footer>
+  ${buildArticleFooterHtml()}
   <script type="application/ld+json">${articleJsonLd({
     title,
     description,
@@ -609,6 +636,7 @@ function escapeRegExp(s) {
 }
 
 async function main() {
+  assertProposalBundleComplete()
   if (!ANON_KEY) {
     console.error('Set SUPABASE_ANON_KEY (Skister anon JWT).')
     process.exit(1)
@@ -628,7 +656,8 @@ async function main() {
   fs.mkdirSync(blogDir, { recursive: true })
 
   // Sitemap policy (SeaDays-aligned): only canonical URLs (no /index.html, no dynamic blog.html, no .html stubs)
-  const sitemapUrls = [`${base}/`, `${base}/blog/`]
+  const sitemapUrls = [`${base}/`, `${base}/blog/`, ...getStaticLegalSitemapUrls(base)]
+  const impressumFooterLink = getImpressumFooterLinkHtml('../')
 
   let removedBase64Count = 0
 
@@ -652,8 +681,8 @@ async function main() {
       seo.canonicalUrl && String(seo.canonicalUrl).trim()
     ) || `${base}/blog/${encodeURIComponent(slug)}/`
 
-    const title = seo.metaTitle || p.metaTitle || p.title || slug
-    const description =
+    let title = seo.metaTitle || p.metaTitle || p.title || slug
+    let description =
       seo.metaDescription ||
       p.metaDescription ||
       stripHtml(p.content).slice(0, 160) ||
@@ -689,6 +718,17 @@ async function main() {
       pool: byNewest,
       limit: 6,
     })
+    processedBodyHtml = normalizeBlogTablesInHtml(processedBodyHtml)
+    processedBodyHtml = normalizeBlogBodyHeadingsInHtml(processedBodyHtml, title)
+    processedBodyHtml = applyBlogImageAltAttributes(processedBodyHtml)
+    const resolvedSeo = resolvePostSeoMeta({
+      slug,
+      title,
+      description,
+      bodyHtml: processedBodyHtml,
+    })
+    title = resolvedSeo.metaTitle
+    description = resolvedSeo.metaDescription
     processedBodyHtml = injectContextualLinksIntoBodyHtml({
       bodyHtml: processedBodyHtml,
       relatedPosts: related,
@@ -708,7 +748,7 @@ async function main() {
         ? buildEndOfArticleAdHtml(ADS_CONFIG)
         : ''
 
-    const page = buildArticlePage({
+    let page = buildArticlePage({
       title,
       description,
       canonical,
@@ -726,6 +766,9 @@ async function main() {
       softCtaHtml,
       endAdHtml,
     })
+    if (isManagedSlug(slug)) {
+      page = applyCmsProposalsToArticleHtml(slug, page)
+    }
     fs.writeFileSync(path.join(slugDir, 'index.html'), page, 'utf8')
 
     const redirectTarget = `/blog/${encodeURIComponent(slug)}/`
@@ -767,7 +810,8 @@ async function main() {
     siteSeo.blogMetaDescription ||
     'Guides, tips, and updates from the Skister team.'
   const blogIndexCanonical = `${base}/blog/`
-  const blogIndexOgImage = String(siteSeo.blogOgImage || siteSeo.ogImage || '').trim()
+  const blogIndexOgImage =
+    String(siteSeo.blogOgImage || siteSeo.ogImage || '').trim() || defaultOgImageUrl()
   const blogIndexSiteName = siteSeo.ogSiteName || 'Skister'
 
   const topicPills = [
@@ -1001,7 +1045,9 @@ ${allCardsHtml}
       <div class="blog-footer-links">
         <a href="../index.html">Home</a>
         <a href="../index.html#download">Download</a>
-        <a href="../index.html">Contact</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
+        ${impressumFooterLink}
       </div>
       <span class="blog-footer-credit">Developed by SEMPROG</span>
     </footer>
@@ -1097,9 +1143,32 @@ ${urlset}
 `
   fs.writeFileSync(path.join(OUT, 'sitemap.xml'), sitemap, 'utf8')
 
-  const robotsBody = String(siteSeo.robotsTxt || '').trim()
-    ? String(siteSeo.robotsTxt)
-    : `User-agent: *\nAllow: /\n\nSitemap: ${base}/sitemap.xml\n`
+  const adminRobotsDisallows = [
+    'Disallow: /admin.html',
+    'Disallow: /blog-admin.html',
+    'Disallow: /landing-admin.html',
+    'Disallow: /seo-admin.html',
+    'Disallow: /resort-admin.html',
+    ...getUnpublishedImpressumRobotsDisallow(),
+  ]
+  const defaultRobots = [
+    'User-agent: *',
+    'Allow: /',
+    ...adminRobotsDisallows,
+    '',
+    `Sitemap: ${base}/sitemap.xml`,
+    '',
+  ].join('\n')
+  function mergeAdminRobotsDisallows(robotsTxt) {
+    let body = String(robotsTxt || '').trim()
+    if (!body) return defaultRobots
+    const missing = adminRobotsDisallows.filter((line) => !body.includes(line))
+    if (!missing.length) return body + (body.endsWith('\n') ? '' : '\n')
+    return body + '\n' + missing.join('\n') + '\n'
+  }
+  const robotsBody = mergeAdminRobotsDisallows(
+    String(siteSeo.robotsTxt || '').trim() ? String(siteSeo.robotsTxt) : '',
+  )
   fs.writeFileSync(path.join(OUT, 'robots.txt'), robotsBody, 'utf8')
 
   if (removedBase64Count) console.warn('Removed base64 images from posts:', removedBase64Count)

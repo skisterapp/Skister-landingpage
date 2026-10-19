@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://news.google.com" crossorigin>
   <script async src="https://news.google.com/swg/js/v1/publisher.js"></script>
   <style>
-    :root { --primary-green:#00AF64; --primary-green-light:#61C58E; --bg-card:#1a1a1a; --text-gray:#b0b0b0; --border-color:rgba(255,255,255,0.1); }
+    :root { --primary-green:#00AF64; --primary-green-dark:#008f54; --primary-green-light:#61C58E; --bg-card:#1a1a1a; --text-gray:#b0b0b0; --border-color:rgba(255,255,255,0.1); }
     body { font-family: system-ui, sans-serif; background:#0a0a0a; color:#fff; line-height:1.6; max-width:760px; margin:0 auto; padding:2rem 1.25rem 4rem; }
     a { color:#00AF64; }
     .nav { margin-bottom:2rem; font-size:0.95rem; }
@@ -39,11 +39,43 @@
     .prose-featured img { width:100%; height:auto; border-radius:10px; border:1px solid rgba(255,255,255,0.12); }
     .prose > h1:first-of-type { color:#00AF64; font-size:1.75rem; }
     h1 { color:#00AF64; font-size:1.75rem; }
-    .prose .TyagGW_tableContainer { margin:1rem 0; overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:100%; }
-    .prose table { border-collapse:collapse; width:100%; max-width:100%; border:1px solid rgba(255,255,255,0.28); }
-    .prose th, .prose td { border:1px solid rgba(255,255,255,0.28); padding:0.5rem 0.75rem; text-align:left; vertical-align:top; }
-    .prose thead th { background:rgba(255,255,255,0.08); font-weight:600; }
-    .prose tbody tr:nth-child(even) { background:rgba(255,255,255,0.03); }
+    .prose { max-width: 100%; min-width: 0; }
+    body { overflow-x: clip; }
+    .prose .blog-table-scroll,
+    .prose .TyagGW_tableContainer {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      margin: 1rem 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+    }
+    .prose .blog-table-scroll:focus-visible {
+      outline: 2px solid #00AF64;
+      outline-offset: 2px;
+    }
+    .prose .TyagGW_tableWrapper,
+    .prose .TyagGW_tableContainer > div {
+      display: block;
+      max-width: none;
+      width: max-content;
+      min-width: 0;
+    }
+    .prose table {
+      border-collapse: collapse;
+      width: auto;
+      min-width: min(100%, 36rem);
+      border: 1px solid rgba(255,255,255,0.28);
+    }
+    .prose th, .prose td {
+      border: 1px solid rgba(255,255,255,0.28);
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .prose thead th { background: rgba(255,255,255,0.08); font-weight: 600; }
+    .prose tbody tr:nth-child(even) { background: rgba(255,255,255,0.03); }
     .post-more-section { margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border-color); }
     .post-nav-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; align-items:stretch; }
     .post-nav-row > div { min-width:0; }
@@ -83,8 +115,8 @@
     .comment-form input, .comment-form textarea { padding:0.75rem 1rem; background:rgba(255,255,255,0.05); border:1px solid var(--border-color); border-radius:8px; color:#fff; font-size:1rem; font-family:inherit; }
     .comment-form textarea { min-height:100px; resize:vertical; }
     .comment-form input:focus, .comment-form textarea:focus { outline:none; border-color:var(--primary-green); }
-    .comment-form .btn-submit { align-self:flex-start; padding:0.55rem 1.2rem; background:var(--primary-green); color:#fff; border:none; border-radius:8px; font-weight:600; cursor:pointer; }
-    .comment-form .btn-submit:hover { background:var(--primary-green-light); }
+    .comment-form .btn-submit { align-self:flex-start; padding:0.55rem 1.2rem; background:var(--primary-green); color:#f4faf7; border:none; border-radius:8px; font-weight:600; cursor:pointer; }
+    .comment-form .btn-submit:hover { background:var(--primary-green-dark); } .comment-form .btn-submit:focus-visible { outline:2px solid var(--primary-green); outline-offset:2px; } .comment-form .btn-submit:disabled { opacity:0.5; cursor:not-allowed; }
     .comment-form .comment-error { color:#ff6b6b; font-size:0.9rem; margin:0; }
     .comment-form .comment-success-msg { color:var(--primary-green); font-size:0.95rem; display:none; margin:0; }
     .comments-list { display:flex; flex-direction:column; gap:1rem; }
@@ -105,23 +137,73 @@
   <article class="prose" itemscope itemtype="https://schema.org/BlogPosting">
     <h1 itemprop="headline">Skischuhe 236 mm – welche Größe steckt dahinter?</h1>
     <figure class="prose-featured"><img src="https://images.surferseo.art/2b6f45e1-3261-4094-9507-ad7fb767b0fd.jpg" alt="Skischuhe 236 mm – welche Größe steckt dahinter?" loading="eager" decoding="async" width="1200" height="630"></figure>
-    <p data-start="2691" data-end="2898"><span class="BZ_Pyq_fadeIn">Du </span><span class="BZ_Pyq_fadeIn">hast </span><span class="BZ_Pyq_fadeIn">Skischuhe </span><span class="BZ_Pyq_fadeIn">mit </span><span class="BZ_Pyq_fadeIn">einer </span><span class="BZ_Pyq_fadeIn">Sohlenlänge </span><span class="BZ_Pyq_fadeIn">von </span><strong data-start="2735" data-end="2745"><span class="BZ_Pyq_fadeIn">236 </span><span class="BZ_Pyq_fadeIn">mm</span></strong><span class="BZ_Pyq_fadeIn"> </span><span class="BZ_Pyq_fadeIn">gefunden? </span><span class="BZ_Pyq_fadeIn">Dieser </span><span class="BZ_Pyq_fadeIn">Wert </span><span class="BZ_Pyq_fadeIn">liegt </span><span class="BZ_Pyq_fadeIn">praktisch </span><span class="BZ_Pyq_fadeIn">im </span><span class="BZ_Pyq_fadeIn">gleichen </span><span class="BZ_Pyq_fadeIn">Größencluster </span><span class="BZ_Pyq_fadeIn">wie </span><span class="BZ_Pyq_fadeIn">235 </span><span class="BZ_Pyq_fadeIn">mm </span><span class="BZ_Pyq_fadeIn">und </span><span class="BZ_Pyq_fadeIn">befindet </span><span class="BZ_Pyq_fadeIn">sich </span><span class="BZ_Pyq_fadeIn">im </span><strong data-start="2842" data-end="2897"><span class="BZ_Pyq_fadeIn">Übergang </span><span class="BZ_Pyq_fadeIn">vom </span><span class="BZ_Pyq_fadeIn">Junior- </span><span class="BZ_Pyq_fadeIn">zum </span><span class="BZ_Pyq_fadeIn">kleinen </span><span class="BZ_Pyq_fadeIn">Erwachsenenbereich</span></strong><span class="BZ_Pyq_fadeIn">.</span></p><hr data-start="2686" data-end="2689"><h2><span class="BZ_Pyq_fadeIn" style="font-size: 1rem;">TL;</span><span class="BZ_Pyq_fadeIn" style="font-size: 1rem;">DR (</span><span class="BZ_Pyq_fadeIn" style="font-size: 1rem;">Kurzantwort)</span></h2><p data-start="2691" data-end="2898">
-</p><p data-start="2479" data-end="2684"><strong data-start="2479" data-end="2550"><span class="BZ_Pyq_fadeIn">236 </span><span class="BZ_Pyq_fadeIn">mm </span><span class="BZ_Pyq_fadeIn">ist </span><span class="BZ_Pyq_fadeIn">die </span><span class="BZ_Pyq_fadeIn">Sohlenlänge (</span><span class="BZ_Pyq_fadeIn">BSL), </span><span class="BZ_Pyq_fadeIn">nicht </span><span class="BZ_Pyq_fadeIn">die </span><span class="BZ_Pyq_fadeIn">eigentliche </span><span class="BZ_Pyq_fadeIn">Schuhgröße.</span></strong><br data-start="2550" data-end="2553">
-<span class="BZ_Pyq_fadeIn">Sie </span><span class="BZ_Pyq_fadeIn">deutet </span><span class="BZ_Pyq_fadeIn">sehr </span><span class="BZ_Pyq_fadeIn">wahrscheinlich </span><span class="BZ_Pyq_fadeIn">auf </span><span class="BZ_Pyq_fadeIn">einen </span><strong data-start="2594" data-end="2662"><span class="BZ_Pyq_fadeIn">Junior- </span><span class="BZ_Pyq_fadeIn">bis </span><span class="BZ_Pyq_fadeIn">kleinen </span><span class="BZ_Pyq_fadeIn">Erwachsenen-</span><span class="BZ_Pyq_fadeIn">Skischuh </span><span class="BZ_Pyq_fadeIn">im </span><span class="BZ_Pyq_fadeIn">Bereich </span><span class="BZ_Pyq_fadeIn">MP </span><span class="BZ_Pyq_fadeIn">20,0–</span><span class="BZ_Pyq_fadeIn">21,5</span></strong><span class="BZ_Pyq_fadeIn"> </span><span class="BZ_Pyq_fadeIn">hin (≈ </span><strong data-start="2670" data-end="2682"><span class="BZ_Pyq_fadeIn">EU </span><span class="BZ_Pyq_fadeIn">31–</span><span class="BZ_Pyq_fadeIn">34</span></strong><span class="BZ_Pyq_fadeIn">).</span></p><hr data-start="2900" data-end="2903"><h2 data-section-id="17cjhjy" data-start="2905" data-end="2928"></h2><article class="text-token-text-primary w-full focus:outline-none [--shadow-height:45px] has-data-writing-block:pointer-events-none has-data-writing-block:-mt-(--shadow-height) has-data-writing-block:pt-(--shadow-height) [&amp;:has([data-writing-block])&gt;*]:pointer-events-auto scroll-mt-[calc(var(--header-height)+min(200px,max(70px,20svh)))]" tabindex="-1" dir="auto" data-turn-id="9115b2a2-cf6d-423a-9144-d7da1373a897" data-testid="conversation-turn-63" data-scroll-anchor="false" data-turn="assistant"><div class="text-base my-auto mx-auto [--thread-content-margin:var(--thread-content-margin-xs,calc(var(--spacing)*4))] @w-sm/main:[--thread-content-margin:var(--thread-content-margin-sm,calc(var(--spacing)*6))] @w-lg/main:[--thread-content-margin:var(--thread-content-margin-lg,calc(var(--spacing)*16))] px-(--thread-content-margin)"><div tabindex="-1" class="[--thread-content-max-width:40rem] @w-lg/main:[--thread-content-max-width:48rem] mx-auto max-w-(--thread-content-max-width) flex-1 group/turn-messages focus-visible:outline-hidden relative flex w-full min-w-0 flex-col agent-turn"><div class="flex max-w-full flex-col gap-4 grow"><div data-message-author-role="assistant" data-message-id="b0df658a-2265-426c-b841-62b50264ce04" dir="auto" data-message-model-slug="gpt-5-2" class="min-h-8 text-message relative flex w-full flex-col items-end gap-2 text-start break-words whitespace-normal [.text-message+&amp;]:mt-1"><div class="flex w-full flex-col gap-1 empty:hidden"><div class="markdown prose dark:prose-invert w-full wrap-break-word light markdown-new-styling">
-<h2 data-section-id="17cjhjy" data-start="2905" data-end="2928"><span class="BZ_Pyq_fadeIn">Was </span><span class="BZ_Pyq_fadeIn">bedeutet </span><span class="BZ_Pyq_fadeIn">236 </span><span class="BZ_Pyq_fadeIn">mm?</span></h2>
-<p data-start="2930" data-end="2945"><span class="BZ_Pyq_fadeIn" style="font-size: 1rem;">Die </span><span class="BZ_Pyq_fadeIn" style="font-size: 1rem;">Zahl </span><span class="BZ_Pyq_fadeIn" style="font-size: 1rem;">beschreibt </span><span class="BZ_Pyq_fadeIn" style="font-size: 1rem;">die </span><strong data-start="2971" data-end="2987" style="font-size: 1rem;">Schalenlänge</strong><span class="BZ_Pyq_fadeIn" style="font-size: 1rem;">, </span><span class="BZ_Pyq_fadeIn" style="font-size: 1rem;">nicht </span><span class="BZ_Pyq_fadeIn" style="font-size: 1rem;">die </span><span class="BZ_Pyq_fadeIn" style="font-size: 1rem;">Fußgröße.</span></p>
-<p data-start="3010" data-end="3093"><span class="BZ_Pyq_fadeIn">Sie </span><span class="BZ_Pyq_fadeIn">ist </span><span class="BZ_Pyq_fadeIn">wichtig </span><span class="BZ_Pyq_fadeIn">für </span><span class="BZ_Pyq_fadeIn">die </span><span class="BZ_Pyq_fadeIn">Bindungseinstellung – </span><span class="BZ_Pyq_fadeIn">aber </span><span class="BZ_Pyq_fadeIn">nicht </span><span class="BZ_Pyq_fadeIn">für </span><span class="BZ_Pyq_fadeIn">die </span><span class="BZ_Pyq_fadeIn">exakte </span><span class="BZ_Pyq_fadeIn">Schuhgröße.</span></p>
-<hr data-start="3095" data-end="3098">
-<h2 data-section-id="vf06m6" data-start="3100" data-end="3138"><span class="BZ_Pyq_fadeIn">Wahrscheinlicher </span><span class="BZ_Pyq_fadeIn">Mondopoint-</span><span class="BZ_Pyq_fadeIn">Bereich</span></h2>
-<p data-start="3140" data-end="3185"><span class="BZ_Pyq_fadeIn">Typischerweise </span><span class="BZ_Pyq_fadeIn">bewegt </span><span class="BZ_Pyq_fadeIn">sich </span><span class="BZ_Pyq_fadeIn">236 </span><span class="BZ_Pyq_fadeIn">mm </span><span class="BZ_Pyq_fadeIn">im </span><span class="BZ_Pyq_fadeIn">Bereich:</span></p>
-<p data-start="3187" data-end="3225"><strong data-start="3187" data-end="3210"><span class="BZ_Pyq_fadeIn">MP </span><span class="BZ_Pyq_fadeIn">20,0 </span><span class="BZ_Pyq_fadeIn">bis </span><span class="BZ_Pyq_fadeIn">MP </span><span class="BZ_Pyq_fadeIn">21,5</span></strong><br data-start="3210" data-end="3213">
-<span class="BZ_Pyq_fadeIn">(≈ </span><span class="BZ_Pyq_fadeIn">EU </span><span class="BZ_Pyq_fadeIn">31–</span><span class="BZ_Pyq_fadeIn">34)</span></p>
-<p data-start="3227" data-end="3245"><span class="BZ_Pyq_fadeIn">Warum </span><span class="BZ_Pyq_fadeIn">ein </span><span class="BZ_Pyq_fadeIn">Bereich?</span></p>
-<p data-start="3247" data-end="3369"><span class="BZ_Pyq_fadeIn">Weil </span><span class="BZ_Pyq_fadeIn">mehrere </span><span class="BZ_Pyq_fadeIn">Mondopoint-</span><span class="BZ_Pyq_fadeIn">Größen </span><span class="BZ_Pyq_fadeIn">oft </span><span class="BZ_Pyq_fadeIn">dieselbe </span><span class="BZ_Pyq_fadeIn">Schale </span><span class="BZ_Pyq_fadeIn">nutzen – </span><span class="BZ_Pyq_fadeIn">besonders </span><span class="BZ_Pyq_fadeIn">im </span><span class="BZ_Pyq_fadeIn">Übergangsbereich </span><span class="BZ_Pyq_fadeIn">zwischen </span><span class="BZ_Pyq_fadeIn">Junior </span><span class="BZ_Pyq_fadeIn">und </span><span class="BZ_Pyq_fadeIn">Erwachsenen.</span></p>
-<hr data-start="3371" data-end="3374">
-<h2 data-section-id="x8o1ad" data-start="3376" data-end="3384"><span class="BZ_Pyq_fadeIn">Fazit</span></h2>
-<p data-start="3386" data-end="3460"><strong data-start="3386" data-end="3434"><span class="BZ_Pyq_fadeIn">236 </span><span class="BZ_Pyq_fadeIn">mm </span><span class="BZ_Pyq_fadeIn">ist </span><span class="BZ_Pyq_fadeIn">ein </span><span class="BZ_Pyq_fadeIn">klarer </span><span class="BZ_Pyq_fadeIn">Hinweis </span><span class="BZ_Pyq_fadeIn">auf </span><span class="BZ_Pyq_fadeIn">MP </span><span class="BZ_Pyq_fadeIn">20–</span><span class="BZ_Pyq_fadeIn">21,5</span></strong><span class="BZ_Pyq_fadeIn">, </span><span class="BZ_Pyq_fadeIn">aber </span><span class="BZ_Pyq_fadeIn">keine </span><span class="BZ_Pyq_fadeIn">exakte </span><span class="BZ_Pyq_fadeIn">Größe.</span></p>
-<p data-start="3462" data-end="3593"><span class="BZ_Pyq_fadeIn">Für </span><span class="BZ_Pyq_fadeIn">eine </span><span class="BZ_Pyq_fadeIn">sichere </span><span class="BZ_Pyq_fadeIn">Bestimmung </span><span class="BZ_Pyq_fadeIn">solltest </span><span class="BZ_Pyq_fadeIn">du </span><span class="BZ_Pyq_fadeIn">immer </span><span class="BZ_Pyq_fadeIn">den </span><strong data-start="3512" data-end="3552"><span class="BZ_Pyq_fadeIn">Mondopoint-</span><span class="BZ_Pyq_fadeIn">Wert </span><span class="BZ_Pyq_fadeIn">im </span><span class="BZ_Pyq_fadeIn">Innenschuh </span><span class="BZ_Pyq_fadeIn">prüfen</span></strong><span class="BZ_Pyq_fadeIn"> </span><span class="BZ_Pyq_fadeIn">oder </span><span class="BZ_Pyq_fadeIn">einen </span><span class="BZ_Pyq_fadeIn">kurzen </span><span class="BZ_Pyq_fadeIn">Shell-</span><span class="BZ_Pyq_fadeIn">Fit </span><span class="BZ_Pyq_fadeIn">durchführen.</span></p></div></div></div></div></div></div></article>
+    <p>Du hast Skischuhe mit einer Sohlenlänge von <strong>236 mm</strong> gefunden? Die Zahl steht meist an der Ferse und beschreibt die <strong>Boot Sole Length (BSL)</strong> – nicht deine Straßen- oder Skischuhgröße. Werte um 236 mm liegen häufig im <strong>Übergang von Junior- zu kleineren Erwachsenenmodellen</strong>; in der Praxis liegen benachbarte Kennzeichnungen (z. B. 235 mm) oft im gleichen Größencluster.</p>
+<p>Hier erfährst du, wie du BSL, Mondopoint und EU-Angaben unterscheidest, wo du die Herstellerkennzeichnung findest und was du bei Passform und Gebrauchtware prüfen solltest.</p>
+<hr>
+<h2>TL;DR (Kurzantwort)</h2>
+<p><strong>236 mm ist die Sohlenlänge (BSL), nicht die Schuhgröße.</strong><br>
+Für die tatsächliche Größe gilt der <strong>Mondopoint am Innenschuh</strong> (Fußlänge in cm) – mehrere MPs können dieselbe Schale und damit dieselbe BSL nutzen. EU-Größen auf Kartons sind nur grobe Orientierung. Bindung nur im Skiservice einstellen und prüfen lassen.</p>
+<hr>
+<h2>Was bedeutet 236 mm bei Skischuhen?</h2>
+<p><strong>236 mm</strong> ist die gemessene <strong>Länge der Schuhsohle</strong> in Millimetern (BSL). Sie wird für die <strong>Einordnung der Bindung</strong> an der Skale (Verstellbereich, Kompatibilität) herangezogen – nicht für die Frage „welche EU-Größe bin ich?“.</p>
+<p>Wichtig:<br>
+<strong>Die Sohlenlänge ist nicht die Schuhgröße.</strong></p>
+<hr>
+<h2>BSL, Mondopoint und EU – was ist was?</h2>
+<ul>
+<li><strong>Mondopoint (MP):</strong> Skischuhgröße, bezogen auf die <strong>Fußlänge in Zentimetern</strong> (steht typischerweise am Innenschuh).</li>
+<li><strong>BSL:</strong> Länge der Außenschale in mm – relevant für die <strong>Bindungsmontage</strong>, nicht 1:1 gleichbedeutend mit MP.</li>
+<li><strong>EU-Größe:</strong> handelsübliche Angabe, oft auf der Box – kann von MP abweichen; Skischuhe sitzen enger als Alltagsschuhe.</li>
+</ul>
+<p>Online-Tabellen, die aus 236 mm direkt eine feste EU-Größe ableiten, sind <strong>unzuverlässig</strong>. Verlasse dich auf MP am Innenschuh und auf die <strong>Herstellerangaben</strong> zu deinem Modell.</p>
+<hr>
+<h2>Wo findest du die BSL am Schuh?</h2>
+<p>Die Sohlenlänge steht in der Regel:</p>
+<ul>
+<li>an der <strong>Ferse</strong> der Sohle (Zahl + „mm“),</li>
+<li>manchmal zusätzlich auf einem <strong>Aufkleber</strong> oder in der <strong>Produktdokumentation</strong>.</li>
+</ul>
+<p>Ist die Angabe abgewetzt oder fehlt sie bei Gebrauchtware, nicht raten: Im Skiservice oder Fachhandel lässt sich die Sohle messen und die Bindung daran ausrichten.</p>
+<hr>
+<h2>Kann man aus 236 mm direkt die Schuhgröße ableiten?</h2>
+<p><strong>Nein, nicht eindeutig.</strong> Besonders bei Junior- und Übergangsgrößen teilen sich mehrere Mondopoint-Varianten oft eine Schale – dieselbe BSL kann zu unterschiedlichen MPs passen.</p>
+<p>Die 236 mm helfen dir, Modelle <strong>einzugrenzen</strong> und die Bindungsskala zu prüfen; sie ersetzen nicht den Innenschuh-Check.</p>
+<hr>
+<h2>Innenschuh prüfen und Shell-Fit</h2>
+<p>Am zuverlässigsten ist der <strong>Mondopoint am Innenschuh (Liner)</strong>.</p>
+<h3>Kurzer Shell-Fit (Orientierung)</h3>
+<ol>
+<li>Innenschuh herausnehmen.</li>
+<li>Mit dünner Socke in die leere Schale stellen.</li>
+<li>Zehen leicht an die Front stoßen.</li>
+<li>Abstand an der Ferse prüfen – bei Kindern und Jugendlichen eher mit Fachberatung als mit starren Daumenregeln.</li>
+</ol>
+<p>Bei Unsicherheit: <strong>Bootfitting oder Skiservice</strong> – Passform und Bindung gehören zusammen betrachtet.</p>
+<hr>
+<h2>Gebrauchte Skischuhe mit 236 mm BSL</h2>
+<ul>
+<li>Schale auf Risse, verformte Bereiche und abgenutzte Sohle prüfen.</li>
+<li>Innenschuh auf Durchdrückungen und Geruch/Feuchtigkeit checken.</li>
+<li><strong>Bindung und Ski</strong> nur als geprüftes Set nutzen – Einstellung und Auslösefunktion im Fachbetrieb nach DIN-ISO-11088-Rahmen (Montage, Einstellung, Inspektion durch Qualifiziertes) klären lassen.</li>
+</ul>
+<hr>
+<h2>Häufiger Suchfehler</h2>
+<p>Manche suchen nach „23,6 mm“ oder „23.6 mm“. Gemeint ist fast immer <strong>236 mm</strong> Sohlenlänge (dreistellig, in Millimetern).</p>
+<hr>
+<h2 id="bsl-sicherheitshinweis">Sicherheit: Bindung, Passform und Gebrauchtcheck</h2>
+<p>Bitte trenne drei Dinge: <strong>Schuhgröße (Mondopoint)</strong>, <strong>Sohlenlänge (BSL)</strong> und <strong>Bindungseinstellung</strong>. Sie hängen zusammen, sind aber nicht austauschbar.</p>
+<ul>
+<li><strong>BSL allein</strong> belegt weder die Passform noch, ob Ski und Bindung zusammenpassen.</li>
+<li><strong>EU- oder MP-Hinweise</strong> in Ratgebern und Tabellen sind nur Orientierung – Hersteller und Modelle weichen ab.</li>
+<li><strong>Montage, Einstellung und Inspektion</strong> von Skibindungen (inkl. Prüfung des Auslöseverhaltens) gehören in qualifizierte Hände. DIN ISO 11088 beschreibt u. a. den Rahmen für Montage, Einstellung und Inspektion von Bindungen durch geeignetes Fachpersonal; dieser Artikel ersetzt keine Fachwerkstatt und belegt keine Zertifizierung.</li>
+</ul>
+<p>Der <a href="/blog/z-wert-kalkulator/">Z-Wert-Kalkulator</a> in der SKISTER-App kann zur ersten Orientierung beim Z-Wert dienen – er ersetzt weder die Einstellung noch die Funktionsprüfung im Skiservice.</p>
+<p>Bei <strong>Gebrauchtkäufen</strong>: Schale und Innenschuh auf Beschädigungen prüfen, Sohle auf Lesbarkeit der BSL-Kennzeichnung, und die Kombination aus Ski, Bindung und Schuh vor der Nutzung im Fachbetrieb prüfen lassen.</p>
+<hr>
+<h2>Fazit</h2>
+<p><strong>236 mm = Sohlenlänge (BSL), nicht Schuhgröße.</strong> Lies den Mondopoint am Innenschuh, nutze Herstellerinfos statt pauschaler Umrechnungstabellen und lasse Bindung sowie Auslösefunktion im Skiservice prüfen.</p>
+    
+    
     
     <aside class="product-soft-cta" aria-label="Skister">   <p>Ski- und Outdoor-Ausrüstung im Freundes- oder Familienkreis teilen statt jedes Mal neu kaufen?   <a href="/#download">Skister</a> hilft dir, Inventar und Übergaben in deinem privaten Netzwerk zu organisieren.</p> </aside>
     <aside class="related-posts-static" aria-label="Ähnliche Artikel">
@@ -171,7 +253,7 @@
       </div>
     </div>
   </article>
-  <footer class="article-footer"><p>Developed by SEMPROG</p></footer>
+  <footer class="article-footer"><p class="article-legal-links"><a href="../../privacy.html">Datenschutz</a> · <a href="../../terms.html">Nutzungsbedingungen</a> · <a href="../../impressum.html">Impressum</a></p><p>Developed by SEMPROG</p></footer>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","headline":"Skischuhe 236 mm – welche Größe steckt dahinter?","description":"Du hast Skischuhe mit einer Sohlenlänge von 236 mm gefunden? Dieser Wert liegt praktisch im gleichen Größencluster wie 235 mm und befindet sich im Übergang vom Junior- zum kleinen Erwachsenenbereich.","datePublished":"2026-03-16T16:34:30.389Z","dateModified":"2026-03-16T16:34:30.389Z","inLanguage":"de","mainEntityOfPage":{"@type":"WebPage","@id":"https://skister.app/blog/skischuhe-236-mm/"},"author":{"@type":"Organization","name":"Skister Team"},"publisher":{"@type":"Organization","name":"Skister","url":"https://skister.app/","logo":{"@type":"ImageObject","url":"https://skister.app/assets/skister-app-icon.png"}},"image":["https://images.surferseo.art/2b6f45e1-3261-4094-9507-ad7fb767b0fd.jpg"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://skister.app/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://skister.app/blog/"},{"@type":"ListItem","position":3,"name":"Skischuhe 236 mm – welche Größe steckt dahinter?","item":"https://skister.app/blog/skischuhe-236-mm/"}]}]}</script>
   <script src="../../assets/blog-article-client.js" defer></script>
   

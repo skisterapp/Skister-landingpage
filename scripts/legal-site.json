@@ -1,0 +1,19 @@
+{
+  "impressumPublished": true,
+  "staticLegalSitemapPaths": [
+    "/privacy.html",
+    "/terms.html",
+    "/help.html"
+  ],
+  "operator": {
+    "legalName": "Benjamin Fritz",
+    "tradeName": "digital lokal",
+    "street": "Justinus-Kerner-Str. 22/1",
+    "postalCode": "72622",
+    "city": "Nürtingen",
+    "country": "Deutschland",
+    "phone": "+49 7022 9058389",
+    "email": "privacy@skister.app",
+    "vatId": "DE316471344"
+  }
+}

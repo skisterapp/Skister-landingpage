@@ -23,15 +23,30 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate site (pre-deploy)
+        run: npm run validate:deploy
+
       - name: Validate AASA
-        run: node scripts/validate-aasa.js
+        run: npm run validate:aasa
+
+      - name: Prepare Pages artifact (legal deploy guards)
+        run: npm run prepare:pages-artifact
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: build/pages-artifact
           include-hidden-files: true
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

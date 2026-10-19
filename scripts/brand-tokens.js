@@ -6,13 +6,21 @@ const FAVICON_ASSET_VERSION = '20261011'
 module.exports = {
   faviconAssetVersion: FAVICON_ASSET_VERSION,
   colors: {
-    emerald: '#00AF64',
-    mint: '#61C58E',
-    forest: '#053D2B',
-    mist: '#F4FAF7',
-    primary: '#00AF64',
-    primaryLight: '#61C58E',
+    emerald: '#00af64',
+    mint: '#61c58e',
+    forest: '#053d2b',
+    forestDeep: '#046b48',
+    mist: '#f4faf7',
+    primary: '#00af64',
+    primaryDark: '#008f54',
+    primaryDarkLightTheme: '#009456',
+    primaryLight: '#61c58e',
+    primaryForeground: '#f4faf7',
     primaryRgb: '0, 175, 100',
+    primaryGradient:
+      'linear-gradient(135deg, #046b48 0%, #00af64 52%, #61c58e 100%)',
+    primaryGlowDark: 'rgba(0, 175, 100, 0.28)',
+    primaryGlowDarkStrong: 'rgba(97, 197, 142, 0.38)',
   },
   assets: {
     logoWhite: '/assets/skister-logo-white.png',

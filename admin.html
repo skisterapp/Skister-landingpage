@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <link rel="canonical" href="https://skister.app/admin.html">
     <title>Skister CMS – Admin</title>
     <link rel="icon" href="/favicon.ico?v=20261011" sizes="any">
@@ -331,7 +332,7 @@
                             <button type="button" class="btn btn-primary btn-small" onclick="loadAdminComments()"><i class="fa-solid fa-refresh"></i> Load comments</button>
                         </div>
                         <div class="card-body">
-                            <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;">Review and approve or reject comments. Uses your admin password.</p>
+                            <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1rem;">Review guest comments (KV store). Publish/Reject need <code>PATCH /blog/comments/:id</code>, which is not deployed — use <strong>Delete</strong> or moderate via <strong>seo-admin</strong> (Supabase sign-in) for the Postgres comment queue.</p>
                             <div id="comments-admin-content"></div>
                         </div>
                     </div>
@@ -372,15 +373,18 @@
                         </div>
                         <div class="settings-card">
                             <h3><i class="fa-solid fa-cloud-arrow-up"></i> Restore</h3>
-                            <p>Restore from a previously downloaded backup file. This overwrites current data for the selected sections.</p>
+                            <p class="msg show" style="margin-bottom:1rem;background:rgba(255,193,7,0.12);border:1px solid rgba(255,193,7,0.35);color:#e6c200;">
+                                Server restore is not available: <code>POST /cms/restore</code> is not implemented on the edge function. Download backups still work; restoring live CMS data requires a separately approved server rollout.
+                            </p>
+                            <p style="color:var(--text-muted);font-size:0.9rem;">When restore is enabled in a future release, you will upload a backup JSON here.</p>
                             <div class="form-group">
                                 <label>Backup file</label>
-                                <div class="restore-zone" id="restore-zone" onclick="document.getElementById('restore-file').click()">
-                                    <input type="file" id="restore-file" accept=".json,application/json" style="display:none" onchange="onRestoreFileSelect(event)">
-                                    <span id="restore-zone-text">Click or drop a backup .json file</span>
+                                <div class="restore-zone" id="restore-zone" style="opacity:0.5;pointer-events:none;">
+                                    <input type="file" id="restore-file" accept=".json,application/json" style="display:none" disabled>
+                                    <span id="restore-zone-text">Restore disabled</span>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-danger" id="restore-btn" onclick="restoreBackup()" disabled><i class="fa-solid fa-upload"></i> Restore from file</button>
+                            <button type="button" class="btn btn-danger" id="restore-btn" disabled title="Restore API not deployed"><i class="fa-solid fa-upload"></i> Restore from file</button>
                         </div>
                     </div>
                     <div class="settings-card" style="margin-top:1.5rem;">
@@ -405,8 +409,6 @@
 
         let allEmails = [];
         let filteredEmails = [];
-        let restoreFileContent = null;
-
         window.addEventListener('DOMContentLoaded', () => { showLoginPage(); });
 
         function getAuthHeaders() {
@@ -598,8 +600,6 @@
                                 html += '<div class="comment-item" data-comment-id="' + (c.id || '') + '">';
                                 html += '<div class="comment-meta"><strong>' + author + '</strong> · ' + dateStr + ' · ' + statusLabel + '</div><div class="comment-text">' + body + '</div>';
                                 html += '<div class="comment-actions">';
-                                if (status !== 'approved') html += '<button type="button" class="btn btn-primary btn-small" onclick="setCommentStatus(\'' + (c.id || '').replace(/'/g, "\\'") + '\', \'approved\')"><i class="fa-solid fa-check"></i> Publish</button>';
-                                if (status !== 'rejected') html += '<button type="button" class="btn btn-secondary btn-small" onclick="setCommentStatus(\'' + (c.id || '').replace(/'/g, "\\'") + '\', \'rejected\')"><i class="fa-solid fa-times"></i> Reject</button>';
                                 html += '<button type="button" class="btn btn-danger btn-small" onclick="deleteAdminComment(\'' + (c.id || '').replace(/'/g, "\\'") + '\')"><i class="fa-solid fa-trash"></i> Delete</button></div></div>';
                             });
                             html += '</div>';
@@ -612,16 +612,6 @@
             } catch (err) {
                 container.innerHTML = '<p class="msg error show">' + err.message + '</p>';
             }
-        }
-
-        async function setCommentStatus(id, status) {
-            if (!id || (status !== 'approved' && status !== 'rejected')) return;
-            try {
-                const res = await fetch(API_BASE + '/blog/comments/' + encodeURIComponent(id), { method: 'PATCH', headers: getAuthHeaders(), body: JSON.stringify({ status }) });
-                const data = await res.json();
-                if (data.success) loadAdminComments();
-                else alert(data.error || 'Failed to update.');
-            } catch (err) { alert(err.message); }
         }
 
         async function deleteAdminComment(id) {
@@ -677,64 +667,6 @@
             }
             btn.disabled = false;
             btn.innerHTML = '<i class="fa-solid fa-download"></i> Download backup';
-        }
-
-        function onRestoreFileSelect(e) {
-            const file = e.target.files && e.target.files[0];
-            const zone = document.getElementById('restore-zone');
-            const text = document.getElementById('restore-zone-text');
-            const restoreBtn = document.getElementById('restore-btn');
-            if (!file) {
-                restoreFileContent = null;
-                zone.classList.remove('has-file');
-                text.textContent = 'Click or drop a backup .json file';
-                restoreBtn.disabled = true;
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = () => {
-                try {
-                    restoreFileContent = JSON.parse(reader.result);
-                    zone.classList.add('has-file');
-                    text.textContent = file.name + ' – ready to restore';
-                    restoreBtn.disabled = false;
-                } catch (err) {
-                    restoreFileContent = null;
-                    zone.classList.remove('has-file');
-                    text.textContent = 'Invalid JSON. Choose a valid backup file.';
-                    restoreBtn.disabled = true;
-                }
-            };
-            reader.readAsText(file);
-        }
-
-        async function restoreBackup() {
-            if (!restoreFileContent || !confirm('Restore will overwrite current data for the sections in this backup. Continue?')) return;
-            const btn = document.getElementById('restore-btn');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Restoring…';
-            try {
-                const res = await fetch(API_BASE + '/cms/restore', {
-                    method: 'POST',
-                    headers: getAuthHeaders(),
-                    body: JSON.stringify(restoreFileContent)
-                });
-                const data = await res.json();
-                if (data.success) {
-                    showMessage('Restore complete. ' + (data.restored && data.restored.length ? 'Restored: ' + data.restored.join(', ') : ''), 'success');
-                    document.getElementById('restore-file').value = '';
-                    document.getElementById('restore-zone').classList.remove('has-file');
-                    document.getElementById('restore-zone-text').textContent = 'Click or drop a backup .json file';
-                    restoreFileContent = null;
-                    loadWaitlistData();
-                } else {
-                    showMessage(data.error || 'Restore failed', 'error');
-                }
-            } catch (err) {
-                showMessage('Restore failed: ' + err.message, 'error');
-            }
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fa-solid fa-upload"></i> Restore from file';
         }
 
         // Password reset

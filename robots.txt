@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /admin.html
+Disallow: /blog-admin.html
+Disallow: /landing-admin.html
+Disallow: /seo-admin.html
+Disallow: /resort-admin.html
 
 Sitemap: https://skister.app/sitemap.xml

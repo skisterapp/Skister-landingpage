@@ -1,9 +1,67 @@
-/* SKISTER 2026 approved brand tokens — import in public/CMS pages as needed */
+/* Skister brand + primary action tokens — aligned with Skister-theme-v2/src/styles/skister-theme.css
+   and src/app/lib/skister-design-tokens.ts (operator-approved 14 Oct 2026). */
 :root {
-  --skister-emerald: #00AF64;
-  --skister-mint: #61C58E;
-  --skister-forest: #053D2B;
-  --skister-mist: #F4FAF7;
+  --skister-emerald: #00af64;
+  --skister-mint: #61c58e;
+  --skister-forest: #053d2b;
+  --skister-forest-deep: #046b48;
+  --skister-mist: #f4faf7;
+
+  /* Dark UI (landing / marketing) — matches :root.dark[data-theme] in the app */
+  --skister-primary: var(--skister-emerald);
+  --skister-primary-dark: #008f54;
+  --skister-primary-foreground: var(--skister-mist);
+  --skister-primary-gradient: linear-gradient(
+    135deg,
+    #046b48 0%,
+    var(--skister-emerald) 52%,
+    var(--skister-mint) 100%
+  );
+  --skister-primary-glow: rgba(0, 175, 100, 0.28);
+  --skister-primary-glow-strong: rgba(97, 197, 142, 0.38);
+  --skister-primary-ring: color-mix(in srgb, var(--skister-primary) 36%, transparent);
+
+  /* Legacy aliases used across static HTML */
   --primary-green: var(--skister-emerald);
   --primary-green-light: var(--skister-mint);
+  --primary-green-dark: var(--skister-primary-dark);
+  --premium-gradient: var(--skister-primary-gradient);
+}
+
+/* Primary CTA — mirrors .skister-btn-action in the mobile app */
+.skister-btn-primary,
+button.skister-btn-primary {
+  background-color: var(--skister-primary);
+  background-image: var(--skister-primary-gradient);
+  color: var(--skister-primary-foreground);
+  border: 1px solid color-mix(in srgb, var(--skister-mint) 35%, transparent);
+  box-shadow:
+    0 0 20px var(--skister-primary-glow),
+    0 0 0 1px color-mix(in srgb, var(--skister-primary) 22%, transparent);
+}
+
+.skister-btn-primary:hover:not(:disabled),
+button.skister-btn-primary:hover:not(:disabled) {
+  filter: brightness(1.06);
+  box-shadow:
+    0 0 28px var(--skister-primary-glow-strong),
+    0 0 0 1px color-mix(in srgb, var(--skister-mint) 45%, transparent);
+}
+
+.skister-btn-primary:active:not(:disabled),
+button.skister-btn-primary:active:not(:disabled) {
+  filter: brightness(0.94);
+  box-shadow: 0 0 14px var(--skister-primary-glow);
+}
+
+.skister-btn-primary:disabled,
+button.skister-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.skister-btn-primary:focus-visible,
+button.skister-btn-primary:focus-visible {
+  outline: 2px solid var(--skister-primary);
+  outline-offset: 2px;
 }

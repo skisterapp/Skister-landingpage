@@ -4,6 +4,7 @@ node_modules
 .cursor/
 supabase/
 dist/
+build/pages-artifact/
 *.apk
 .gradle/
 .DS_Store

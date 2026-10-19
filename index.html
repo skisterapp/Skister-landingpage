@@ -14,13 +14,13 @@
         document.head.appendChild(s);
     })();
     </script>
-    <meta name="description" content="Skister is the easiest way to share ski gear with people you trust. Private networks, QR handoff, Maintenance Center, Adventure Profile, smart reminders, and ski tools — plus camping, hiking and other outdoor equipment.">
+    <meta name="description" content="Skister ist der einfachste Weg, Skiausrüstung mit Menschen zu teilen, denen du vertraust. Private Netzwerke, QR-Übergabe, Maintenance Center, Adventure Profile, Erinnerungen und Ski-Tools — auch Camping-, Wander- und Outdoor-Ausrüstung.">
     <meta name="keywords" content="ski equipment sharing, share ski gear, trusted network, private communities, QR handoff, maintenance center, adventure profile, community reputation, referral rewards, ski tools, DIN calculator, packing checklist">
     <meta name="author" content="Skister">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Skister — Share ski gear with people you trust">
-    <meta property="og:description" content="Private ski gear sharing with trusted people. QR handoff, Maintenance Center, Adventure Profile, reminders, and modern ski tools — outdoor equipment supported too.">
+    <meta property="og:title" content="Skister — Skiausrüstung mit Menschen teilen, denen du vertraust">
+    <meta property="og:description" content="Skiausrüstung privat mit Vertrauenspersonen teilen. QR-Übergabe, Maintenance Center, Adventure Profile, Erinnerungen und moderne Ski-Tools — auch Outdoor-Ausrüstung.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://skister.app/">
     <meta property="og:image" id="meta-og-image" content="https://skister.app/assets/skister-app-icon.png">
@@ -29,8 +29,8 @@
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Skister — Share ski gear with people you trust">
-    <meta name="twitter:description" content="Private ski gear sharing with trusted people. QR handoff, Maintenance Center, Adventure Profile, reminders, and modern ski tools.">
+    <meta name="twitter:title" content="Skister — Skiausrüstung mit Menschen teilen, denen du vertraust">
+    <meta name="twitter:description" content="Skiausrüstung privat mit Vertrauenspersonen teilen. QR-Übergabe, Maintenance Center, Adventure Profile, Erinnerungen und Ski-Tools.">
     <meta name="twitter:image" content="https://skister.app/assets/skister-app-icon.png">
     
     <!-- Android/Mobile Meta Tags -->
@@ -41,7 +41,7 @@
     <meta name="application-version" content="1.0.9">
     
     <link rel="canonical" href="https://skister.app/">
-    <title>Skister — Share ski gear with people you trust</title>
+    <title>Skister — Skiausrüstung mit Menschen teilen, denen du vertraust</title>
     <link rel="preload" as="image" href="/assets/hero-mascot.png" fetchpriority="high">
     <link rel="icon" href="/favicon.ico?v=20261011" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=20261011">
@@ -55,6 +55,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/brand-tokens.css">
 
     <!-- Structured data (SoftwareApplication + FAQ + Organization + WebSite) -->
     <script type="application/ld+json" id="skister-ld-org">
@@ -160,11 +161,6 @@
         }
         
         :root {
-            --primary-green: #00AF64;
-            --primary-green-dark: #1a6b1a;
-            --primary-green-light: #61C58E;
-            --cta-green: #2ded6a;
-            --cta-green-mid: #22c55e;
             --bg-dark: #070908;
             --bg-elevated: #0d1210;
             --text-white: #f4faf6;
@@ -184,7 +180,6 @@
             --shadow-soft: 0 8px 28px rgba(0, 0, 0, 0.35);
             --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.28);
             --shadow-card-hover: 0 12px 32px rgba(0, 0, 0, 0.42);
-            --premium-gradient: linear-gradient(135deg, #1aa34a 0%, #22c55e 55%, #2ded6a 100%);
             --font-display: 'Outfit', ui-sans-serif, system-ui, sans-serif;
             --font-body: 'Source Sans 3', ui-sans-serif, system-ui, sans-serif;
         }
@@ -218,6 +213,7 @@
             scroll-behavior: smooth;
             scroll-snap-type: y mandatory;
             scroll-padding-top: var(--nav-offset);
+            overflow-x: clip;
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -244,6 +240,20 @@
             pointer-events: none;
             z-index: 0;
             overflow: hidden;
+            clip-path: inset(0);
+            contain: paint;
+        }
+        .glow-orb-shell {
+            position: absolute;
+            overflow: hidden;
+            pointer-events: none;
+            contain: strict;
+        }
+        .glow-orb-shell--2 {
+            top: 38%;
+            right: 0;
+            width: min(14rem, 30vw);
+            height: 18rem;
         }
         .glow-orb {
             position: absolute;
@@ -263,8 +273,9 @@
             width: 18rem;
             height: 18rem;
             background: radial-gradient(circle, rgba(0, 175, 100, 0.2) 0%, rgba(46, 232, 154, 0.06) 45%, transparent 70%);
-            top: 38%;
-            right: -8%;
+            top: 0;
+            right: -1.25rem;
+            left: auto;
             animation: glowDrift2 28s ease-in-out infinite;
         }
         .glow-orb-3 {
@@ -320,7 +331,7 @@
             font-family: var(--font-body);
             background: var(--bg-dark);
             color: var(--text-white);
-            overflow-x: hidden;
+            overflow-x: clip;
             line-height: 1.65;
             font-size: 1rem;
             -webkit-font-smoothing: antialiased;
@@ -538,12 +549,18 @@
         }
 
         .cookie-banner-actions .cookie-accept {
-            background: var(--primary-green);
-            color: var(--text-white);
+            background-color: var(--skister-primary);
+            background-image: var(--skister-primary-gradient);
+            color: var(--skister-primary-foreground);
+            border: 1px solid color-mix(in srgb, var(--skister-mint) 35%, transparent);
         }
 
         .cookie-banner-actions .cookie-accept:hover {
-            background: var(--primary-green-dark);
+            filter: brightness(1.06);
+        }
+
+        .cookie-banner-actions .cookie-accept:active {
+            filter: brightness(0.94);
         }
 
         .cookie-banner-actions .cookie-essential {
@@ -585,7 +602,7 @@
         
         .language-btn:hover {
             background: rgba(0, 175, 100, 0.22);
-            border-color: rgba(46, 232, 154, 0.55);
+            border-color: color-mix(in srgb, var(--skister-mint) 55%, transparent);
         }
 
         .language-btn:focus-visible,
@@ -853,9 +870,9 @@
         }
         
         .email-input:focus {
-            border-color: rgba(46, 232, 154, 0.5);
+            border-color: color-mix(in srgb, var(--skister-mint) 50%, transparent);
             background: rgba(255, 255, 255, 0.055);
-            box-shadow: 0 0 0 3px rgba(0, 175, 100, 0.12);
+            box-shadow: 0 0 0 3px var(--skister-primary-glow);
         }
         
         .email-input::placeholder {
@@ -865,25 +882,32 @@
         .submit-btn {
             padding: 0.8rem 1.2rem;
             border-radius: 0.65rem;
-            border: none;
-            background: var(--premium-gradient);
-            color: #061008;
             font-size: 0.92rem;
             font-weight: 700;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
             white-space: nowrap;
-            box-shadow: 0 4px 18px rgba(45, 237, 106, 0.22);
         }
         
-        .submit-btn:hover {
-            filter: brightness(1.06);
+        .submit-btn:hover:not(:disabled) {
             transform: translateY(-1px);
-            box-shadow: 0 8px 24px rgba(45, 237, 106, 0.28);
+        }
+
+        .submit-btn.skister-btn-primary:hover:not(:disabled) {
+            filter: brightness(1.06) !important;
+        }
+
+        .submit-btn.skister-btn-primary:active:not(:disabled) {
+            filter: brightness(0.94) !important;
         }
         
-        .submit-btn:active {
+        .submit-btn:active:not(:disabled) {
             transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
         
         .waitlist-info {
@@ -1937,10 +1961,10 @@
             transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
         }
         .store-badge-flip:hover .store-badge-front {
-            border-color: rgba(46, 232, 154, 0.55);
+            border-color: color-mix(in srgb, var(--skister-mint) 55%, transparent);
             box-shadow:
                 0 8px 32px rgba(0, 0, 0, 0.5),
-                0 0 24px rgba(0, 175, 100, 0.15),
+                0 0 24px var(--skister-primary-glow),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
             transform: translateY(-2px);
         }
@@ -1989,9 +2013,9 @@
         .store-badge-back {
             transform: rotateY(180deg);
             background: linear-gradient(135deg, rgba(0, 175, 100, 0.35) 0%, rgba(5, 61, 43, 0.5) 100%);
-            border: 1.5px solid rgba(46, 232, 154, 0.65);
+            border: 1.5px solid color-mix(in srgb, var(--skister-mint) 65%, transparent);
             box-shadow:
-                0 0 30px rgba(46, 232, 154, 0.25),
+                0 0 30px var(--skister-primary-glow),
                 0 8px 28px rgba(0, 0, 0, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.12);
             justify-content: center;
@@ -1999,8 +2023,8 @@
             animation: storeBadgeGlow 2.2s ease-in-out infinite;
         }
         @keyframes storeBadgeGlow {
-            0%, 100% { box-shadow: 0 0 24px rgba(46, 232, 154, 0.2), 0 8px 28px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12); }
-            50% { box-shadow: 0 0 40px rgba(46, 232, 154, 0.38), 0 8px 28px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15); }
+            0%, 100% { box-shadow: 0 0 24px var(--skister-primary-glow), 0 8px 28px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12); }
+            50% { box-shadow: 0 0 40px var(--skister-primary-glow-strong), 0 8px 28px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15); }
         }
         .store-badge-back-text {
             font-size: 1rem;
@@ -2889,7 +2913,7 @@
     <!-- Ambient background glow -->
     <div id="ambient-glow" aria-hidden="true">
         <span class="glow-orb glow-orb-1"></span>
-        <span class="glow-orb glow-orb-2"></span>
+        <span class="glow-orb-shell glow-orb-shell--2" aria-hidden="true"><span class="glow-orb glow-orb-2"></span></span>
         <span class="glow-orb glow-orb-3"></span>
         <span class="glow-orb glow-orb-4"></span>
         <span class="glow-orb glow-orb-5"></span>
@@ -2997,7 +3021,7 @@
                     <div id="message-container"></div>
                     <form class="email-form" id="waitlist-form" onsubmit="handleEmailSubmit(event)">
                         <input type="email" class="email-input" placeholder="Deine E-Mail-Adresse eingeben" data-i18n-placeholder="hero.emailPlaceholder" required id="email-input" aria-label="Email address">
-                        <button type="submit" class="submit-btn" id="submit-btn" data-i18n="hero.submitBtn">Benachrichtigung erhalten</button>
+                        <button type="submit" class="submit-btn skister-btn-primary" id="submit-btn" data-i18n="hero.submitBtn">Benachrichtigung erhalten</button>
                     </form>
                     <p class="waitlist-info" data-i18n="hero.waitlistInfo">Trete der Warteliste bei und sei der Erste, der erfährt, wenn wir starten!</p>
                 </div>
@@ -3582,6 +3606,7 @@
                 <div class="footer-links">
                     <a href="/privacy.html" data-i18n="footer.privacy">Datenschutz</a>
                     <a href="/terms.html" data-i18n="footer.terms">Nutzungsbedingungen</a>
+                    <a href="/impressum.html" data-i18n="footer.impressum">Impressum</a>
                     <a href="mailto:privacy@skister.app">privacy@skister.app</a>
                 </div>
             </div>
@@ -3662,6 +3687,8 @@
                 'hero.title': 'Skiausrüstung teilen war noch nie so einfach.',
                 'hero.tagline': '🏔️ Für Familien, Freunde und Vereine',
                 'hero.subtitle': 'Skister ist der einfachste Weg, Skiausrüstung mit Menschen zu teilen, denen du vertraust. Du kannst auch Camping-, Wander- und andere Outdoor-Ausrüstung teilen.',
+                'home.seo.title': 'Skister — Skiausrüstung mit Menschen teilen, denen du vertraust',
+                'home.seo.description': 'Skister ist der einfachste Weg, Skiausrüstung mit Menschen zu teilen, denen du vertraust. Private Netzwerke, QR-Übergabe, Maintenance Center, Adventure Profile, Erinnerungen und Ski-Tools — auch Camping-, Wander- und Outdoor-Ausrüstung.',
                 'hero.mediaDesc': 'Hintergrund: Skifahren im Vordergrund; Outdoor-Abenteuer ergänzend.',
                 'hero.emailPlaceholder': 'Deine E-Mail-Adresse eingeben',
                 'hero.submitBtn': 'Benachrichtigung erhalten',
@@ -3780,6 +3807,7 @@
                 'footer.legal': 'Rechtliches',
                 'footer.privacy': 'Datenschutz',
                 'footer.terms': 'Nutzungsbedingungen',
+                'footer.impressum': 'Impressum',
                 'footer.support': 'Support',
                 'footer.contact': 'Kontakt',
                 'footer.rights': 'Alle Rechte vorbehalten.',
@@ -3844,7 +3872,7 @@
                 'homeActions.return': 'Zurückgeben',
                 'homeActions.scan': 'QR scannen',
                 'homeActions.myGear': 'My Gear',
-                'homeActions.explore': 'Explore', ohne vorgetäuschte Live-Daten.', Lifte und Vorhersage — derzeit unter Entwicklung.', Erste Hilfe und Offline-Zugriff in der App.',
+                'homeActions.explore': 'Explore',
                 'footer.pricing': 'Preise',
                 'footer.tools': 'Tools',
                 'nav.pricing': 'Preise',
@@ -3890,6 +3918,8 @@
                 'hero.title': 'Sharing ski gear has never been easier.',
                 'hero.tagline': '🏔️ For families, friends and clubs',
                 'hero.subtitle': 'Skister is the easiest way to share ski gear with people you trust. You can also share camping, hiking and other outdoor equipment.',
+                'home.seo.title': 'Skister — Share ski gear with people you trust',
+                'home.seo.description': 'Skister is the easiest way to share ski gear with people you trust. Private networks, QR handoff, Maintenance Center, Adventure Profile, smart reminders, and ski tools — plus camping, hiking and other outdoor equipment.',
                 'hero.mediaDesc': 'Background: skiing first; outdoor adventure scenes as secondary.',
                 'hero.emailPlaceholder': 'Enter your email address',
                 'hero.submitBtn': 'Get Notified',
@@ -4008,6 +4038,7 @@
                 'footer.legal': 'Legal',
                 'footer.privacy': 'Privacy',
                 'footer.terms': 'Terms of Service',
+                'footer.impressum': 'Legal notice (Impressum)',
                 'footer.support': 'Support',
                 'footer.contact': 'Contact',
                 'footer.rights': 'All rights reserved.',
@@ -4072,7 +4103,7 @@
                 'homeActions.return': 'Return equipment',
                 'homeActions.scan': 'Scan QR',
                 'homeActions.myGear': 'My Gear',
-                'homeActions.explore': 'Explore', without pretending live data exists.', lifts and forecast — currently under development.', first aid and offline access in the app.',
+                'homeActions.explore': 'Explore',
                 'footer.pricing': 'Pricing',
                 'footer.tools': 'Tools',
                 'nav.pricing': 'Pricing',
@@ -4118,6 +4149,8 @@
                 'hero.title': 'Partager du matériel de ski n\'a jamais été aussi simple.',
                 'hero.tagline': '🏔️ Pour les familles, les amis et les clubs',
                 'hero.subtitle': 'Skister est le moyen le plus simple de partager du matériel de ski avec des personnes de confiance. Vous pouvez aussi partager du matériel de camping, de randonnée et d\'autres équipements outdoor.',
+                'home.seo.title': 'Skister — Partagez votre matériel de ski avec des personnes de confiance',
+                'home.seo.description': 'Skister est le moyen le plus simple de partager du matériel de ski avec des personnes de confiance. Réseaux privés, remise QR, Maintenance Center, Adventure Profile, rappels et outils ski — aussi équipement outdoor.',
                 'hero.mediaDesc': 'Arrière-plan : ski en premier ; aventures outdoor en complément.',
                 'hero.emailPlaceholder': 'Entrez votre adresse e-mail',
                 'hero.submitBtn': 'Être Notifié',
@@ -4236,6 +4269,7 @@
                 'footer.legal': 'Légal',
                 'footer.privacy': 'Confidentialité',
                 'footer.terms': 'Conditions d\'Utilisation',
+                'footer.impressum': 'Mentions légales (Impressum)',
                 'footer.support': 'Support',
                 'footer.contact': 'Contact',
                 'footer.rights': 'Tous droits réservés.',
@@ -4300,7 +4334,7 @@
                 'homeActions.return': 'Rendre le matériel',
                 'homeActions.scan': 'Scanner le QR',
                 'homeActions.myGear': 'My Gear',
-                'homeActions.explore': 'Explore', sans données live fictives.', remontées et prévisions — en développement.', premiers secours et accès hors ligne dans l’app.',
+                'homeActions.explore': 'Explore',
                 'footer.pricing': 'Tarifs',
                 'footer.tools': 'Outils',
                 'nav.pricing': 'Tarifs',
@@ -4346,6 +4380,8 @@
                 'hero.title': 'Compartir equipo de esquí nunca fue tan fácil.',
                 'hero.tagline': '🏔️ Para familias, amigos y clubes',
                 'hero.subtitle': 'Skister es la forma más fácil de compartir equipo de esquí con personas de confianza. También puedes compartir equipo de camping, senderismo y otro material outdoor.',
+                'home.seo.title': 'Skister — Comparte equipo de esquí con personas de confianza',
+                'home.seo.description': 'Skister es la forma más fácil de compartir equipo de esquí con personas de confianza. Redes privadas, entrega QR, Maintenance Center, Adventure Profile, recordatorios y herramientas de esquí — también equipo outdoor.',
                 'hero.mediaDesc': 'Fondo: esquí primero; aventuras outdoor como complemento.',
                 'hero.emailPlaceholder': 'Ingresa tu dirección de correo',
                 'hero.submitBtn': 'Recibir Notificación',
@@ -4460,6 +4496,7 @@
                 'footer.legal': 'Legal',
                 'footer.privacy': 'Privacidad',
                 'footer.terms': 'Términos de Servicio',
+                'footer.impressum': 'Aviso legal (Impressum)',
                 'footer.support': 'Soporte',
                 'footer.contact': 'Contacto',
                 'footer.rights': 'Todos los derechos reservados.',
@@ -4524,7 +4561,7 @@
                 'homeActions.return': 'Devolver equipo',
                 'homeActions.scan': 'Escanear QR',
                 'homeActions.myGear': 'My Gear',
-                'homeActions.explore': 'Explore', sin datos en vivo fingidos.', remontes y previsión — en desarrollo.', primeros auxilios y acceso offline en la app.',
+                'homeActions.explore': 'Explore',
                 'footer.pricing': 'Precios',
                 'footer.tools': 'Herramientas',
                 'nav.pricing': 'Precios',
@@ -4570,6 +4607,8 @@
                 'hero.title': 'Condividere attrezzatura da sci non è mai stato così facile.',
                 'hero.tagline': '🏔️ Per famiglie, amici e club',
                 'hero.subtitle': 'Skister è il modo più semplice per condividere attrezzatura da sci con le persone di cui ti fidi. Puoi anche condividere attrezzatura da camping, trekking e altro outdoor.',
+                'home.seo.title': 'Skister — Condividi attrezzatura da sci con persone di fiducia',
+                'home.seo.description': 'Skister è il modo più semplice per condividere attrezzatura da sci con persone di fiducia. Reti private, consegna QR, Maintenance Center, Adventure Profile, promemoria e strumenti sci — anche attrezzatura outdoor.',
                 'hero.mediaDesc': 'Sfondo: sci in primo piano; avventure outdoor come complemento.',
                 'hero.emailPlaceholder': 'Inserisci il tuo indirizzo email',
                 'hero.submitBtn': 'Ricevi Notifica',
@@ -4688,6 +4727,7 @@
                 'footer.legal': 'Legale',
                 'footer.privacy': 'Privacy',
                 'footer.terms': 'Termini di Servizio',
+                'footer.impressum': 'Note legali (Impressum)',
                 'footer.support': 'Supporto',
                 'footer.contact': 'Contatto',
                 'footer.rights': 'Tutti i diritti riservati.',
@@ -4752,7 +4792,7 @@
                 'homeActions.return': 'Restituisci',
                 'homeActions.scan': 'Scansiona QR',
                 'homeActions.myGear': 'My Gear',
-                'homeActions.explore': 'Explore', senza dati live finti.', impianti e previsioni — in sviluppo.', primo soccorso e accesso offline nell’app.',
+                'homeActions.explore': 'Explore',
                 'footer.pricing': 'Prezzi',
                 'footer.tools': 'Strumenti',
                 'nav.pricing': 'Prezzi',
@@ -5041,6 +5081,10 @@
             document.addEventListener('click', handleNavHashLink);
             if (window.SkisterLegalRender) SkisterLegalRender.renderModals(currentLang);
             applyDataI18n(currentLang);
+            document.documentElement.lang = currentLang;
+            const langFlags = { de: '🇩🇪 DE', en: '🇬🇧 EN', fr: '🇫🇷 FR', es: '🇪🇸 ES', it: '🇮🇹 IT' };
+            const langLabel = document.getElementById('current-language');
+            if (langLabel) langLabel.textContent = langFlags[currentLang] || langFlags.de;
         });
 
         function initHeroBackgroundVideos() {
@@ -5126,6 +5170,26 @@
         }
         
         // Language Functions
+        function applyHomeSeoMeta(lang) {
+            const dict = translations[lang] || translations.de || {};
+            const title = dict['home.seo.title'];
+            const description = dict['home.seo.description'];
+            if (title) document.title = title;
+            const metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc && description) metaDesc.setAttribute('content', description);
+            const ogTitle = document.querySelector('meta[property="og:title"]');
+            if (ogTitle && title) ogTitle.setAttribute('content', title);
+            const ogDesc = document.querySelector('meta[property="og:description"]');
+            if (ogDesc && description) ogDesc.setAttribute('content', description);
+            const twTitle = document.querySelector('meta[name="twitter:title"]');
+            if (twTitle && title) twTitle.setAttribute('content', title);
+            const twDesc = document.querySelector('meta[name="twitter:description"]');
+            if (twDesc && description) twDesc.setAttribute('content', description);
+            const ogLocale = document.querySelector('meta[property="og:locale"]');
+            const localeMap = { de: 'de_DE', en: 'en_US', fr: 'fr_FR', es: 'es_ES', it: 'it_IT' };
+            if (ogLocale && localeMap[lang]) ogLocale.setAttribute('content', localeMap[lang]);
+        }
+
         function applyDataI18n(lang) {
             const dict = translations[lang] || translations.en || {};
             document.querySelectorAll('[data-i18n]').forEach(element => {
@@ -5152,6 +5216,7 @@
                     element.setAttribute('aria-label', dict[key]);
                 }
             });
+            applyHomeSeoMeta(lang);
             updateNavMenuToggleLabel();
         }
 

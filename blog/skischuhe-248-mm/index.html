@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://news.google.com" crossorigin>
   <script async src="https://news.google.com/swg/js/v1/publisher.js"></script>
   <style>
-    :root { --primary-green:#00AF64; --primary-green-light:#61C58E; --bg-card:#1a1a1a; --text-gray:#b0b0b0; --border-color:rgba(255,255,255,0.1); }
+    :root { --primary-green:#00AF64; --primary-green-dark:#008f54; --primary-green-light:#61C58E; --bg-card:#1a1a1a; --text-gray:#b0b0b0; --border-color:rgba(255,255,255,0.1); }
     body { font-family: system-ui, sans-serif; background:#0a0a0a; color:#fff; line-height:1.6; max-width:760px; margin:0 auto; padding:2rem 1.25rem 4rem; }
     a { color:#00AF64; }
     .nav { margin-bottom:2rem; font-size:0.95rem; }
@@ -39,11 +39,43 @@
     .prose-featured img { width:100%; height:auto; border-radius:10px; border:1px solid rgba(255,255,255,0.12); }
     .prose > h1:first-of-type { color:#00AF64; font-size:1.75rem; }
     h1 { color:#00AF64; font-size:1.75rem; }
-    .prose .TyagGW_tableContainer { margin:1rem 0; overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:100%; }
-    .prose table { border-collapse:collapse; width:100%; max-width:100%; border:1px solid rgba(255,255,255,0.28); }
-    .prose th, .prose td { border:1px solid rgba(255,255,255,0.28); padding:0.5rem 0.75rem; text-align:left; vertical-align:top; }
-    .prose thead th { background:rgba(255,255,255,0.08); font-weight:600; }
-    .prose tbody tr:nth-child(even) { background:rgba(255,255,255,0.03); }
+    .prose { max-width: 100%; min-width: 0; }
+    body { overflow-x: clip; }
+    .prose .blog-table-scroll,
+    .prose .TyagGW_tableContainer {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      margin: 1rem 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+    }
+    .prose .blog-table-scroll:focus-visible {
+      outline: 2px solid #00AF64;
+      outline-offset: 2px;
+    }
+    .prose .TyagGW_tableWrapper,
+    .prose .TyagGW_tableContainer > div {
+      display: block;
+      max-width: none;
+      width: max-content;
+      min-width: 0;
+    }
+    .prose table {
+      border-collapse: collapse;
+      width: auto;
+      min-width: min(100%, 36rem);
+      border: 1px solid rgba(255,255,255,0.28);
+    }
+    .prose th, .prose td {
+      border: 1px solid rgba(255,255,255,0.28);
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .prose thead th { background: rgba(255,255,255,0.08); font-weight: 600; }
+    .prose tbody tr:nth-child(even) { background: rgba(255,255,255,0.03); }
     .post-more-section { margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border-color); }
     .post-nav-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; align-items:stretch; }
     .post-nav-row > div { min-width:0; }
@@ -83,8 +115,8 @@
     .comment-form input, .comment-form textarea { padding:0.75rem 1rem; background:rgba(255,255,255,0.05); border:1px solid var(--border-color); border-radius:8px; color:#fff; font-size:1rem; font-family:inherit; }
     .comment-form textarea { min-height:100px; resize:vertical; }
     .comment-form input:focus, .comment-form textarea:focus { outline:none; border-color:var(--primary-green); }
-    .comment-form .btn-submit { align-self:flex-start; padding:0.55rem 1.2rem; background:var(--primary-green); color:#fff; border:none; border-radius:8px; font-weight:600; cursor:pointer; }
-    .comment-form .btn-submit:hover { background:var(--primary-green-light); }
+    .comment-form .btn-submit { align-self:flex-start; padding:0.55rem 1.2rem; background:var(--primary-green); color:#f4faf7; border:none; border-radius:8px; font-weight:600; cursor:pointer; }
+    .comment-form .btn-submit:hover { background:var(--primary-green-dark); } .comment-form .btn-submit:focus-visible { outline:2px solid var(--primary-green); outline-offset:2px; } .comment-form .btn-submit:disabled { opacity:0.5; cursor:not-allowed; }
     .comment-form .comment-error { color:#ff6b6b; font-size:0.9rem; margin:0; }
     .comment-form .comment-success-msg { color:var(--primary-green); font-size:0.95rem; display:none; margin:0; }
     .comments-list { display:flex; flex-direction:column; gap:1rem; }
@@ -105,107 +137,122 @@
   <article class="prose" itemscope itemtype="https://schema.org/BlogPosting">
     <h1 itemprop="headline">Skischuhe 248 mm – welche Größe steckt dahinter?</h1>
     <figure class="prose-featured"><img src="https://images.surferseo.art/2f9a9df7-b58c-4625-ae4c-1e236ff73c7f.jpg" alt="Skischuhe 248 mm – welche Größe steckt dahinter?" loading="eager" decoding="async" width="1200" height="630"></figure>
-    <h2 data-section-id="fdge8y" data-start="297" data-end="319">TL;DR (Kurzantwort)</h2>
-<p data-start="321" data-end="619"><strong data-start="321" data-end="392">248 mm ist die Sohlenlänge (BSL), nicht die eigentliche Schuhgröße.</strong><br data-start="392" data-end="395">
-Sie deutet sehr wahrscheinlich auf einen <strong data-start="436" data-end="492">kleinen Erwachsenen-Skischuh im Bereich MP 23,0–24,0</strong> hin (≈ <strong data-start="500" data-end="512">EU 36–38</strong>). Prüfe zusätzlich den <strong data-start="536" data-end="569">Mondopoint-Wert am Innenschuh</strong>, da mehrere Größen dieselbe Schale nutzen können.</p>
-<hr data-start="621" data-end="624">
-<p data-start="626" data-end="962">Du hast Skischuhe mit einer Sohlenlänge von <strong data-start="670" data-end="680">248 mm</strong> gefunden und fragst dich, welche Größe das ist? Dieser Wert liegt im <strong data-start="750" data-end="780">unteren Erwachsenenbereich</strong> und markiert praktisch den Übergang zu klassischen Damen- oder kleinen Herrenmodellen. Die Zahl an der Ferse hilft dir bei der Einordnung – aber sie ist nicht direkt die Schuhgröße.</p>
-<p data-start="964" data-end="1084">Hier erfährst du, was 248 mm bedeutet, welchen Größenbereich du erwarten kannst und worauf du unbedingt achten solltest.</p>
-<hr data-start="1086" data-end="1089">
-<h2 data-section-id="7ww9hi" data-start="1091" data-end="1129">Was bedeutet 248 mm bei Skischuhen?</h2>
-<p data-start="1131" data-end="1212">Die Angabe <strong data-start="1142" data-end="1152">248 mm</strong> ist die sogenannte <strong data-start="1172" data-end="1211">Sohlenlänge (Boot Sole Length, BSL)</strong>.</p>
-<p data-start="1214" data-end="1285">Sie beschreibt die <strong data-start="1233" data-end="1263">Länge der Kunststoffschale</strong> und ist relevant für:</p>
-<ul data-start="1287" data-end="1411">
-<li data-section-id="1lqnhoj" data-start="1287" data-end="1321">
-<p data-start="1289" data-end="1321">die Einstellung der Skibindung</p>
+    <figure class="prose-featured"><img src="https://images.surferseo.art/2f9a9df7-b58c-4625-ae4c-1e236ff73c7f.jpg" alt="Skischuhe 248 mm – welche Größe steckt dahinter?" loading="eager" decoding="async" width="1200" height="630"></figure>
+    <figure class="prose-featured"><img src="https://images.surferseo.art/2f9a9df7-b58c-4625-ae4c-1e236ff73c7f.jpg" alt="Skischuhe 248 mm – welche Größe steckt dahinter?" loading="eager" decoding="async" width="1200" height="630"></figure>
+    <h2>TL;DR (Kurzantwort)</h2>
+<p><strong>248 mm ist die Sohlenlänge (BSL), nicht die eigentliche Schuhgröße.</strong><br>
+Sie deutet sehr wahrscheinlich auf einen <strong>kleinen Erwachsenen-Skischuh im Bereich MP 23,0–24,0</strong> hin (≈ <strong>EU 36–38</strong>). Prüfe zusätzlich den <strong>Mondopoint-Wert am Innenschuh</strong>, da mehrere Größen dieselbe Schale nutzen können.</p>
+<hr>
+<p>Du hast Skischuhe mit einer Sohlenlänge von <strong>248 mm</strong> gefunden und fragst dich, welche Größe das ist? Dieser Wert liegt im <strong>unteren Erwachsenenbereich</strong> und markiert praktisch den Übergang zu klassischen Damen- oder kleinen Herrenmodellen. Die Zahl an der Ferse hilft dir bei der Einordnung – aber sie ist nicht direkt die Schuhgröße.</p>
+<p>Hier erfährst du, was 248 mm bedeutet, welchen Größenbereich du erwarten kannst und worauf du unbedingt achten solltest.</p>
+<hr>
+<h2 id="bsl-sicherheitshinweis">Sicherheit: Bindung, Passform und Gebrauchtcheck</h2>
+<p>Bitte trenne drei Dinge: <strong>Schuhgröße (Mondopoint)</strong>, <strong>Sohlenlänge (BSL)</strong> und <strong>Bindungseinstellung</strong>. Sie hängen zusammen, sind aber nicht austauschbar.</p>
+<ul>
+<li><strong>BSL allein</strong> belegt weder die Passform noch, ob Ski und Bindung zusammenpassen.</li>
+<li><strong>EU- oder MP-Hinweise</strong> in Ratgebern und Tabellen sind nur Orientierung – Hersteller und Modelle weichen ab.</li>
+<li><strong>Montage, Einstellung und Inspektion</strong> von Skibindungen (inkl. Prüfung des Auslöseverhaltens) gehören in qualifizierte Hände. DIN ISO 11088 beschreibt u. a. den Rahmen für Montage, Einstellung und Inspektion von Bindungen durch geeignetes Fachpersonal; dieser Artikel ersetzt keine Fachwerkstatt und belegt keine Zertifizierung.</li>
+</ul>
+<p>Der <a href="/blog/z-wert-kalkulator/">Z-Wert-Kalkulator</a> in der SKISTER-App kann zur ersten Orientierung beim Z-Wert dienen – er ersetzt weder die Einstellung noch die Funktionsprüfung im Skiservice.</p>
+<p>Bei <strong>Gebrauchtkäufen</strong>: Schale und Innenschuh auf Beschädigungen prüfen, Sohle auf Lesbarkeit der BSL-Kennzeichnung, und die Kombination aus Ski, Bindung und Schuh vor der Nutzung im Fachbetrieb prüfen lassen.</p>
+<hr>
+<h2>Was bedeutet 248 mm bei Skischuhen?</h2>
+<p>Die Angabe <strong>248 mm</strong> ist die sogenannte <strong>Sohlenlänge (Boot Sole Length, BSL)</strong>.</p>
+<p>Sie beschreibt die <strong>Länge der Kunststoffschale</strong> und ist relevant für:</p>
+<ul>
+<li>
+<p>die Einstellung der Skibindung</p>
 </li>
-<li data-section-id="1mm7r20" data-start="1322" data-end="1357">
-<p data-start="1324" data-end="1357">den Verstellbereich der Bindung</p>
+<li>
+<p>den Verstellbereich der Bindung</p>
 </li>
-<li data-section-id="14kv0ze" data-start="1358" data-end="1411">
-<p data-start="1360" data-end="1411">die Kompatibilität mit bestimmten Systembindungen</p>
+<li>
+<p>die Kompatibilität mit bestimmten Systembindungen</p>
 </li>
 </ul>
-<p data-start="1413" data-end="1469">Wichtig:<br data-start="1421" data-end="1424">
-<strong data-start="1424" data-end="1469">Die Sohlenlänge ist nicht die Schuhgröße.</strong></p>
-<hr data-start="1471" data-end="1474">
-<h2 data-section-id="aw9cfa" data-start="1476" data-end="1530">Kann man aus 248 mm direkt die Schuhgröße ableiten?</h2>
-<p data-start="1532" data-end="1571">Kurz gesagt: <strong data-start="1545" data-end="1571">Nein, nicht eindeutig.</strong></p>
-<p data-start="1573" data-end="1682">Gerade im unteren Erwachsenenbereich nutzen viele Hersteller eine Schale für mehrere halbe Mondopoint-Größen.</p>
-<p data-start="1684" data-end="1761">Das bedeutet:<br data-start="1697" data-end="1700">
+<p>Wichtig:<br>
+<strong>Die Sohlenlänge ist nicht die Schuhgröße.</strong></p>
+<hr>
+<h2>Kann man aus 248 mm direkt die Schuhgröße ableiten?</h2>
+<p>Kurz gesagt: <strong>Nein, nicht eindeutig.</strong></p>
+<p>Gerade im unteren Erwachsenenbereich nutzen viele Hersteller eine Schale für mehrere halbe Mondopoint-Größen.</p>
+<p>Das bedeutet:<br>
 Eine Sohlenlänge von 248 mm kann mehreren Größen entsprechen.</p>
-<p data-start="1763" data-end="1855">Die BSL hilft dir bei der <strong data-start="1789" data-end="1804">Eingrenzung</strong>, ersetzt aber nicht die tatsächliche Größenangabe.</p>
-<hr data-start="1857" data-end="1860">
-<h2 data-section-id="crz6yi" data-start="1862" data-end="1884">Was ist Mondopoint?</h2>
-<p data-start="1886" data-end="1957"><strong data-start="1886" data-end="1905">Mondopoint (MP)</strong> ist das standardisierte Größensystem für Skischuhe.</p>
-<p data-start="1959" data-end="2006">Es basiert auf der <strong data-start="1978" data-end="2005">Fußlänge in Zentimetern</strong>.</p>
-<p data-start="2008" data-end="2017">Beispiel:</p>
-<ul data-start="2018" data-end="2109">
-<li data-section-id="1e9xmnj" data-start="2018" data-end="2063">
-<p data-start="2020" data-end="2063">MP 23,0 → geeignet für ca. 23 cm Fußlänge</p>
+<p>Die BSL hilft dir bei der <strong>Eingrenzung</strong>, ersetzt aber nicht die tatsächliche Größenangabe.</p>
+<hr>
+<h2>Was ist Mondopoint?</h2>
+<p><strong>Mondopoint (MP)</strong> ist das standardisierte Größensystem für Skischuhe.</p>
+<p>Es basiert auf der <strong>Fußlänge in Zentimetern</strong>.</p>
+<p>Beispiel:</p>
+<ul>
+<li>
+<p>MP 23,0 → geeignet für ca. 23 cm Fußlänge</p>
 </li>
-<li data-section-id="1agofqn" data-start="2064" data-end="2109">
-<p data-start="2066" data-end="2109">MP 24,0 → geeignet für ca. 24 cm Fußlänge</p>
-</li>
-</ul>
-<p data-start="2111" data-end="2148">Zur groben Orientierung im EU-System:</p>
-<ul data-start="2150" data-end="2218">
-<li data-section-id="ztyceb" data-start="2150" data-end="2172">
-<p data-start="2152" data-end="2172">MP 22,0 ≈ EU 34–35</p>
-</li>
-<li data-section-id="1gciqo0" data-start="2173" data-end="2195">
-<p data-start="2175" data-end="2195">MP 23,0 ≈ EU 35–36</p>
-</li>
-<li data-section-id="1low2sr" data-start="2196" data-end="2218">
-<p data-start="2198" data-end="2218">MP 24,0 ≈ EU 37–38</p>
+<li>
+<p>MP 24,0 → geeignet für ca. 24 cm Fußlänge</p>
 </li>
 </ul>
-<p data-start="2220" data-end="2329">Die EU-Umrechnung ist nur eine Annäherung. Skischuhe fallen enger und präziser aus als normale Straßenschuhe.</p>
-<hr data-start="2331" data-end="2334">
-<h2 data-section-id="unvsyy" data-start="2336" data-end="2396">Welcher Mondopoint-Bereich ist bei 248 mm wahrscheinlich?</h2>
-<p data-start="2398" data-end="2462">Eine Sohlenlänge von <strong data-start="2419" data-end="2429">248 mm</strong> liegt typischerweise im Bereich:</p>
-<p data-start="2464" data-end="2502"><strong data-start="2464" data-end="2487">MP 23,0 bis MP 24,0</strong><br data-start="2487" data-end="2490">
+<p>Zur groben Orientierung im EU-System:</p>
+<ul>
+<li>
+<p>MP 22,0 ≈ EU 34–35</p>
+</li>
+<li>
+<p>MP 23,0 ≈ EU 35–36</p>
+</li>
+<li>
+<p>MP 24,0 ≈ EU 37–38</p>
+</li>
+</ul>
+<p>Die EU-Umrechnung ist nur eine Annäherung. Skischuhe fallen enger und präziser aus als normale Straßenschuhe.</p>
+<hr>
+<h2>Welcher Mondopoint-Bereich ist bei 248 mm wahrscheinlich?</h2>
+<p>Eine Sohlenlänge von <strong>248 mm</strong> liegt typischerweise im Bereich:</p>
+<p><strong>MP 23,0 bis MP 24,0</strong><br>
 (≈ EU 36–38)</p>
-<p data-start="2504" data-end="2526">Warum nur ein Bereich?</p>
-<p data-start="2528" data-end="2667">Im Erwachsenenbereich unterscheiden sich Schalenlängen je nach Hersteller und Modell. Zudem decken viele Modelle halbe Größen gemeinsam ab.</p>
-<p data-start="2669" data-end="2766">Deshalb gilt:<br data-start="2682" data-end="2685">
-<strong data-start="2685" data-end="2766">248 mm gibt dir einen realistischen Größenkorridor – aber keine exakte Größe.</strong></p>
-<hr data-start="2768" data-end="2771">
-<h2 data-section-id="e4rwf2" data-start="2773" data-end="2827">Warum solltest du zusätzlich den Innenschuh prüfen?</h2>
-<p data-start="2829" data-end="2900">Entscheidend für die tatsächliche Größe ist der <strong data-start="2877" data-end="2899">Innenschuh (Liner)</strong>.</p>
-<p data-start="2902" data-end="2992">Dort ist in der Regel der Mondopoint-Wert aufgedruckt – das ist die zuverlässigste Angabe.</p>
-<p data-start="2994" data-end="3064">Falls kein Label vorhanden ist, kannst du einen einfachen Test machen:</p>
-<h3 data-section-id="pe7lp1" data-start="3066" data-end="3084">Shell-Fit-Test</h3>
-<ol data-start="3086" data-end="3237">
-<li data-section-id="7tfsu8" data-start="3086" data-end="3114">
-<p data-start="3089" data-end="3114">Innenschuh herausnehmen</p>
+<p>Warum nur ein Bereich?</p>
+<p>Im Erwachsenenbereich unterscheiden sich Schalenlängen je nach Hersteller und Modell. Zudem decken viele Modelle halbe Größen gemeinsam ab.</p>
+<p>Deshalb gilt:<br>
+<strong>248 mm gibt dir einen realistischen Größenkorridor – aber keine exakte Größe.</strong></p>
+<hr>
+<h2>Warum solltest du zusätzlich den Innenschuh prüfen?</h2>
+<p>Entscheidend für die tatsächliche Größe ist der <strong>Innenschuh (Liner)</strong>.</p>
+<p>Dort ist in der Regel der Mondopoint-Wert aufgedruckt – das ist die zuverlässigste Angabe.</p>
+<p>Falls kein Label vorhanden ist, kannst du einen einfachen Test machen:</p>
+<h3>Shell-Fit-Test</h3>
+<ol>
+<li>
+<p>Innenschuh herausnehmen</p>
 </li>
-<li data-section-id="179do2i" data-start="3115" data-end="3164">
-<p data-start="3118" data-end="3164">Mit dünner Socke in die leere Schale stellen</p>
+<li>
+<p>Mit dünner Socke in die leere Schale stellen</p>
 </li>
-<li data-section-id="1vpnrn2" data-start="3165" data-end="3204">
-<p data-start="3168" data-end="3204">Zehen vorne leicht anstoßen lassen</p>
+<li>
+<p>Zehen vorne leicht anstoßen lassen</p>
 </li>
-<li data-section-id="w4igd4" data-start="3205" data-end="3237">
-<p data-start="3208" data-end="3237">Abstand an der Ferse prüfen</p>
+<li>
+<p>Abstand an der Ferse prüfen</p>
 </li>
 </ol>
-<p data-start="3239" data-end="3343">Im Erwachsenenbereich sollte der Abstand möglichst präzise passen, da sonst die Kraftübertragung leidet.</p>
-<hr data-start="3345" data-end="3348">
-<h2 data-section-id="mcdd6m" data-start="3350" data-end="3372">Häufiger Suchfehler</h2>
-<p data-start="3374" data-end="3398">Manche suchen auch nach:</p>
-<ul data-start="3399" data-end="3433">
-<li data-section-id="nd3vr6" data-start="3399" data-end="3433">
-<p data-start="3401" data-end="3433">„24.8 mm Skischuhe welche Größe“</p>
+<p>Im Erwachsenenbereich sollte der Abstand möglichst präzise passen, da sonst die Kraftübertragung leidet.</p>
+<hr>
+<h2>Häufiger Suchfehler</h2>
+<p>Manche suchen auch nach:</p>
+<ul>
+<li>
+<p>„24.8 mm Skischuhe welche Größe“</p>
 </li>
 </ul>
-<p data-start="3435" data-end="3521">Gemeint ist fast immer <strong data-start="3458" data-end="3468">248 mm</strong>.<br data-start="3469" data-end="3472">
+<p>Gemeint ist fast immer <strong>248 mm</strong>.<br>
 Die Sohlenlänge wird immer dreistellig angegeben.</p>
-<hr data-start="3523" data-end="3526">
-<h2 data-section-id="x8o1ad" data-start="3528" data-end="3536">Fazit</h2>
-<p data-start="3538" data-end="3592"><strong data-start="3538" data-end="3592">248 mm ist die Sohlenlänge – nicht die Schuhgröße.</strong></p>
-<p data-start="3594" data-end="3691">Sie deutet sehr wahrscheinlich auf einen <strong data-start="3635" data-end="3686">Skischuh im Bereich MP 23,0–24,0 (EU ca. 36–38)</strong> hin.</p>
-<p data-start="3693" data-end="3829">Für eine sichere Einordnung solltest du zusätzlich den <strong data-start="3748" data-end="3788">Mondopoint-Wert am Innenschuh prüfen</strong> oder einen kurzen Shell-Fit durchführen.</p>
+
+<hr>
+<h2>Fazit</h2>
+<p><strong>248 mm ist die Sohlenlänge – nicht die Schuhgröße.</strong></p>
+<p>Sie deutet sehr wahrscheinlich auf einen <strong>Skischuh im Bereich MP 23,0–24,0 (EU ca. 36–38)</strong> hin.</p>
+<p>Für eine sichere Einordnung solltest du zusätzlich den <strong>Mondopoint-Wert am Innenschuh prüfen</strong> oder einen kurzen Shell-Fit durchführen.</p>
+    
+    
     
     <aside class="product-soft-cta" aria-label="Skister">   <p>Ski- und Outdoor-Ausrüstung im Freundes- oder Familienkreis teilen statt jedes Mal neu kaufen?   <a href="/#download">Skister</a> hilft dir, Inventar und Übergaben in deinem privaten Netzwerk zu organisieren.</p> </aside>
     <aside class="related-posts-static" aria-label="Ähnliche Artikel">
@@ -255,7 +302,7 @@ Die Sohlenlänge wird immer dreistellig angegeben.</p>
       </div>
     </div>
   </article>
-  <footer class="article-footer"><p>Developed by SEMPROG</p></footer>
+  <footer class="article-footer"><p class="article-legal-links"><a href="../../privacy.html">Datenschutz</a> · <a href="../../terms.html">Nutzungsbedingungen</a> · <a href="../../impressum.html">Impressum</a></p><p>Developed by SEMPROG</p></footer>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","headline":"Skischuhe 248 mm – welche Größe steckt dahinter?","description":"Hier erfährst du, was 248 mm bedeutet, welchen Größenbereich du erwarten kannst und worauf du unbedingt achten solltest.","datePublished":"2026-03-11T21:08:13.853Z","dateModified":"2026-03-11T21:08:13.853Z","inLanguage":"de","mainEntityOfPage":{"@type":"WebPage","@id":"https://skister.app/blog/skischuhe-248-mm/"},"author":{"@type":"Organization","name":"Skister Team"},"publisher":{"@type":"Organization","name":"Skister","url":"https://skister.app/","logo":{"@type":"ImageObject","url":"https://skister.app/assets/skister-app-icon.png"}},"image":["https://images.surferseo.art/2f9a9df7-b58c-4625-ae4c-1e236ff73c7f.jpg"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://skister.app/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://skister.app/blog/"},{"@type":"ListItem","position":3,"name":"Skischuhe 248 mm – welche Größe steckt dahinter?","item":"https://skister.app/blog/skischuhe-248-mm/"}]}]}</script>
   <script src="../../assets/blog-article-client.js" defer></script>
   

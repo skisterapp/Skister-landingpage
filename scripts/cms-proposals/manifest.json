@@ -1,0 +1,20 @@
+{
+  "note": "Review-only CMS payloads. Apply in Supabase blog post `content` field. Do not deploy to production CMS without authorization.",
+  "fullBodyReplace": {
+    "skischuhe-236-mm": "skischuhe-236-mm.body.html"
+  },
+  "safetyBlockInsert": {
+    "file": "bsl-safety-block.html",
+    "markerId": "bsl-sicherheitshinweis",
+    "insertBeforeHeading": "Fazit",
+    "slugs": [
+      "skischuhe-220-mm",
+      "skischuhe-230-mm-welche-groesse",
+      "skischuhe-245-mm-welche-groesse",
+      "skischuhe-248-mm",
+      "skischuhe-185-mm-welche-groesse",
+      "skischuhe-205mm-welche-groesse"
+    ]
+  },
+  "safetyIncludedInFullReplace": ["skischuhe-236-mm"]
+}

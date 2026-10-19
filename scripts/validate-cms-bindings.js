@@ -3,6 +3,7 @@
 
 const fs = require('fs')
 const path = require('path')
+const vm = require('vm')
 
 const ROOT = path.join(__dirname, '..')
 const indexHtml = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8')
@@ -58,6 +59,19 @@ for (const key of legacy) {
 if (adminJs.indexOf('isLegacyCmsKey') === -1) {
   console.error('validate-cms-bindings: missing isLegacyCmsKey guard')
   failed = true
+}
+
+const translationsMatch = indexHtml.match(/const translations = (\{[\s\S]*?\n        \};)/)
+if (!translationsMatch) {
+  console.error('validate-cms-bindings: could not find translations object in index.html')
+  failed = true
+} else {
+  try {
+    vm.runInNewContext('const translations = ' + translationsMatch[1].replace(/;\s*$/, ''))
+  } catch (err) {
+    console.error('validate-cms-bindings: index.html translations object is invalid JS:', err.message)
+    failed = true
+  }
 }
 
 if (failed) process.exit(1)
