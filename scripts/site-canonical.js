@@ -14,6 +14,7 @@
     if (p.length > '/index.html'.length && p.slice(-'/index.html'.length) === '/index.html') {
       p = p.slice(0, -'/index.html'.length) || '/'
     }
+    if (/\.html$/i.test(p)) return p
     if (p.length > 1 && p.charAt(p.length - 1) !== '/') p += '/'
     return p
   }
