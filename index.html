@@ -790,10 +790,10 @@
         .hero-mascot {
             width: 10.5rem;
             height: 10.5rem;
-            object-fit: cover;
+            object-fit: contain;
             object-position: center;
             display: block;
-            border-radius: 50%;
+            border-radius: 0;
             background: transparent;
         }
         .hero-content {
@@ -4840,7 +4840,42 @@
             return 'de';
         })();
         const DEFAULT_HERO_IMAGE = '/assets/hero-mascot.png';
-        
+        const RETIRED_HERO_CDN_FRAGMENT = 'SkisterAppPro' + '227.png';
+
+        const shippedShellTranslationBaseline = (function () {
+            const prefixes = ['hero.', 'nav.'];
+            const langs = ['de', 'en', 'fr', 'es', 'it'];
+            const out = {};
+            langs.forEach(function (lang) {
+                out[lang] = {};
+                const src = translations[lang] || {};
+                Object.keys(src).forEach(function (key) {
+                    if (prefixes.some(function (prefix) { return key.indexOf(prefix) === 0; })) {
+                        out[lang][key] = src[key];
+                    }
+                });
+            });
+            return out;
+        })();
+
+        function sanitizeHeroMascotUrl(url) {
+            if (url == null || typeof url !== 'string') return DEFAULT_HERO_IMAGE;
+            const t = url.trim();
+            if (!t) return DEFAULT_HERO_IMAGE;
+            if (t.indexOf(RETIRED_HERO_CDN_FRAGMENT) !== -1 || t.indexOf('SkisterLogoWeb') !== -1) return DEFAULT_HERO_IMAGE;
+            if (t.indexOf('hero-mascot') !== -1 && t.indexOf('make-080ebf84-landing-images') !== -1) return DEFAULT_HERO_IMAGE;
+            if (t.indexOf('/assets/hero-mascot') !== -1) return DEFAULT_HERO_IMAGE;
+            return t;
+        }
+
+        function applyShippedShellTranslations() {
+            ['de', 'en', 'fr', 'es', 'it'].forEach(function (lang) {
+                const baseline = shippedShellTranslationBaseline[lang];
+                if (!baseline || !Object.keys(baseline).length) return;
+                translations[lang] = mergeTranslationOverrides(translations[lang] || {}, baseline);
+            });
+        }
+
         // Load landing content from API and merge with defaults
         function deepMerge(target, source) {
             const out = { ...target };
@@ -4865,8 +4900,8 @@
 
         function setHeroMascotSrc(url) {
             const el = document.getElementById('hero-mascot');
-            if (!el || !url) return;
-            const next = String(url).trim();
+            if (!el) return;
+            const next = sanitizeHeroMascotUrl(url);
             if (!next) return;
             // Avoid reassigning the same URL — that causes a visible flash/reload.
             if (el.getAttribute('src') === next || el.currentSrc === next) return;
@@ -4905,6 +4940,8 @@
                     if (slide) slide.src = imageUrl;
                 });
             }
+            applyShippedShellTranslations();
+            setHeroMascotSrc(DEFAULT_HERO_IMAGE);
             changeLanguage(currentLang);
         }
 
@@ -5027,18 +5064,10 @@
                     || key === 'faq.a2'
                     || key === 'download.subtitle';
             }
-            /** Git-shipped brand assets override stale CMS hero URLs (e.g. retired CDN). */
+            /** Git-shipped hero mascot always wins over CMS (broken or retired CDN URLs). */
             function applyShippedBrandingAssets() {
-                return fetch('data/landing-content.json', { cache: 'no-store' })
-                    .then(function (res) { return res.ok ? res.json() : null; })
-                    .then(function (snapshot) {
-                        if (!snapshot || !snapshot.images) return;
-                        const hero = snapshot.images.heroMascot || snapshot.images.heroMascotUrl;
-                        if (hero && String(hero).startsWith('/assets/')) {
-                            applyLandingContent({ images: { heroMascot: hero } });
-                        }
-                    })
-                    .catch(function () {});
+                setHeroMascotSrc(DEFAULT_HERO_IMAGE);
+                return Promise.resolve();
             }
             /** Keep git-shipped product feature copy ahead of stale CMS overrides. */
             function applyShippedProductCopy() {
