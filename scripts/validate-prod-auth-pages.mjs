@@ -10,8 +10,11 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
 const required = [
   'verify-email/index.html',
   'login/index.html',
+  'assets/brand-tokens.css',
+  'assets/skister-logo-white.png',
   'assets/skister-prod-auth-core.mjs',
   'assets/skister-prod-auth-shared.mjs',
+  'assets/skister-prod-auth-i18n.mjs',
   'assets/skister-prod-auth-verify.mjs',
   'assets/skister-prod-auth-login.mjs',
   'assets/skister-auth-pages.css',

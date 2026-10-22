@@ -4,7 +4,6 @@ import {
   isEmailNotConfirmedError,
   isEmailVerifiedUser,
   isRecoverySession,
-  safeErrorMessage,
   stashPendingVerifyEmail,
   stripAuthParamsFromUrl,
 } from './skister-prod-auth-core.mjs'
@@ -14,6 +13,12 @@ import {
   getProdSupabase,
   openSkisterApp,
 } from './skister-prod-auth-shared.mjs'
+import {
+  applyAuthPageStaticI18n,
+  authMsg,
+  authStatic,
+  localizedAuthError,
+} from './skister-prod-auth-i18n.mjs'
 
 function showAlert(root, message) {
   const alert = root.querySelector('#alert')
@@ -24,7 +29,7 @@ function showAlert(root, message) {
     return
   }
   alert.hidden = false
-  alert.textContent = safeErrorMessage(message)
+  alert.textContent = localizedAuthError(message)
 }
 
 function setRecoveryMode(root, enabled) {
@@ -39,8 +44,8 @@ function setRecoveryMode(root, enabled) {
   if (recoveryPanel) recoveryPanel.hidden = !enabled
   if (subtitle) {
     subtitle.textContent = enabled
-      ? 'Choose a new password for your Skister account.'
-      : 'Sign in on the web or open the Skister app on your phone.'
+      ? authStatic('login.recoverySubtitle')
+      : authStatic('login.subtitle')
   }
   if (enabled) {
     root.dataset.recoveryActive = '1'
@@ -55,14 +60,13 @@ function showSignedInPanel(root, signInPanel) {
   if (signedIn) {
     signedIn.hidden = false
     const hint = signedIn.querySelector('#signed-in-hint')
-    if (hint) {
-      hint.textContent =
-        'You are signed in on this browser only. Open the Skister app and sign in there to use your account on your phone.'
-    }
+    if (hint) hint.textContent = authMsg('loginSignedInHint')
   }
 }
 
 export async function initLoginPage() {
+  applyAuthPageStaticI18n()
+
   const root = document.querySelector('[data-skister-login]')
   if (!root) return
 
@@ -110,8 +114,7 @@ export async function initLoginPage() {
     if (callbackKind === 'recovery_invalid' || callbackKind === 'exchange_failed') {
       showAlert(
         root,
-        exchange.error?.message ||
-          'This reset link is invalid, expired, or was already used. Request a new reset email.',
+        exchange.error?.message || authMsg('loginResetInvalid'),
       )
       if (forgotPanel) forgotPanel.hidden = false
       if (signInPanel) signInPanel.hidden = true
@@ -138,7 +141,7 @@ export async function initLoginPage() {
       hasSession: Boolean(initialSession),
     })
     if (callbackKind === 'recovery_invalid') {
-      showAlert(root, 'This reset link is invalid or expired. Request a new reset email.')
+      showAlert(root, authMsg('loginResetInvalidShort'))
       setRecoveryMode(root, false)
       if (forgotPanel) forgotPanel.hidden = false
       if (signInPanel) signInPanel.hidden = true
@@ -171,7 +174,7 @@ export async function initLoginPage() {
       const email = root.querySelector('#email')?.value?.trim() || ''
       const password = root.querySelector('#password')?.value || ''
       if (!email || !password) {
-        showAlert(root, 'Email and password are required.')
+        showAlert(root, authMsg('loginCredentialsRequired'))
         return
       }
       const submit = signInForm.querySelector('button[type="submit"]')
@@ -197,7 +200,7 @@ export async function initLoginPage() {
         }
         window.location.reload()
       } catch {
-        showAlert(root, 'Network error. Try again.')
+        showAlert(root, authMsg('loginNetwork'))
       } finally {
         if (submit) submit.disabled = false
       }
@@ -210,7 +213,7 @@ export async function initLoginPage() {
       showAlert(root, null)
       const email = root.querySelector('#forgot-email')?.value?.trim() || ''
       if (!email) {
-        showAlert(root, 'Enter your email address.')
+        showAlert(root, authMsg('loginEnterEmail'))
         return
       }
       const submit = forgotForm.querySelector('button[type="submit"]')
@@ -226,10 +229,10 @@ export async function initLoginPage() {
         const info = root.querySelector('#forgot-sent')
         if (info) {
           info.hidden = false
-          info.textContent = 'If an account exists for this email, we sent a reset link.'
+          info.textContent = authMsg('loginForgotSent')
         }
       } catch {
-        showAlert(root, 'Network error. Try again.')
+        showAlert(root, authMsg('loginNetwork'))
       } finally {
         if (submit) submit.disabled = false
       }
@@ -241,21 +244,21 @@ export async function initLoginPage() {
       e.preventDefault()
       showAlert(root, null)
       if (root.dataset.recoveryActive !== '1') {
-        showAlert(root, 'Open the password reset link from your email to set a new password.')
+        showAlert(root, authMsg('loginOpenResetLink'))
         return
       }
       const pw = root.querySelector('#new-password')?.value || ''
       const confirm = root.querySelector('#confirm-password')?.value || ''
       if (!pw || !confirm) {
-        showAlert(root, 'Enter and confirm your new password.')
+        showAlert(root, authMsg('loginPasswordConfirm'))
         return
       }
       if (pw.length < 6) {
-        showAlert(root, 'Password must be at least 6 characters.')
+        showAlert(root, authMsg('loginPasswordMin'))
         return
       }
       if (pw !== confirm) {
-        showAlert(root, 'Passwords do not match.')
+        showAlert(root, authMsg('loginPasswordMismatch'))
         return
       }
       const submit = recoveryForm.querySelector('button[type="submit"]')
@@ -265,7 +268,7 @@ export async function initLoginPage() {
           data: { session },
         } = await supabase.auth.getSession()
         if (!session) {
-          showAlert(root, 'This reset session expired. Request a new reset email.')
+          showAlert(root, authMsg('loginResetExpired'))
           setRecoveryMode(root, false)
           if (forgotPanel) forgotPanel.hidden = false
           return
@@ -280,11 +283,11 @@ export async function initLoginPage() {
         const info = root.querySelector('#recovery-done')
         if (info) {
           info.hidden = false
-          info.textContent = 'Password updated. You can sign in in the Skister app or below.'
+          info.textContent = authMsg('loginPasswordUpdated')
         }
         if (signInPanel) signInPanel.hidden = false
       } catch {
-        showAlert(root, 'Network error. Try again.')
+        showAlert(root, authMsg('loginNetwork'))
       } finally {
         if (submit) submit.disabled = false
       }

@@ -1,6 +1,13 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import {
+  authMsg,
+  authStatic,
+  getVerifyViewCopy,
+  localizedAuthError,
+  resolveAuthLang,
+} from '../assets/skister-prod-auth-i18n.mjs'
+import {
   buildSkisterAppOpenDestination,
   classifyLoginCallback,
   classifyVerifyError,
@@ -82,6 +89,44 @@ describe('PKCE recovery callback classification', () => {
       }),
       'recovery_invalid',
     )
+  })
+})
+
+describe('auth page localization', () => {
+  it('defaults to German when preference is unset', () => {
+    assert.equal(resolveAuthLang(null), 'de')
+    assert.equal(resolveAuthLang('fr'), 'de')
+    assert.equal(authStatic('login.title', 'de'), 'Anmelden')
+    assert.equal(getVerifyViewCopy('pending', {}, 'de').title, 'E-Mail bestätigen')
+  })
+
+  it('uses English when skister-lang is en', () => {
+    assert.equal(resolveAuthLang('en'), 'en')
+    assert.equal(authStatic('login.title', 'en'), 'Sign in')
+    assert.equal(getVerifyViewCopy('success', {}, 'en').title, 'Email verified')
+    assert.equal(getVerifyViewCopy('expired', {}, 'en').title, 'Link expired')
+  })
+
+  it('localizes dynamic login and verify messages', () => {
+    assert.equal(authMsg('loginPasswordUpdated', 'de'), 'Passwort aktualisiert. Du kannst dich in der Skister-App oder unten anmelden.')
+    assert.equal(authMsg('verifyResendSent', 'en'), 'Verification email sent.')
+    assert.equal(
+      localizedAuthError('Invalid login credentials', 'de'),
+      'E-Mail oder Passwort ist falsch.',
+    )
+    assert.equal(
+      localizedAuthError('eyJhbGciOiJIUzI1NiJ9.abc.def', 'en'),
+      'Authentication link invalid or expired.',
+    )
+  })
+
+  it('verify pending body stays single language with email', () => {
+    const de = getVerifyViewCopy('pending', { email: 'a@b.de' }, 'de').body
+    const en = getVerifyViewCopy('pending', { email: 'a@b.de' }, 'en').body
+    assert.match(de, /a@b\.de/)
+    assert.match(en, /a@b\.de/)
+    assert.doesNotMatch(de, /Confirm your email/)
+    assert.doesNotMatch(en, /E-Mail bestätigen/)
   })
 })
 

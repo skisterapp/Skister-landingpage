@@ -1,54 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <script src="/scripts/site-canonical.js"></script>
   <meta name="robots" content="noindex,nofollow">
-  <meta name="theme-color" content="#00AF64">
+  <meta name="theme-color" content="#00af64">
   <link rel="canonical" href="https://skister.app/verify-email">
-  <title>Skister — Verify email</title>
-  <link rel="icon" href="/favicon.ico?v=20261011" sizes="any">
+  <title>Skister — E-Mail bestätigen</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/brand-tokens.css">
   <link rel="stylesheet" href="/assets/skister-auth-pages.css">
 </head>
-<body>
-  <main class="card" role="main" data-skister-verify>
-    <div class="icon" id="icon" aria-hidden="true">✉️</div>
-    <h1 id="title">Confirm your email</h1>
-    <p class="lead" id="body">Check your inbox for the verification link from Skister.</p>
-    <p class="status" id="status" role="status" aria-live="polite"></p>
-    <div class="alert" id="alert" role="alert" hidden></div>
+<body class="auth-page">
+  <header class="auth-header">
+    <a href="/" aria-label="Skister Startseite">
+      <img
+        class="auth-logo"
+        src="/assets/skister-logo-white.png"
+        alt="Skister"
+        width="1287"
+        height="337"
+        decoding="async"
+      >
+    </a>
+  </header>
+  <div class="auth-main">
+    <main class="auth-card" role="main" data-skister-verify>
+      <div class="auth-status-icon" id="icon" aria-hidden="true">✉️</div>
+      <h1 id="title" data-auth-i18n="verify.title">E-Mail bestätigen</h1>
+      <p class="lead" id="body" data-auth-i18n="verify.lead">Prüfe dein Postfach auf den Bestätigungslink von Skister.</p>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+      <div class="alert" id="alert" role="alert" hidden></div>
 
-    <div id="panel-pending">
-      <label for="email">Email</label>
-      <input id="email" name="email" type="email" autocomplete="email" inputmode="email">
-      <div class="stack">
-        <button type="button" class="btn btn-primary" id="resend">Resend verification email</button>
-        <button type="button" class="btn-link" id="toggle-change">Wrong email? Change it before verifying</button>
+      <div id="panel-pending">
+        <label for="email" data-auth-i18n="verify.emailLabel">E-Mail</label>
+        <input id="email" name="email" type="email" autocomplete="email" inputmode="email" data-auth-i18n-placeholder="verify.emailPlaceholder" placeholder="deine@email.de">
+        <div class="stack">
+          <button type="button" class="btn btn-primary skister-btn-primary" id="resend" data-auth-i18n="verify.resend">Bestätigungsmail erneut senden</button>
+          <button type="button" class="btn-link" id="toggle-change" data-auth-i18n="verify.changeEmail">Falsche E-Mail? Vor der Bestätigung ändern</button>
+        </div>
       </div>
-    </div>
 
-    <form id="change-form" class="stack" hidden>
-      <p class="subtitle">Enter your signup password to update the pending address.</p>
-      <label for="new-email">New email</label>
-      <input id="new-email" name="new-email" type="email" autocomplete="email">
-      <label for="change-password">Password</label>
-      <input id="change-password" name="change-password" type="password" autocomplete="current-password">
-      <button type="submit" class="btn btn-secondary">Update email</button>
-    </form>
+      <form id="change-form" class="stack" hidden>
+        <p class="subtitle" data-auth-i18n="verify.changeHint">Gib dein Registrierungs-Passwort ein, um die ausstehende Adresse zu aktualisieren.</p>
+        <label for="new-email" data-auth-i18n="verify.newEmailLabel">Neue E-Mail</label>
+        <input id="new-email" name="new-email" type="email" autocomplete="email">
+        <label for="change-password" data-auth-i18n="verify.passwordLabel">Passwort</label>
+        <input id="change-password" name="change-password" type="password" autocomplete="current-password">
+        <button type="submit" class="btn btn-secondary" data-auth-i18n="verify.updateEmail">E-Mail aktualisieren</button>
+      </form>
 
-    <div id="panel-success" hidden>
-      <div class="stack">
-        <button type="button" class="btn btn-primary" id="open-app">Open Skister app</button>
-        <a class="btn btn-secondary" id="sign-in" href="/login/">Sign in on the web</a>
+      <div id="panel-success" hidden>
+        <div class="stack">
+          <button type="button" class="btn btn-primary skister-btn-primary" id="open-app" data-auth-i18n="verify.openApp">Skister-App öffnen</button>
+          <a class="btn btn-secondary" id="sign-in" href="/login/" data-auth-i18n="verify.signInWeb">Im Browser anmelden</a>
+        </div>
+        <p class="auth-note" data-auth-i18n="verify.appNote">
+          Die Bestätigung im Browser meldet dich nicht automatisch in der App an. Melde dich dort mit derselben E-Mail und deinem Passwort an.
+        </p>
       </div>
-      <p class="subtitle" style="margin-top: 1rem;">
-        Browser verification does not sign you into the mobile app automatically. Use the same email and password in the app.
-      </p>
-    </div>
 
-    <a class="home-link" href="/">Back to skister.app</a>
-  </main>
+      <a class="auth-footer" href="/" data-auth-i18n="common.backHome">Zurück zu skister.app</a>
+    </main>
+  </div>
   <script type="module">
     import { initVerifyEmailPage } from '/assets/skister-prod-auth-verify.mjs'
     initVerifyEmailPage()

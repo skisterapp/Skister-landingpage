@@ -5,7 +5,6 @@ import {
   clearPendingVerifyEmail,
   isEmailVerifiedUser,
   peekPendingVerifyEmail,
-  safeErrorMessage,
   stashPendingVerifyEmail,
   stripAuthParamsFromUrl,
 } from './skister-prod-auth-core.mjs'
@@ -14,6 +13,12 @@ import {
   peekPendingReferralCode,
 } from './skister-prod-auth-core.mjs'
 import { applyReferralAfterAuth, getProdSupabase, openSkisterApp } from './skister-prod-auth-shared.mjs'
+import {
+  applyAuthPageStaticI18n,
+  authMsg,
+  getVerifyViewCopy,
+  localizedAuthError,
+} from './skister-prod-auth-i18n.mjs'
 
 /** @type {boolean} */
 let referralAppliedOnPage = false
@@ -39,48 +44,14 @@ function setView(root, view, detail) {
   const alert = root.querySelector('#alert')
   const status = root.querySelector('#status')
 
-  const copy = {
-    loading: {
-      title: 'Verifying your email',
-      body: 'Please wait while we confirm your address…',
-      icon: '⏳',
-    },
-    pending: {
-      title: 'Confirm your email',
-      body: detail?.email
-        ? `We sent a link to ${detail.email}. Open it on this device to finish signup.`
-        : 'Check your inbox for the verification link from Skister.',
-      icon: '✉️',
-    },
-    success: {
-      title: 'Email verified',
-      body:
-        'Your email is confirmed. Open the Skister app and sign in with your password to continue. ' +
-        'Signing in here does not automatically sign you into the mobile app.',
-      icon: '✓',
-    },
-    already: {
-      title: 'Already verified',
-      body: 'This email is already confirmed. You can sign in in the Skister app.',
-      icon: '✓',
-    },
-    expired: {
-      title: 'Link expired',
-      body: 'This verification link is no longer valid. Request a new email below.',
-      icon: '!',
-    },
-    failed: {
-      title: 'Verification failed',
-      body: 'We could not verify this link. Request a new email or contact support@skister.app.',
-      icon: '!',
-    },
-  }
-
-  const c = copy[view] || copy.failed
+  const c = getVerifyViewCopy(view, { email: detail?.email })
   if (title) title.textContent = c.title
   if (body) body.textContent = c.body
   if (icon) icon.textContent = c.icon
-  if (status) status.textContent = view === 'loading' ? 'Working…' : detail?.status || ''
+  if (status) {
+    if (view === 'loading') status.textContent = c.status || ''
+    else status.textContent = detail?.status || ''
+  }
 
   const showPending = view === 'pending' || view === 'expired' || view === 'failed'
   if (panelPending) panelPending.hidden = !showPending
@@ -90,12 +61,18 @@ function setView(root, view, detail) {
   if (alert) {
     if (detail?.error && view !== 'loading') {
       alert.hidden = false
-      alert.textContent = safeErrorMessage(detail.error)
+      alert.textContent = localizedAuthError(detail.error)
     } else {
       alert.hidden = true
       alert.textContent = ''
     }
   }
+}
+
+function referralStatusAfterApply(hadCodeBefore) {
+  if (referralAppliedOnPage) return authMsg('referralApplied')
+  if (hadCodeBefore && peekPendingReferralCode()) return authMsg('referralNotApplied')
+  return ''
 }
 
 async function runVerification(root, supabase, params) {
@@ -128,13 +105,15 @@ async function runVerification(root, supabase, params) {
       data: { session },
     } = await supabase.auth.getSession()
 
+    const hadReferral = Boolean(peekPendingReferralCode())
     if (session?.access_token) {
       const applyResult = await applyReferralAfterAuth(session.access_token)
       if (applyResult.referralCleared && applyResult.ok) referralAppliedOnPage = true
     }
 
     clearPendingVerifyEmail()
-    setView(root, user && isEmailVerifiedUser(user) ? 'success' : 'success', {})
+    const status = referralStatusAfterApply(hadReferral)
+    setView(root, user && isEmailVerifiedUser(user) ? 'success' : 'success', { status })
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
     stripAuthParamsFromUrl('/verify-email/')
@@ -143,6 +122,8 @@ async function runVerification(root, supabase, params) {
 }
 
 export async function initVerifyEmailPage() {
+  applyAuthPageStaticI18n()
+
   const root = document.querySelector('[data-skister-verify]')
   if (!root) return
 
@@ -175,7 +156,7 @@ export async function initVerifyEmailPage() {
     resendBtn.addEventListener('click', async () => {
       const value = (emailInput && emailInput.value.trim()) || email
       if (!value) {
-        setView(root, 'pending', { email: '', error: 'Enter your email address.' })
+        setView(root, 'pending', { email: '', error: authMsg('verifyEnterEmail') })
         return
       }
       resendBtn.disabled = true
@@ -194,7 +175,10 @@ export async function initVerifyEmailPage() {
         })
         const data = await res.json().catch(() => ({}))
         if (!res.ok) {
-          setView(root, 'pending', { email: value, error: data.error || 'Could not resend email.' })
+          setView(root, 'pending', {
+            email: value,
+            error: data.error || authMsg('verifyResendFailed'),
+          })
           return
         }
         if (data.alreadyVerified) {
@@ -202,9 +186,9 @@ export async function initVerifyEmailPage() {
           return
         }
         stashPendingVerifyEmail(value)
-        setView(root, 'pending', { email: value, status: 'Verification email sent.' })
+        setView(root, 'pending', { email: value, status: authMsg('verifyResendSent') })
       } catch {
-        setView(root, 'pending', { email: value, error: 'Network error. Try again.' })
+        setView(root, 'pending', { email: value, error: authMsg('verifyNetwork') })
       } finally {
         resendBtn.disabled = false
       }
@@ -221,7 +205,7 @@ export async function initVerifyEmailPage() {
       const newEmail = root.querySelector('#new-email')?.value?.trim() || ''
       const password = root.querySelector('#change-password')?.value || ''
       if (!current || !newEmail || !password) {
-        setView(root, 'pending', { email: current, error: 'All fields are required.' })
+        setView(root, 'pending', { email: current, error: authMsg('verifyAllFields') })
         return
       }
       try {
@@ -240,15 +224,18 @@ export async function initVerifyEmailPage() {
         })
         const data = await res.json().catch(() => ({}))
         if (!res.ok) {
-          setView(root, 'pending', { email: current, error: data.error || 'Could not change email.' })
+          setView(root, 'pending', {
+            email: current,
+            error: data.error || authMsg('verifyChangeFailed'),
+          })
           return
         }
         if (emailInput) emailInput.value = newEmail.toLowerCase()
         stashPendingVerifyEmail(newEmail)
         changeForm.hidden = true
-        setView(root, 'pending', { email: newEmail, status: 'Email updated. Check your inbox for the new link.' })
+        setView(root, 'pending', { email: newEmail, status: authMsg('verifyEmailUpdated') })
       } catch {
-        setView(root, 'pending', { email: current, error: 'Network error. Try again.' })
+        setView(root, 'pending', { email: current, error: authMsg('verifyNetwork') })
       }
     })
   }
@@ -280,12 +267,13 @@ export async function initVerifyEmailPage() {
       } = await supabase.auth.getSession()
       stripAuthParamsFromUrl('/verify-email/')
       if (error || !session) throw error || new Error('Invalid verification link')
+      const hadReferral = Boolean(peekPendingReferralCode())
       if (session.access_token) {
         const applyResult = await applyReferralAfterAuth(session.access_token)
         if (applyResult.referralCleared && applyResult.ok) referralAppliedOnPage = true
       }
       clearPendingVerifyEmail()
-      setView(root, 'success', {})
+      setView(root, 'success', { status: referralStatusAfterApply(hadReferral) })
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err)
       setView(root, classifyVerifyError(msg), { error: msg })
