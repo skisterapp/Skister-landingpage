@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <script src="/scripts/site-canonical.js"></script>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#00AF64">
+  <link rel="canonical" href="https://skister.app/login">
+  <title>Skister — Sign in</title>
+  <link rel="icon" href="/favicon.ico?v=20261011" sizes="any">
+  <link rel="stylesheet" href="/assets/skister-auth-pages.css">
+</head>
+<body>
+  <main class="card" role="main" data-skister-login>
+    <h1>Skister</h1>
+    <p class="subtitle" id="subtitle">Sign in on the web or open the Skister app on your phone.</p>
+    <div class="alert" id="alert" role="alert" hidden></div>
+
+    <div id="panel-signed-in" hidden>
+      <div class="info" id="signed-in-hint"></div>
+      <div class="stack">
+        <button type="button" class="btn btn-primary" id="open-app">Open Skister app</button>
+        <button type="button" class="btn btn-secondary" id="sign-out">Sign out on this browser</button>
+      </div>
+    </div>
+
+    <div id="panel-signin">
+      <form id="signin-form" class="stack">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+        <button type="submit" class="btn btn-primary">Sign in</button>
+        <button type="button" class="btn-link" id="forgot-toggle">Forgot password?</button>
+      </form>
+    </div>
+
+    <div id="panel-forgot" hidden>
+      <form id="forgot-form" class="stack">
+        <p class="subtitle">We will email a secure reset link (valid for a limited time).</p>
+        <label for="forgot-email">Email</label>
+        <input id="forgot-email" name="forgot-email" type="email" autocomplete="email" required>
+        <button type="submit" class="btn btn-primary">Send reset link</button>
+        <button type="button" class="btn-link" id="forgot-back">Back to sign in</button>
+      </form>
+      <p class="info" id="forgot-sent" hidden role="status"></p>
+    </div>
+
+    <div id="panel-recovery" hidden>
+      <form id="recovery-form" class="stack">
+        <label for="new-password">New password</label>
+        <input id="new-password" name="new-password" type="password" autocomplete="new-password" minlength="6" required>
+        <label for="confirm-password">Confirm password</label>
+        <input id="confirm-password" name="confirm-password" type="password" autocomplete="new-password" minlength="6" required>
+        <button type="submit" class="btn btn-primary">Save new password</button>
+      </form>
+      <p class="info" id="recovery-done" hidden role="status"></p>
+    </div>
+
+    <a class="home-link" href="/">Back to skister.app</a>
+  </main>
+  <script type="module">
+    import { initLoginPage } from '/assets/skister-prod-auth-login.mjs'
+    initLoginPage()
+  </script>
+</body>
+</html>
