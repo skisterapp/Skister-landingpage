@@ -31,6 +31,7 @@ export function safeErrorMessage(raw) {
   const trimmed = raw.trim()
   if (!trimmed) return 'Something went wrong. Please try again.'
   if (/eyJ[A-Za-z0-9_-]{10,}/.test(trimmed)) return 'Authentication link invalid or expired.'
+  if (/code verifier|pkce|token_hash/i.test(trimmed)) return 'Authentication link invalid or expired.'
   if (trimmed.length > 240) return `${trimmed.slice(0, 240)}…`
   return trimmed
 }
@@ -181,6 +182,55 @@ export function consumePendingReferralCode() {
 /** @param {string | null | undefined} event */
 export function isPasswordRecoveryAuthEvent(event) {
   return event === 'PASSWORD_RECOVERY'
+}
+
+/**
+ * Recovery links opened from email. token_hash is cross-browser; a PKCE code is not.
+ * @param {string} search
+ * @param {string} hash
+ */
+export function parseRecoveryLink(search, hash) {
+  const params = new URLSearchParams(String(search || '').replace(/^\?/, ''))
+  const hashParams = new URLSearchParams(String(hash || '').replace(/^#/, ''))
+  const type = params.get('type') || hashParams.get('type')
+  const tokenHash = params.get('token_hash') || hashParams.get('token_hash')
+  if (type === 'recovery' && tokenHash) return { kind: 'token_hash', tokenHash }
+  if (type === 'recovery' && hashParams.get('access_token')) return { kind: 'implicit', tokenHash: null }
+  if (type === 'recovery') return { kind: 'implicit', tokenHash: null }
+  if (params.get('code')) return { kind: 'pkce_code', tokenHash: null }
+  return { kind: 'none', tokenHash: null }
+}
+
+/** @param {string | null | undefined} message */
+export function isPkceVerifierError(message) {
+  return /code verifier|pkce/i.test(message || '')
+}
+
+/**
+ * Password replacement after a recovery session. Does not return the raw API error.
+ * @param {boolean} hasSession
+ * @param {string | null | undefined} updateError
+ * @returns {{ screen: 'request_new_link' | 'set_password' | 'sign_in', alertKey: string | null, doneKey: string | null }}
+ */
+export function passwordUpdateOutcome(hasSession, updateError) {
+  if (!hasSession) return { screen: 'request_new_link', alertKey: 'loginResetExpired', doneKey: null }
+  if (updateError) return { screen: 'set_password', alertKey: 'errorGeneric', doneKey: null }
+  return { screen: 'sign_in', alertKey: null, doneKey: 'loginPasswordUpdated' }
+}
+
+/**
+ * @param {'token_hash' | 'implicit' | 'pkce_code' | 'none'} kind
+ * @param {string | null} exchangeError
+ * @param {boolean} hasSession
+ * @returns {'set_password' | 'request_new_link' | 'sign_in'}
+ */
+export function recoveryScreenForLink(kind, exchangeError, hasSession) {
+  if (kind === 'token_hash' && hasSession && !exchangeError) return 'set_password'
+  if (kind === 'implicit' && !exchangeError) return 'set_password'
+  if (kind === 'token_hash' || kind === 'implicit') return 'request_new_link'
+  if (kind === 'pkce_code' && hasSession && !exchangeError) return 'set_password'
+  if (kind === 'pkce_code') return 'request_new_link'
+  return 'sign_in'
 }
 
 /**

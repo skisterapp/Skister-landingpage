@@ -3,7 +3,10 @@ import {
   hashParams,
   isEmailNotConfirmedError,
   isEmailVerifiedUser,
-  isRecoverySession,
+  isPkceVerifierError,
+  parseRecoveryLink,
+  passwordUpdateOutcome,
+  recoveryScreenForLink,
   stashPendingVerifyEmail,
   stripAuthParamsFromUrl,
 } from './skister-prod-auth-core.mjs'
@@ -94,12 +97,33 @@ export async function initLoginPage() {
     stripAuthParamsFromUrl('/login/')
   }
 
-  const recoveryFromUrl = isRecoverySession(params, hash)
+  const parsedRecovery = parseRecoveryLink(window.location.search, window.location.hash || '')
+  const recoveryFromUrl = parsedRecovery.kind === 'token_hash' || parsedRecovery.kind === 'implicit'
   let isRecoveryFlow = recoveryFromUrl
   let initialSession = null
+  let recoveryVerifyFailed = false
 
-  const code = params.get('code')
-  const recoveryTypeHint = params.get('type') === 'recovery'
+  if (parsedRecovery.kind === 'token_hash' && parsedRecovery.tokenHash) {
+    const { data, error } = await supabase.auth.verifyOtp({
+      token_hash: parsedRecovery.tokenHash,
+      type: 'recovery',
+    })
+    stripAuthParamsFromUrl('/login/')
+    initialSession = data?.session ?? null
+    const screen = recoveryScreenForLink('token_hash', error?.message || null, Boolean(initialSession))
+    if (screen === 'set_password') {
+      isRecoveryFlow = true
+    } else {
+      showAlert(root, authMsg('loginResetInvalidShort'))
+      isRecoveryFlow = false
+      recoveryVerifyFailed = true
+      if (forgotPanel) forgotPanel.hidden = false
+      if (signInPanel) signInPanel.hidden = true
+    }
+  }
+
+  const code = parsedRecovery.kind === 'token_hash' ? null : params.get('code')
+  const recoveryTypeHint = params.get('type') === 'recovery' || hash.get('type') === 'recovery'
   if (code) {
     const exchange = await exchangeLoginPkceCode(supabase, code)
     stripAuthParamsFromUrl('/login/')
@@ -111,17 +135,18 @@ export async function initLoginPage() {
       hasSession: Boolean(initialSession),
     })
 
-    if (callbackKind === 'recovery_invalid' || callbackKind === 'exchange_failed') {
-      showAlert(
-        root,
-        exchange.error?.message || authMsg('loginResetInvalid'),
-      )
+    if (
+      isPkceVerifierError(exchange.error?.message) ||
+      callbackKind === 'recovery_invalid' ||
+      callbackKind === 'exchange_failed'
+    ) {
+      showAlert(root, authMsg('loginResetInvalidShort'))
       if (forgotPanel) forgotPanel.hidden = false
       if (signInPanel) signInPanel.hidden = true
     } else if (exchange.isRecovery || (recoveryTypeHint && initialSession)) {
       isRecoveryFlow = true
     }
-  } else {
+  } else if (!recoveryVerifyFailed) {
     const {
       data: { session },
     } = await supabase.auth.getSession()
@@ -268,14 +293,16 @@ export async function initLoginPage() {
           data: { session },
         } = await supabase.auth.getSession()
         if (!session) {
-          showAlert(root, authMsg('loginResetExpired'))
+          const expired = passwordUpdateOutcome(false, null)
+          showAlert(root, authMsg(expired.alertKey))
           setRecoveryMode(root, false)
           if (forgotPanel) forgotPanel.hidden = false
           return
         }
         const { error } = await supabase.auth.updateUser({ password: pw })
-        if (error) {
-          showAlert(root, error.message)
+        const outcome = passwordUpdateOutcome(true, error?.message || null)
+        if (outcome.screen === 'set_password') {
+          showAlert(root, authMsg(outcome.alertKey))
           return
         }
         stripAuthParamsFromUrl('/login/')
@@ -283,7 +310,7 @@ export async function initLoginPage() {
         const info = root.querySelector('#recovery-done')
         if (info) {
           info.hidden = false
-          info.textContent = authMsg('loginPasswordUpdated')
+          info.textContent = authMsg(outcome.doneKey)
         }
         if (signInPanel) signInPanel.hidden = false
       } catch {

@@ -296,6 +296,7 @@ const SUPABASE_ERROR_MAP = [
   { match: (s) => /invalid login credentials/i.test(s), key: 'errorInvalidCredentials' },
   { match: (s) => /email not confirmed/i.test(s), key: 'errorEmailNotConfirmed' },
   { match: (s) => /email link expired|otp_expired/i.test(s), key: 'errorAuthLink' },
+  { match: (s) => /code verifier|pkce/i.test(s), key: 'loginResetInvalidShort' },
   { match: (s) => /invalid verification link|missing verification token/i.test(s), key: 'verifyInvalidLink' },
 ]
 
