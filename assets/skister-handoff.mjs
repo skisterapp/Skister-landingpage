@@ -1,6 +1,13 @@
 import { EDGE_BASE, SUPABASE_ANON_KEY } from './skister-prod-auth-core.mjs'
 import { getProdSupabase } from './skister-prod-auth-shared.mjs'
 
+export function formatHandoffPin(raw) {
+  const pin = String(raw ?? '').replace(/\D/g, '').slice(0, 8)
+  if (pin.length <= 3) return pin
+  if (pin.length <= 6) return `${pin.slice(0, 3)} ${pin.slice(3)}`
+  return `${pin.slice(0, 3)} ${pin.slice(3, 6)} ${pin.slice(6)}`
+}
+
 export function handoffPhaseForRental(rental, userId) {
   if (!rental || !userId) return null
   if (rental.ownerId !== userId && rental.borrowerId !== userId) return null
@@ -49,6 +56,16 @@ export async function loadHandoffRentals(fetchImpl, token, userId) {
   return mergeOwnRentals(owned, borrowed, userId)
 }
 
+export async function resolveHandoffPin(fetchImpl, token, pin) {
+  const response = await fetchImpl(`${EDGE_BASE}/handoff/pin/resolve`, {
+    method: 'POST',
+    headers: { ...authHeaders(token), 'content-type': 'application/json' },
+    body: JSON.stringify({ pin: String(pin).replace(/\D/g, '') }),
+  })
+  const body = await response.json().catch(() => ({}))
+  return { status: response.status, body }
+}
+
 export async function confirmHandoff(fetchImpl, token, rentalId, phase) {
   const response = await fetchImpl(`${EDGE_BASE}/rentals/${rentalId}/party-confirm`, {
     method: 'POST',
@@ -71,6 +88,11 @@ function renderRentals(root, rentals, userId, onConfirm) {
   const list = root.querySelector('#handoff-list')
   const signIn = root.querySelector('#handoff-signin')
   if (signIn) signIn.hidden = true
+  const codeForm = root.querySelector('#handoff-code-form')
+  if (codeForm) {
+    codeForm.hidden = false
+    bindHandoffCodeForm(root, codeForm, supabase)
+  }
   if (!list) return
   list.hidden = false
   list.replaceChildren()
@@ -98,6 +120,58 @@ function renderRentals(root, rentals, userId, onConfirm) {
     item.append(title, meta, button)
     list.append(item)
   }
+}
+
+function bindHandoffCodeForm(root, form, supabase) {
+  if (form.dataset.bound === '1') return
+  form.dataset.bound = '1'
+  const input = form.querySelector('#handoff-code')
+  input?.addEventListener('input', () => {
+    input.value = formatHandoffPin(input.value)
+  })
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    const pin = input?.value ?? ''
+    if (pin.replace(/\D/g, '').length !== 8) {
+      setStatus(root, 'Gib den 8-stelligen Code ein.', true)
+      return
+    }
+    const session = await supabase.auth.getSession()
+    const token = session.data.session?.access_token
+    if (!token) {
+      setStatus(root, 'Bitte erneut anmelden.', true)
+      return
+    }
+    const result = await resolveHandoffPin(fetch, token, pin)
+    const match = root.querySelector('#handoff-match')
+    if (result.status !== 200 || !match) {
+      setStatus(root, result.body?.error || 'Dieser Code ist ungültig.', true)
+      return
+    }
+    match.hidden = false
+    match.replaceChildren()
+    const rental = result.body.rental ?? {}
+    const title = document.createElement('h2')
+    title.textContent = rental.gearItemName || 'Ausrüstung'
+    const meta = document.createElement('p')
+    meta.className = 'subtitle'
+    const phase = result.body.phase === 'return' ? 'Rückgabe' : 'Abholung'
+    const ownerState = result.body.ownerConfirmed ? 'Besitzer: bestätigt' : 'Besitzer: wartet'
+    const borrowerState = result.body.borrowerConfirmed ? 'Ausleiher: bestätigt' : 'Ausleiher: wartet'
+    meta.textContent = `${phase} · ${rental.ownerName || ''} · ${ownerState} · ${borrowerState}`
+    const button = document.createElement('button')
+    button.type = 'button'
+    button.className = 'btn btn-primary skister-btn-primary'
+    button.textContent = phase === 'Rückgabe' ? 'Rückgabe bestätigen' : 'Abholung bestätigen'
+    button.addEventListener('click', async () => {
+      button.disabled = true
+      const confirmed = await confirmHandoff(fetch, token, rental.id, result.body.phase)
+      setStatus(root, confirmed.message, confirmed.status !== 200)
+      button.disabled = false
+    })
+    match.append(title, meta, button)
+    setStatus(root, 'Prüfe Ausrüstung und Person, dann bestätige selbst.', false)
+  })
 }
 
 async function showRentals(root, supabase) {

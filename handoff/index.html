@@ -21,7 +21,7 @@
   <div class="auth-main">
     <main class="auth-card" role="main" data-skister-handoff>
       <h1>Übergabe bestätigen</h1>
-      <p class="subtitle">Beide Personen bestätigen Abholung und Rückgabe hier im Browser. Der QR-Code in der App bleibt gültig.</p>
+      <p class="subtitle">Melde dich an, gib den 8-stelligen Übergabecode aus der App ein und bestätige selbst. Der QR-Code in der App bleibt gültig. Ein Code allein schließt die Übergabe nicht ab.</p>
       <p id="handoff-status" class="info" role="status" hidden></p>
       <form id="handoff-signin" class="stack">
         <label for="email">E-Mail</label>
@@ -31,6 +31,13 @@
         <button type="submit" class="btn btn-primary skister-btn-primary">Anmelden</button>
         <a class="btn-link" href="/login/">Passwort vergessen?</a>
       </form>
+      <form id="handoff-code-form" class="stack" hidden>
+        <label for="handoff-code">Übergabecode</label>
+        <input id="handoff-code" name="code" inputmode="numeric" autocomplete="one-time-code" placeholder="482 951 37">
+        <button type="submit" class="btn btn-primary skister-btn-primary">Code prüfen</button>
+        <p class="subtitle">Teile den Code nur mit der Person, die diese Ausrüstung übergibt.</p>
+      </form>
+      <div id="handoff-match" class="stack" hidden></div>
       <div id="handoff-list" class="stack" hidden></div>
       <a class="auth-footer" href="/">Zurück zu skister.app</a>
     </main>
