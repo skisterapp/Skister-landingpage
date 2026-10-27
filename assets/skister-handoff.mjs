@@ -84,7 +84,7 @@ function setStatus(root, message, isError) {
   status.className = isError ? 'alert' : 'info'
 }
 
-function renderRentals(root, rentals, userId, onConfirm) {
+function renderRentals(root, rentals, userId, onConfirm, supabase) {
   const list = root.querySelector('#handoff-list')
   const signIn = root.querySelector('#handoff-signin')
   if (signIn) signIn.hidden = true
@@ -191,7 +191,7 @@ async function showRentals(root, supabase) {
     const result = await confirmHandoff(fetch, token, rentalId, phase)
     setStatus(root, result.message, result.status !== 200)
     button.disabled = false
-  })
+  }, supabase)
 }
 
 export async function initHandoffPage() {
