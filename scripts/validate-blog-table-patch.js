@@ -85,8 +85,8 @@ const articleRels = listArticleIndexFiles().map((f) =>
 const filesToValidate = gitFiles.length > 0 ? gitFiles : articleRels
 const compareWorkingTreeToHead = gitFiles.length > 0
 
-if (filesToValidate.length !== 127) {
-  fail(`expected 127 blog articles, got ${filesToValidate.length}`)
+if (filesToValidate.length !== 129) {
+  fail(`expected 129 blog articles, got ${filesToValidate.length}`)
 }
 
 for (const rel of filesToValidate) {
