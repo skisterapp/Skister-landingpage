@@ -1,17 +1,18 @@
 {
   "translations": {
     "de": {
-      "faq.a1": "SKISTER ist eine App, mit der Familien, Freunde und Vereine ihre Ski- und Winterausrüstung im privaten Netzwerk organisieren und teilen können. So wird vorhandene Ausrüstung besser genutzt – einfach, sicher und kostenlos.",
-      "faq.a2": "Nein. Du kannst unbegrenzt Ski- und Winterausrüstung hinzufügen, verwalten und in deinem privaten Netzwerk teilen – komplett kostenlos. Zusätzlich wird es eine Premium-Version geben. Damit erhältst du weitere Komfortfunktionen, die die Organisation deiner Ausrüstung noch einfacher machen.",
-      "faq.a3": "SKISTER wurde in erster Linie für Familien entwickelt. Gerade bei Kindern wechseln Ski, Schuhe oder Helme regelmäßig die Größe. Mit SKISTER behaltet ihr den Überblick und teilt vorhandene Ausrüstung einfach innerhalb eures privaten Netzwerks. Natürlich eignet sich die App genauso für Freundeskreise und Vereine.",
-      "faq.a4": "WhatsApp eignet sich für Nachrichten – aber nicht für die Organisation von Ausrüstung. Mit SKISTER siehst du sofort, welche Artikel verfügbar sind, wer gerade etwas ausgeliehen hat und wann es zurückkommt. Kalender, Reservierungen und Erinnerungen sorgen dafür, dass alles übersichtlich bleibt und Missverständnisse vermieden werden.",
-      "faq.a5": "SKISTER ist kein Ersatz für Skibasare oder Plattformen wie Kleinanzeigen oder Vinted – sondern eine sinnvolle Ergänzung. Wenn du oder dein Netzwerk eine bestimmte Ausrüstung noch nicht besitzt, kannst du sie dort natürlich gebraucht kaufen. SKISTER setzt genau danach an: Die App hilft dir dabei, vorhandene Ski- und Winterausrüstung innerhalb deiner Familie, deines Freundeskreises oder Vereins einfach zu organisieren und gemeinsam zu nutzen. So muss nicht jeder alles selbst besitzen – und vorhandene Ausrüstung wird deutlich häufiger genutzt.",
-      "faq.a6": "Dein Ski-Netzwerk ist dein privater Kreis aus Freunden, Familie und anderen Skifahrern. Über deinen Skiverein kannst du weitere Mitglieder entdecken, dich mit ihnen vernetzen und so dein Netzwerk vergrößern. Innerhalb dieses Kreises könnt ihr Ski, Schuhe sowie weitere Outdoor-Ausrüstung unkompliziert miteinander teilen.",
+      "faq.a1": "SKISTER ist eine App, mit der du Ski- und Winterausrüstung verwaltest und mit Familie und Freunden in einem privaten Netzwerk teilst. Du siehst verfügbare Ausrüstung, organisierst Reservierungen und behältst eure Ausleihen im Blick.",
+      "faq.a2": "Nein. Du kannst unbegrenzt Ski- und Winterausrüstung hinzufügen, verwalten und in deinem privaten Netzwerk teilen – komplett kostenlos. Zusätzlich gibt es eine Premium-Version. Damit erhältst du weitere Komfortfunktionen, die die Organisation deiner Ausrüstung noch einfacher machen.",
+      "faq.a3": "SKISTER wurde besonders für Familien entwickelt. Gerade bei Kindern ändern sich die benötigten Ski- und Schuhgrößen regelmäßig. Über euer privates Netzwerk könnt ihr vorhandene Ausrüstung gemeinsam nutzen. Auch Freundeskreise und Menschen, die sich aus dem Verein kennen, können sich miteinander vernetzen.",
+      "faq.a4": "Mit SKISTER sind Ausrüstung, Größen, Verfügbarkeiten und Reservierungen übersichtlich an einem Ort hinterlegt. Du musst nicht im Chatverlauf nachsehen, wer welche Ski hat oder wann etwas zurückkommt. ",
+      "faq.a5": "Auf Skibasaren und Verkaufsplattformen kaufst oder verkaufst du Ausrüstung. Mit SKISTER organisiert ihr die gemeinsame Nutzung bereits vorhandener Ausrüstung im Freundes- und Familienkreis. Bevor du etwas kaufst, kannst du nachsehen, ob jemand in deinem Netzwerk etwas Passendes zum Ausleihen hat.",
+      "faq.a6": "Du entscheidest selbst, welche Ausrüstung du zum Teilen anbietest und welche Reservierungsanfragen du bestätigst. Eine Anfrage ist noch keine Zusage.",
       "faq.q1": "Was ist SKISTER?",
       "faq.q2": "Kostet SKISTER etwas?",
       "faq.q3": "Für wen ist SKISTER geeignet?",
       "faq.q4": "Warum sollte ich SKISTER statt einer WhatsApp-Gruppe nutzen?",
       "faq.q5": "Warum sollte ich SKISTER nutzen, wenn es bereits Skibasare, Kleinanzeigen oder Vinted gibt?",
+      "faq.q6": "Muss ich meine Ausrüstung an andere verleihen?",
       "cookie.text": "Wir speichern deine Sprachwahl in localStorage (notwendig). Optionale Analyse-Cookies setzen wir nur, wenn du zustimmst — derzeit sind keine Analyse-Skripte aktiv. Mehr in der <a href=\"/privacy.html\">Datenschutzerklärung</a>.",
       "nav.pricing": "Preise",
       "nav.signOut": "Abmelden",
@@ -26,7 +27,7 @@
       "nav.menuClose": "Menü schließen",
       "pricing.title": "Preise",
       "benefits.title": "Warum SKISTER?",
-      "download.title": "SKISTER holen",
+      "download.title": "Starte euren gemeinsamen Ausrüstungspool.",
       "features.title": "Alles, was du brauchst",
       "footer.pricing": "Preise",
       "hero.mediaDesc": "Hintergrund: Skifahren im Vordergrund; Outdoor-Abenteuer ergänzend.",
@@ -51,6 +52,7 @@
       "tools.cat.winter": "Winter-Tools",
       "tools.snow.title": "Schneelage",
       "benefits.subtitle": "Weniger neu kaufen, vorhandene Ausrüstung besser nutzen und eure Ausleihen einfacher organisieren.",
+      "download.subtitle": "Lade SKISTER herunter, trage deine Ausrüstung ein und vernetze dich mit befreundeten Familien.",
       "features.subtitle": "Diese Funktionen machen das Teilen eurer Ausrüstung einfach und übersichtlich.",
       "homeActions.share": "Ausrüstung teilen",
       "homeActions.title": "Dein Home in der App",
@@ -711,5 +713,5 @@
   "images": {
     "heroMascot": "https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/make-080ebf84-landing-images/assets/hero-mascot.png"
   },
-  "syncedAt": "2026-11-23T11:57:03.884Z"
+  "syncedAt": "2026-11-23T12:02:14.232Z"
 }
