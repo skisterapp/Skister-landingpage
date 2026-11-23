@@ -22,9 +22,10 @@
       "nav.menuOpen": "Menü öffnen",
       "pricing.note": "Premium stellt Teilen nie hinter eine Paywall. Der Wert von Skister entsteht durch dein vertrauenswürdiges Netzwerk — Premium macht Organisation und Einblicke einfacher.",
       "cookie.accept": "Alles akzeptieren",
-      "hero.subtitle": "Mit SKISTER sparst du Geld und teilst Ski-Ausrüstung einfach mit Familie, Freunden oder in deinem Verein.",
+      "hero.subtitle": "Mit SKISTER organisierst und teilst du Ski- und Winterausrüstung mit Menschen, denen du vertraust. Entdecke verfügbare Ausrüstung in deinem privaten Netzwerk und behalte eure Ausleihen im Blick.",
       "nav.menuClose": "Menü schließen",
       "pricing.title": "Preise",
+      "benefits.title": "Warum SKISTER?",
       "download.title": "SKISTER holen",
       "footer.pricing": "Preise",
       "hero.mediaDesc": "Hintergrund: Skifahren im Vordergrund; Outdoor-Abenteuer ergänzend.",
@@ -48,6 +49,7 @@
       "tools.cat.safety": "Sicherheit",
       "tools.cat.winter": "Winter-Tools",
       "tools.snow.title": "Schneelage",
+      "benefits.subtitle": "Weniger neu kaufen, vorhandene Ausrüstung besser nutzen und eure Ausleihen einfacher organisieren.",
       "features.subtitle": "Alle Funktionen, die das Teilen von Ski-Ausrüstung einfach, übersichtlich und zeitsparend machen.",
       "homeActions.share": "Ausrüstung teilen",
       "homeActions.title": "Dein Home in der App",
@@ -69,12 +71,14 @@
       "pricing.premium.f4": "Netzwerk-Lücken & Größen-Hinweise",
       "pricing.premium.f5": "Jährlich €39.99 — spare gegenüber Monatlich",
       "tools.cat.planning": "Planung",
+      "benefits.save.title": "Weniger neu kaufen",
       "features.free.title": "Anfragen mit Kalender",
       "homeActions.explore": "Explore",
       "onboarding.subtitle": "In wenigen Minuten baust du dein privates Netzwerk auf und teilst Ski-Ausrüstung sicher mit Familie, Freunden oder deinem Verein.",
       "tools.badgeIncluded": "Inklusive",
       "tools.cat.equipment": "Ausrüstung",
       "tools.packing.title": "Packliste",
+      "benefits.waste.title": "Vorhandenes besser nutzen",
       "features.local.title": "Keine Gebühren. Kein Aufwand.",
       "features.share.title": "Ausrüstung übersichtlich verwalten",
       "home.seo.description": "Skister ist der einfachste Weg, Skiausrüstung mit Menschen zu teilen, denen du vertraust. Private Netzwerke, QR-Übergabe, Maintenance Center, Adventure Profile, Erinnerungen und Ski-Tools — auch Camping-, Wander- und Outdoor-Ausrüstung.",
@@ -102,8 +106,11 @@
       "tools.snow.description": "Vorschau — Live-Resortbedingungen folgen in einer späteren Version.",
       "tools.maintenance.title": "Gear-Pflege",
       "tools.tripPlanner.title": "Trip Planner",
+      "benefits.community.title": "Den Überblick behalten",
       "download.comingSoonAlert": "Demnächst! Wir melden uns, sobald die App verfügbar ist.",
       "features.reminders.title": "Automatische Erinnerungen",
+      "benefits.community.kicker": "Organisation",
+      "benefits.save.description": "Kinder wachsen schnell aus ihrer Ausrüstung heraus. Nutze passende Ski und Schuhe, die bei befreundeten Familien bereits vorhanden sind.",
       "features.free.description": "Freie Zeiträume werden automatisch angezeigt. Reservierungen laufen direkt über die App.",
       "onboarding.step1.feature1": "Geld sparen",
       "onboarding.step1.feature2": "Ressourcen schonen",
@@ -118,6 +125,7 @@
       "onboarding.step7.feature2": "Vereinsmitglieder entdecken und vernetzen",
       "onboarding.step7.feature3": "Ski und Ausrüstung im Netzwerk teilen",
       "tools.packing.description": "Packlisten für Ski, Snowboard, Camping und Wandern — offline.",
+      "benefits.waste.description": "Was bei euch im Keller liegt, kann anderen den nächsten Skiurlaub ermöglichen. Gemeinsam nutzt ihr eure Ausrüstung häufiger.",
       "features.local.description": "Skister ist kostenlos. Ihr organisiert eure Ausrüstung gemeinsam – ohne Provisionen oder versteckte Kosten.",
       "features.share.description": "Erfasse Ski, Schuhe, Helme und Zubehör einmalig – inklusive Fotos, Größen und Notizen.",
       "tools.bootSize.description": "Mondopoint, EU, UK und US Skischuhgrößen umrechnen.",
@@ -134,6 +142,7 @@
       "onboarding.step7.description": "Entdecke Skifahrerinnen und Skifahrer aus deinem Verein und erweitere dein persönliches Netzwerk. Vernetzt euch über SKISTER und leiht euch Ski, Schuhe und weitere Ausrüstung unkompliziert untereinander.",
       "tools.maintenance.description": "Wartungserinnerungen für Ski, Jacken und Outdoor-Ausrüstung.",
       "tools.tripPlanner.description": "Plane Touren, Packlisten und Ausrüstung aus deinem Netzwerk.",
+      "benefits.community.description": "Welche Ausrüstung ist verfügbar? Wer hat gerade was? SKISTER bringt Ordnung in eure gemeinsamen Ausleihen.",
       "features.reminders.description": "Skister erinnert euch an Abholung und Rückgabe."
     },
     "en": {
@@ -701,5 +710,5 @@
   "images": {
     "heroMascot": "https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/make-080ebf84-landing-images/assets/hero-mascot.png"
   },
-  "syncedAt": "2026-11-23T11:44:33.217Z"
+  "syncedAt": "2026-11-23T11:48:54.045Z"
 }
