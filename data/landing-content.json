@@ -30,10 +30,12 @@
       "download.title": "Starte euren gemeinsamen Ausrüstungspool.",
       "features.title": "Alles, was du brauchst",
       "footer.pricing": "Preise",
+      "footer.tagline": "Organisiere und teile Ski- und Winterausrüstung mit Menschen, denen du vertraust.",
       "hero.mediaDesc": "Hintergrund: Skifahren im Vordergrund; Outdoor-Abenteuer ergänzend.",
       "home.seo.title": "Skister — Skiausrüstung mit Menschen teilen, denen du vertraust",
       "tools.subtitle": "Winter, Planung, Ausrüstung und Sicherheit — in der App, genau wenn du sie brauchst.",
       "disclaimer.text": "Skister stellt ausschließlich die Plattform zur Organisation privater Ausleihen bereit. Leihvereinbarungen kommen direkt zwischen den beteiligten Personen zustande. Für geliehene, beschädigte oder verlorene Ausrüstung übernimmt Skister keine Haftung.",
+      "footer.madewith": "Made with ❤️",
       "home.blog.title": "Wissenswertes von der Piste",
       "pricing.free.f1": "Unbegrenzte Ausrüstung",
       "pricing.free.f2": "Freunde & Familie einladen",
@@ -713,5 +715,5 @@
   "images": {
     "heroMascot": "https://ayomhapkzckbhgwxenwr.supabase.co/storage/v1/object/public/make-080ebf84-landing-images/assets/hero-mascot.png"
   },
-  "syncedAt": "2026-11-23T12:02:14.232Z"
+  "syncedAt": "2026-11-23T12:05:23.519Z"
 }
