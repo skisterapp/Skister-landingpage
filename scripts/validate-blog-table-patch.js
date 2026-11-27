@@ -3,7 +3,7 @@
 
 const fs = require('fs')
 const path = require('path')
-const { execSync } = require('child_process')
+const { execFileSync } = require('child_process')
 const { BLOG_PROSE_TABLE_CSS } = require('./blog-table-normalize')
 const { normalizeBlogBodyHeadingsInHtml } = require('./blog-heading-normalize')
 
@@ -75,19 +75,48 @@ function extractArticleLinks(html) {
 }
 
 const cssSnippet = BLOG_PROSE_TABLE_CSS.trim()
-const gitFiles = execSync('git diff --name-only -- blog/**/index.html', { encoding: 'utf8' })
-  .trim()
-  .split('\n')
-  .filter(Boolean)
-const articleRels = listArticleIndexFiles().map((f) =>
-  path.relative(ROOT, f).replace(/\\/g, '/'),
-)
-const filesToValidate = gitFiles.length > 0 ? gitFiles : articleRels
-const compareWorkingTreeToHead = gitFiles.length > 0
+// The generator writes sitemap entries from published posts, independently of the files on disk.
+const siteOrigin = new URL(`https://${fs.readFileSync(path.join(ROOT, 'CNAME'), 'utf8').trim()}`).origin
+const sitemap = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8')
+const expectedArticleRels = new Set()
+for (const [, location] of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+  const url = new URL(location.trim())
+  const match = /^\/blog\/([^/]+)\/$/.exec(url.pathname)
+  if (url.origin !== siteOrigin || url.search || url.hash || !match) continue
 
-if (filesToValidate.length !== 129) {
-  fail(`expected 129 blog articles, got ${filesToValidate.length}`)
+  const slug = decodeURIComponent(match[1])
+  if (slug.includes('/') || slug.includes('\\')) {
+    fail(`invalid article slug in sitemap.xml: ${url.pathname}`)
+    continue
+  }
+  const rel = `blog/${slug}/index.html`
+  if (expectedArticleRels.has(rel)) fail(`duplicate article in sitemap.xml: ${rel}`)
+  expectedArticleRels.add(rel)
 }
+if (expectedArticleRels.size === 0) {
+  fail('sitemap.xml lists no canonical blog articles')
+  process.exit(1)
+}
+
+const articleRels = new Set(
+  listArticleIndexFiles().map((file) => path.relative(ROOT, file).replace(/\\/g, '/')),
+)
+for (const rel of expectedArticleRels) {
+  if (!articleRels.has(rel)) fail(`missing published article: ${rel}`)
+}
+for (const rel of articleRels) {
+  if (!expectedArticleRels.has(rel)) fail(`article not listed in sitemap.xml: ${rel}`)
+}
+if (failed) process.exit(1)
+
+const gitFiles = execFileSync('git', ['diff', '--name-only', '-z', 'HEAD', '--', 'blog/'], {
+  cwd: ROOT,
+  encoding: 'utf8',
+})
+  .split('\0')
+  .filter((rel) => articleRels.has(rel))
+const filesToValidate = gitFiles.length > 0 ? gitFiles : [...articleRels]
+const compareWorkingTreeToHead = gitFiles.length > 0
 
 for (const rel of filesToValidate) {
   const filePath = path.join(ROOT, rel)
@@ -103,7 +132,11 @@ for (const rel of filesToValidate) {
   if (!compareWorkingTreeToHead) continue
   let headVersion = ''
   try {
-    headVersion = execSync(`git show HEAD:${rel}`, { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 })
+    headVersion = execFileSync('git', ['show', `HEAD:${rel}`], {
+      cwd: ROOT,
+      encoding: 'utf8',
+      maxBuffer: 8 * 1024 * 1024,
+    })
   } catch (_) {
     continue
   }
@@ -145,4 +178,4 @@ for (const rel of filesToValidate) {
 }
 
 if (failed) process.exit(1)
-console.log(`validate-blog-table-patch: PASS (${filesToValidate.length} articles)`)
+console.log(`validate-blog-table-patch: PASS (${filesToValidate.length} checked, ${expectedArticleRels.size} inventoried)`)

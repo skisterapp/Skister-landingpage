@@ -274,7 +274,7 @@
   </nav>
 
   <main>
-    <p id="help-lang-fallback" class="legal-page-es-fallback" hidden data-i18n="help.langFallback">Help articles are currently available in English.</p>
+    <p id="help-lang-fallback" class="legal-page-es-fallback" hidden data-i18n="help.langFallback">Other help articles are available in English.</p>
     <div class="page-header">
       <h1 data-i18n="help.title">Help Center</h1>
       <p>Guides for sharing ski equipment with trusted people — private communities, invites, tools and Premium.</p>
@@ -286,10 +286,9 @@
     </section>
 
     <section class="page-card" aria-labelledby="ski-network">
-      <h2 id="ski-network">What is a Ski Network?</h2>
-      <p>A Ski Network is your private circle around where you ski — friends, family, ski clubs and local groups you trust. It can be anchored by a ski resort, club, or local group.</p>
-      <p>A ski resort is a real-world place. Your Ski Network in Skister is the private sharing layer in the app — often starting by choosing a resort, club, or group where you ski.</p>
-      <p>Within your Ski Network you share ski equipment first, and camping, hiking or other outdoor gear when you need it — with people you invite, not an open marketplace.</p>
+      <h2 id="ski-network" data-i18n="help.connections.title">How do I add a Trusted Connection?</h2>
+      <p data-i18n="help.connections.invite">On Home, tap “Invite Friends”. To invite a friend, family member or clubmate, enter their email address in the email form and tap “Send invite”.</p>
+      <p data-i18n="help.connections.accept">Ask the recipient to open Skister and accept the invitation.</p>
     </section>
 
     <section class="page-card" aria-labelledby="how-it-works">
@@ -435,8 +434,8 @@
       <h2 id="faq">FAQ</h2>
       <div style="display: grid; gap: 10px;">
         <details>
-          <summary>What is a Ski Network?</summary>
-          <p style="margin-top: 0.6rem;">A Ski Network is your private circle around where you ski — friends, family, ski clubs and local groups. A ski resort is a real-world place; your Ski Network in Skister is the private sharing layer in the app. Within it you can also share camping, hiking and other outdoor equipment.</p>
+          <summary data-i18n="help.connections.title">How do I add a Trusted Connection?</summary>
+          <p style="margin-top: 0.6rem;" data-i18n="help.connections.faq">Open “Invite Friends” on Home. Send an invitation using the email form, then ask the recipient to accept it in Skister.</p>
         </details>
         <details>
           <summary>What is My Adventure Profile?</summary>
@@ -525,11 +524,36 @@
   <script src="/scripts/legal-page-shell.js"></script>
   <script>
     var helpTranslations = {
-      de: { 'help.title': 'Hilfe', 'help.langFallback': 'Hilfeartikel sind derzeit nur auf Englisch verfügbar.', 'nav.features': 'Funktionen', 'nav.tools': 'Tools', 'nav.download': 'Download', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.support': 'Support', 'nav.language': 'Sprache', 'nav.menuOpen': 'Menü öffnen', 'nav.menuClose': 'Menü schließen' },
-      en: { 'help.title': 'Help Center', 'help.langFallback': 'Help articles are currently available in English.', 'nav.features': 'Features', 'nav.tools': 'Tools', 'nav.download': 'Download', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.support': 'Support', 'nav.language': 'Language', 'nav.menuOpen': 'Open menu', 'nav.menuClose': 'Close menu' },
-      fr: { 'help.title': 'Aide', 'help.langFallback': 'Les articles d’aide sont actuellement disponibles en anglais.', 'nav.features': 'Fonctionnalités', 'nav.tools': 'Outils', 'nav.download': 'Télécharger', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.support': 'Support', 'nav.language': 'Langue', 'nav.menuOpen': 'Ouvrir le menu', 'nav.menuClose': 'Fermer le menu' },
-      es: { 'help.title': 'Ayuda', 'help.langFallback': 'Los artículos de ayuda están disponibles actualmente en inglés.', 'nav.features': 'Características', 'nav.tools': 'Herramientas', 'nav.download': 'Descargar', 'nav.faq': 'Preguntas frecuentes', 'nav.blog': 'Blog', 'nav.support': 'Soporte', 'nav.language': 'Idioma', 'nav.menuOpen': 'Abrir menú', 'nav.menuClose': 'Cerrar menú' },
-      it: { 'help.title': 'Aiuto', 'help.langFallback': 'Gli articoli di aiuto sono attualmente disponibili in inglese.', 'nav.features': 'Funzionalità', 'nav.tools': 'Strumenti', 'nav.download': 'Download', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.support': 'Supporto', 'nav.language': 'Lingua', 'nav.menuOpen': 'Apri menu', 'nav.menuClose': 'Chiudi menu' },
+      de: { 'help.title': 'Hilfe', 'help.langFallback': 'Weitere Hilfeartikel sind auf Englisch verfügbar.', 'nav.features': 'Funktionen', 'nav.tools': 'Tools', 'nav.download': 'Download', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.support': 'Support', 'nav.language': 'Sprache', 'nav.menuOpen': 'Menü öffnen', 'nav.menuClose': 'Menü schließen',
+        'help.connections.title': 'Wie füge ich einen vertrauenswürdigen Kontakt hinzu?',
+        'help.connections.invite': 'Tippe auf der Startseite auf „Freunde einladen“. Gib im E-Mail-Formular die E-Mail-Adresse einer Person aus deinem Freundeskreis, deiner Familie oder deinem Verein ein und tippe auf „Einladung senden“.',
+        'help.connections.accept': 'Bitte die eingeladene Person, Skister zu öffnen und die Einladung anzunehmen.',
+        'help.connections.faq': 'Öffne „Freunde einladen“ auf der Startseite. Sende die Einladung über das E-Mail-Formular und bitte die eingeladene Person, sie in Skister anzunehmen.',
+      },
+      en: { 'help.title': 'Help Center', 'help.langFallback': 'Other help articles are available in English.', 'nav.features': 'Features', 'nav.tools': 'Tools', 'nav.download': 'Download', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.support': 'Support', 'nav.language': 'Language', 'nav.menuOpen': 'Open menu', 'nav.menuClose': 'Close menu',
+        'help.connections.title': 'How do I add a Trusted Connection?',
+        'help.connections.invite': 'On Home, tap “Invite Friends”. To invite a friend, family member or clubmate, enter their email address in the email form and tap “Send invite”.',
+        'help.connections.accept': 'Ask the recipient to open Skister and accept the invitation.',
+        'help.connections.faq': 'Open “Invite Friends” on Home. Send an invitation using the email form, then ask the recipient to accept it in Skister.',
+      },
+      fr: { 'help.title': 'Aide', 'help.langFallback': 'Les autres articles d’aide sont disponibles en anglais.', 'nav.features': 'Fonctionnalités', 'nav.tools': 'Outils', 'nav.download': 'Télécharger', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.support': 'Support', 'nav.language': 'Langue', 'nav.menuOpen': 'Ouvrir le menu', 'nav.menuClose': 'Fermer le menu',
+        'help.connections.title': 'Comment ajouter une connexion de confiance ?',
+        'help.connections.invite': 'Sur l’accueil, appuyez sur « Inviter des amis ». Saisissez l’adresse e-mail d’un ami, d’un proche ou d’un membre de votre club dans le formulaire, puis appuyez sur « Envoyer l’invitation ».',
+        'help.connections.accept': 'Demandez à la personne invitée d’ouvrir Skister et d’accepter l’invitation.',
+        'help.connections.faq': 'Ouvrez « Inviter des amis » sur l’accueil. Envoyez une invitation avec le formulaire par e-mail, puis demandez à la personne invitée de l’accepter dans Skister.',
+      },
+      es: { 'help.title': 'Ayuda', 'help.langFallback': 'Los demás artículos de ayuda están disponibles en inglés.', 'nav.features': 'Características', 'nav.tools': 'Herramientas', 'nav.download': 'Descargar', 'nav.faq': 'Preguntas frecuentes', 'nav.blog': 'Blog', 'nav.support': 'Soporte', 'nav.language': 'Idioma', 'nav.menuOpen': 'Abrir menú', 'nav.menuClose': 'Cerrar menú',
+        'help.connections.title': '¿Cómo añado un contacto de confianza?',
+        'help.connections.invite': 'Abre la opción para invitar amigos en la pantalla de inicio. Escribe el correo electrónico de un amigo, un familiar o un miembro de tu club en el formulario y envía la invitación.',
+        'help.connections.accept': 'Pide a la persona invitada que abra Skister y acepte la invitación.',
+        'help.connections.faq': 'Abre la opción para invitar amigos en la pantalla de inicio. Envía la invitación por correo electrónico con el formulario y pide a la otra persona que la acepte en Skister.',
+      },
+      it: { 'help.title': 'Aiuto', 'help.langFallback': 'Gli altri articoli di assistenza sono disponibili in inglese.', 'nav.features': 'Funzionalità', 'nav.tools': 'Strumenti', 'nav.download': 'Download', 'nav.faq': 'FAQ', 'nav.blog': 'Blog', 'nav.support': 'Supporto', 'nav.language': 'Lingua', 'nav.menuOpen': 'Apri menu', 'nav.menuClose': 'Chiudi menu',
+        'help.connections.title': 'Come aggiungo una connessione fidata?',
+        'help.connections.invite': 'Nella schermata Home, tocca «Invita amici». Inserisci nel modulo l’indirizzo email di un amico, di un familiare o di un membro del tuo club, poi tocca «Invia invito».',
+        'help.connections.accept': 'Chiedi alla persona invitata di aprire Skister e accettare l’invito.',
+        'help.connections.faq': 'Apri «Invita amici» dalla schermata Home. Invia un invito tramite il modulo email, poi chiedi alla persona invitata di accettarlo in Skister.',
+      },
     }
     var helpLang = (window.SkisterLegalPageShell && SkisterLegalPageShell.readStoredLang()) || 'en'
     function applyHelpI18n(lang) {
